@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import useUser from "@/libs/useUser";
+import fetcher from "@/libs/fetcher";
 import StyledInput from "@/components/ui/styledInput";
 import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -18,9 +20,40 @@ import {
 import { withSnackbar } from "notistack";
 
 function Login(props) {
+  const { mutateUser } = useUser({
+    redirectTo: "/dashboard",
+    redirectIfFound: true,
+  });
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    let email = data.email;
+    let password = data.password;
+
+    const body = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      await mutateUser(
+        fetcher("/api/v1/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        })
+      );
+    } catch (error) {
+      props.enqueueSnackbar(
+        //FIXME: Change below code before deploying to production
+        `${error.data.code}: ${error.data.message}`,
+        {
+          variant: "error",
+        }
+      );
+    }
+  };
   return (
     <NoSsr>
       <CssBaseline>

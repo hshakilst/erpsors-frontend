@@ -84,8 +84,6 @@ const StyledInput = (props) => {
         </Grid>
         <Grid item xs={10}>
           <TextField
-            autoComplete={false}
-            autoSave={false}
             name={props.name}
             onClick={props.onClick}
             label={props.label}

@@ -1,15 +1,24 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/scss/bootstrap.scss";
 import "@/styles/_app.css";
 import StyledSnackbar from "@/components/ui/styledSnackbar";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "@/components/ui/theme";
+import { SWRConfig } from "swr";
+import fetcher from "@/libs/fetcher";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <StyledSnackbar>
-        <Component {...pageProps} />
+        <SWRConfig
+          value={{
+            fetcher: fetcher,
+            onError: (err) => {
+              console.error(err);
+            },
+          }}
+        >
+          <Component {...pageProps} />
+        </SWRConfig>
       </StyledSnackbar>
     </ThemeProvider>
   );
