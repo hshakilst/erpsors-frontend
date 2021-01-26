@@ -3,28 +3,25 @@ import StyledInput from "@/components/ui/styledInput";
 import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import AlternateEmailOutlinedIcon from "@material-ui/icons/AlternateEmailOutlined";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import StyledButton from "@/components/ui/styledButton";
 import NextLink from "next/link";
 import { Box, Grid, Typography, Paper, Link } from "@material-ui/core";
-import useUser from "@/libs/useUser";
-import fetcher from "@/libs/fetcher";
+import { useAuth } from "@/libs/auth";
 import { withSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import BaseLayout from "@/components/layouts/baseLayout";
 
 function SignUp(props) {
-  const { mutateUser } = useUser({
-    redirectTo: "/dashboard",
-    redirectIfFound: true,
-  });
+  const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    let name = data.name;
-    let email = data.email;
-    let password = data.password;
+  const onSubmit = async (formData) => {
+    console.log(formData);
+    let name = formData.name;
+    let email = formData.email;
+    let password = formData.password;
 
     const body = {
       name: name,
@@ -32,26 +29,42 @@ function SignUp(props) {
       password: password,
     };
 
-    try {
-      await mutateUser(
-        fetcher("/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        })
-      );
-    } catch (error) {
+    const { error, data } = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+
+    if (!error)
       props.enqueueSnackbar(
         //FIXME: Change below code before deploying to production
-        `${error.data.code}: ${error.data.message} ${JSON.stringify(error)}`,
+        "Signup successful!",
+        {
+          variant: "success",
+        }
+      );
+    else
+      props.enqueueSnackbar(
+        //FIXME: Change below code before deploying to production
+        `${JSON.stringify(data)}`,
         {
           variant: "error",
         }
       );
-    }
+
+    // try {
+    //
+    // } catch (error) {
+    //   props.enqueueSnackbar(
+    //     //FIXME: Change below code before deploying to production
+    //     `${error.data.code}: ${error.data.message} ${JSON.stringify(error)}`,
+    //     {
+    //       variant: "error",
+    //     }
+    //   );
+    // }
   };
 
-  const onClickHandle = () => {
+  const onError = (errors) => {
     if (errors.name) {
       props.enqueueSnackbar("Invalid Name.", {
         variant: "error",
@@ -126,7 +139,7 @@ function SignUp(props) {
                     ERPSORS
                   </Typography>
                   <Box>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit, onError)}>
                       <StyledInput
                         label={"Name"}
                         startIcon={
@@ -148,7 +161,7 @@ function SignUp(props) {
                           min: 6,
                           pattern: /^[a-zA-Z ]{2,30}$/,
                         })}
-                        error={errors.name ? true : false}
+                        error={errors.email ? true : false}
                       />
                       {/* <StyledInput
                         label={"Username"}
@@ -215,11 +228,7 @@ function SignUp(props) {
                         })}
                         error={errors.password ? true : false}
                       />
-                      <StyledButton
-                        label={"Log In"}
-                        type="submit"
-                        onClick={onClickHandle}
-                      />
+                      <StyledButton label={"Log In"} type="submit" />
                       <NextLink href="/login">
                         <Typography
                           style={{

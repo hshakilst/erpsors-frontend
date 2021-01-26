@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "firebase": "^8.2.1",
+    "firebase-admin": "^9.4.2",
     "next": "10.0.3",
     "next-iron-session": "^4.1.10",
     "node-fetch": "^2.6.1",

@@ -1,7 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import useUser from "@/libs/useUser";
-import fetcher from "@/libs/fetcher";
 import StyledInput from "@/components/ui/styledInput";
 import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -11,12 +9,14 @@ import NextLink from "next/link";
 import BaseLayout from "@/components/layouts/baseLayout";
 import { Box, Grid, Typography, Paper, Link } from "@material-ui/core";
 import { withSnackbar } from "notistack";
+import { useAuth } from "@/libs/auth";
 
 function Login(props) {
-  const { mutateUser } = useUser({
-    redirectTo: "/dashboard",
-    redirectIfFound: true,
-  });
+  // const { mutateUser } = useUser({
+  //   redirectTo: "/dashboard",
+  //   redirectIfFound: true,
+  // });
+  const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = async (data) => {
@@ -24,23 +24,23 @@ function Login(props) {
     let email = data.email;
     let password = data.password;
 
-    const body = {
-      email: email,
-      password: password,
-    };
-
     try {
-      await mutateUser(
-        fetcher("/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        })
+      const { error, data } = await auth.sessionLoginWithEmailAndPassword(
+        email,
+        password
       );
+      if (!error)
+        props.enqueueSnackbar("Session set", {
+          variant: "success",
+        });
+      else
+        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+          variant: "error",
+        });
     } catch (error) {
       props.enqueueSnackbar(
         //FIXME: Change below code before deploying to production
-        `${error.data.code}: ${error.data.message}`,
+        `${error}`,
         {
           variant: "error",
         }
@@ -48,7 +48,7 @@ function Login(props) {
     }
   };
 
-  const onClickHandle = () => {
+  const onError = (errors) => {
     if (errors.email) {
       props.enqueueSnackbar("Invalid Email address.", {
         variant: "error",
@@ -117,7 +117,7 @@ function Login(props) {
                     ERPSORS
                   </Typography>
                   <Box>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit, onError)}>
                       <StyledInput
                         name="email"
                         label={"Email"}
@@ -140,7 +140,7 @@ function Login(props) {
                           min: 6,
                           pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
                         })}
-                        error={errors.name ? true : false}
+                        error={errors.email ? true : false}
                       />
                       <StyledInput
                         name="password"
@@ -166,11 +166,7 @@ function Login(props) {
                         })}
                         error={errors.password ? true : false}
                       />
-                      <StyledButton
-                        label={"Log In"}
-                        type="submit"
-                        onClick={onClickHandle}
-                      />
+                      <StyledButton label={"Log In"} type="submit" />
                     </form>
                     <NextLink href="/register">
                       <Typography

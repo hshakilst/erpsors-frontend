@@ -1,34 +1,38 @@
 import withSession from "@/libs/withSession";
-import initFirebase from "@/libs/initFirebase";
-import firebase from "firebase/app";
-import "firebase/auth";
+import admin from "@/libs/firebase/firebaseAdmin";
 
 export default withSession(async (req, res) => {
-  const { email } = await req.body;
-  const { password } = await req.body;
-
-  initFirebase();
-
   try {
-    const credentials = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-
-    const user = {
-      isLoggedIn: true,
-      id: credentials.user.uid,
-      email: credentials.user.email,
-      token: credentials.user.getIdToken,
-      isEmailVerified: credentials.user.emailVerified,
-      name: credentials.user.displayName,
-    };
-
-    req.session.set("user", user);
-    await req.session.save();
-    res.json(user);
+    const { idToken } = await req.body;
+    //TODO:Implement csrf token
+    // const csrfToken = req.body.csrfToken.toString();
+    // Guard against CSRF attacks.
+    // if (csrfToken !== req.cookies.csrfToken) {
+    //   res.status(401).send("UNAUTHORIZED REQUEST!");
+    //   return;
+    // }
+    // Set session expiration to 5 days.
+    if (idToken) {
+      const expiresIn = 60 * 60 * 24 * 5 * 1000;
+      const decodedIdToken = await admin.auth().verifyIdToken(idToken);
+      if (new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60) {
+        const sessionCookie = await admin
+          .auth()
+          .createSessionCookie(idToken, { expiresIn });
+        req.session.set("sessionCookie", sessionCookie);
+        await req.session.save();
+        res
+          .status(200)
+          .end(JSON.stringify({ error: false, data: "Sign in succeeded!" }));
+      }
+      res
+        .status(401)
+        .end(JSON.stringify({ error: true, data: "Recent sign in required!" }));
+    } else
+      res
+        .status(401)
+        .end(JSON.stringify({ error: true, data: "Bad Request!" }));
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    res.status(500).json(error);
+    res.status(500).end(JSON.stringify({ error: true, data: error }));
   }
 });

@@ -1,23 +1,19 @@
 import withSession from "@/libs/withSession";
-import initFirebase from "@/libs/initFirebase";
-import firebase from "firebase/app";
-import "firebase/auth";
+import admin from "@/libs/firebase/firebaseAdmin";
 
 export default withSession(async (req, res) => {
-  const user = req.session.get("user");
-  if (user) {
-    // in a real world application you might read the user id from the session and then do a database request
-    // to get more information on the user if needed
-    // for example
-    // initFirebase();
-    // const snap = await firebase.collection("users").doc(user.id).get();
-    res.json({
-      isLoggedIn: true,
-      ...user,
-    });
-  } else {
-    res.json({
-      isLoggedIn: false,
-    });
+  const sessionCookie = await req.session.get("sessionCookie");
+  try {
+    if (sessionCookie) {
+      const decodedClaims = await admin
+        .auth()
+        .verifySessionCookie(sessionCookie, true);
+      const user = await admin.auth().getUser(decodedClaims.sub);
+      res.status(200).json({ error: false, data: user });
+    } else {
+      res.status(401).json({ error: true, data: "Bad Request!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, data: error });
   }
 });

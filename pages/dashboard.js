@@ -2,65 +2,43 @@ import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 import BaseLayout from "@/components/layouts/baseLayout";
 import withSession from "@/libs/withSession";
-import useUser from "@/libs/useUser";
+import Redirect from "@/components/shared/redirect";
+import { useGetUser } from "@/actions/user";
+import { withAuthUser } from "@/libs/auth";
 
 const Dashboard = (props) => {
-  // const { user, error } = useUser({ redirectTo: "/login" });
-  // if (error) return <h1>Error Page</h1>;
-  // if (user?.isLoggedIn === true && user?.isEmailVerified === true)
+  // const { data, error, loading } = useGetUser();
+  // if (!data && loading)
   //   return (
   //     <BaseLayout className="dashboard">
-  //       <h1>Welcone to dashboard page!</h1>
-  //       <h3>{JSON.stringify(user)}</h3>
+  //       <h3>Loading...</h3>
   //     </BaseLayout>
   //   );
-  // if (user?.isLoggedIn === true && user?.isEmailVerified === false)
-  //   return (
-  //     <BaseLayout className="dashboard">
-  //       <h1>Please Verify Your Email</h1>
-  //       <h3>{JSON.stringify(user)}</h3>
-  //     </BaseLayout>
-  //   );
+  // if (error) return <Redirect to={"/login"} ssr={true}></Redirect>;
+  // if (!data?.data.emailVerified)
+  //   return <Redirect to={"/verification"}></Redirect>;
   return (
     <BaseLayout className="dashboard">
-      <h1>Welcone to dashboard page!</h1>
+      <h1>Welcome to dashboard page!</h1>
       <h3>{JSON.stringify(props.user)}</h3>
     </BaseLayout>
   );
 };
 
 export const getServerSideProps = withSession(async function ({ req, res }) {
-  const user = req.session.get("user");
-
-  if (user === undefined || user.isLoggedIn === false) {
-    // res.setHeader("location", "/login");
-    // res.statusCode = 302;
-    // res.end();
-    return {
-      props: {},
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  if (user.isEmailVerified === false) {
-    res.setHeader("location", "/verification");
+  const sessionCookie = await req.session.get("sessionCookie");
+  if (sessionCookie === undefined) {
+    res.setHeader("location", "/login");
     res.statusCode = 302;
     res.end();
-    return {
-      props: {},
-      redirect: {
-        destination: "/verification",
-        permanent: false,
-      },
-    };
+    return { props: {} };
   }
 
   return {
-    props: { user: req.session.get("user") },
+    props: {
+      sessionCookie: sessionCookie,
+    },
   };
 });
 
-export default Dashboard;
+export default withAuthUser(Dashboard);
