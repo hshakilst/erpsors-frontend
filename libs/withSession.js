@@ -7,7 +7,7 @@ export default function withSession(handler) {
     // ⚠️ Do not reuse the same password, create a different password for you and store it in a secret management system
     // Example for Vercel: https://vercel.com/docs/v2/serverless-functions/env-and-secrets
     password: process.env.SECRET_COOKIE_PASSWORD,
-    cookieName: "next.js/examples/with-iron-session",
+    cookieName: "X9qGVVwp",
     cookieOptions: {
       // the next line allows to use the session in non-https environements like
       // Next.js dev mode (http://localhost:3000)

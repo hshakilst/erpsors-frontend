@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-export default async function fetcher (...args) {
+export default async function fetcher(...args) {
   try {
     const response = await fetch(...args);
 
@@ -8,7 +8,7 @@ export default async function fetcher (...args) {
     // if there's a network error, it will throw at the previous line
     const data = await response.json();
 
-    if (response.ok) {
+    if (response.status === 200) {
       return data;
     }
 

@@ -1,5 +1,8 @@
 import firebase from "firebase/app";
 // import "firebase/auth";
+// import "firebase/storage";
+import "firebase/analytics";
+import "firebase/performance";
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -15,5 +18,9 @@ const config = {
 export default () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(config);
+    if (typeof window !== "undefined") {
+      firebase.analytics();
+      firebase.performance();
+    }
   }
 };
