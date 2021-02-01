@@ -4,8 +4,8 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import StyledCardFour from "@/components/ui/styledItems";
-import StyledCardFive from "@/components/ui/styledCardFive";
-import StyledCardSix from "@/components/ui/styledCardSix";
+import StyledCardFive from "@/components/ui/styledInventoryHistory";
+import StyledCardSix from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 
 const useStyles = makeStyles((theme) =>

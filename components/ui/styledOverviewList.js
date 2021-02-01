@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function RecipeReviewCard() {
+export default function StyledOverviewList() {
   const classes = useStyles();
   return (
     <Card className={classes.root}>

@@ -221,7 +221,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function StyledCardSix(props) {
+export default function StyledTableCard(props) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
