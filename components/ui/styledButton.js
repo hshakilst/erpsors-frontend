@@ -23,9 +23,13 @@ const StyledButton = (props) => {
   return (
     <div className={classes.root}>
       <Button
+        className={classes.root}
         variant="contained"
         color="primary"
-        {...props}
+        href="#contained-buttons"
+        onClick={props.onClick}
+        style={props.style}
+        endIcon={props.endIcon}
       >
         {props.label}
       </Button>

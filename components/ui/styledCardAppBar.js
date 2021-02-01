@@ -3,17 +3,13 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
+import ImportExportOutlinedIcon from "@material-ui/icons/ImportExportOutlined";
+import HeightOutlinedIcon from "@material-ui/icons/HeightOutlined";
 
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -21,8 +17,11 @@ const StyledAppBar = (props) => {
       flexGrow: 1,
       "& .MuiIconButton-root": {
         padding: 0,
-        height: "2.375rem",
-        width: "2.375rem",
+        height: "2.5rem",
+        width: "2.5rem",
+        "& .MuiAppBar-colorPrimary": {
+          background: "#fff",
+        },
       },
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
@@ -39,24 +38,21 @@ const StyledAppBar = (props) => {
       },
     },
     appBar: {
-      background: "#EFF0F6",
-      paddingTop: "0.625rem",
-      paddingBottom: "0.625rem",
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         width: `calc(100% - ${props.drawerWidth}px)`,
         marginLeft: props.drawerWidth,
+        "& .MuiAppBar-colorPrimary": {
+          background: "#fff",
+        },
+        "& .MuiToolbar-regular": {
+          minHeight: 0,
+        },
       },
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         display: "none",
-      },
-    },
-    title: {
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
       },
     },
     search: {
@@ -69,17 +65,8 @@ const StyledAppBar = (props) => {
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
-      // width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(0),
-        width: "auto",
-      },
-      [theme.breakpoints.up("xs")]: {
-        margin: "left",
-      },
     },
     searchIcon: {
-      // padding: theme.spacing(0, 2),
       fontSize: "1.563rem",
       height: "100%",
       position: "absolute",
@@ -98,12 +85,10 @@ const StyledAppBar = (props) => {
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      paddingRight: `calc(1em + ${theme.spacing(2)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
       color: "#000",
       borderRadius: "1rem",
-      backgroundColor: "#EFF0F6",
       [theme.breakpoints.up("md")]: {
         width: "40ch",
       },
@@ -116,25 +101,27 @@ const StyledAppBar = (props) => {
       [theme.breakpoints.up("md")]: {
         display: "flex",
       },
+      "& .MuiAppBar-colorPrimary": {
+        background: "#fff",
+      },
     },
     sectionMobile: {
       display: "flex",
       color: "#000",
       padding: 0,
-      marginLeft: "10px",
+      marginLeft: "0.625rem",
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
     },
     searchBackground: {
-      background: "#fff",
-      lineHeight: "60px",
-      paddingRight: "0.938rem",
-      paddingLeft: "0.938rem",
       borderRadius: "1rem",
       display: "flex",
       flexDirection: "row",
       width: "100%",
+      "& .MuiAppBar-colorPrimary": {
+        background: "#fff",
+      },
     },
   }));
 
@@ -144,10 +131,6 @@ const StyledAppBar = (props) => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -194,18 +177,18 @@ const StyledAppBar = (props) => {
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge color="secondary">
-            <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
+            <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Export</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge color="secondary">
-            <MailOutlineOutlinedIcon></MailOutlineOutlinedIcon>
+            <HeightOutlinedIcon></HeightOutlinedIcon>
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Fullscreen</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -215,17 +198,7 @@ const StyledAppBar = (props) => {
         </IconButton>
         <p>Settings</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
-        </IconButton>
-        <p>Account</p>
-      </MenuItem>
+
     </Menu>
   );
 
@@ -234,34 +207,6 @@ const StyledAppBar = (props) => {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <div className={classes.searchBackground}>
-            <IconButton
-              color="secondary"
-              aria-label="open drawer"
-              edge="start"
-              onClick={props.handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon
-                style={{
-                  color: "#000",
-                  marginTop: "1.563rem",
-                  marginLeft: "0.625rem",
-                }}
-              />
-            </IconButton>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
@@ -270,12 +215,12 @@ const StyledAppBar = (props) => {
                 style={{
                   border: "0.063rem solid #D9DBE9",
                   borderRadius: "1rem",
-                  marginRight: "0.5rem",
-                  marginTop: "0.75rem",
+                  marginRight: ".5rem",
+                  marginTop: "0.5rem",
                 }}
               >
                 <Badge color="secondary">
-                  <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
+                  <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
                 </Badge>
               </IconButton>
               <IconButton
@@ -284,12 +229,12 @@ const StyledAppBar = (props) => {
                 style={{
                   border: "0.063rem solid #D9DBE9",
                   borderRadius: "1rem",
-                  marginRight: "0.5rem",
-                  marginTop: "0.75rem",
+                  marginRight: ".5rem",
+                  marginTop: "0.5rem",
                 }}
               >
                 <Badge color="secondary">
-                  <MailOutlineOutlinedIcon></MailOutlineOutlinedIcon>
+                  <HeightOutlinedIcon></HeightOutlinedIcon>
                 </Badge>
               </IconButton>
               <IconButton
@@ -298,34 +243,15 @@ const StyledAppBar = (props) => {
                 style={{
                   border: "0.063rem solid #D9DBE9",
                   borderRadius: "1rem",
-                  marginRight: "0.5rem",
-                  marginTop: "0.75rem",
+                  marginTop: "0.5rem",
                 }}
               >
                 <Badge color="secondary">
                   <TuneOutlinedIcon></TuneOutlinedIcon>
                 </Badge>
               </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-                style={{
-                  border: "0.063rem solid #D9DBE9",
-                  borderRadius: "1rem",
-                  marginTop: "0.75rem",
-                }}
-              >
-                <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
-              </IconButton>
             </div>
-            <div
-              className={classes.sectionMobile}
-              style={{ marginTop: "0.625rem" }}
-            >
+            <div className={classes.sectionMobile}>
               <IconButton
                 aria-label="show more"
                 aria-controls={mobileMenuId}

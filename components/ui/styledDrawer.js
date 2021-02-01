@@ -1,20 +1,46 @@
 import React from "react";
-import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
+import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import StyledButton from "./styledButton";
+import ChevronRightOutlinedIcon from "@material-ui/icons/ChevronRightOutlined";
 
 const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      display: "flex",
+      zIndex: 9999999,
+      backgroundColor: "#fff",
+      "& .MuiList-padding": {
+        paddingTop: 0,
+        paddingBottom: "0px",
+      },
+      "& .MuiTypography-h6": {
+        fontSize: "2rem",
+        fontWeight: 800,
+      },
+      "& .MuiSvgIcon-fontSizeLarge": {
+        fontSize: "3rem",
+        color: "#14142B",
+      },
+      "& .makeStyles-root-56 .MuiList-padding": {
+        paddingTop: 0,
+      },
+      "& .makeStyles-drawerPaper-33": {
+        background: "#EFF0F6",
+      },
+      "& .MuiDrawer-paper": {
+        backgroundColor: "#EFF0F6",
+        flexDirection: "none",
+      },
+      "& .MuiDrawer-paperAnchorDockedLeft": {
+        border: "none",
+      },
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
@@ -22,14 +48,9 @@ const StyledDrawer = (props) => {
         flexShrink: 0,
       },
     },
-    // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: props.drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
     },
   }));
 
@@ -38,29 +59,211 @@ const StyledDrawer = (props) => {
   const theme = useTheme();
 
   const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <Divider />
+    <div style={{ backgroundColor: "#EFF0F6" }}>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+        {[
+          <Typography
+            variant="h4"
+            component="h1"
+            style={{
+              fontSize: "2rem",
+              fontWeight: "700",
+              letterSpacing: "0.063rem",
+              color: "#14142B",
+              paddingTop: "0.625rem",
+              paddingBottom: "0.625rem",
+            }}
+          >
+            ERPSORS
+          </Typography>,
+        ].map((text, index) => (
+          <ListItem key={index}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {
+                <LocalMallOutlinedIcon
+                  fontSize={"large"}
+                  style={{ fontSize: "3rem", color: "#14142B" }}
+                ></LocalMallOutlinedIcon>
+              }
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
+      <div />
+      <List
+        style={{
+          marginTop: "0.75rem",
+          paddingTop: "1.25rem",
+          paddingBottom: "1.25rem",
+          background: "#fff",
+          width: "93%",
+          marginLeft: "0.813rem",
+          borderRadius: "1rem",
+          textAlign: "center",
+        }}
+      >
+        {["Tab-Focus", "Active", "Initial", "Turnips"].map((text, index) => (
+          <ListItem
+            button
+            key={text}
+            style={{
+              background: "#EFF0F6",
+              borderRadius: "1rem",
+              color: "#14142B",
+              fontSize: "1rem",
+              fontWeight: 400,
+              letterSpacing: "0.047rem",
+              width: "11.375rem",
+              margin: "auto",
+              marginBottom: "0.625rem",
+              "&:hover": {
+                boxShadow:
+                  "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+              },
+            }}
+          >
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {index % 2 === 0 ? (
+                <ChevronRightOutlinedIcon />
+              ) : (
+                <ChevronRightOutlinedIcon />
+              )}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
+        {/* <StyledButton
+          label={"Tab-Focus"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+          endIcon={
+            <ChevronRightOutlinedIcon
+              style={{ color: "#14142B" }}
+            ></ChevronRightOutlinedIcon>
+          }
+        ></StyledButton>
+        <StyledButton
+          variant="outlined"
+          label={"Active"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+          endIcon={
+            <ChevronRightOutlinedIcon
+              style={{ color: "#14142B" }}
+            ></ChevronRightOutlinedIcon>
+          }
+        ></StyledButton>
+        <StyledButton
+          variant="outlined"
+          label={"Initial"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+          endIcon={
+            <ChevronRightOutlinedIcon
+              style={{ color: "#14142B" }}
+            ></ChevronRightOutlinedIcon>
+          }
+        ></StyledButton>
+        <StyledButton
+          variant="outlined"
+          label={"Turnips"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+        ></StyledButton> */}
+      </List>
+      <List
+        style={{
+          background: "#fff",
+          width: "93%",
+          marginLeft: "0.813rem",
+          borderRadius: "1rem",
+          marginTop: "1.25rem",
+          marginBottom: "1.25rem",
+          paddingTop: "1.25rem",
+          paddingBottom: "1.25rem",
+          textAlign: "center",
+        }}
+      >
+        <StyledButton
+          variant="outlined"
+          label={"Initial"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+          endIcon={
+            <ChevronRightOutlinedIcon
+              style={{ color: "#14142B" }}
+            ></ChevronRightOutlinedIcon>
+          }
+        ></StyledButton>
+        <StyledButton
+          variant="outlined"
+          label={"Turnips"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            leletterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+        ></StyledButton>
+        <StyledButton
+          variant="outlined"
+          label={"Broccoil"}
+          style={{
+            background: "#EFF0F6",
+            borderRadius: "1rem",
+            color: "#14142B",
+            fontSize: "1rem",
+            fontWeight: 400,
+            letterSpacing: "0.047rem",
+            width: "11.375rem",
+            marginBottom: "0.625rem",
+          }}
+        ></StyledButton>
       </List>
     </div>
   );
@@ -71,7 +274,6 @@ const StyledDrawer = (props) => {
   return (
     <div className={classes.root}>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -83,7 +285,7 @@ const StyledDrawer = (props) => {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
           >
             {drawer}
@@ -101,9 +303,6 @@ const StyledDrawer = (props) => {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        {props.children}
-      </main>
     </div>
   );
 };
