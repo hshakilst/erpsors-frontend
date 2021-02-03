@@ -1,5 +1,3 @@
-import useSWR from "swr";
-
 export const fetcher = (url) =>
   fetch(url).then(async (res) => {
     const result = await res.json();
@@ -11,15 +9,33 @@ export const fetcher = (url) =>
     }
   });
 
-export const useGetPosts = () => {
-  const { data, error, ...rest } = useSWR("/api/v1/posts", fetcher);
-  return { data, error, loading: !data && !error, ...rest };
-};
+export const fetcherWithSession = (url, sessionCookie) =>
+  fetch(url, {
+    method: "post",
+    body: JSON.stringify({ sessionCookie: sessionCookie }),
+    headers: { "Content-Type": "application/json" },
+  }).then(async (res) => {
+    const result = await res.json();
 
-export const useGetPostById = (id) => {
-  const { data, error, ...rest } = useSWR(
-    id ? `/api/v1/posts/${id}` : null,
-    fetcher
-  );
-  return { data, error, loading: !data && !error, ...rest };
-};
+    if (res.status !== 200) {
+      return Promise.reject(result);
+    } else {
+      return result;
+    }
+  });
+
+// export const fetcherWithPostData = (url, data) =>
+//   console.log(JSON.stringify(data));
+// fetch(url, {
+//   method: "post",
+//   body: JSON.stringify(data),
+//   headers: { "Content-Type": "application/json" },
+// }).then(async (res) => {
+//   const result = await res.json();
+
+//   if (res.status !== 200) {
+//     return Promise.reject(result);
+//   } else {
+//     return result;
+//   }
+// });

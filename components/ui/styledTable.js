@@ -20,26 +20,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 // import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import { useGetAllItems } from "@/actions/items";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
-
-const rows = [
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Donut", 452, 25.0, 51, 4.9),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-  createData("Honeycomb", 408, 3.2, 87, 6.5),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Jelly Bean", 375, 0.0, 94, 0.0),
-  createData("KitKat", 518, 26.0, 65, 7.0),
-  createData("Lollipop", 392, 0.2, 98, 0.0),
-  createData("Marshmallow", 318, 0, 81, 2.0),
-  createData("Nougat", 360, 19.0, 9, 37.0),
-  createData("Oreo", 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -69,15 +54,62 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "code",
     numeric: false,
     disablePadding: true,
-    label: "Dessert (100g serving)",
+    label: "Code",
   },
-  { id: "calories", numeric: true, disablePadding: false, label: "Calories" },
-  { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
-  { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
-  { id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
+  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "type", numeric: false, disablePadding: false, label: "Type" },
+  { id: "opnQty", numeric: true, disablePadding: false, label: "Opening Qty" },
+  {
+    id: "priceRate",
+    numeric: true,
+    disablePadding: false,
+    label: "Price Rate",
+  },
+  {
+    id: "valueRate",
+    numeric: true,
+    disablePadding: false,
+    label: "Value Rate",
+  },
+  {
+    id: "unit",
+    numeric: false,
+    disablePadding: false,
+    label: "Unit",
+  },
+  {
+    id: "warehouse",
+    numeric: false,
+    disablePadding: false,
+    label: "Warehouse",
+  },
+  {
+    id: "status",
+    numeric: false,
+    disablePadding: false,
+    label: "Status",
+  },
+  {
+    id: "group",
+    numeric: false,
+    disablePadding: false,
+    label: "Group",
+  },
+  {
+    id: "image",
+    numeric: false,
+    disablePadding: false,
+    label: "Image",
+  },
+  {
+    id: "notes",
+    numeric: false,
+    disablePadding: false,
+    label: "Notes",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -148,8 +180,7 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
   highlight:
     theme.palette.type === "light"
-      ? {
-        }
+      ? {}
       : {
           color: theme.palette.text.primary,
           backgroundColor: theme.palette.secondary.dark,
@@ -262,11 +293,27 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("code");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
+  // const [rows, setRows] = React.useState([]);
   // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { error, data:rows, loading } = useGetAllItems();
+  // let rows = [];
+  if (error) {
+    //FIXME: Handle Errors
+    return <h1>error</h1>;
+  }
+  if (loading) {
+    debugger
+    return <h1>loading</h1>
+    //FIXME: Loading screen for table
+    // setRows([{ name: "Loading" }]);
+  }
+  // if (data && !error && !loading) rows = data;
+  // React.useEffect(async () => {}, []);
+  // const { error, data, loading } = await useGetAllItems();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -355,7 +402,7 @@ export default function EnhancedTable() {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -370,12 +417,41 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        <Typography>{row.code}</Typography>
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.name}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.type}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.opnQty}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.priceRate}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.valueRate}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.unit}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.warehouse}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.status}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.group || "N/A"}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.image || "N/A"}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{row.notes || "N/A"}</Typography>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -397,18 +473,6 @@ export default function EnhancedTable() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-        style={{
-          marginLeft: "0.5rem",
-          marginBottom: "0.5rem",
-          fontSize: "1rem",
-          fontWeight: 500,
-          color: "#14142B",
-          letterSpacing: "0.047rem",
-        }}
-      /> */}
     </div>
   );
 }

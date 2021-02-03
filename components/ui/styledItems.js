@@ -10,6 +10,9 @@ import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
+import { useForm } from "react-hook-form";
+import { withSnackbar } from "notistack";
+import { useCreateItem } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -115,6 +118,66 @@ const useStyles = makeStyles((theme) =>
 
 const StyledItems = (props) => {
   const classes = useStyles();
+  const { register, handleSubmit, errors } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    let code = data.code;
+    let name = data.name;
+    let type = data.type;
+    let opnQty = data.opnQty;
+    let priceRate = data.priceRate;
+    let valueRate = data.valueRate;
+    let unit = data.unit;
+    let warehouse = data.warehouse;
+    let status = data.status;
+    let group = data.group;
+    let image = data.image;
+    let notes = data.notes;
+
+    try {
+      const { error, data } = await useCreateItem(
+        code,
+        name,
+        type,
+        opnQty,
+        priceRate,
+        valueRate,
+        unit,
+        warehouse,
+        status,
+        group,
+        image,
+        notes
+      );
+      if (!error)
+        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+          variant: "success",
+        });
+      else
+        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+          variant: "error",
+        });
+    } catch (error) {
+      props.enqueueSnackbar(
+        //FIXME: Change below code before deploying to production
+        `${JSON.stringify(error)}`,
+        {
+          variant: "error",
+        }
+      );
+    }
+  };
+
+  const onError = (errors) => {
+    if (errors) {
+      props.enqueueSnackbar("Errors", {
+        variant: "error",
+        autoHideDuration: 10000,
+      });
+    }
+  };
+
   return (
     <Card className={classes.root}>
       <Box>
@@ -171,281 +234,356 @@ const StyledItems = (props) => {
           </div>
         </div>
       </Box>
-      <Box style={{ marginTop: "3.438rem" }}>
-        <div className={classes.rootGrid}>
-          <Grid container spacing={2}>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+      <form component="form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <Box style={{ marginTop: "3.438rem" }}>
+          <div className={classes.rootGrid}>
+            <Grid container spacing={2}>
+              <Grid className={classes.gridItem} item xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Code"}
+                      size={"small"}
+                      name={"code"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.code ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Code"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Name"}
+                      size={"small"}
+                      name={"name"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.name ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Name"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Type"}
+                      size={"small"}
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.type ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Type"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid className={classes.gridItem} item xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Opening Qty."}
+                      size={"small"}
+                      name={"opnQty"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.opnQty ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Opening Qty."}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Price Rate"}
+                      size={"small"}
+                      name={"priceRate"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.priceRate ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Price Rate"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Value Rate"}
+                      size={"small"}
+                      name={"valueRate"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.valueRate ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Value Rate"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid className={classes.gridItem} item xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Unit"}
+                      size={"small"}
+                      name={"unit"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.unit ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Unit"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Warehouse"}
+                      size={"small"}
+                      name={"warehouse"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.warehouse ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Warehouse"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Status"}
+                      size={"small"}
+                      name={"status"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.status ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Status"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid className={classes.gridItem} item xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Group"}
+                      size={"small"}
+                      name={"group"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: false,
+                      })}
+                      error={errors.group ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Group"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Image"}
+                      size={"small"}
+                      name={"image"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: false,
+                      })}
+                      error={errors.image ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Image"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.inputField}>
-                  <div className={classes.inputFieldIcon}>
-                    <TocOutlinedIcon fontSize="large" />
+                </Paper>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={4}>
+                <Paper className={classes.paper}>
+                  <div className={classes.inputField}>
+                    <div className={classes.inputFieldIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Notes"}
+                      size={"small"}
+                      name={"notes"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: false,
+                      })}
+                      error={errors.notes ? true : false}
+                    />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Notes"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
+                </Paper>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
+        </Box>
+        <div style={{ float: "right", marginTop: "1rem" }}>
+          <div style={{ float: "left" }}>
+            <StyledButton
+              label={"Add"}
+              style={{
+                background: "none",
+                padding: "0.25rem 1.5rem",
+                color: "#5F2EEA",
+                border: "0.125rem solid #5F2EEA",
+                boxShadow: "none",
+                marginRight: "0.625rem",
+              }}
+              type={"submit"}
+            ></StyledButton>
+          </div>
+          <div style={{ float: "left" }}>
+            <StyledButton
+              label={"Clear"}
+              style={{
+                background: "none",
+                padding: "0.25rem 1.5rem",
+                color: "#5F2EEA",
+                border: "0.125rem solid #D6D8E7",
+                boxShadow: "none",
+              }}
+            ></StyledButton>
+          </div>
         </div>
-      </Box>
-      <div style={{ float: "right", marginTop: "1rem" }}>
-        <div style={{ float: "left" }}>
-          <StyledButton
-            label={"Add"}
-            style={{
-              background: "none",
-              padding: "0.25rem 1.5rem",
-              color: "#5F2EEA",
-              border: "0.125rem solid #5F2EEA",
-              boxShadow: "none",
-              marginRight: "0.625rem",
-            }}
-          ></StyledButton>
-        </div>
-        <div style={{ float: "left" }}>
-          <StyledButton
-            label={"Clear"}
-            style={{
-              background: "none",
-              padding: "0.25rem 1.5rem",
-              color: "#5F2EEA",
-              border: "0.125rem solid #D6D8E7",
-              boxShadow: "none",
-            }}
-          ></StyledButton>
-        </div>
-      </div>
+      </form>
     </Card>
   );
 };
 
-export default StyledItems;
+export default withSnackbar(StyledItems);

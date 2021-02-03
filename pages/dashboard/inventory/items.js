@@ -3,9 +3,9 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledCardFour from "@/components/ui/styledItems";
-import StyledCardFive from "@/components/ui/styledInventoryHistory";
-import StyledCardSix from "@/components/ui/styledTableCard";
+import StyledItems from "@/components/ui/styledItems";
+import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
+import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 
 const useStyles = makeStyles((theme) =>
@@ -47,17 +47,17 @@ const Inventory = (props) => {
         <Grid container spacing={2}>
           <Grid className={classes.gridItem} item xs={8}>
             <Paper className={classes.paper}>
-              <StyledCardFour></StyledCardFour>
+              <StyledItems></StyledItems>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} xs={4}>
             <Paper className={classes.paper}>
-              <StyledCardFive></StyledCardFive>
+              <StyledInventoryHistory></StyledInventoryHistory>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} xs={12}>
             <Paper className={classes.paper}>
-              <StyledCardSix></StyledCardSix>
+              <StyledTableCard></StyledTableCard>
             </Paper>
           </Grid>
         </Grid>
