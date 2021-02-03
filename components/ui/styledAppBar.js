@@ -193,7 +193,7 @@ const StyledAppBar = (props) => {
     >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge color="secondary">
+          <Badge color="primary">
             <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
           </Badge>
         </IconButton>
