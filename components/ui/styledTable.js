@@ -306,7 +306,6 @@ export default function EnhancedTable() {
     return <h1>error</h1>;
   }
   if (loading) {
-    debugger
     return <h1>loading</h1>
     //FIXME: Loading screen for table
     // setRows([{ name: "Loading" }]);

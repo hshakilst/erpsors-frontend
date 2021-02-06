@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-ui/styles'
 import theme from '@/components/ui/theme'
 import { SentryInitialize } from '@/libs/sentry'
 import { AuthProvider } from '@/libs/auth'
-
 SentryInitialize()
 
 function MyApp ({ Component, pageProps, err }) {
@@ -12,7 +11,7 @@ function MyApp ({ Component, pageProps, err }) {
     <ThemeProvider theme={theme}>
       <StyledSnackbar>
         <AuthProvider>
-          <Component {...pageProps} err={err}/>
+          <Component {...pageProps} err={err} />
         </AuthProvider>
       </StyledSnackbar>
     </ThemeProvider>
