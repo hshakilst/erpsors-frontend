@@ -1,19 +1,22 @@
-import { createItem, getAllItems } from "@/libs/fauna";
+import { createItem, getAllItems } from '@/libs/fauna'
+import { SentryInitialize } from '@/libs/sentry'
+
+SentryInitialize()
 
 export default async (req, res) => {
   try {
     const {
       query: { id, name },
-      method,
-    } = req;
+      method
+    } = req
 
     switch (method) {
-      case "GET":
+      case 'GET':
         //FIXME:Pagination support for ui table
-        const itemsQuery = await getAllItems();
-        res.status(200).json(itemsQuery.data);
-        break;
-      case "POST":
+        const itemsQuery = await getAllItems()
+        res.status(200).json(itemsQuery.data)
+        break
+      case 'POST':
         const {
           code,
           name,
@@ -26,8 +29,8 @@ export default async (req, res) => {
           status,
           group,
           image,
-          notes,
-        } = req.body;
+          notes
+        } = req.body
 
         const result = await createItem(
           code,
@@ -42,14 +45,14 @@ export default async (req, res) => {
           group,
           image,
           notes
-        );
-        res.status(200).json({ error: false, data: result });
-        break;
+        )
+        res.status(200).json({ error: false, data: result })
+        break
       default:
-        res.setHeader("Allow", ["GET", "POST"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
+        res.setHeader('Allow', ['GET', 'POST'])
+        res.status(405).end(`Method ${method} Not Allowed`)
     }
   } catch (error) {
-    res.status(500).json({ error: true, data: error });
+    res.status(500).json({ error: true, data: error })
   }
-};
+}

@@ -1,30 +1,22 @@
-import "@/styles/_app.css";
-import StyledSnackbar from "@/components/ui/styledSnackbar";
-import { ThemeProvider } from "@material-ui/styles";
-import theme from "@/components/ui/theme";
-import { SWRConfig } from "swr";
-import fetcher from "@/libs/fetcher";
-import { AuthProvider } from "@/libs/auth";
+import '@/styles/_app.css'
+import StyledSnackbar from '@/components/ui/styledSnackbar'
+import { ThemeProvider } from '@material-ui/styles'
+import theme from '@/components/ui/theme'
+import { SentryInitialize } from '@/libs/sentry'
+import { AuthProvider } from '@/libs/auth'
 
-function MyApp({ Component, pageProps }) {
+SentryInitialize()
+
+function MyApp ({ Component, pageProps, err }) {
   return (
     <ThemeProvider theme={theme}>
       <StyledSnackbar>
         <AuthProvider>
-          {/* <SWRConfig
-          value={{
-            fetcher: fetcher,
-            onError: (err) => {
-              console.error(err);
-            },
-          }}
-        > */}
-          <Component {...pageProps} />
+          <Component {...pageProps} err={err}/>
         </AuthProvider>
-        {/* </SWRConfig> */}
       </StyledSnackbar>
     </ThemeProvider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
