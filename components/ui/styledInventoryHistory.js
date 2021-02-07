@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@material-ui/core";
+import { Link, List, ListItem } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) =>
@@ -81,9 +81,9 @@ export default function StyledInventoryHistory() {
           textAlign: "left",
         }}
       >
-        <div style={{ marginBottom: "8.2rem" }}>
-          <ul>
-            <li>
+        <div style={{ marginBottom: "7.15rem" }}>
+          <List>
+            <ListItem>
               <Typography
                 style={{
                   color: "#6E7191",
@@ -91,11 +91,12 @@ export default function StyledInventoryHistory() {
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
                   lineHeight: "1rem",
-                  paddingBottom: "1rem",
                 }}
               >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Typography>
+            </ListItem>
+            <ListItem>
               <Typography
                 style={{
                   color: "#6E7191",
@@ -103,11 +104,12 @@ export default function StyledInventoryHistory() {
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
                   lineHeight: "1rem",
-                  paddingBottom: "1rem",
                 }}
               >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Typography>
+            </ListItem>
+            <ListItem>
               <Typography
                 style={{
                   color: "#6E7191",
@@ -115,11 +117,13 @@ export default function StyledInventoryHistory() {
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
                   lineHeight: "1rem",
-                  paddingBottom: "1rem",
                 }}
               >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Typography>
+            </ListItem>
+
+            <ListItem>
               <Typography
                 style={{
                   color: "#6E7191",
@@ -127,13 +131,12 @@ export default function StyledInventoryHistory() {
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
                   lineHeight: "1rem",
-                  paddingBottom: "1rem",
                 }}
               >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Typography>
-            </li>
-          </ul>
+            </ListItem>
+          </List>
         </div>
       </Box>
     </Card>

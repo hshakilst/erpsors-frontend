@@ -20,11 +20,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 // import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useGetAllItems } from "@/actions/items";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -52,65 +48,65 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: "code",
-    numeric: false,
-    disablePadding: true,
-    label: "Code",
-  },
-  { id: "name", numeric: false, disablePadding: false, label: "Name" },
-  { id: "type", numeric: false, disablePadding: false, label: "Type" },
-  { id: "opnQty", numeric: true, disablePadding: false, label: "Opening Qty" },
-  {
-    id: "priceRate",
-    numeric: true,
-    disablePadding: false,
-    label: "Price Rate",
-  },
-  {
-    id: "valueRate",
-    numeric: true,
-    disablePadding: false,
-    label: "Value Rate",
-  },
-  {
-    id: "unit",
-    numeric: false,
-    disablePadding: false,
-    label: "Unit",
-  },
-  {
-    id: "warehouse",
-    numeric: false,
-    disablePadding: false,
-    label: "Warehouse",
-  },
-  {
-    id: "status",
-    numeric: false,
-    disablePadding: false,
-    label: "Status",
-  },
-  {
-    id: "group",
-    numeric: false,
-    disablePadding: false,
-    label: "Group",
-  },
-  {
-    id: "image",
-    numeric: false,
-    disablePadding: false,
-    label: "Image",
-  },
-  {
-    id: "notes",
-    numeric: false,
-    disablePadding: false,
-    label: "Notes",
-  },
-];
+// const headCells = [
+//   {
+//     id: "code",
+//     numeric: false,
+//     disablePadding: true,
+//     label: "Code",
+//   },
+//   { id: "name", numeric: false, disablePadding: false, label: "Name" },
+//   { id: "type", numeric: false, disablePadding: false, label: "Type" },
+//   { id: "opnQty", numeric: true, disablePadding: false, label: "Opening Qty" },
+//   {
+//     id: "priceRate",
+//     numeric: true,
+//     disablePadding: false,
+//     label: "Price Rate",
+//   },
+//   {
+//     id: "valueRate",
+//     numeric: true,
+//     disablePadding: false,
+//     label: "Value Rate",
+//   },
+//   {
+//     id: "unit",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Unit",
+//   },
+//   {
+//     id: "warehouse",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Warehouse",
+//   },
+//   {
+//     id: "status",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Status",
+//   },
+//   {
+//     id: "group",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Group",
+//   },
+//   {
+//     id: "image",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Image",
+//   },
+//   {
+//     id: "notes",
+//     numeric: false,
+//     disablePadding: false,
+//     label: "Notes",
+//   },
+// ];
 
 function EnhancedTableHead(props) {
   const {
@@ -121,6 +117,7 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    headCells,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -163,15 +160,15 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   numSelected: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -193,7 +190,9 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
-
+  const handleRefresh = () => {
+    props.refreshRows();
+  };
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -238,11 +237,18 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon style={{ color: "#14142B" }} />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon style={{ color: "#14142B" }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Refresh list">
+            <IconButton aria-label="refresh list" onClick={handleRefresh}>
+              <RefreshRoundedIcon style={{ color: "#14142B" }} />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );
@@ -276,9 +282,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     color: "#14142B",
     letterSpacing: "0.047rem",
+    "& .MuiTableCell-head": {
+      fontSize: "1rem",
+      fontWeight: 500,
+      color: "#14142B",
+      letterSpacing: "0.047rem",
+    },
   },
   visuallyHidden: {
-    border: 0,
+    border: 1,
     clip: "rect(0 0 0 0)",
     height: 1,
     margin: -1,
@@ -290,29 +302,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  // const [rows, setRows] = React.useState([]);
-  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { error, data:rows, loading } = useGetAllItems();
-  // let rows = [];
+
+  const { error, data: rows, loading, mutate } = props.fetch();
+
   if (error) {
     //FIXME: Handle Errors
     return <h1>error</h1>;
   }
   if (loading) {
-    return <h1>loading</h1>
-    //FIXME: Loading screen for table
-    // setRows([{ name: "Loading" }]);
+    return <h1>loading</h1>;
   }
-  // if (data && !error && !loading) rows = data;
-  // React.useEffect(async () => {}, []);
-  // const { error, data, loading } = await useGetAllItems();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -322,19 +328,19 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.code);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, code) => {
+    const selectedIndex = selected.indexOf(code);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, code);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -358,11 +364,7 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  // const handleChangeDense = (event) => {
-  //   setDense(event.target.checked);
-  // };
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (code) => selected.indexOf(code) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -370,7 +372,10 @@ export default function EnhancedTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          refreshRows={mutate}
+          numSelected={selected.length}
+        />
         <TableContainer>
           <Table
             className={classes.table}
@@ -386,18 +391,19 @@ export default function EnhancedTable() {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              headCells={props.headCells}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.code);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.code)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -416,23 +422,15 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        <Typography>{row.code}</Typography>
+                        {row.code}
                       </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.name}</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.type}</Typography>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Typography>{row.opnQty}</Typography>
-                      </TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.type}</TableCell>
+                      <TableCell align="right">{row.opnQty}</TableCell>
                       <TableCell align="right">
                         <Typography>{row.priceRate}</Typography>
                       </TableCell>
-                      <TableCell align="right">
-                        <Typography>{row.valueRate}</Typography>
-                      </TableCell>
+                      <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">
                         <Typography>{row.unit}</Typography>
                       </TableCell>
@@ -442,15 +440,9 @@ export default function EnhancedTable() {
                       <TableCell align="left">
                         <Typography>{row.status}</Typography>
                       </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.group || "N/A"}</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.image || "N/A"}</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.notes || "N/A"}</Typography>
-                      </TableCell>
+                      <TableCell align="left">{row.group || "N/A"}</TableCell>
+                      <TableCell align="left">{row.image || "N/A"}</TableCell>
+                      <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -182,7 +182,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Code"}
                     size={"small"}
@@ -203,7 +202,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Company"}
                     size={"small"}
@@ -224,7 +222,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Type"}
                     size={"small"}
@@ -245,9 +242,8 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
-                    label={"Opening Balance"}
+                    label={"Opn. Balance"}
                     size={"small"}
                   />
                 </div>
@@ -266,7 +262,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Item"}
                     size={"small"}
@@ -287,7 +282,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Contact Name"}
                     size={"small"}
@@ -308,7 +302,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Address"}
                     size={"small"}
@@ -329,7 +322,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Phone"}
                     size={"small"}
@@ -350,7 +342,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Status"}
                     size={"small"}
@@ -371,7 +362,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Group"}
                     size={"small"}
@@ -392,7 +382,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Image"}
                     size={"small"}
@@ -413,7 +402,6 @@ export default function RecipeReviewCard() {
                     }}
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput,
                     }}
                     label={"Notes"}
                     size={"small"}
