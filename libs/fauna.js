@@ -68,3 +68,68 @@ export const getAllItems = () => {
     )
   );
 };
+
+export const createSupplier = (
+  code,
+  company,
+  name,
+  type,
+  opnBalance,
+  item,
+  address,
+  phone,
+  status,
+  group,
+  image,
+  notes
+) => {
+  return db.query(
+    q.Create(q.Collection("items"), {
+      data: {
+        code,
+        company,
+        name,
+        type,
+        opnBalance,
+        item,
+        address,
+        phone,
+        status,
+        group,
+        image,
+        notes,
+      },
+    })
+  );
+};
+
+export const getAllSuppliers = () => {
+  return db.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("all_suppliers"))),
+      q.Lambda(
+        "supplierRef",
+        q.Let(
+          {
+            itemDoc: q.Get(q.Var("supplierRef")),
+          },
+          {
+            id: q.Select(["ref", "id"], q.Var("supplierRef")),
+            code: q.Select(["data", "code"], q.Var("supplierRef")),
+            company: q.Select(["data", "company"], q.Var("supplierRef")),
+            name: q.Select(["data", "name"], q.Var("supplierRef")),
+            type: q.Select(["data", "type"], q.Var("supplierRef")),
+            opnBalance: q.Select(["data", "opnBalance"], q.Var("supplierRef")),
+            item: q.Select(["data", "item"], q.Var("supplierRef")),
+            address: q.Select(["data", "address"], q.Var("supplierRef")),
+            phone: q.Select(["data", "phone"], q.Var("supplierRef")),
+            status: q.Select(["data", "status"], q.Var("supplierRef")),
+            group: q.Select(["data", "group"], q.Var("supplierRef")),
+            image: q.Select(["data", "image"], q.Var("supplierRef")),
+            notes: q.Select(["data", "notes"], q.Var("supplierRef")),
+          }
+        )
+      )
+    )
+  );
+};

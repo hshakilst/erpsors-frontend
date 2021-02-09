@@ -10,7 +10,6 @@ import StyledDropdown from "./styledDropdown";
 import ShortTextOutlinedIcon from "@material-ui/icons/ShortTextOutlined";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
-import StyledTable from "./styledTable";
 import { Typography } from "@material-ui/core";
 import StyledCardAppBar from "./styledCardAppBar";
 
@@ -370,7 +369,7 @@ export default function StyledTableCard(props) {
               <Grid item className={classes.gridItem} xs={12}>
                 <Paper className={classes.paperTable}>
                   <Box>
-                    <StyledTable></StyledTable>
+                    {props.children}
                   </Box>
                 </Paper>
               </Grid>
