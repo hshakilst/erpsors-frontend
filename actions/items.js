@@ -1,20 +1,20 @@
-import useSWR from 'swr'
-import { fetcher } from '@/actions'
-import axios from 'axios'
+import useSWR, { mutate } from "swr";
+import { fetcher } from "@/actions";
+import axios from "axios";
 
 export const useGetAllItems = () => {
-  const { data, error, ...rest } = useSWR('/api/items', fetcher)
+  const { data, error, ...rest } = useSWR("/api/items", fetcher);
 
-  return { data, error, loading: !data && !error, ...rest }
-}
+  return { data, error, loading: !data && !error, ...rest };
+};
 
-export const useGetItemById = id => {
+export const useGetItemById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/v1/posts/${id}` : null,
     fetcher
-  )
-  return { data, error, loading: !data && !error, ...rest }
-}
+  );
+  return { data, error, loading: !data && !error, ...rest };
+};
 
 export const useCreateItem = async (
   code,
@@ -30,7 +30,7 @@ export const useCreateItem = async (
   image,
   notes
 ) => {
-  const res = await axios.post('/api/items', {
+  const res = await axios.post("/api/items", {
     code,
     name,
     type,
@@ -42,8 +42,8 @@ export const useCreateItem = async (
     status,
     group,
     image,
-    notes
-  })
-
-  return { error: res.data.error, data: res.data.data }
-}
+    notes,
+  });
+  mutate("/api/items");
+  return { error: res.data.error, data: res.data.data };
+};

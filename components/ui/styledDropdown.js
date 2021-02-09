@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -14,9 +15,19 @@ const useStyles = makeStyles((theme) =>
         justifyContent: "left",
       },
     },
+    rootIcon: {
+      marginLeft: "1.25rem",
+      fontSize: "2rem",
+      color: "#14142B",
+      [theme.breakpoints.up("xs")]: {
+        marginLeft: theme.spacing(10),
+      },
+      [theme.breakpoints.down("xs")]: {
+        marginLeft: theme.spacing(10),
+      },
+    },
     rootMenu: {
       "& .MuiPaper-root": {
-        width: "15%",
         backgroundColor: "#EFF0F6",
         borderRadius: "1rem",
         fontSize: "1rem",
@@ -27,7 +38,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-export default function SimpleMenu() {
+export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -57,6 +68,9 @@ export default function SimpleMenu() {
         }}
       >
         Items
+        <KeyboardArrowDownIcon
+          className={classes.rootIcon}
+        ></KeyboardArrowDownIcon>
       </Button>
       <Menu
         className={classes.rootMenu}
@@ -65,7 +79,7 @@ export default function SimpleMenu() {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        style={{ top: 60,left:-18 }}
+        style={{ top: 60, left: -18 }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>

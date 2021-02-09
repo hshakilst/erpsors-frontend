@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -16,8 +15,6 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
@@ -48,66 +45,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-// const headCells = [
-//   {
-//     id: "code",
-//     numeric: false,
-//     disablePadding: true,
-//     label: "Code",
-//   },
-//   { id: "name", numeric: false, disablePadding: false, label: "Name" },
-//   { id: "type", numeric: false, disablePadding: false, label: "Type" },
-//   { id: "opnQty", numeric: true, disablePadding: false, label: "Opening Qty" },
-//   {
-//     id: "priceRate",
-//     numeric: true,
-//     disablePadding: false,
-//     label: "Price Rate",
-//   },
-//   {
-//     id: "valueRate",
-//     numeric: true,
-//     disablePadding: false,
-//     label: "Value Rate",
-//   },
-//   {
-//     id: "unit",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Unit",
-//   },
-//   {
-//     id: "warehouse",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Warehouse",
-//   },
-//   {
-//     id: "status",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Status",
-//   },
-//   {
-//     id: "group",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Group",
-//   },
-//   {
-//     id: "image",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Image",
-//   },
-//   {
-//     id: "notes",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Notes",
-//   },
-// ];
-
 function EnhancedTableHead(props) {
   const {
     classes,
@@ -117,12 +54,74 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
-    headCells,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
+  const headCells = [
+    {
+      id: "code",
+      numeric: false,
+      disablePadding: true,
+      label: "Code",
+    },
+    { id: "name", numeric: false, disablePadding: false, label: "Name" },
+    { id: "type", numeric: false, disablePadding: false, label: "Type" },
+    {
+      id: "opnQty",
+      numeric: true,
+      disablePadding: false,
+      label: "Opn. Qty",
+    },
+    {
+      id: "priceRate",
+      numeric: true,
+      disablePadding: false,
+      label: "Price Rate",
+    },
+    {
+      id: "valueRate",
+      numeric: true,
+      disablePadding: false,
+      label: "Value Rate",
+    },
+    {
+      id: "unit",
+      numeric: false,
+      disablePadding: false,
+      label: "Unit",
+    },
+    {
+      id: "warehouse",
+      numeric: false,
+      disablePadding: false,
+      label: "Warehouse",
+    },
+    {
+      id: "status",
+      numeric: false,
+      disablePadding: false,
+      label: "Status",
+    },
+    {
+      id: "group",
+      numeric: false,
+      disablePadding: false,
+      label: "Group",
+    },
+    {
+      id: "image",
+      numeric: false,
+      disablePadding: false,
+      label: "Image",
+    },
+    {
+      id: "notes",
+      numeric: false,
+      disablePadding: false,
+      label: "Notes",
+    },
+  ];
   return (
     <TableHead>
       <TableRow>
@@ -131,7 +130,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
+            inputProps={{ "aria-label": "select all rows" }}
           />
         </TableCell>
         {headCells.map((headCell) => (
@@ -160,20 +159,14 @@ function EnhancedTableHead(props) {
   );
 }
 
-// EnhancedTableHead.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   numSelected: PropTypes.number.isRequired,
-//   onRequestSort: PropTypes.func.isRequired,
-//   onSelectAllClick: PropTypes.func.isRequired,
-//   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-//   orderBy: PropTypes.string.isRequired,
-//   rowCount: PropTypes.number.isRequired,
-// };
-
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
+    minHeight: "0px",
+    "& @media (min-width: 600px) .MuiToolbar-regular": {
+      minHeight: "0px",
+    },
   },
   highlight:
     theme.palette.type === "light"
@@ -254,10 +247,6 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -272,7 +261,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "100%",
-    marginBottom: theme.spacing(2),
     borderRadius: "1rem",
     backgroundColor: "#D9DBE9",
   },
@@ -286,11 +274,14 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1rem",
       fontWeight: 500,
       color: "#14142B",
-      letterSpacing: "0.047rem",
+    },
+    "& .MuiTableCell-paddingNone": {
+      fontSize: "1rem",
+      color: "#14142B",
     },
   },
   visuallyHidden: {
-    border: 1,
+    border: 0,
     clip: "rect(0 0 0 0)",
     height: 1,
     margin: -1,
@@ -309,16 +300,14 @@ export default function EnhancedTable(props) {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
 
-  const { error, data: rows, loading, mutate } = props.fetch();
-
-  if (error) {
-    //FIXME: Handle Errors
-    return <h1>error</h1>;
-  }
-  if (loading) {
-    return <h1>loading</h1>;
-  }
+  const { error, data, loading, mutate } = props.fetch();
+  React.useEffect(() => {
+    if (data) setRows(data);
+  }, [data]);
+  if (error) return <h1>error</h1>;
+  if (loading) return <h1>loading</h1>;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -356,7 +345,7 @@ export default function EnhancedTable(props) {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    if (newPage <= rows.length / rowsPerPage) setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -427,19 +416,11 @@ export default function EnhancedTable(props) {
                       <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="left">{row.type}</TableCell>
                       <TableCell align="right">{row.opnQty}</TableCell>
-                      <TableCell align="right">
-                        <Typography>{row.priceRate}</Typography>
-                      </TableCell>
+                      <TableCell align="right">{row.priceRate}</TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
-                      <TableCell align="right">
-                        <Typography>{row.unit}</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.warehouse}</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Typography>{row.status}</Typography>
-                      </TableCell>
+                      <TableCell align="right">{row.unit}</TableCell>
+                      <TableCell align="left">{row.warehouse}</TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>

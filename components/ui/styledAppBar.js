@@ -18,6 +18,11 @@ import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
     grow: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      zIndex: "1030",
       flexGrow: 1,
       "& .MuiIconButton-root": {
         padding: 0,
@@ -67,7 +72,7 @@ const StyledAppBar = (props) => {
       "&:hover": {
         backgroundColor: fade(theme.palette.common.white, 0.25),
       },
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(4),
       marginLeft: 0,
       // width: "100%",
       [theme.breakpoints.up("sm")]: {
@@ -109,6 +114,8 @@ const StyledAppBar = (props) => {
       },
     },
     sectionDesktop: {
+      position: "fixed",
+      right: "28px",
       display: "none",
       color: "#000",
       padding: 0,
@@ -193,7 +200,7 @@ const StyledAppBar = (props) => {
     >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge color="primary">
+          <Badge color="secondary">
             <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
           </Badge>
         </IconButton>
@@ -235,7 +242,7 @@ const StyledAppBar = (props) => {
         <Toolbar>
           <div className={classes.searchBackground}>
             <IconButton
-              color="secondary"
+              color="primary"
               aria-label="open drawer"
               edge="start"
               onClick={props.handleDrawerToggle}
@@ -274,7 +281,7 @@ const StyledAppBar = (props) => {
                   marginTop: "0.75rem",
                 }}
               >
-                <Badge color="secondary">
+                <Badge color="primary">
                   <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
                 </Badge>
               </IconButton>
@@ -324,7 +331,7 @@ const StyledAppBar = (props) => {
             </div>
             <div
               className={classes.sectionMobile}
-              style={{ marginTop: "0.625rem" }}
+              style={{ marginTop: ".95rem", position: "fixed", right: "20px" }}
             >
               <IconButton
                 aria-label="show more"

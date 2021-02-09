@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) =>
     rootGrid: {
       flexGrow: 1,
       backgroundColor: "#EFF0F7",
+      marginTop:"2.5rem",
       padding: theme.spacing(2),
       borderRadius: "1rem",
     },
@@ -70,6 +71,10 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
+      [theme.breakpoints.up("xs")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+      },
     },
     inputFieldIcon: {
       padding: theme.spacing(0, 2),
@@ -83,33 +88,52 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
     },
     inputRoot: {
-      fontSize: "1rem",
-      fontWeight: 400,
-      color: "#14142B",
-      letterSpacing: "0.047rem",
       lineHeight: 0,
-      paddingLeft: "1.25rem",
+      // paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: "1rem",
+        fontSize: ".975rem",
         fontWeight: 400,
         color: "#14142B",
-        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
       },
-      input: {},
+      "& .MuiInputBase-input": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: "#14142B",
+        letterSpacing: "0.047rem",
+        paddingTop: "0.4rem",
+        paddingLeft: "1.25rem",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
+      },
     },
     // inputInput: {
     //   padding: theme.spacing(1.5, 1, 1, 0),
     //   paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
     //   transition: theme.transitions.create("width"),
     //   width: "100%",
-    //   fontSize: "1rem",
-    //   fontWeight: 400,
-    //   color: "#14142B",
-    //   letterSpacing: "0.047rem",
+    //   "& .MuiInputBase-input": {
+    //     fontSize: ".3rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     letterSpacing: "0.047rem",
+    //   },
     //   [theme.breakpoints.up("md")]: {
+    //     width: "100%",
+    //   },
+    //   [theme.breakpoints.up("sm")]: {
+    //     width: "100%",
+    //   },
+    //   [theme.breakpoints.up("xs")]: {
     //     width: "100%",
     //   },
     // },
@@ -238,7 +262,14 @@ const StyledItems = (props) => {
         <Box style={{ marginTop: "3.438rem" }}>
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
-              <Grid className={classes.gridItem} item xs={4}>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -264,7 +295,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -290,7 +328,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -316,7 +361,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -342,7 +394,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -368,7 +427,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -394,7 +460,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -420,7 +493,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -446,7 +526,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -472,7 +559,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -498,7 +592,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -524,7 +625,14 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={4}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.inputField}>
                     <div className={classes.inputFieldIcon}>
@@ -565,7 +673,6 @@ const StyledItems = (props) => {
                 boxShadow: "none",
                 marginRight: "0.625rem",
               }}
-              type={"submit"}
             ></StyledButton>
           </div>
           <div style={{ float: "left" }}>

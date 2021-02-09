@@ -11,7 +11,7 @@ import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 import ImportExportOutlinedIcon from "@material-ui/icons/ImportExportOutlined";
 import HeightOutlinedIcon from "@material-ui/icons/HeightOutlined";
 
-const StyledAppBar = (props) => {
+const StyledCardAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
@@ -19,9 +19,6 @@ const StyledAppBar = (props) => {
         padding: 0,
         height: "2.5rem",
         width: "2.5rem",
-        "& .MuiAppBar-colorPrimary": {
-          background: "#fff",
-        },
       },
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
@@ -41,9 +38,6 @@ const StyledAppBar = (props) => {
       [theme.breakpoints.up("md")]: {
         width: `calc(100% - ${props.drawerWidth}px)`,
         marginLeft: props.drawerWidth,
-        "& .MuiAppBar-colorPrimary": {
-          background: "#fff",
-        },
         "& .MuiToolbar-regular": {
           minHeight: 0,
         },
@@ -56,8 +50,8 @@ const StyledAppBar = (props) => {
       },
     },
     search: {
+      height: "2.5rem",
       position: "relative",
-      paddingTop: "0.25rem",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       "&:hover": {
@@ -67,28 +61,32 @@ const StyledAppBar = (props) => {
       marginLeft: 0,
     },
     searchIcon: {
-      fontSize: "1.563rem",
       height: "100%",
       position: "absolute",
-      top: 0,
+      top: "0.563rem",
       left: "0.625rem",
       pointerEvents: "none",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#000",
+      color: "#A0A3BD",
       zIndex: 99,
+      "& .MuiSvgIcon-root": {
+        fontSize: "1.8rem",
+      },
     },
     inputRoot: {
       color: "inherit",
     },
     inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      height: "2.5rem",
+      padding: theme.spacing(1, 2, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(3)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
       color: "#000",
       borderRadius: "1rem",
+      backgroundColor: "#EFF0F6",
       [theme.breakpoints.up("md")]: {
         width: "40ch",
       },
@@ -101,26 +99,16 @@ const StyledAppBar = (props) => {
       [theme.breakpoints.up("md")]: {
         display: "flex",
       },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
     },
     sectionMobile: {
       display: "flex",
       color: "#000",
       padding: 0,
-      marginLeft: "0.625rem",
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
-    },
-    searchBackground: {
-      borderRadius: "1rem",
-      display: "flex",
-      flexDirection: "row",
-      width: "100%",
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
+      "& .MuiIconButton-label": {
+        marginRight: "2rem",
       },
     },
   }));
@@ -198,7 +186,6 @@ const StyledAppBar = (props) => {
         </IconButton>
         <p>Settings</p>
       </MenuItem>
-
     </Menu>
   );
 
@@ -216,10 +203,9 @@ const StyledAppBar = (props) => {
                   border: "0.063rem solid #D9DBE9",
                   borderRadius: "1rem",
                   marginRight: ".5rem",
-                  marginTop: "0.5rem",
-                }}
+                  marginTop: "0.5rem",                }}
               >
-                <Badge color="secondary">
+                <Badge color="primary">
                   <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
                 </Badge>
               </IconButton>
@@ -271,4 +257,4 @@ const StyledAppBar = (props) => {
   );
 };
 
-export default StyledAppBar;
+export default StyledCardAppBar;
