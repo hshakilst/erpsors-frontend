@@ -15,6 +15,10 @@ const StyledCardAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
+      float: "right auto",
+      // [theme.breakpoints.up("lg")]: {
+      //   marginLeft: "30px",
+      // },
       "& .MuiIconButton-root": {
         padding: 0,
         height: "2.5rem",
@@ -103,13 +107,19 @@ const StyledCardAppBar = (props) => {
     sectionMobile: {
       display: "flex",
       color: "#000",
-      padding: 0,
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
       "& .MuiIconButton-label": {
         marginRight: "2rem",
       },
+    },
+    sectionMobileBorder: {
+      height: "2.8rem",
+      width: "2.8rem",
+      border: "0.063rem solid #D9DBE9",
+      borderRadius: "1rem",
+      marginRight: "0.5rem",
     },
   }));
 
@@ -203,7 +213,8 @@ const StyledCardAppBar = (props) => {
                   border: "0.063rem solid #D9DBE9",
                   borderRadius: "1rem",
                   marginRight: ".5rem",
-                  marginTop: "0.5rem",                }}
+                  marginTop: "0.5rem",
+                }}
               >
                 <Badge color="primary">
                   <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
@@ -245,7 +256,15 @@ const StyledCardAppBar = (props) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <div className={classes.sectionMobileBorder}>
+                  <MoreIcon
+                    style={{
+                      margin: "auto",
+                      fontSize: "2.3rem",
+                      paddingTop: "0.313rem",
+                    }}
+                  />
+                </div>
               </IconButton>
             </div>
           </div>

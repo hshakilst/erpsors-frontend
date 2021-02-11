@@ -18,11 +18,11 @@ import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
     grow: {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      zIndex: "1030",
+      // position: "fixed",
+      // top: 0,
+      // left: 0,
+      // width: "100%",
+      // zIndex: "1030",
       flexGrow: 1,
       "& .MuiIconButton-root": {
         padding: 0,
@@ -114,8 +114,9 @@ const StyledAppBar = (props) => {
       },
     },
     sectionDesktop: {
-      position: "fixed",
+      // position: "fixed",
       right: "28px",
+      zIndex: "1030",
       display: "none",
       color: "#000",
       padding: 0,
@@ -132,6 +133,12 @@ const StyledAppBar = (props) => {
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
+    },
+    sectionMobileBorder: {
+      height: "2.3rem",
+      width: "2.3rem",
+      border: "0.063rem solid #D9DBE9",
+      borderRadius: "1rem",
     },
     searchBackground: {
       background: "#fff",
@@ -331,7 +338,11 @@ const StyledAppBar = (props) => {
             </div>
             <div
               className={classes.sectionMobile}
-              style={{ marginTop: ".95rem", position: "fixed", right: "20px" }}
+              style={{
+                marginTop: ".95rem",
+                position: "absolute",
+                right: "20px",
+              }}
             >
               <IconButton
                 aria-label="show more"
@@ -340,7 +351,15 @@ const StyledAppBar = (props) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <div className={classes.sectionMobileBorder}>
+                  <MoreIcon
+                    style={{
+                      margin: "auto",
+                      fontSize: "2rem",
+                      paddingTop: "0.2rem",
+                    }}
+                  />
+                </div>
               </IconButton>
             </div>
           </div>

@@ -16,11 +16,18 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       backgroundColor: "#EFF0F6",
       padding: theme.spacing(1.5),
-      paddingTop: "6rem",
+      // paddingTop: "6rem",
+      marginLeft: 240,
       [theme.breakpoints.down("xs")]: {
         marginLeft: 0,
       },
-      marginLeft: 240,
+      [theme.breakpoints.up("lg")]: {
+        flexGrow: 1,
+        backgroundColor: "#EFF0F6",
+        padding: theme.spacing(1.5),
+        // paddingTop: "6rem",
+        marginLeft: 240,
+      },
     },
     paper: {
       padding: theme.spacing(2),

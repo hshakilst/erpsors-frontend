@@ -81,7 +81,7 @@ export default function StyledInventoryHistory() {
           textAlign: "left",
         }}
       >
-        <div style={{ marginBottom: "7.15rem" }}>
+        <div style={{ marginBottom: "7.2rem" }}>
           <List>
             <ListItem>
               <Typography

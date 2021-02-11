@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) =>
       fontSize: "2rem",
       color: "#14142B",
       [theme.breakpoints.up("xs")]: {
-        marginLeft: theme.spacing(10),
+        marginLeft: theme.spacing(6),
       },
       [theme.breakpoints.down("xs")]: {
-        marginLeft: theme.spacing(10),
+        marginLeft: theme.spacing(6),
       },
     },
     rootMenu: {
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
+
 export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
