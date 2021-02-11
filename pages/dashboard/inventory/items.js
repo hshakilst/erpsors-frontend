@@ -7,7 +7,7 @@ import StyledItems from "@/components/ui/styledItems";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import { useGetAllItems } from "@/actions/items";
+
 import StyledTable from "@/components/ui/styledTable";
 
 const useStyles = makeStyles((theme) =>
@@ -69,7 +69,7 @@ const Inventory = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTable fetch={useGetAllItems}></StyledTable>
+                <StyledTable ></StyledTable>
               </StyledTableCard>
             </Paper>
           </Grid>
