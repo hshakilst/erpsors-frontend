@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import StyledSelect from "./styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     paperDropdown: {
-      paddingTop: theme.spacing(1),
+      paddingTop: theme.spacing(1.5),
       paddingBottom: theme.spacing(1.7),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
@@ -420,7 +421,8 @@ export default function StyledTableCard(props) {
                       ></ShortTextOutlinedIcon>
                     </div>
                     <div>
-                      <StyledDropdown></StyledDropdown>
+                      <StyledSelect></StyledSelect>
+                      {/* <StyledDropdown></StyledDropdown> */}
                     </div>
                   </Box>
                 </Paper>
@@ -447,7 +449,8 @@ export default function StyledTableCard(props) {
                       ></ShortTextOutlinedIcon>
                     </div>
                     <div>
-                      <StyledDropdown></StyledDropdown>
+                      <StyledSelect></StyledSelect>
+                      {/* <StyledDropdown></StyledDropdown> */}
                     </div>
                   </Box>
                 </Paper>
