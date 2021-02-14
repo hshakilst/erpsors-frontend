@@ -8,7 +8,6 @@ import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(0),
     minWidth: 80,
     "& label + .MuiInput-formControl": {
       marginTop: "0",

@@ -60,8 +60,8 @@ const useStyles = makeStyles((theme) =>
       },
     },
     paperDropdown: {
-      paddingTop: theme.spacing(1.5),
-      paddingBottom: theme.spacing(1.7),
+      paddingTop: theme.spacing(1.3),
+      paddingBottom: theme.spacing(1.3),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       borderRadius: "1rem",
@@ -412,18 +412,39 @@ export default function StyledTableCard(props) {
                   style={{ background: "#EFF0F6" }}
                 >
                   <Box>
-                    <div style={{ float: "left" }}>
-                      <ShortTextOutlinedIcon
-                        style={{
-                          fontSize: "2rem",
-                          color: "14142B",
-                        }}
-                      ></ShortTextOutlinedIcon>
-                    </div>
-                    <div>
-                      <StyledSelect></StyledSelect>
-                      {/* <StyledDropdown></StyledDropdown> */}
-                    </div>
+                    <Grid
+                      container
+                      spacing={0}
+                      style={{
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Grid
+                        item
+                        lg={3}
+                        md={3}
+                        sm={3}
+                        xs={3}
+                        style={{ textAlign: "left" }}
+                      >
+                        <ShortTextOutlinedIcon
+                          style={{
+                            fontSize: "2rem",
+                            color: "14142B",
+                          }}
+                        ></ShortTextOutlinedIcon>
+                      </Grid>
+                      <Grid
+                        item
+                        lg={9}
+                        md={9}
+                        sm={9}
+                        xs={9}
+                        style={{ textAlign: "left" }}
+                      >
+                        <StyledSelect></StyledSelect>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Paper>
               </Grid>
@@ -440,18 +461,39 @@ export default function StyledTableCard(props) {
                   style={{ background: "#EFF0F6" }}
                 >
                   <Box>
-                    <div style={{ float: "left" }}>
-                      <ShortTextOutlinedIcon
-                        style={{
-                          fontSize: "2rem",
-                          color: "14142B",
-                        }}
-                      ></ShortTextOutlinedIcon>
-                    </div>
-                    <div>
-                      <StyledSelect></StyledSelect>
-                      {/* <StyledDropdown></StyledDropdown> */}
-                    </div>
+                    <Grid
+                      container
+                      spacing={0}
+                      style={{
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Grid
+                        item
+                        lg={3}
+                        md={3}
+                        sm={3}
+                        xs={3}
+                        style={{ textAlign: "left" }}
+                      >
+                        <ShortTextOutlinedIcon
+                          style={{
+                            fontSize: "2rem",
+                            color: "14142B",
+                          }}
+                        ></ShortTextOutlinedIcon>
+                      </Grid>
+                      <Grid
+                        item
+                        lg={9}
+                        md={9}
+                        sm={9}
+                        xs={9}
+                        style={{ textAlign: "left" }}
+                      >
+                        <StyledSelect></StyledSelect>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Paper>
               </Grid>
@@ -492,7 +534,6 @@ export default function StyledTableCard(props) {
                       }}
                       classes={{
                         root: classes.inputRoot,
-                        input: classes.inputInput,
                       }}
                     />
                   </div>
@@ -628,7 +669,6 @@ export default function StyledTableCard(props) {
                       }}
                       classes={{
                         root: classes.inputRootTableCardFilter,
-                        input: classes.inputInputTableCard,
                       }}
                       label={"Filter By"}
                       size={"small"}
@@ -645,9 +685,7 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper className={classes.paperTable}>
-                  <Box>
-                    <Box>{props.children}</Box>
-                  </Box>
+                  <Box>{props.children}</Box>
                 </Paper>
               </Grid>
             </Grid>
