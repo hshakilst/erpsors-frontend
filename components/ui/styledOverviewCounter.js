@@ -9,9 +9,7 @@ import KeyboardArrowUpOutlinedIcon from "@material-ui/icons/KeyboardArrowUpOutli
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
-
-    },
+    root: {},
     media: {
       height: 0,
       paddingTop: "56.25%",
@@ -64,7 +62,7 @@ export default function StyledOverviewCounter() {
           ট 25000 K
         </Typography>
       </Box>
-      <Box style={{textAlign:"right"}}>
+      <Box style={{ textAlign: "right" }}>
         <Link
           component="button"
           variant="body2"

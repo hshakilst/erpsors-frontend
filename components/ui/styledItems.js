@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) =>
     rootGrid: {
       flexGrow: 1,
       backgroundColor: "#EFF0F7",
-      marginTop:"2.5rem",
       padding: theme.spacing(2),
       borderRadius: "1rem",
     },
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "center",
       textAlign: "center",
     },
-    inputField: {
+    search: {
       height: "3.5rem",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
@@ -76,7 +75,7 @@ const useStyles = makeStyles((theme) =>
         width: "auto",
       },
     },
-    inputFieldIcon: {
+    searchIcon: {
       padding: theme.spacing(0, 2),
       height: "100%",
       position: "absolute",
@@ -116,27 +115,27 @@ const useStyles = makeStyles((theme) =>
         width: "100%",
       },
     },
-    // inputInput: {
-    //   padding: theme.spacing(1.5, 1, 1, 0),
-    //   paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-    //   transition: theme.transitions.create("width"),
-    //   width: "100%",
-    //   "& .MuiInputBase-input": {
-    //     fontSize: ".3rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     letterSpacing: "0.047rem",
-    //   },
-    //   [theme.breakpoints.up("md")]: {
-    //     width: "100%",
-    //   },
-    //   [theme.breakpoints.up("sm")]: {
-    //     width: "100%",
-    //   },
-    //   [theme.breakpoints.up("xs")]: {
-    //     width: "100%",
-    //   },
-    // },
+    inputInput: {
+      padding: theme.spacing(1.5, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      "& .MuiInputBase-input": {
+        fontSize: ".3rem",
+        fontWeight: 400,
+        color: "#14142B",
+        letterSpacing: "0.047rem",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
+      },
+    },
   })
 );
 
@@ -271,8 +270,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -304,8 +303,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -337,8 +336,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -370,8 +369,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -403,8 +402,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -436,8 +435,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -469,8 +468,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -502,8 +501,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -535,8 +534,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -568,8 +567,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -601,8 +600,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField
@@ -634,8 +633,8 @@ const StyledItems = (props) => {
                 xs={12}
               >
                 <Paper className={classes.paper}>
-                  <div className={classes.inputField}>
-                    <div className={classes.inputFieldIcon}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <TextField

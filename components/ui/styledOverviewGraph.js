@@ -55,7 +55,7 @@ export default function StyledOverviewGraph(props) {
           marginBottom: "1rem",
         }}
       >
-        <img alt="graph" src={Image} width={'100%'}></img>
+        <img alt="graph" src={Image} width={"100%"}></img>
       </Box>
       <Box style={{ textAlign: "right" }}>
         <Link

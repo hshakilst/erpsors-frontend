@@ -155,7 +155,7 @@ export default function StyledOverviewList() {
           <div>
             <div style={{ float: "left", textAlign: "left" }}>
               <CheckCircleOutlineOutlinedIcon
-                style={{ fontSize: "1.375rem",color:"blue" }}
+                style={{ fontSize: "1.375rem", color: "blue" }}
               ></CheckCircleOutlineOutlinedIcon>
             </div>
             <div style={{ float: "left", textAlign: "left" }}>

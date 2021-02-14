@@ -12,6 +12,7 @@ import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { useCreateSupplier } from "@/actions/suppliers";
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -97,19 +98,19 @@ const useStyles = makeStyles((theme) =>
         paddingTop: "0.5rem",
       },
     },
-    // inputInput: {
-    //   padding: theme.spacing(1.5, 1, 1, 0),
-    //   paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-    //   transition: theme.transitions.create("width"),
-    //   width: "100%",
-    //   [theme.breakpoints.up("md")]: {
-    //     width: "100%",
-    //   },
-    // },
+    inputInput: {
+      padding: theme.spacing(1.5, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+    },
   })
 );
 
-export default function RecipeReviewCard() {
+export default function StyledSuppliers() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
