@@ -18,6 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import { useGetAllItems } from "@/actions/items";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -302,7 +303,7 @@ export default function EnhancedTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const { error, data, loading, mutate } = props.fetch();
+  const { error, data, loading, mutate } = useGetAllItems();
   React.useEffect(() => {
     if (data) setRows(data);
   }, [data]);
