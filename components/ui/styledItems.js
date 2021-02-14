@@ -672,6 +672,7 @@ const StyledItems = (props) => {
                 boxShadow: "none",
                 marginRight: "0.625rem",
               }}
+              type="submit"
             ></StyledButton>
           </div>
           <div style={{ float: "left" }}>

@@ -11,6 +11,7 @@ import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
+import { withSnackbar } from "notistack";
 import { useCreateSupplier } from "@/actions/suppliers";
 
 const useStyles = makeStyles((theme) =>
@@ -110,7 +111,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function StyledSuppliers() {
+const StyledSuppliers = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
@@ -507,7 +508,7 @@ export default function StyledSuppliers() {
                       }}
                       label={"Image"}
                       size={"small"}
-                      name={"Image"}
+                      name={"image"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
@@ -577,4 +578,6 @@ export default function StyledSuppliers() {
       </form>
     </Card>
   );
-}
+};
+
+export default withSnackbar(StyledSuppliers);

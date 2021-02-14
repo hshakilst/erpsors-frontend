@@ -111,22 +111,22 @@ export const getAllSuppliers = () => {
         "supplierRef",
         q.Let(
           {
-            itemDoc: q.Get(q.Var("supplierRef")),
+            supplierDoc: q.Get(q.Var("supplierRef")),
           },
           {
-            id: q.Select(["ref", "id"], q.Var("supplierRef")),
-            code: q.Select(["data", "code"], q.Var("supplierRef")),
-            company: q.Select(["data", "company"], q.Var("supplierRef")),
-            name: q.Select(["data", "name"], q.Var("supplierRef")),
-            type: q.Select(["data", "type"], q.Var("supplierRef")),
-            opnBalance: q.Select(["data", "opnBalance"], q.Var("supplierRef")),
-            item: q.Select(["data", "item"], q.Var("supplierRef")),
-            address: q.Select(["data", "address"], q.Var("supplierRef")),
-            phone: q.Select(["data", "phone"], q.Var("supplierRef")),
-            status: q.Select(["data", "status"], q.Var("supplierRef")),
-            group: q.Select(["data", "group"], q.Var("supplierRef")),
-            image: q.Select(["data", "image"], q.Var("supplierRef")),
-            notes: q.Select(["data", "notes"], q.Var("supplierRef")),
+            id: q.Select(["ref", "id"], q.Var("supplierDoc")),
+            code: q.Select(["data", "code"], q.Var("supplierDoc")),
+            company: q.Select(["data", "company"], q.Var("supplierDoc")),
+            name: q.Select(["data", "name"], q.Var("supplierDoc")),
+            type: q.Select(["data", "type"], q.Var("supplierDoc")),
+            opnBalance: q.Select(["data", "opnBalance"], q.Var("supplierDoc")),
+            item: q.Select(["data", "item"], q.Var("supplierDoc")),
+            address: q.Select(["data", "address"], q.Var("supplierDoc")),
+            phone: q.Select(["data", "phone"], q.Var("supplierDoc")),
+            status: q.Select(["data", "status"], q.Var("supplierDoc")),
+            group: q.Select(["data", "group"], q.Var("supplierDoc")),
+            image: q.Select(["data", "image"], q.Var("supplierDoc")),
+            notes: q.Select(["data", "notes"], q.Var("supplierDoc")),
           }
         )
       )

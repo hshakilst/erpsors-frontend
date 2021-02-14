@@ -408,25 +408,25 @@ export default function EnhancedTable() {
                         {row.code}
                       </TableCell>
                       <TableCell align="left">
+                        {row.company}
+                      </TableCell>
+                      <TableCell align="left">
                         {row.name}
                       </TableCell>
                       <TableCell align="left">
-                        {row.type}
-                      </TableCell>
-                      <TableCell align="left">
-                        {row.opnQty}
+                        {row.item}
                       </TableCell>
                       <TableCell align="right">
-                        {row.priceRate}
+                        {row.opnBalance}
                       </TableCell>
                       <TableCell align="left">
-                        {row.valueRate}
+                        {row.phone}
                       </TableCell>
                       <TableCell align="left">
-                        {row.unit}
+                        {row.address}
                       </TableCell>
                       <TableCell align="left">
-                        {row.warehouse}
+                        {row.type}
                       </TableCell>
                       <TableCell align="left">
                         {row.status}

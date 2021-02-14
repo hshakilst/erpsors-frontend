@@ -1,4 +1,4 @@
-import useSWR, {mutate} from "swr";
+import useSWR, { mutate } from "swr";
 import { fetcher } from "@/actions";
 import axios from "axios";
 
@@ -36,7 +36,6 @@ export const useCreateSupplier = async (
     image,
     notes,
   });
-
+  mutate("/api/suppliers");
   return { error: res.data.error, data: res.data.data };
 };
-
