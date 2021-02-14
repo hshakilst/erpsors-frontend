@@ -264,7 +264,7 @@ const StyledItems = (props) => {
               <Grid
                 className={classes.gridItem}
                 item
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -297,7 +297,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -330,7 +330,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -363,7 +363,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -396,7 +396,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -429,7 +429,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -462,7 +462,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -495,7 +495,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -528,7 +528,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -561,7 +561,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -594,7 +594,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -627,7 +627,7 @@ const StyledItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}

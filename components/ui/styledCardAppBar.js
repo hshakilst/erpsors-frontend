@@ -16,14 +16,6 @@ const StyledCardAppBar = (props) => {
     grow: {
       flexGrow: 1,
       float: "right auto",
-      // [theme.breakpoints.up("lg")]: {
-      //   marginLeft: "30px",
-      // },
-      "& .MuiIconButton-root": {
-        padding: 0,
-        height: "2.5rem",
-        width: "2.5rem",
-      },
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
       },
@@ -100,6 +92,16 @@ const StyledCardAppBar = (props) => {
       color: "#000",
       padding: 0,
       paddingBottom: 0,
+      "&:hover": {
+        "& .MuiGrid-item": {
+          backgroundColor: "#fff",
+        },
+      },
+      "& .MuiIconButton-root": {
+        padding: 0,
+        height: "2.5rem",
+        width: "2.5rem",
+      },
       [theme.breakpoints.up("md")]: {
         display: "flex",
       },
@@ -107,6 +109,11 @@ const StyledCardAppBar = (props) => {
     sectionMobile: {
       display: "flex",
       color: "#000",
+      "&:hover": {
+        "& .MuiGrid-item": {
+          backgroundColor: "#fff",
+        },
+      },
       [theme.breakpoints.up("md")]: {
         display: "none",
       },

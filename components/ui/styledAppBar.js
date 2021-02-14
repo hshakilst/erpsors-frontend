@@ -351,15 +351,7 @@ const StyledAppBar = (props) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <div className={classes.sectionMobileBorder}>
-                  <MoreIcon
-                    style={{
-                      margin: "auto",
-                      fontSize: "2rem",
-                      paddingTop: "0.2rem",
-                    }}
-                  />
-                </div>
+                <MoreIcon />
               </IconButton>
             </div>
           </div>

@@ -69,6 +69,10 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
+      [theme.breakpoints.up("xs")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+      },
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -82,20 +86,32 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
     },
     inputRoot: {
-      fontSize: "1rem",
-      fontWeight: 400,
-      color: "#14142B",
-      letterSpacing: "0.047rem",
       lineHeight: 0,
-      paddingLeft: "1.25rem",
+      // paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: "1rem",
+        fontSize: ".975rem",
         fontWeight: 400,
         color: "#14142B",
-        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
+      },
+      "& .MuiInputBase-input": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: "#14142B",
+        letterSpacing: "0.047rem",
+        paddingTop: "0.4rem",
+        paddingLeft: "1.25rem",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
       },
     },
     inputInput: {
@@ -231,7 +247,14 @@ export default function StyledSuppliers() {
         <Box style={{ marginTop: "3.438rem" }}>
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
-              <Grid className={classes.gridItem} item xs={6}>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -257,7 +280,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -283,7 +313,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -309,7 +346,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={6}>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -335,7 +379,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -361,7 +412,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={6}>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -387,7 +445,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -413,7 +478,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -439,7 +511,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid className={classes.gridItem} item xs={6}>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -465,7 +544,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -491,7 +577,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -517,7 +610,14 @@ export default function StyledSuppliers() {
                   </div>
                 </Paper>
               </Grid>
-              <Grid item className={classes.gridItem} xs={6}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
