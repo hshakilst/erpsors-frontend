@@ -10,16 +10,13 @@ import StyledDropdown from "./styledDropdown";
 import ShortTextOutlinedIcon from "@material-ui/icons/ShortTextOutlined";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
-<<<<<<< HEAD
+import { Typography } from "@material-ui/core";
+import StyledCardAppBar from "@/components/ui/styledCardAppBar";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-=======
->>>>>>> 34c00e61874cd38b400ce890cf8ccbb3cfd842e3
-import { Typography } from "@material-ui/core";
-import StyledCardAppBar from "./styledCardAppBar";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -486,13 +483,7 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper className={classes.paperTable}>
-<<<<<<< HEAD
                   <Box>{props.children}</Box>
-=======
-                  <Box>
-                    {props.children}
-                  </Box>
->>>>>>> 34c00e61874cd38b400ce890cf8ccbb3cfd842e3
                 </Paper>
               </Grid>
             </Grid>
