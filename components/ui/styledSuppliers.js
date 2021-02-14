@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function RecipeReviewCard() {
+export default function StyledSuppliers() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 

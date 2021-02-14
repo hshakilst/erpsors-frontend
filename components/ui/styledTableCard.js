@@ -5,13 +5,11 @@ import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
-import StyledDropdown from "./styledDropdown";
 import ShortTextOutlinedIcon from "@material-ui/icons/ShortTextOutlined";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
-import StyledTable from "./styledTable";
 import { Typography } from "@material-ui/core";
-import StyledCardAppBar from "./styledCardAppBar";
+import StyledCardAppBar from "@/components/ui/styledCardAppBar";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -586,7 +584,6 @@ export default function StyledTableCard(props) {
                         variant="inline"
                         format="dd/MM/yyyy"
                         margin="normal"
-                        id="date-picker-inline"
                         maxDate={new Date()}
                         value={selectedDate}
                         onChange={handleDateChange}
@@ -633,7 +630,6 @@ export default function StyledTableCard(props) {
                         variant="inline"
                         format="dd/MM/yyyy"
                         margin="normal"
-                        id="date-picker-inline"
                         maxDate={new Date()}
                         value={selectedDate}
                         onChange={handleDateChange}

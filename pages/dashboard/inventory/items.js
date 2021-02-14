@@ -8,7 +8,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 
-import StyledTable from "@/components/ui/styledTable";
+import StyledTableItems from "@/components/ui/styledTableItems";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       backgroundColor: "#EFF0F6",
       padding: theme.spacing(1.5),
-      // paddingTop: "6rem",
+      paddingTop: "6rem",
       marginLeft: 240,
       [theme.breakpoints.down("xs")]: {
         marginLeft: 0,
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) =>
         flexGrow: 1,
         backgroundColor: "#EFF0F6",
         padding: theme.spacing(1.5),
-        // paddingTop: "6rem",
+        paddingTop: "6rem",
         marginLeft: 240,
       },
     },
@@ -76,7 +76,7 @@ const Inventory = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTable ></StyledTable>
+                <StyledTableItems></StyledTableItems>
               </StyledTableCard>
             </Paper>
           </Grid>

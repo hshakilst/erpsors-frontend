@@ -84,7 +84,7 @@ export const createSupplier = (
   notes
 ) => {
   return db.query(
-    q.Create(q.Collection("items"), {
+    q.Create(q.Collection("suppliers"), {
       data: {
         code,
         company,
