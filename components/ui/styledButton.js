@@ -25,7 +25,7 @@ const StyledButton = (props) => {
       <Button
         className={classes.root}
         variant="contained"
-        style={props.style}
+        color="primary"
         endIcon={props.endIcon}
         {...props}
       >

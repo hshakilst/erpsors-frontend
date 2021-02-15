@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useGetAllSuppliers } from "@/actions/suppliers";
+import { useGetAllWarehouses } from "@/actions/warehouses";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
 function descendingComparator(a, b, orderBy) {
@@ -53,20 +53,20 @@ const headCells = [
     disablePadding: true,
     label: "Code",
   },
-  { id: "company", numeric: false, disablePadding: false, label: "Company" },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
-  { id: "item", numeric: false, disablePadding: false, label: "Item" },
+  { id: "type", numeric: false, disablePadding: false, label: "Type" },
+  { id: "capacity", numeric: true, disablePadding: false, label: "Capacity" },
   {
-    id: "opnBalance",
-    numeric: true,
-    disablePadding: false,
-    label: "Balance",
-  },
-  {
-    id: "phone",
+    id: "items",
     numeric: false,
     disablePadding: false,
-    label: "Phone",
+    label: "Items",
+  },
+  {
+    id: "incharge",
+    numeric: false,
+    disablePadding: false,
+    label: "In-Charge Officer",
   },
   {
     id: "address",
@@ -75,10 +75,10 @@ const headCells = [
     label: "Address",
   },
   {
-    id: "type",
+    id: "phone",
     numeric: false,
     disablePadding: false,
-    label: "Type",
+    label: "Phone",
   },
   {
     id: "status",
@@ -157,16 +157,6 @@ function EnhancedTableHead(props) {
   );
 }
 
-// EnhancedTableHead.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   numSelected: PropTypes.number.isRequired,
-//   onRequestSort: PropTypes.func.isRequired,
-//   onSelectAllClick: PropTypes.func.isRequired,
-//   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-//   orderBy: PropTypes.string.isRequired,
-//   rowCount: PropTypes.number.isRequired,
-// };
-
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -225,7 +215,7 @@ const EnhancedTableToolbar = (props) => {
             letterSpacing: "0.047rem",
           }}
         >
-          {"Suppliers"}
+          {"Warehouses"}
         </Typography>
       )}
 
@@ -252,10 +242,6 @@ const EnhancedTableToolbar = (props) => {
     </Toolbar>
   );
 };
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -303,7 +289,7 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { error, data, loading, mutate } = useGetAllSuppliers();
+  const { error, data, loading, mutate } = useGetAllWarehouses();
 
   React.useEffect(() => {
     if (data && !loading) setRows(data);
@@ -422,13 +408,13 @@ export default function EnhancedTable() {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{row.company}</TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.item}</TableCell>
-                      <TableCell align="right">{row.opnBalance}</TableCell>
-                      <TableCell align="left">{row.phone}</TableCell>
-                      <TableCell align="left">{row.address}</TableCell>
                       <TableCell align="left">{row.type}</TableCell>
+                      <TableCell align="right">{row.capacity}</TableCell>
+                      <TableCell align="left">{row.items}</TableCell>
+                      <TableCell align="left">{row.incharge}</TableCell>
+                      <TableCell align="left">{row.address}</TableCell>
+                      <TableCell align="left">{row.phone}</TableCell>
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>
