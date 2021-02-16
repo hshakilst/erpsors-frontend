@@ -8,11 +8,12 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
+import StyledButton from "@/components/ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
+import StyledSelectForm from "@/components/ui/styledSelectForm";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -114,6 +115,18 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("xs")]: {
         width: "100%",
       },
+    },
+    selectRoot: {
+      paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
     },
     inputInput: {
       padding: theme.spacing(1.5, 1, 1, 0),
@@ -340,23 +353,12 @@ const StyledItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Type"}
-                      size={"small"}
-                      name={"type"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.type ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -472,23 +474,12 @@ const StyledItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Unit"}
-                      size={"small"}
-                      name={"unit"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.unit ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -505,23 +496,12 @@ const StyledItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Warehouse"}
-                      size={"small"}
-                      name={"warehouse"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.warehouse ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -538,23 +518,12 @@ const StyledItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Status"}
-                      size={"small"}
-                      name={"status"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.status ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -571,23 +540,12 @@ const StyledItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Group"}
-                      size={"small"}
-                      name={"group"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: false,
-                      })}
-                      error={errors.group ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>

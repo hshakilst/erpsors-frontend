@@ -7,7 +7,6 @@ import StyledItems from "@/components/ui/styledItems";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-
 import StyledTableItems from "@/components/ui/styledTableItems";
 
 const useStyles = makeStyles((theme) =>

@@ -12,6 +12,8 @@ import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { useCreateSupplier } from "@/actions/suppliers";
+import StyledSelectForm from "@/components/ui/styledSelectForm";
+import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -113,6 +115,31 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("xs")]: {
         width: "100%",
       },
+    },
+    selectRoot: {
+      paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
+    selectRootContainer: {
+      paddingLeft: "1.25rem",
+      paddingTop: ".55rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
     },
     inputInput: {
       padding: theme.spacing(1.5, 1, 1, 0),
@@ -336,12 +363,12 @@ export default function StyledSuppliers() {
                       }}
                       label={"Name"}
                       size={"small"}
-                      name={"name"}
+                      name={"company"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.name ? true : false}
+                      error={errors.company ? true : false}
                     />
                   </div>
                 </Paper>
@@ -359,23 +386,10 @@ export default function StyledSuppliers() {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Item"}
-                      name={"item"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.item ? true : false}
-                      size={"small"}
-                    />
+                    <StyledSelect
+                      placeholder={"Items"}
+                      className={classes.selectRootContainer}
+                    ></StyledSelect>
                   </div>
                 </Paper>
               </Grid>
@@ -491,23 +505,12 @@ export default function StyledSuppliers() {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Type"}
-                      size={"small"}
-                      name={"type"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.type ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -524,23 +527,12 @@ export default function StyledSuppliers() {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Status"}
-                      size={"small"}
-                      name={"status"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.status ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -557,23 +549,12 @@ export default function StyledSuppliers() {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
+                    <StyledSelectForm
                       label={"Group"}
-                      size={"small"}
-                      name={"group"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.group ? true : false}
-                    />
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>

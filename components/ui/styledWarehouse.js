@@ -10,6 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
+import StyledSelectForm from "@/components/ui/styledSelectForm";
+import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -96,6 +98,31 @@ const useStyles = makeStyles((theme) =>
         paddingTop: "0.5rem",
       },
     },
+    selectRoot: {
+      paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
+    selectRootContainer: {
+      paddingLeft: "1.25rem",
+      paddingTop: ".55rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
     inputInput: {
       padding: theme.spacing(1.5, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
@@ -169,7 +196,14 @@ export default function RecipeReviewCard() {
       <Box style={{ marginTop: "3.438rem" }}>
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
-            <Grid className={classes.gridItem} item xs={4}>
+            <Grid
+              className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -190,7 +224,14 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -211,28 +252,36 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <TocOutlinedIcon fontSize="large" />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
+                  <StyledSelectForm
                     label={"Type"}
-                    size={"small"}
-                  />
+                    classes={{
+                      root: classes.selectRoot,
+                    }}
+                  ></StyledSelectForm>
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
+            <Grid
+              className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -253,28 +302,34 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <TocOutlinedIcon fontSize="large" />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Items"}
-                    size={"small"}
-                  />
+                  <StyledSelect
+                    placeholder={"Items"}
+                    className={classes.selectRootContainer}
+                  ></StyledSelect>
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -295,7 +350,14 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
+            <Grid
+              className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -316,7 +378,14 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -337,49 +406,58 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <TocOutlinedIcon fontSize="large" />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
+                  <StyledSelectForm
                     label={"Status"}
-                    size={"small"}
-                  />
+                    classes={{
+                      root: classes.selectRoot,
+                    }}
+                  ></StyledSelectForm>
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
+            <Grid
+              className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <TocOutlinedIcon fontSize="large" />
                   </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
+                  <StyledSelectForm
                     label={"Group"}
-                    size={"small"}
-                  />
+                    classes={{
+                      root: classes.selectRoot,
+                    }}
+                  ></StyledSelectForm>
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -400,7 +478,14 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>

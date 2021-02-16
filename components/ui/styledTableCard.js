@@ -15,7 +15,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import StyledSelect from "./styledSelect";
+import StyledSelectTable from "./styledSelectTable";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) =>
       },
       flexDirection: "column",
       flexGrow: 1,
-      justifyContent: "center",
+      justifyContent: "end",
       textAlign: "center",
       "& .MuiButton-outlined": {
         padding: "0.5rem 0px",
@@ -403,7 +403,7 @@ export default function StyledTableCard(props) {
                 lg={3}
                 md={3}
                 sm={10}
-                xs={10}
+                xs={9}
               >
                 <Paper
                   className={classes.paperDropdown}
@@ -440,7 +440,7 @@ export default function StyledTableCard(props) {
                         xs={9}
                         style={{ textAlign: "left" }}
                       >
-                        <StyledSelect></StyledSelect>
+                        <StyledSelectTable></StyledSelectTable>
                       </Grid>
                     </Grid>
                   </Box>
@@ -489,7 +489,7 @@ export default function StyledTableCard(props) {
                         xs={9}
                         style={{ textAlign: "left" }}
                       >
-                        <StyledSelect></StyledSelect>
+                        <StyledSelectTable></StyledSelectTable>
                       </Grid>
                     </Grid>
                   </Box>
@@ -501,7 +501,7 @@ export default function StyledTableCard(props) {
                 lg={2}
                 md={2}
                 sm={2}
-                xs={2}
+                xs={3}
                 style={{ margin: "auto" }}
               >
                 <Paper className={classes.paperIcon}>

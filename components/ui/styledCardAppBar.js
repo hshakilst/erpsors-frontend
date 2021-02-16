@@ -15,7 +15,11 @@ const StyledCardAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
-      float: "right auto",
+      "& .MuiIconButton-root": {
+        padding: 0,
+        height: "2.5rem",
+        width: "2.5rem",
+      },
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
       },
@@ -92,15 +96,16 @@ const StyledCardAppBar = (props) => {
       color: "#000",
       padding: 0,
       paddingBottom: 0,
-      "&:hover": {
-        "& .MuiGrid-item": {
-          backgroundColor: "#fff",
-        },
-      },
       "& .MuiIconButton-root": {
         padding: 0,
         height: "2.5rem",
         width: "2.5rem",
+        justifyContent: "center",
+      },
+      "&:hover": {
+        "& .MuiGrid-item": {
+          backgroundColor: "#fff",
+        },
       },
       [theme.breakpoints.up("md")]: {
         display: "flex",
@@ -109,6 +114,12 @@ const StyledCardAppBar = (props) => {
     sectionMobile: {
       display: "flex",
       color: "#000",
+      "& .MuiIconButton-root": {
+        padding: 0,
+        height: "2.5rem",
+        width: "2.5rem",
+        justifyContent: "end",
+      },
       "&:hover": {
         "& .MuiGrid-item": {
           backgroundColor: "#fff",
@@ -117,9 +128,9 @@ const StyledCardAppBar = (props) => {
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
-      "& .MuiIconButton-label": {
-        marginRight: "2rem",
-      },
+      // "& .MuiIconButton-label": {
+      //   marginRight: "2rem",
+      // },
     },
     sectionMobileBorder: {
       height: "2.8rem",
