@@ -7,7 +7,7 @@ import StyledWarehouses from "@/components/ui/styledWarehouses";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableWarehouses from "@/components/ui/styledTableWarehouses";
+import StyledTableWarehouses from "@/components/ui/styledTableSuppliers";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
