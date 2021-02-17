@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function RecipeReviewCard() {
+export default function StyledFormStoreRequisitions() {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -122,7 +122,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Floor Received
+            Store Requisition
           </Typography>
           <Typography
             style={{
@@ -132,7 +132,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a floor received report
+            Create a store requisition request
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -184,13 +184,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Material Issue Code"}
+                    label={"Code"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={6}>
+            <Grid item className={classes.gridItem} xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -211,7 +211,7 @@ export default function RecipeReviewCard() {
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={6}>
+            <Grid item className={classes.gridItem} xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -226,13 +226,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Received Qty."}
+                    label={"Opening Qty."}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={6}>
+            <Grid className={classes.gridItem} item xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>

@@ -3,11 +3,11 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledWarehouses from "@/components/ui/styledWarehouses";
+import StyledFormWarehouses from "@/components/ui/styledFormWarehouses";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableWarehouses from "@/components/ui/styledTableSuppliers";
+import StyledTableWarehouses from "@/components/ui/styledTableWarehouses";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -56,7 +56,7 @@ const Warehouses = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledWarehouses></StyledWarehouses>
+              <StyledFormWarehouses></StyledFormWarehouses>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>

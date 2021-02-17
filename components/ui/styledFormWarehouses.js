@@ -12,7 +12,7 @@ import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateItem } from "@/actions/items";
+import { useCreateWarehouses } from "@/actions/warehouses";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -70,10 +70,6 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
-      [theme.breakpoints.up("xs")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-      },
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -87,59 +83,26 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
     },
     inputRoot: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      color: "#14142B",
+      letterSpacing: "0.047rem",
       lineHeight: 0,
-      // paddingLeft: "1.25rem",
+      paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: ".975rem",
+        fontSize: "1rem",
         fontWeight: 400,
         color: "#14142B",
+        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
-      },
-      "& .MuiInputBase-input": {
-        fontSize: ".975rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        paddingTop: "0.4rem",
-        paddingLeft: "1.25rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("sm")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("xs")]: {
-        width: "100%",
-      },
-    },
-    inputInput: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      "& .MuiInputBase-input": {
-        fontSize: ".3rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("sm")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("xs")]: {
-        width: "100%",
       },
     },
   })
 );
 
-const StyledItems = (props) => {
+const StyledFormWarehouses = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
@@ -148,26 +111,26 @@ const StyledItems = (props) => {
     let code = data.code;
     let name = data.name;
     let type = data.type;
-    let opnQty = data.opnQty;
-    let priceRate = data.priceRate;
-    let valueRate = data.valueRate;
-    let unit = data.unit;
-    let warehouse = data.warehouse;
+    let capacity = data.capacity;
+    let items = data.items;
+    let incharge = data.incharge;
+    let address = data.address;
+    let phone = data.phone;
     let status = data.status;
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateItem(
+      const { error, data } = await useCreateWarehouses(
         code,
         name,
         type,
-        opnQty,
-        priceRate,
-        valueRate,
-        unit,
-        warehouse,
+        capacity,
+        items,
+        incharge,
+        address,
+        phone,
         status,
         group,
         image,
@@ -200,7 +163,6 @@ const StyledItems = (props) => {
       });
     }
   };
-
   return (
     <Card className={classes.root}>
       <Box>
@@ -213,7 +175,7 @@ const StyledItems = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Items
+            Warehouse
           </Typography>
           <Typography
             style={{
@@ -223,7 +185,7 @@ const StyledItems = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Create an item
+            Create a warehouse
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -261,14 +223,7 @@ const StyledItems = (props) => {
         <Box style={{ marginTop: "3.438rem" }}>
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
-              <Grid
-                className={classes.gridItem}
-                item
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid className={classes.gridItem} item xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -294,14 +249,7 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -327,14 +275,7 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -360,14 +301,7 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid className={classes.gridItem} item xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -381,26 +315,19 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Opening Qty."}
+                      label={"Capacity"}
                       size={"small"}
-                      name={"opnQty"}
+                      name={"capacity"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnQty ? true : false}
+                      error={errors.capacity ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -414,26 +341,19 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Price Rate"}
+                      label={"Items"}
                       size={"small"}
-                      name={"priceRate"}
+                      name={"items"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.priceRate ? true : false}
+                      error={errors.items ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -447,26 +367,19 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Value Rate"}
+                      label={"In-Charge Officer"}
                       size={"small"}
-                      name={"valueRate"}
+                      name={"incharge"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.valueRate ? true : false}
+                      error={errors.incharge ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid className={classes.gridItem} item xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -480,26 +393,19 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Unit"}
+                      label={"Address"}
                       size={"small"}
-                      name={"unit"}
+                      name={"address"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.unit ? true : false}
+                      error={errors.address ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -513,26 +419,19 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Warehouse"}
+                      label={"Phone"}
                       size={"small"}
-                      name={"warehouse"}
+                      name={"phone"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.warehouse ? true : false}
+                      error={errors.phone ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -558,14 +457,7 @@ const StyledItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid className={classes.gridItem} item xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -584,21 +476,14 @@ const StyledItems = (props) => {
                       name={"group"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: false,
+                        required: true,
                       })}
                       error={errors.group ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -617,21 +502,14 @@ const StyledItems = (props) => {
                       name={"image"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: false,
+                        required: true,
                       })}
                       error={errors.image ? true : false}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={12}
-                sm={12}
-                xs={12}
-              >
+              <Grid item className={classes.gridItem} xs={6}>
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -650,7 +528,7 @@ const StyledItems = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: false,
+                        required: true,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -672,7 +550,7 @@ const StyledItems = (props) => {
                 boxShadow: "none",
                 marginRight: "0.625rem",
               }}
-              type="submit"
+              type={"submit"}
             ></StyledButton>
           </div>
           <div style={{ float: "left" }}>
@@ -693,4 +571,4 @@ const StyledItems = (props) => {
   );
 };
 
-export default withSnackbar(StyledItems);
+export default withSnackbar(StyledFormWarehouses);

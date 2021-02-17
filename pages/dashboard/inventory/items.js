@@ -3,7 +3,7 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledItems from "@/components/ui/styledItems";
+import StyledFormItems from "@/components/ui/styledFormItems";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
@@ -58,7 +58,7 @@ const Inventory = (props) => {
         <Grid container spacing={2}>
           <Grid className={classes.gridItem} item lg={8} md={6} sm={12} xs={12}>
             <Paper className={classes.paper}>
-              <StyledItems></StyledItems>
+              <StyledFormItems></StyledFormItems>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>

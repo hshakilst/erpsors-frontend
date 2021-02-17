@@ -3,7 +3,7 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledSuppliers from "@/components/ui/styledSuppliers";
+import StyledFormSuppliers from "@/components/ui/styledFormSuppliers";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
@@ -56,7 +56,7 @@ const Suppliers = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledSuppliers></StyledSuppliers>
+              <StyledFormSuppliers></StyledFormSuppliers>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
