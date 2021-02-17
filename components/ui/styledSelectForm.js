@@ -75,14 +75,14 @@ export default function styledSelectForm({
     <FormControl className={classes.formControl} {...props}>
       <InputLabel id={labelId}>{label}</InputLabel>
       <Controller
-        as={
-          <Select defau labelId={labelId} label={label}>
+        render={(props) => (
+          <Select {...props} multiple={false}>
             {children}
           </Select>
-        }
+        )}
         name={name}
-        control={control}
         defaultValue={defaultValue}
+        control={control}
       />
     </FormControl>
   );

@@ -512,6 +512,7 @@ const StyledFormSuppliers = (props) => {
                         root: classes.selectRoot,
                       }}
                       name="type"
+                      defaultValue={''}
                       control={control}
                     >
                       <MenuItem value="raw-material">

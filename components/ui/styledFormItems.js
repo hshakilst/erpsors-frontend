@@ -362,6 +362,7 @@ const StyledFormItems = (props) => {
                       name={"type"}
                       //FIXME:Add validation pattern
                       control={control}
+                      defaultValue={""}
                       // error={errors.type ? true : false}
                     >
                       <MenuItem value="raw-material">
@@ -502,6 +503,7 @@ const StyledFormItems = (props) => {
                       // })}
                       // error={errors.unit ? true : false}
                       control={control}
+                      defaultValue={""}
                     >
                       <MenuItem value="pair">{"Pairs"}</MenuItem>
                       <MenuItem value="pc">{"Pieces"}</MenuItem>
@@ -541,6 +543,7 @@ const StyledFormItems = (props) => {
                       // })}
                       // error={errors.warehouse ? true : false}
                       control={control}
+                      defaultValue={""}
                     >
                       <MenuItem value="001">{"Demra Warehouse 1"}</MenuItem>
                       <MenuItem value="002">{"Dhamrai Warehouse 1"}</MenuItem>
@@ -574,6 +577,7 @@ const StyledFormItems = (props) => {
                       // })}
                       // error={errors.status ? true : false}
                       control={control}
+                      defaultValue={""}
                     >
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
@@ -606,6 +610,7 @@ const StyledFormItems = (props) => {
                       // })}
                       // error={errors.group ? true : false}
                       control={control}
+                      defaultValue={""}
                     >
                       <MenuItem value="none">{"(None)"}</MenuItem>
                     </StyledSelectForm>
