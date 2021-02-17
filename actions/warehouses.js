@@ -2,19 +2,19 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "@/actions";
 import axios from "axios";
 
-export const useGetAllSuppliers = () => {
-  const { data, error, ...rest } = useSWR("/api/suppliers", fetcher);
+export const useGetAllWarehouses = () => {
+  const { data, error, ...rest } = useSWR("/api/warehouses", fetcher);
 
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateSupplier = async (
+export const useCreateWarehouses = async (
   code,
-  company,
   name,
   type,
-  opnBalance,
-  item,
+  capacity,
+  items,
+  incharge,
   address,
   phone,
   status,
@@ -22,13 +22,13 @@ export const useCreateSupplier = async (
   image,
   notes
 ) => {
-  const res = await axios.post("/api/suppliers", {
+  const res = await axios.post("/api/warehouses", {
     code,
-    company,
     name,
     type,
-    opnBalance,
-    item,
+    capacity,
+    items,
+    incharge,
     address,
     phone,
     status,
@@ -36,6 +36,6 @@ export const useCreateSupplier = async (
     image,
     notes,
   });
-  mutate("/api/suppliers");
+  mutate("/api/warehouses");
   return { error: res.data.error, data: res.data.data };
 };

@@ -3,12 +3,11 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledItems from "@/components/ui/styledItems";
+import StyledFormWarehouses from "@/components/ui/styledFormWarehouses";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-
-import StyledTableItems from "@/components/ui/styledTableItems";
+import StyledTableWarehouses from "@/components/ui/styledTableWarehouses";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -16,18 +15,10 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       backgroundColor: "#EFF0F6",
       padding: theme.spacing(1.5),
-      // paddingTop: "6rem",
-      marginLeft: 240,
       [theme.breakpoints.down("xs")]: {
         marginLeft: 0,
       },
-      [theme.breakpoints.up("lg")]: {
-        flexGrow: 1,
-        backgroundColor: "#EFF0F6",
-        padding: theme.spacing(1.5),
-        // paddingTop: "6rem",
-        marginLeft: 240,
-      },
+      marginLeft: 240,
     },
     paper: {
       padding: theme.spacing(2),
@@ -48,17 +39,24 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StoreReceipts = (props) => {
+const Warehouses = (props) => {
   const classes = useStyles();
-
   return (
     <BaseLayout>
       <StyledNavbar></StyledNavbar>
       <div className={classes.root}>
         <Grid container spacing={2}>
-          <Grid className={classes.gridItem} item lg={8} md={6} sm={12} xs={12}>
+          <Grid
+            className={classes.gridItem}
+            item
+            item
+            lg={8}
+            md={6}
+            sm={12}
+            xs={12}
+          >
             <Paper className={classes.paper}>
-              <StyledItems></StyledItems>
+              <StyledFormWarehouses></StyledFormWarehouses>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
@@ -76,7 +74,7 @@ const StoreReceipts = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableItems></StyledTableItems>
+                <StyledTableWarehouses></StyledTableWarehouses>
               </StyledTableCard>
             </Paper>
           </Grid>
@@ -86,4 +84,4 @@ const StoreReceipts = (props) => {
   );
 };
 
-export default StoreReceipts;
+export default Warehouses;

@@ -10,8 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -98,31 +96,6 @@ const useStyles = makeStyles((theme) =>
         paddingTop: "0.5rem",
       },
     },
-    selectRoot: {
-      paddingLeft: "1.25rem",
-      // [theme.breakpoints.up("md")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("sm")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("xs")]: {
-      //   width: "100%",
-      // },
-    },
-    selectRootContainer: {
-      paddingLeft: "1.25rem",
-      paddingTop: ".55rem",
-      // [theme.breakpoints.up("md")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("sm")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("xs")]: {
-      //   width: "100%",
-      // },
-    },
     inputInput: {
       padding: theme.spacing(1.5, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
@@ -135,7 +108,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function RecipeReviewCard() {
+export default function StyledFormPurchaseOrders() {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -149,7 +122,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Warehouse
+            Purchase Order
           </Typography>
           <Typography
             style={{
@@ -159,7 +132,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a warehouse
+            Create a purchase order
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -196,14 +169,7 @@ export default function RecipeReviewCard() {
       <Box style={{ marginTop: "3.438rem" }}>
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
-            <Grid
-              className={classes.gridItem}
-              item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid className={classes.gridItem} item xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -218,20 +184,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Code"}
+                    label={"Store Req. Code"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid item className={classes.gridItem} xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -246,42 +205,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Name"}
+                    label={"Item"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Type"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                  ></StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              className={classes.gridItem}
-              item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid item className={classes.gridItem} xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -296,40 +226,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Capacity"}
+                    label={"Approved Qty."}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelect
-                    placeholder={"Items"}
-                    className={classes.selectRootContainer}
-                  ></StyledSelect>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid className={classes.gridItem} item xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -344,20 +247,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Incharge Officer"}
+                    label={"Supplier"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              className={classes.gridItem}
-              item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid item className={classes.gridItem} xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -372,20 +268,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Address"}
+                    label={"Purchased Mode"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid item className={classes.gridItem} xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -400,64 +289,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Phone"}
+                    label={"Credit Days"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Status"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                  ></StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              className={classes.gridItem}
-              item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Group"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                  ></StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid className={classes.gridItem} item xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -472,20 +310,34 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Image"}
+                    label={"Purchased By"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
+            <Grid item className={classes.gridItem} xs={4}>
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    label={"Warehouse"}
+                    size={"small"}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid item className={classes.gridItem} xs={4}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>

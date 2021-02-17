@@ -8,12 +8,13 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "@/components/ui/styledButton";
+import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateItem } from "@/actions/items";
+import { useCreateWarehouses } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
+import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -71,10 +72,6 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
-      [theme.breakpoints.up("xs")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-      },
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -88,36 +85,37 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
     },
     inputRoot: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      color: "#14142B",
+      letterSpacing: "0.047rem",
       lineHeight: 0,
-      // paddingLeft: "1.25rem",
+      paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: ".975rem",
+        fontSize: "1rem",
         fontWeight: 400,
         color: "#14142B",
+        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
       },
-      "& .MuiInputBase-input": {
-        fontSize: ".975rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        paddingTop: "0.4rem",
-        paddingLeft: "1.25rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("sm")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("xs")]: {
-        width: "100%",
-      },
     },
     selectRoot: {
       paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
+    selectRootContainer: {
+      paddingLeft: "1.25rem",
+      paddingTop: ".55rem",
       // [theme.breakpoints.up("md")]: {
       //   width: "100%",
       // },
@@ -133,26 +131,14 @@ const useStyles = makeStyles((theme) =>
       paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
-      "& .MuiInputBase-input": {
-        fontSize: ".3rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-      },
       [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("sm")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("xs")]: {
         width: "100%",
       },
     },
   })
 );
 
-const StyledItems = (props) => {
+const StyledFormWarehouses = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
@@ -161,26 +147,26 @@ const StyledItems = (props) => {
     let code = data.code;
     let name = data.name;
     let type = data.type;
-    let opnQty = data.opnQty;
-    let priceRate = data.priceRate;
-    let valueRate = data.valueRate;
-    let unit = data.unit;
-    let warehouse = data.warehouse;
+    let capacity = data.capacity;
+    let items = data.items;
+    let incharge = data.incharge;
+    let address = data.address;
+    let phone = data.phone;
     let status = data.status;
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateItem(
+      const { error, data } = await useCreateWarehouses(
         code,
         name,
         type,
-        opnQty,
-        priceRate,
-        valueRate,
-        unit,
-        warehouse,
+        capacity,
+        items,
+        incharge,
+        address,
+        phone,
         status,
         group,
         image,
@@ -213,7 +199,6 @@ const StyledItems = (props) => {
       });
     }
   };
-
   return (
     <Card className={classes.root}>
       <Box>
@@ -226,7 +211,7 @@ const StyledItems = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Items
+            Warehouse
           </Typography>
           <Typography
             style={{
@@ -236,7 +221,7 @@ const StyledItems = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Create an item
+            Create a warehouse
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -358,7 +343,106 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.type ? true : false}
                     ></StyledSelectForm>
+                    {/* <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Type"}
+                      size={"small"}
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.type ? true : false}
+                    /> */}
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Capacity"}
+                      size={"small"}
+                      name={"capacity"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.capacity ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledSelect
+                      placeholder={"Items"}
+                      className={classes.selectRootContainer}
+                      name={"items"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.items ? true : false}
+                    ></StyledSelect>
+                    {/* <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Items"}
+                      size={"small"}
+                      name={"items"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.items ? true : false}
+                    /> */}
                   </div>
                 </Paper>
               </Grid>
@@ -383,14 +467,47 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Opening Qty."}
+                      label={"In-Charge Officer"}
                       size={"small"}
-                      name={"opnQty"}
+                      name={"incharge"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnQty ? true : false}
+                      error={errors.incharge ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Address"}
+                      size={"small"}
+                      name={"address"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.address ? true : false}
                     />
                   </div>
                 </Paper>
@@ -416,92 +533,15 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Price Rate"}
+                      label={"Phone"}
                       size={"small"}
-                      name={"priceRate"}
+                      name={"phone"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.priceRate ? true : false}
+                      error={errors.phone ? true : false}
                     />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Value Rate"}
-                      size={"small"}
-                      name={"valueRate"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.valueRate ? true : false}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <StyledSelectForm
-                      label={"Unit"}
-                      classes={{
-                        root: classes.selectRoot,
-                      }}
-                    ></StyledSelectForm>
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <StyledSelectForm
-                      label={"Warehouse"}
-                      classes={{
-                        root: classes.selectRoot,
-                      }}
-                    ></StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -523,13 +563,36 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
+                      name={"status"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.status ? true : false}
                     ></StyledSelectForm>
+                    {/* <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Status"}
+                      size={"small"}
+                      name={"status"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.status ? true : false}
+                    /> */}
                   </div>
                 </Paper>
               </Grid>
               <Grid
-                item
                 className={classes.gridItem}
+                item
                 lg={6}
                 md={12}
                 sm={12}
@@ -545,7 +608,30 @@ const StyledItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
+                      name={"group"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.group ? true : false}
                     ></StyledSelectForm>
+                    {/* <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Group"}
+                      size={"small"}
+                      name={"group"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.group ? true : false}
+                    /> */}
                   </div>
                 </Paper>
               </Grid>
@@ -575,7 +661,7 @@ const StyledItems = (props) => {
                       name={"image"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: false,
+                        required: true,
                       })}
                       error={errors.image ? true : false}
                     />
@@ -608,7 +694,7 @@ const StyledItems = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: false,
+                        required: true,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -630,6 +716,7 @@ const StyledItems = (props) => {
                 boxShadow: "none",
                 marginRight: "0.625rem",
               }}
+              type={"submit"}
             ></StyledButton>
           </div>
           <div style={{ float: "left" }}>
@@ -650,4 +737,4 @@ const StyledItems = (props) => {
   );
 };
 
-export default withSnackbar(StyledItems);
+export default withSnackbar(StyledFormWarehouses);

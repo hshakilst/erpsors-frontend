@@ -32,9 +32,9 @@ const StyledAppBar = (props) => {
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
       },
-      "& .makeStyles-sectionDesktop-90": {
-        paddingLeft: "500px",
-      },
+      // "& .makeStyles-sectionDesktop-90": {
+      //   paddingLeft: "500px",
+      // },
       "& .MuiToolbar-gutters": {
         paddingLeft: "0.75rem",
         paddingRight: "0.75rem",
