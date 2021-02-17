@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@material-ui/core";
+import { Link, MenuItem } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
@@ -156,7 +156,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormSuppliers = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -511,7 +511,20 @@ const StyledFormSuppliers = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name="type"
+                      control={control}
+                    >
+                      <MenuItem value="raw-material">
+                        {"Raw Materials"}
+                      </MenuItem>
+                      <MenuItem value="finished-good">
+                        {"Finished Goods"}
+                      </MenuItem>
+                      <MenuItem value="sub-assembly">
+                        {"Sub-Assemblies"}
+                      </MenuItem>
+                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -533,7 +546,13 @@ const StyledFormSuppliers = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name="status"
+                      defaultValue=""
+                      control={control}
+                    >
+                      <MenuItem value="active">{"Active"}</MenuItem>
+                      <MenuItem value="inactive">{"Inactive"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -555,7 +574,11 @@ const StyledFormSuppliers = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name="group"
+                      control={control}
+                    >
+                      <MenuItem value="none">{"(None)"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>

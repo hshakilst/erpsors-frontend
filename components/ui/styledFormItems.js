@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -154,7 +155,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormItems = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -358,7 +359,22 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      control={control}
+                      // error={errors.type ? true : false}
+                    >
+                      <MenuItem value="raw-material">
+                        {"Raw Materials"}
+                      </MenuItem>
+                      <MenuItem value="finished-good">
+                        {"Finished Goods"}
+                      </MenuItem>
+                      <MenuItem value="sub-assembly">
+                        {"Sub-Assemblies"}
+                      </MenuItem>
+                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -479,7 +495,24 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name={"unit"}
+                      //FIXME:Add validation pattern
+                      // inputRef={register({
+                      //   required: true,
+                      // })}
+                      // error={errors.unit ? true : false}
+                      control={control}
+                    >
+                      <MenuItem value="pair">{"Pairs"}</MenuItem>
+                      <MenuItem value="pc">{"Pieces"}</MenuItem>
+                      <MenuItem value="kg">{"KGs"}</MenuItem>
+                      <MenuItem value="m">{"Meters"}</MenuItem>
+                      <MenuItem value="cm">{"Centimeters"}</MenuItem>
+                      <MenuItem value="feet">{"Feet"}</MenuItem>
+                      <MenuItem value="inch">{"Inches"}</MenuItem>
+                      <MenuItem value="g">{"Grams"}</MenuItem>
+                      <MenuItem value="unit">{"Units"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -501,7 +534,18 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name={"warehouse"}
+                      //FIXME:Add validation pattern
+                      // inputRef={register({
+                      //   required: true,
+                      // })}
+                      // error={errors.warehouse ? true : false}
+                      control={control}
+                    >
+                      <MenuItem value="001">{"Demra Warehouse 1"}</MenuItem>
+                      <MenuItem value="002">{"Dhamrai Warehouse 1"}</MenuItem>
+                      <MenuItem value="003">{"Jessore Warehouse 1"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -523,7 +567,17 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name={"status"}
+                      //FIXME:Add validation pattern
+                      // inputRef={register({
+                      //   required: true,
+                      // })}
+                      // error={errors.status ? true : false}
+                      control={control}
+                    >
+                      <MenuItem value="active">{"Active"}</MenuItem>
+                      <MenuItem value="inactive">{"Inactive"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -545,7 +599,16 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                    ></StyledSelectForm>
+                      name={"group"}
+                      //FIXME:Add validation pattern
+                      // inputRef={register({
+                      //   required: true,
+                      // })}
+                      // error={errors.group ? true : false}
+                      control={control}
+                    >
+                      <MenuItem value="none">{"(None)"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
