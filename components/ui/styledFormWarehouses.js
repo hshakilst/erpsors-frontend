@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@material-ui/core";
+import { Link, MenuItem } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateWarehouses } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
+import StyledMultiSelectForm from "@/components/ui/styledMultiSelectForm";
 import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
@@ -140,7 +141,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormWarehouses = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -272,7 +273,7 @@ const StyledFormWarehouses = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <TextField
+                    {/* <TextField
                       fullWidth
                       InputProps={{
                         disableUnderline: true,
@@ -288,7 +289,8 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
-                    />
+                    /> */}
+                    <StyledMultiSelectForm />
                   </div>
                 </Paper>
               </Grid>
@@ -343,30 +345,21 @@ const StyledFormWarehouses = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                      name={"type"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.type ? true : false}
-                    ></StyledSelectForm>
-                    {/* <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Type"}
-                      size={"small"}
-                      name={"type"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.type ? true : false}
-                    /> */}
+                      name="type"
+                      defaultValue={""}
+                      control={control}
+                    >
+                      <MenuItem value="raw-material">
+                        {"Raw Materials"}
+                      </MenuItem>
+                      <MenuItem value="finished-good">
+                        {"Finished Goods"}
+                      </MenuItem>
+                      <MenuItem value="sub-assembly">
+                        {"Sub-Assemblies"}
+                      </MenuItem>
+                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -424,25 +417,9 @@ const StyledFormWarehouses = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      control={control}
                       error={errors.items ? true : false}
                     ></StyledSelect>
-                    {/* <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Items"}
-                      size={"small"}
-                      name={"items"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.items ? true : false}
-                    /> */}
                   </div>
                 </Paper>
               </Grid>
@@ -563,30 +540,13 @@ const StyledFormWarehouses = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                      name={"status"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.status ? true : false}
-                    ></StyledSelectForm>
-                    {/* <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Status"}
-                      size={"small"}
-                      name={"status"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.status ? true : false}
-                    /> */}
+                      name="status"
+                      defaultValue=""
+                      control={control}
+                    >
+                      <MenuItem value="active">{"Active"}</MenuItem>
+                      <MenuItem value="inactive">{"Inactive"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>
@@ -608,30 +568,12 @@ const StyledFormWarehouses = (props) => {
                       classes={{
                         root: classes.selectRoot,
                       }}
-                      name={"group"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.group ? true : false}
-                    ></StyledSelectForm>
-                    {/* <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Group"}
-                      size={"small"}
-                      name={"group"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.group ? true : false}
-                    /> */}
+                      name="group"
+                      control={control}
+                      defaultValue={""}
+                    >
+                      <MenuItem value="none">{"(None)"}</MenuItem>
+                    </StyledSelectForm>
                   </div>
                 </Paper>
               </Grid>

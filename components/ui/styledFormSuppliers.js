@@ -364,7 +364,7 @@ const StyledFormSuppliers = (props) => {
                       }}
                       label={"Name"}
                       size={"small"}
-                      name={"company"}
+                      name={"name"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
@@ -512,7 +512,7 @@ const StyledFormSuppliers = (props) => {
                         root: classes.selectRoot,
                       }}
                       name="type"
-                      defaultValue={''}
+                      defaultValue={""}
                       control={control}
                     >
                       <MenuItem value="raw-material">
@@ -577,6 +577,7 @@ const StyledFormSuppliers = (props) => {
                       }}
                       name="group"
                       control={control}
+                      defaultValue={""}
                     >
                       <MenuItem value="none">{"(None)"}</MenuItem>
                     </StyledSelectForm>
