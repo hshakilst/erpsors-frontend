@@ -4,11 +4,11 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 // import Input from "@material-ui/core/Input";
 // import InputLabel from "@material-ui/core/InputLabel";
 // import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
+import {Paper} from "@material-ui/core";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
-import Chip from "@material-ui/core/Chip";
+// import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -63,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "0.5rem",
     paddingLeft: "1.25rem",
     marginLeft: "-0.75rem",
+    width: "100%",
+    flexWrap: "nowrap",
     // '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
     //   flexWrap: "nowrap",
     // },
@@ -85,6 +87,10 @@ const useStyles = makeStyles((theme) => ({
       // borderColor: "transparent",
       borderStyle: "none",
     },
+    '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-endAdornment': {
+      right: "-0.75rem",
+    },
+    "& .MuiIconButton-root":{color: "#14142B"}
   },
   // chips: {
   //   display: "flex",
@@ -288,24 +294,29 @@ export default function StyledMultiSelectForm(props) {
   const classes = useStyles();
   return (
     <Autocomplete
-      multiple
+      {...props}
+      // multiple={props.multiple}
       id="tags-outlined"
       options={top100Films}
       getOptionLabel={(option) => option.title}
       defaultValue={[]}
       filterSelectedOptions
+      disableListWrap
+      multiple
+      //   loading={true}
       renderInput={(params) => (
         <TextField
           {...params}
+          label={props.label}
           fullWidth
           classes={{
             root: classes.inputRoot,
           }}
-          label={"Name"}
           size={"small"}
           variant="outlined"
-          // placeholder="Favorites"
-        />
+        >
+          <Paper></Paper>
+        </TextField>
       )}
     />
   );

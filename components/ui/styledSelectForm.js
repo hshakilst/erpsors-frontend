@@ -76,7 +76,7 @@ export default function styledSelectForm({
       <InputLabel id={labelId}>{label}</InputLabel>
       <Controller
         render={(props) => (
-          <Select {...props} multiple={false}>
+          <Select {...props} >
             {children}
           </Select>
         )}

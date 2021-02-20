@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateWarehouses } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
-import StyledMultiSelectForm from "@/components/ui/styledMultiSelectForm";
+import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
@@ -273,7 +273,7 @@ const StyledFormWarehouses = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    {/* <TextField
+                    <TextField
                       fullWidth
                       InputProps={{
                         disableUnderline: true,
@@ -289,8 +289,10 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                    />
+                    {/* <StyledAutoComplete
+                      labels=
                     /> */}
-                    <StyledMultiSelectForm />
                   </div>
                 </Paper>
               </Grid>
@@ -409,17 +411,21 @@ const StyledFormWarehouses = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledSelect
+                    {/* <StyledSelect
                       placeholder={"Items"}
                       className={classes.selectRootContainer}
                       name={"items"}
                       //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
+                      // inputRef={register({
+                      //   required: true,
+                      // })}
+                      defaultValue={[]}
                       control={control}
                       error={errors.items ? true : false}
-                    ></StyledSelect>
+                    ></StyledSelect> */}
+                    <StyledAutoCompleteForm
+                      label={"Items"}
+                    />
                   </div>
                 </Paper>
               </Grid>

@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "react-select";
+import { Controller } from "react-hook-form";
 
 const customStyles = {
   menu: (provided) => ({
@@ -22,6 +23,7 @@ const customStyles = {
     ...provided,
     width: "100%",
     border: "none",
+    paddingTop:10,
     boxShadow: "none",
   }),
 
@@ -51,14 +53,33 @@ const options = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
-export default function StyledSelect(props) {
+export default function StyledSelect({
+  name,
+  placeholder,
+  control,
+  defaultValue,
+  children,
+  ...props
+}) {
   return (
-    <Select
-      isClearable
-      isMulti
-      options={options}
-      styles={customStyles}
-      {...props}
+    <Controller
+      render={(props) => (
+        <Select
+          {...props}
+          placeholder={placeholder}
+          isClearable
+          isSearchable
+          isMulti
+          blurInputOnSelect
+          options={options}
+          styles={customStyles}
+          delimiter=","
+
+        />
+      )}
+      name={name}
+      defaultValue={defaultValue}
+      control={control}
     />
   );
 }
