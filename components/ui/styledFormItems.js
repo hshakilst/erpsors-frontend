@@ -15,6 +15,7 @@ import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
+import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -531,7 +532,15 @@ const StyledFormItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledSelectForm
+                    <StyledAutoCompleteForm
+                      label={"Warehouse"}
+                      name="warehouse"
+                      defaultValue={null}
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      control={control}
+                    />
+                    {/* <StyledSelectForm
                       label={"Warehouse"}
                       classes={{
                         root: classes.selectRoot,
@@ -548,7 +557,7 @@ const StyledFormItems = (props) => {
                       <MenuItem value="001">{"Demra Warehouse 1"}</MenuItem>
                       <MenuItem value="002">{"Dhamrai Warehouse 1"}</MenuItem>
                       <MenuItem value="003">{"Jessore Warehouse 1"}</MenuItem>
-                    </StyledSelectForm>
+                    </StyledSelectForm> */}
                   </div>
                 </Paper>
               </Grid>

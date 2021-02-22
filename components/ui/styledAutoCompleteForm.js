@@ -4,13 +4,13 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 // import Input from "@material-ui/core/Input";
 // import InputLabel from "@material-ui/core/InputLabel";
 // import MenuItem from "@material-ui/core/MenuItem";
-import { FormControl, Paper } from "@material-ui/core";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Controller } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   // formControl: {
@@ -184,142 +184,176 @@ const useStyles = makeStyles((theme) => ({
 //   );
 // }
 
-export default function StyledMultiSelectForm(props) {
+export default function StyledAutoCompleteForm({
+  onChange,
+  control,
+  name,
+  label,
+  defaultValue,
+}) {
   const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-    { title: "The Godfather: Part II", year: 1974 },
-    { title: "The Dark Knight", year: 2008 },
-    { title: "12 Angry Men", year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: "Pulp Fiction", year: 1994 },
-    { title: "The Lord of the Rings: The Return of the King", year: 2003 },
-    { title: "The Good, the Bad and the Ugly", year: 1966 },
-    { title: "Fight Club", year: 1999 },
-    { title: "The Lord of the Rings: The Fellowship of the Ring", year: 2001 },
-    { title: "Star Wars: Episode V - The Empire Strikes Back", year: 1980 },
-    { title: "Forrest Gump", year: 1994 },
-    { title: "Inception", year: 2010 },
-    { title: "The Lord of the Rings: The Two Towers", year: 2002 },
-    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-    { title: "Goodfellas", year: 1990 },
-    { title: "The Matrix", year: 1999 },
-    { title: "Seven Samurai", year: 1954 },
-    { title: "Star Wars: Episode IV - A New Hope", year: 1977 },
-    { title: "City of God", year: 2002 },
-    { title: "Se7en", year: 1995 },
-    { title: "The Silence of the Lambs", year: 1991 },
-    { title: "It's a Wonderful Life", year: 1946 },
-    { title: "Life Is Beautiful", year: 1997 },
-    { title: "The Usual Suspects", year: 1995 },
-    { title: "Léon: The Professional", year: 1994 },
-    { title: "Spirited Away", year: 2001 },
-    { title: "Saving Private Ryan", year: 1998 },
-    { title: "Once Upon a Time in the West", year: 1968 },
-    { title: "American History X", year: 1998 },
-    { title: "Interstellar", year: 2014 },
-    { title: "Casablanca", year: 1942 },
-    { title: "City Lights", year: 1931 },
-    { title: "Psycho", year: 1960 },
-    { title: "The Green Mile", year: 1999 },
-    { title: "The Intouchables", year: 2011 },
-    { title: "Modern Times", year: 1936 },
-    { title: "Raiders of the Lost Ark", year: 1981 },
-    { title: "Rear Window", year: 1954 },
-    { title: "The Pianist", year: 2002 },
-    { title: "The Departed", year: 2006 },
-    { title: "Terminator 2: Judgment Day", year: 1991 },
-    { title: "Back to the Future", year: 1985 },
-    { title: "Whiplash", year: 2014 },
-    { title: "Gladiator", year: 2000 },
-    { title: "Memento", year: 2000 },
-    { title: "The Prestige", year: 2006 },
-    { title: "The Lion King", year: 1994 },
-    { title: "Apocalypse Now", year: 1979 },
-    { title: "Alien", year: 1979 },
-    { title: "Sunset Boulevard", year: 1950 },
+    { name: "The Shawshank Redemption", id: 1994 },
+    { name: "The Godfather", id: 1972 },
+    { name: "The Godfather: Part II", id: 1974 },
+    { name: "The Dark Knight", id: 2008 },
+    { name: "12 Angry Men", id: 1957 },
+    { name: "Schindler's List", id: 1993 },
+    { name: "Pulp Fiction", id: 1994 },
+    { name: "The Lord of the Rings: The Return of the King", id: 2003 },
+    { name: "The Good, the Bad and the Ugly", id: 1966 },
+    { name: "Fight Club", id: 1999 },
+    { name: "The Lord of the Rings: The Fellowship of the Ring", id: 2001 },
+    { name: "Star Wars: Episode V - The Empire Strikes Back", id: 1980 },
+    { name: "Forrest Gump", id: 1994 },
+    { name: "Inception", id: 2010 },
+    { name: "The Lord of the Rings: The Two Towers", id: 2002 },
+    { name: "One Flew Over the Cuckoo's Nest", id: 1975 },
+    { name: "Goodfellas", id: 1990 },
+    { name: "The Matrix", id: 1999 },
+    { name: "Seven Samurai", id: 1954 },
+    { name: "Star Wars: Episode IV - A New Hope", id: 1977 },
+    { name: "City of God", id: 2002 },
+    { name: "Se7en", id: 1995 },
+    { name: "The Silence of the Lambs", id: 1991 },
+    { name: "It's a Wonderful Life", id: 1946 },
+    { name: "Life Is Beautiful", id: 1997 },
+    { name: "The Usual Suspects", id: 1995 },
+    { name: "Léon: The Professional", id: 1994 },
+    { name: "Spirited Away", id: 2001 },
+    { name: "Saving Private Ryan", id: 1998 },
+    { name: "Once Upon a Time in the West", id: 1968 },
+    { name: "American History X", id: 1998 },
+    { name: "Interstellar", id: 2014 },
+    { name: "Casablanca", id: 1942 },
+    { name: "City Lights", id: 1931 },
+    { name: "Psycho", id: 1960 },
+    { name: "The Green Mile", id: 1999 },
+    { name: "The Intouchables", id: 2011 },
+    { name: "Modern Times", id: 1936 },
+    { name: "Raiders of the Lost Ark", id: 1981 },
+    { name: "Rear Window", id: 1954 },
+    { name: "The Pianist", id: 2002 },
+    { name: "The Departed", id: 2006 },
+    { name: "Terminator 2: Judgment Day", id: 1991 },
+    { name: "Back to the Future", id: 1985 },
+    { name: "Whiplash", id: 2014 },
+    { name: "Gladiator", id: 2000 },
+    { name: "Memento", id: 2000 },
+    { name: "The Prestige", id: 2006 },
+    { name: "The Lion King", id: 1994 },
+    { name: "Apocalypse Now", id: 1979 },
+    { name: "Alien", id: 1979 },
+    { name: "Sunset Boulevard", id: 1950 },
     {
-      title:
+      name:
         "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
-      year: 1964,
+      id: 1964,
     },
-    { title: "The Great Dictator", year: 1940 },
-    { title: "Cinema Paradiso", year: 1988 },
-    { title: "The Lives of Others", year: 2006 },
-    { title: "Grave of the Fireflies", year: 1988 },
-    { title: "Paths of Glory", year: 1957 },
-    { title: "Django Unchained", year: 2012 },
-    { title: "The Shining", year: 1980 },
-    { title: "WALL·E", year: 2008 },
-    { title: "American Beauty", year: 1999 },
-    { title: "The Dark Knight Rises", year: 2012 },
-    { title: "Princess Mononoke", year: 1997 },
-    { title: "Aliens", year: 1986 },
-    { title: "Oldboy", year: 2003 },
-    { title: "Once Upon a Time in America", year: 1984 },
-    { title: "Witness for the Prosecution", year: 1957 },
-    { title: "Das Boot", year: 1981 },
-    { title: "Citizen Kane", year: 1941 },
-    { title: "North by Northwest", year: 1959 },
-    { title: "Vertigo", year: 1958 },
-    { title: "Star Wars: Episode VI - Return of the Jedi", year: 1983 },
-    { title: "Reservoir Dogs", year: 1992 },
-    { title: "Braveheart", year: 1995 },
-    { title: "M", year: 1931 },
-    { title: "Requiem for a Dream", year: 2000 },
-    { title: "Amélie", year: 2001 },
-    { title: "A Clockwork Orange", year: 1971 },
-    { title: "Like Stars on Earth", year: 2007 },
-    { title: "Taxi Driver", year: 1976 },
-    { title: "Lawrence of Arabia", year: 1962 },
-    { title: "Double Indemnity", year: 1944 },
-    { title: "Eternal Sunshine of the Spotless Mind", year: 2004 },
-    { title: "Amadeus", year: 1984 },
-    { title: "To Kill a Mockingbird", year: 1962 },
-    { title: "Toy Story 3", year: 2010 },
-    { title: "Logan", year: 2017 },
-    { title: "Full Metal Jacket", year: 1987 },
-    { title: "Dangal", year: 2016 },
-    { title: "The Sting", year: 1973 },
-    { title: "2001: A Space Odyssey", year: 1968 },
-    { title: "Singin' in the Rain", year: 1952 },
-    { title: "Toy Story", year: 1995 },
-    { title: "Bicycle Thieves", year: 1948 },
-    { title: "The Kid", year: 1921 },
-    { title: "Inglourious Basterds", year: 2009 },
-    { title: "Snatch", year: 2000 },
-    { title: "3 Idiots", year: 2009 },
-    { title: "Monty Python and the Holy Grail", year: 1975 },
+    { name: "The Great Dictator", id: 1940 },
+    { name: "Cinema Paradiso", id: 1988 },
+    { name: "The Lives of Others", id: 2006 },
+    { name: "Grave of the Fireflies", id: 1988 },
+    { name: "Paths of Glory", id: 1957 },
+    { name: "Django Unchained", id: 2012 },
+    { name: "The Shining", id: 1980 },
+    { name: "WALL·E", id: 2008 },
+    { name: "American Beauty", id: 1999 },
+    { name: "The Dark Knight Rises", id: 2012 },
+    { name: "Princess Mononoke", id: 1997 },
+    { name: "Aliens", id: 1986 },
+    { name: "Oldboy", id: 2003 },
+    { name: "Once Upon a Time in America", id: 1984 },
+    { name: "Witness for the Prosecution", id: 1957 },
+    { name: "Das Boot", id: 1981 },
+    { name: "Citizen Kane", id: 1941 },
+    { name: "North by Northwest", id: 1959 },
+    { name: "Vertigo", id: 1958 },
+    { name: "Star Wars: Episode VI - Return of the Jedi", id: 1983 },
+    { name: "Reservoir Dogs", id: 1992 },
+    { name: "Braveheart", id: 1995 },
+    { name: "M", id: 1931 },
+    { name: "Requiem for a Dream", id: 2000 },
+    { name: "Amélie", id: 2001 },
+    { name: "A Clockwork Orange", id: 1971 },
+    { name: "Like Stars on Earth", id: 2007 },
+    { name: "Taxi Driver", id: 1976 },
+    { name: "Lawrence of Arabia", id: 1962 },
+    { name: "Double Indemnity", id: 1944 },
+    { name: "Eternal Sunshine of the Spotless Mind", id: 2004 },
+    { name: "Amadeus", id: 1984 },
+    { name: "To Kill a Mockingbird", id: 1962 },
+    { name: "Toy Story 3", id: 2010 },
+    { name: "Logan", id: 2017 },
+    { name: "Full Metal Jacket", id: 1987 },
+    { name: "Dangal", id: 2016 },
+    { name: "The Sting", id: 1973 },
+    { name: "2001: A Space Odyssey", id: 1968 },
+    { name: "Singin' in the Rain", id: 1952 },
+    { name: "Toy Story", id: 1995 },
+    { name: "Bicycle Thieves", id: 1948 },
+    { name: "The Kid", id: 1921 },
+    { name: "Inglourious Basterds", id: 2009 },
+    { name: "Snatch", id: 2000 },
+    { name: "3 Idiots", id: 2009 },
+    { name: "Monty Python and the Holy Grail", id: 1975 },
   ];
   const classes = useStyles();
   return (
-    <FormControl>
-      <Autocomplete
-        {...props}
-        multiple={props.multiple}
-        id="tags-outlined"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        renderOption={(option) => <>{option.title}</>}
-        defaultValue={props.multiple ? [] : null}
-        filterSelectedOptions
-        // disableListWrap
-        //   loading={true}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label={props.label}
-            name={props.name}
-            inputRef={props.refs}
-            fullWidth
-            classes={{
-              root: classes.inputRoot,
-            }}
-            size={"small"}
-            variant="outlined"
-          ></TextField>
-        )}
-      />
-    </FormControl>
+    <Controller
+      render={(props) => (
+        <Autocomplete
+          {...props}
+          id="country-select-demo"
+          options={top100Films}
+          autoHighlight
+          getOptionLabel={(option) => option.name}
+          getOptionSelected={(option, value) => option.id === value.id} //FIXME:"Change equality condition to check id"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={label}
+              variant="outlined"
+              fullWidth
+              size="small"
+              classes={{
+                root: classes.inputRoot,
+              }}
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: "disabled", // disable autocomplete and autofill
+              }}
+            />
+          )}
+
+          //TODO:"Render option menu
+          // renderOption={(option, { selected }) => (
+          //   <React.Fragment>
+          //     <Checkbox
+          //       icon={icon}
+          //       checkedIcon={checkedIcon}
+          //       style={{ marginRight: 8 }}
+          //       checked={selected}
+          //     />
+          //     {option.label} ({option.code}) +{option.phone}
+          //   </React.Fragment>
+          // )}
+
+          //TODO:"Render input field
+          // renderTags={(value, getTagProps) =>
+          //   value.map((option, index) => (
+          //     <Chip
+          //       variant="outlined"
+          //       label={option}
+          //       {...getTagProps({ index })}
+          //     />
+          //   ))
+          // }
+          onChange={(_, data) => props.onChange(data)}
+        />
+      )}
+      name={name}
+      control={control}
+      defaultValue={defaultValue}
+    />
   );
 }
