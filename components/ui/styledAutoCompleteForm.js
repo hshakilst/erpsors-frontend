@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 // import Input from "@material-ui/core/Input";
 // import InputLabel from "@material-ui/core/InputLabel";
 // import MenuItem from "@material-ui/core/MenuItem";
-import {Paper} from "@material-ui/core";
+import { FormControl, Paper } from "@material-ui/core";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-endAdornment': {
       right: "-0.75rem",
     },
-    "& .MuiIconButton-root":{color: "#14142B"}
+    "& .MuiIconButton-root": { color: "#14142B" },
   },
   // chips: {
   //   display: "flex",
@@ -293,31 +293,33 @@ export default function StyledMultiSelectForm(props) {
   ];
   const classes = useStyles();
   return (
-    <Autocomplete
-      {...props}
-      // multiple={props.multiple}
-      id="tags-outlined"
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      defaultValue={[]}
-      filterSelectedOptions
-      disableListWrap
-      multiple
-      //   loading={true}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={props.label}
-          fullWidth
-          classes={{
-            root: classes.inputRoot,
-          }}
-          size={"small"}
-          variant="outlined"
-        >
-          <Paper></Paper>
-        </TextField>
-      )}
-    />
+    <FormControl>
+      <Autocomplete
+        {...props}
+        multiple={props.multiple}
+        id="tags-outlined"
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        renderOption={(option) => <>{option.title}</>}
+        defaultValue={props.multiple ? [] : null}
+        filterSelectedOptions
+        // disableListWrap
+        //   loading={true}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={props.label}
+            name={props.name}
+            inputRef={props.refs}
+            fullWidth
+            classes={{
+              root: classes.inputRoot,
+            }}
+            size={"small"}
+            variant="outlined"
+          ></TextField>
+        )}
+      />
+    </FormControl>
   );
 }

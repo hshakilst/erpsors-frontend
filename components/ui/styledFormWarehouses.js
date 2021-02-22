@@ -398,7 +398,7 @@ const StyledFormWarehouses = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -410,7 +410,7 @@ const StyledFormWarehouses = (props) => {
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
-                    </div>
+                    </div> */}
                     {/* <StyledSelect
                       placeholder={"Items"}
                       className={classes.selectRootContainer}
@@ -423,12 +423,12 @@ const StyledFormWarehouses = (props) => {
                       control={control}
                       error={errors.items ? true : false}
                     ></StyledSelect> */}
-                    <StyledAutoCompleteForm
+                    {/* <StyledAutoCompleteForm
                       label={"Items"}
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -619,7 +619,7 @@ const StyledFormWarehouses = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}

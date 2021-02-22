@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateSupplier } from "@/actions/suppliers";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
-import StyledSelect from "@/components/ui/styledSelect";
+// import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -374,7 +374,7 @@ const StyledFormSuppliers = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 className={classes.gridItem}
                 item
                 lg={6}
@@ -393,7 +393,7 @@ const StyledFormSuppliers = (props) => {
                     ></StyledSelect>
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -620,7 +620,7 @@ const StyledFormSuppliers = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}
