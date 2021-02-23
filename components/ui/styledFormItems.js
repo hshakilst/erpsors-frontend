@@ -161,7 +161,7 @@ const StyledFormItems = (props) => {
   const onSubmit = async (data) => {
     console.log(data);
     let code = data.code;
-    let name = data.name;
+    let item = data.name;
     let type = data.type;
     let opnQty = data.opnQty;
     let priceRate = data.priceRate;
@@ -540,24 +540,6 @@ const StyledFormItems = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                     />
-                    {/* <StyledSelectForm
-                      label={"Warehouse"}
-                      classes={{
-                        root: classes.selectRoot,
-                      }}
-                      name={"warehouse"}
-                      //FIXME:Add validation pattern
-                      // inputRef={register({
-                      //   required: true,
-                      // })}
-                      // error={errors.warehouse ? true : false}
-                      control={control}
-                      defaultValue={""}
-                    >
-                      <MenuItem value="001">{"Demra Warehouse 1"}</MenuItem>
-                      <MenuItem value="002">{"Dhamrai Warehouse 1"}</MenuItem>
-                      <MenuItem value="003">{"Jessore Warehouse 1"}</MenuItem>
-                    </StyledSelectForm> */}
                   </div>
                 </Paper>
               </Grid>

@@ -420,7 +420,11 @@ export default function EnhancedTable(props) {
                       <TableCell align="right">{row.priceRate}</TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">{row.unit}</TableCell>
-                      <TableCell align="left">{row.warehouse}</TableCell>
+                      <TableCell align="left">
+                        {row.warehouse.id
+                          ? `${row.warehouse.id}: ${row.warehouse.name}`
+                          : row.warehouse}
+                      </TableCell>
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>

@@ -201,3 +201,47 @@ export const getAllWarehouses = () => {
     )
   );
 };
+
+export const createStoreRequisition = (
+  code,
+  item,
+  reqQty,
+  warehouse,
+  notes
+) => {
+  return db.query(
+    q.Create(q.Collection("store_requisitions"), {
+      data: {
+        code,
+        item,
+        reqQty,
+        warehouse,
+        notes,
+      },
+    })
+  );
+};
+
+export const getAllStoreRequisitions = () => {
+  return db.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("all_store_requisitions"))),
+      q.Lambda(
+        "storeReqRef",
+        q.Let(
+          {
+            storeReqDoc: q.Get(q.Var("storeReqRef")),
+          },
+          {
+            id: q.Select(["ref", "id"], q.Var("storeReqDoc")),
+            code: q.Select(["data", "code"], q.Var("storeReqDoc")),
+            item: q.Select(["data", "item"], q.Var("storeReqDoc")),
+            reqQty: q.Select(["data", "reqQty"], q.Var("storeReqDoc")),
+            warehouse: q.Select(["data", "warehouse"], q.Var("storeReqDoc")),
+            notes: q.Select(["data", "notes"], q.Var("storeReqDoc")),
+          }
+        )
+      )
+    )
+  );
+};

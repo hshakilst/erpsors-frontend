@@ -3,11 +3,12 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledFormStoreRequisitions from "@/components/ui/styledFormStoreRequisitions";
+import StyledFormMaterialReceipts from "@/components/ui/styledFormMaterialReceipts";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableStoreRequisitions from "@/components/ui/styledTableStoreRequisitions";
+
+import StyledTableItems from "@/components/ui/styledTableItems";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StoreRequisitions = (props) => {
+const StoreReceipts = (props) => {
   const classes = useStyles();
 
   return (
@@ -57,7 +58,7 @@ const StoreRequisitions = (props) => {
         <Grid container spacing={2}>
           <Grid className={classes.gridItem} item lg={8} md={6} sm={12} xs={12}>
             <Paper className={classes.paper}>
-              <StyledFormStoreRequisitions></StyledFormStoreRequisitions>
+              <StyledFormMaterialReceipts></StyledFormMaterialReceipts>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
@@ -75,7 +76,7 @@ const StoreRequisitions = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableStoreRequisitions></StyledTableStoreRequisitions>
+                <StyledTableItems></StyledTableItems>
               </StyledTableCard>
             </Paper>
           </Grid>
@@ -85,4 +86,4 @@ const StoreRequisitions = (props) => {
   );
 };
 
-export default StoreRequisitions;
+export default StoreReceipts;

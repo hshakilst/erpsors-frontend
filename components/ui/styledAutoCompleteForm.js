@@ -303,7 +303,6 @@ export default function StyledAutoCompleteForm({
       render={(props) => (
         <Autocomplete
           {...props}
-          id="country-select-demo"
           options={top100Films}
           autoHighlight
           getOptionLabel={(option) => option.name}

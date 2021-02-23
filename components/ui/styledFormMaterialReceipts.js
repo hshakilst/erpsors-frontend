@@ -122,7 +122,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Material Issue
+            Material Receipts
           </Typography>
           <Typography
             style={{
@@ -132,7 +132,7 @@ export default function RecipeReviewCard() {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a material issue report
+            Create a store received report report
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -169,7 +169,7 @@ export default function RecipeReviewCard() {
       <Box style={{ marginTop: "3.438rem" }}>
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
-            <Grid className={classes.gridItem} item xs={6}>
+            <Grid className={classes.gridItem} item xs={12}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -184,13 +184,13 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Floor Req. Code"}
+                    label={"Purchase Order Code"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={6}>
+            <Grid item className={classes.gridItem} xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -226,28 +226,7 @@ export default function RecipeReviewCard() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Rate"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={6}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Issued Qty."}
+                    label={"Received Qty."}
                     size={"small"}
                   />
                 </div>
