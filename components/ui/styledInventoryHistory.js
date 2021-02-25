@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function StyledInventoryHistory() {
+export default function StyledInventoryHistory(props) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -81,7 +81,7 @@ export default function StyledInventoryHistory() {
           textAlign: "left",
         }}
       >
-        <div style={{ marginBottom: "16rem" }}>
+        <div style={props.style}>
           <List>
             <ListItem>
               <Typography
