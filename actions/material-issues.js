@@ -1,0 +1,29 @@
+import useSWR, { mutate } from "swr";
+import { fetcher } from "@/actions";
+import axios from "axios";
+
+export const useGetAllMaterialIssues = () => {
+  const { data, error, ...rest } = useSWR("/api/material-issues", fetcher);
+
+  return { data, error, loading: !data && !error, ...rest };
+};
+
+export const useCreateMaterialIssue = async (
+  code,
+  reqCode,
+  valueRate,
+  issQty,
+  warehouse,
+  notes
+) => {
+  const res = await axios.post("/api/material-issues", {
+    code,
+    reqCode,
+    valueRate,
+    issQty,
+    warehouse,
+    notes,
+  });
+  mutate("/api/material-issues");
+  return { error: res.data.error, data: res.data.data };
+};

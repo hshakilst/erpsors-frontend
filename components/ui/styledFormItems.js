@@ -130,27 +130,6 @@ const useStyles = makeStyles((theme) =>
       //   width: "100%",
       // },
     },
-    inputInput: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      "& .MuiInputBase-input": {
-        fontSize: ".3rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("sm")]: {
-        width: "100%",
-      },
-      [theme.breakpoints.up("xs")]: {
-        width: "100%",
-      },
-    },
   })
 );
 
