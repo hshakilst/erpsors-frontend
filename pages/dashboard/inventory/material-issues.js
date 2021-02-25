@@ -7,7 +7,6 @@ import StyledFormMaterialIssues from "@/components/ui/styledFormMaterialIssues";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-
 import StyledTableItems from "@/components/ui/styledTableItems";
 
 const useStyles = makeStyles((theme) =>
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StoreIssues = (props) => {
+const MaterialIssues = (props) => {
   const classes = useStyles();
 
   return (
@@ -86,4 +85,4 @@ const StoreIssues = (props) => {
   );
 };
 
-export default StoreIssues;
+export default MaterialIssues;

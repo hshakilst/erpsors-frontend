@@ -374,13 +374,13 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -408,7 +408,9 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.appQty}</TableCell>
                       <TableCell align="left">{`${row.supplier.id}: ${row.supplier.name}`}</TableCell>
                       <TableCell align="left">{row.purMode}</TableCell>
-                      <TableCell align="left">{row.creDays}</TableCell>
+                      <TableCell align="right">
+                        {row.creDays || "N/A"}
+                      </TableCell>
                       <TableCell align="left">{row.purBy}</TableCell>
                       <TableCell align="left">{`${row.warehouse.id}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>

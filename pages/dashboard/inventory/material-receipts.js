@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StoreReceipts = (props) => {
+const MaterialReceipts = (props) => {
   const classes = useStyles();
 
   return (
@@ -86,4 +86,4 @@ const StoreReceipts = (props) => {
   );
 };
 
-export default StoreReceipts;
+export default MaterialReceipts;
