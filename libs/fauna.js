@@ -21,18 +21,18 @@ export const createItem = (
   return db.query(
     q.Create(q.Collection("items"), {
       data: {
-        code,
-        name,
-        type,
-        opnQty,
-        priceRate,
-        valueRate,
-        unit,
-        warehouse,
-        status,
-        group,
-        image,
-        notes,
+        code:code ?? "",
+        name:name ?? "",
+        type:type ?? "",
+        opnQty:opnQty ?? "",
+        priceRate:priceRate ?? "",
+        valueRate:valueRate ?? "",
+        unit:unit ?? "",
+        warehouse:warehouse ?? "",
+        status:status ?? "",
+        group:group ?? "",
+        image:image ?? "",
+        notes:notes ?? "",
       },
     })
   );
@@ -86,18 +86,18 @@ export const createSupplier = (
   return db.query(
     q.Create(q.Collection("suppliers"), {
       data: {
-        code,
-        company,
-        name,
-        type,
-        opnBalance,
-        // item,
-        address,
-        phone,
-        status,
-        group,
-        image,
-        notes,
+        code: code ?? "",
+        company: company ?? "",
+        name: name ?? "",
+        type: type ?? "",
+        opnBalance: opnBalance ?? "",
+        // item:item ?? "",
+        address: address ?? "",
+        phone: phone ?? "",
+        status: status ?? "",
+        group: group ?? "",
+        image: image ?? "",
+        notes: notes ?? "",
       },
     })
   );
@@ -139,7 +139,6 @@ export const createWarehouse = (
   name,
   type,
   capacity,
-  // items,
   incharge,
   address,
   phone,
@@ -151,18 +150,17 @@ export const createWarehouse = (
   return db.query(
     q.Create(q.Collection("warehouses"), {
       data: {
-        code,
-        name,
-        type,
-        capacity,
-        // items,
-        incharge,
-        address,
-        phone,
-        status,
-        group,
-        image,
-        notes,
+        code: code ?? "",
+        name: name ?? "",
+        type: type ?? "",
+        capacity: capacity ?? "",
+        incharge: incharge ?? "",
+        address: address ?? "",
+        phone: phone ?? "",
+        status: status ?? "",
+        group: group ?? "",
+        image: image ?? "",
+        notes: notes ?? "",
       },
     })
   );
@@ -184,10 +182,6 @@ export const getAllWarehouses = () => {
             name: q.Select(["data", "name"], q.Var("warehouseDoc")),
             type: q.Select(["data", "type"], q.Var("warehouseDoc")),
             capacity: q.Select(["data", "capacity"], q.Var("warehouseDoc")),
-            // items: q.Select(
-            //   ["data", "items"],
-            //   q.Var("warehouseDoc")
-            // ),
             incharge: q.Select(["data", "incharge"], q.Var("warehouseDoc")),
             address: q.Select(["data", "address"], q.Var("warehouseDoc")),
             phone: q.Select(["data", "phone"], q.Var("warehouseDoc")),
@@ -212,11 +206,11 @@ export const createStoreRequisition = (
   return db.query(
     q.Create(q.Collection("store_requisitions"), {
       data: {
-        code,
-        item,
-        reqQty,
-        warehouse,
-        notes,
+        code: code ?? "",
+        item: item ?? "",
+        reqQty: reqQty ?? "",
+        warehouse: warehouse ?? "",
+        notes: notes ?? "",
       },
     })
   );
@@ -239,6 +233,65 @@ export const getAllStoreRequisitions = () => {
             reqQty: q.Select(["data", "reqQty"], q.Var("storeReqDoc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("storeReqDoc")),
             notes: q.Select(["data", "notes"], q.Var("storeReqDoc")),
+          }
+        )
+      )
+    )
+  );
+};
+
+export const createPurchaseOrder = (
+  code,
+  reqCode,
+  item,
+  appQty,
+  supplier,
+  purMode,
+  creDays,
+  purBy,
+  warehouse,
+  notes
+) => {
+  return db.query(
+    q.Create(q.Collection("purchase_orders"), {
+      data: {
+        code: code ?? "",
+        reqCode: reqCode ?? "",
+        item: item ?? "",
+        appQty: appQty ?? "",
+        supplier: supplier ?? "",
+        purMode: purMode ?? "",
+        creDays: creDays ?? "",
+        purBy: purBy ?? "",
+        warehouse: warehouse ?? "",
+        notes: notes ?? "",
+      },
+    })
+  );
+};
+
+export const getAllPurchaseOrders = () => {
+  return db.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("all_purchase_orders"))),
+      q.Lambda(
+        "purOrderRef",
+        q.Let(
+          {
+            purOrderDoc: q.Get(q.Var("purOrderRef")),
+          },
+          {
+            id: q.Select(["ref", "id"], q.Var("purOrderDoc")),
+            code: q.Select(["data", "code"], q.Var("purOrderDoc")),
+            reqCode: q.Select(["data", "reqCode"], q.Var("purOrderDoc")),
+            item: q.Select(["data", "item"], q.Var("purOrderDoc")),
+            appQty: q.Select(["data", "appQty"], q.Var("purOrderDoc")),
+            supplier: q.Select(["data", "supplier"], q.Var("purOrderDoc")),
+            purMode: q.Select(["data", "purMode"], q.Var("purOrderDoc")),
+            creDays: q.Select(["data", "creDays"], q.Var("purOrderDoc")),
+            purBy: q.Select(["data", "purBy"], q.Var("purOrderDoc")),
+            warehouse: q.Select(["data", "warehouse"], q.Var("purOrderDoc")),
+            notes: q.Select(["data", "notes"], q.Var("purOrderDoc")),
           }
         )
       )

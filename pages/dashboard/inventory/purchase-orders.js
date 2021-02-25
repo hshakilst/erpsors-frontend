@@ -7,7 +7,7 @@ import StyledFormPurchaseOrders from "@/components/ui/styledFormPurchaseOrders";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableItems from "@/components/ui/styledTableItems";
+import StyledTablePurchaseOrders from "@/components/ui/styledTablePurchaseOrders";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -75,7 +75,7 @@ const PurchaseOrders = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableItems></StyledTableItems>
+                <StyledTablePurchaseOrders></StyledTablePurchaseOrders>
               </StyledTableCard>
             </Paper>
           </Grid>

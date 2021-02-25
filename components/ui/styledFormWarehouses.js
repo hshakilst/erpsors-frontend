@@ -164,7 +164,6 @@ const StyledFormWarehouses = (props) => {
         name,
         type,
         capacity,
-        items,
         incharge,
         address,
         phone,

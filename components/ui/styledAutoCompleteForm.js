@@ -190,6 +190,7 @@ export default function StyledAutoCompleteForm({
   name,
   label,
   defaultValue,
+  required,
 }) {
   const top100Films = [
     { name: "The Shawshank Redemption", id: 1994 },
@@ -321,9 +322,9 @@ export default function StyledAutoCompleteForm({
                 ...params.inputProps,
                 autoComplete: "disabled", // disable autocomplete and autofill
               }}
+              required={required}
             />
           )}
-
           //TODO:"Render option menu
           // renderOption={(option, { selected }) => (
           //   <React.Fragment>
@@ -353,6 +354,7 @@ export default function StyledAutoCompleteForm({
       name={name}
       control={control}
       defaultValue={defaultValue}
+      rules={{ required: required }}
     />
   );
 }

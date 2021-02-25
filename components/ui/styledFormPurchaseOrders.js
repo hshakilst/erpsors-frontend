@@ -126,11 +126,12 @@ const StyledFormPurchaseOrders = (props) => {
     console.log(data);
     let code = data.code;
     let reqCode = data.reqCode;
-    let item = data.name;
+    let item = data.item;
     let appQty = data.appQty;
     let supplier = data.supplier;
     let purMode = data.purMode;
     let creDays = data.creDays;
+    let purBy = data.purBy;
     let warehouse = data.warehouse;
     let notes = data.notes;
 
@@ -143,6 +144,7 @@ const StyledFormPurchaseOrders = (props) => {
         supplier,
         purMode,
         creDays,
+        purBy,
         warehouse,
         notes
       );
@@ -257,6 +259,7 @@ const StyledFormPurchaseOrders = (props) => {
                       }}
                       label={"Code"}
                       size={"small"}
+                      required
                       name={"code"}
                       //FIXME:Add validation pattern
                       inputRef={register({
@@ -287,6 +290,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      required={true}
                     />
                   </div>
                 </Paper>
@@ -311,6 +315,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      required={true}
                     />
                   </div>
                 </Paper>
@@ -338,6 +343,7 @@ const StyledFormPurchaseOrders = (props) => {
                       }}
                       label={"Approved Qty."}
                       size={"small"}
+                      required={true}
                       name={"appQty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
@@ -368,6 +374,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      required={true}
                     />
                   </div>
                 </Paper>
@@ -394,6 +401,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //FIXME:Add validation pattern
                       control={control}
                       defaultValue={""}
+                      required={true}
                       // error={errors.type ? true : false}
                     >
                       <MenuItem value="cash">{"Cash/Cheque"}</MenuItem>
@@ -459,6 +467,7 @@ const StyledFormPurchaseOrders = (props) => {
                       }}
                       label={"Purchased By"}
                       size={"small"}
+                      required={true}
                       name={"purBy"}
                       //FIXME:Add validation pattern
                       inputRef={register({
@@ -489,6 +498,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      required={true}
                     />
                   </div>
                 </Paper>

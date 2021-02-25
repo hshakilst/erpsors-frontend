@@ -1,4 +1,4 @@
-import { createWarehouse, getAllWarehouses } from "@/libs/fauna";
+import { createPurchaseOrder, getAllPurchaseOrders } from "@/libs/fauna";
 import { SentryInitialize } from "@/libs/sentry";
 
 SentryInitialize();
@@ -13,35 +13,33 @@ export default async (req, res) => {
     switch (method) {
       case "GET":
         //FIXME:Pagination support for ui table
-        const query = await getAllWarehouses();
+        const query = await getAllPurchaseOrders();
         res.status(200).json(query.data);
         break;
       case "POST":
         const {
           code,
-          name,
-          type,
-          capacity,
-          incharge,
-          address,
-          phone,
-          status,
-          group,
-          image,
+          reqCode,
+          item,
+          appQty,
+          supplier,
+          purMode,
+          creDays,
+          purBy,
+          warehouse,
           notes,
         } = req.body;
 
-        const result = await createWarehouse(
+        const result = await createPurchaseOrder(
           code,
-          name,
-          type,
-          capacity,
-          incharge,
-          address,
-          phone,
-          status,
-          group,
-          image,
+          reqCode,
+          item,
+          appQty,
+          supplier,
+          purMode,
+          creDays,
+          purBy,
+          warehouse,
           notes
         );
         res.status(200).json({ error: false, data: result });
