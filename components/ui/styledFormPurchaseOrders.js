@@ -134,6 +134,9 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down("xs")]: {
         display: "none",
       },
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
     },
   })
 );
@@ -206,7 +209,6 @@ const StyledFormPurchaseOrders = (props) => {
               fontSize: "1.125rem",
               fontWeight: 400,
               color: "#14142B",
-              letterSpacing: "0.047rem",
             }}
           >
             Purchase Orders
@@ -216,7 +218,6 @@ const StyledFormPurchaseOrders = (props) => {
               fontSize: "0.75rem",
               fontWeight: 200,
               color: "#4E4B66",
-              letterSpacing: "0.047rem",
             }}
           >
             Create a purchase order
