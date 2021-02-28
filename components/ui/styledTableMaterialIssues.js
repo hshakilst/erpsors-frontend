@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useGetAllPurchaseOrders } from "@/actions/purchase-orders";
+import { useGetAllMaterialIssues } from "@/actions/material-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
 function descendingComparator(a, b, orderBy) {
@@ -57,38 +57,20 @@ const headCells = [
     id: "reqCode",
     numeric: false,
     disablePadding: false,
-    label: "Store Req. Code",
+    label: "Requisition Code",
   },
   { id: "item", numeric: false, disablePadding: false, label: "Item" },
   {
-    id: "appQty",
+    id: "valueRate",
     numeric: true,
     disablePadding: false,
-    label: "Approved Qty.",
+    label: "Rate of Value",
   },
   {
-    id: "supplier",
-    numeric: false,
-    disablePadding: false,
-    label: "Supplier",
-  },
-  {
-    id: "purMode",
-    numeric: false,
-    disablePadding: false,
-    label: "Purchase Mode",
-  },
-  {
-    id: "creDays",
+    id: "issQty",
     numeric: true,
     disablePadding: false,
-    label: "Credit Days",
-  },
-  {
-    id: "purBy",
-    numeric: false,
-    disablePadding: false,
-    label: "Purchased By",
+    label: "Issued Qty.",
   },
   {
     id: "warehouse",
@@ -208,7 +190,7 @@ const EnhancedTableToolbar = (props) => {
             letterSpacing: "0.047rem",
           }}
         >
-          {"Purchase Orders"}
+          {"Material Issues"}
         </Typography>
       )}
 
@@ -282,7 +264,7 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { error, data, loading, mutate } = useGetAllPurchaseOrders();
+  const { error, data, loading, mutate } = useGetAllMaterialIssues();
 
   React.useEffect(() => {
     if (data && !loading) setRows(data);
@@ -401,17 +383,12 @@ export default function EnhancedTable() {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{`${row.reqCode.id}`}</TableCell>
+                      <TableCell align="left">{row.reqCode.id}</TableCell>
                       <TableCell align="left">
                         {`${row.item.id}: ${row.item.name}`}
                       </TableCell>
-                      <TableCell align="right">{row.appQty}</TableCell>
-                      <TableCell align="left">{`${row.supplier.id}: ${row.supplier.name}`}</TableCell>
-                      <TableCell align="left">{row.purMode}</TableCell>
-                      <TableCell align="right">
-                        {row.creDays || "N/A"}
-                      </TableCell>
-                      <TableCell align="left">{row.purBy}</TableCell>
+                      <TableCell align="right">{row.valueRate}</TableCell>
+                      <TableCell align="right">{row.issQty}</TableCell>
                       <TableCell align="left">{`${row.warehouse.id}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>

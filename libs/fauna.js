@@ -21,18 +21,18 @@ export const createItem = (
   return db.query(
     q.Create(q.Collection("items"), {
       data: {
-        code:code ?? "",
-        name:name ?? "",
-        type:type ?? "",
-        opnQty:opnQty ?? "",
-        priceRate:priceRate ?? "",
-        valueRate:valueRate ?? "",
-        unit:unit ?? "",
-        warehouse:warehouse ?? "",
-        status:status ?? "",
-        group:group ?? "",
-        image:image ?? "",
-        notes:notes ?? "",
+        code: code ?? "",
+        name: name ?? "",
+        type: type ?? "",
+        opnQty: opnQty ?? "",
+        priceRate: priceRate ?? "",
+        valueRate: valueRate ?? "",
+        unit: unit ?? "",
+        warehouse: warehouse ?? "",
+        status: status ?? "",
+        group: group ?? "",
+        image: image ?? "",
+        notes: notes ?? "",
       },
     })
   );
@@ -292,6 +292,56 @@ export const getAllPurchaseOrders = () => {
             purBy: q.Select(["data", "purBy"], q.Var("purOrderDoc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("purOrderDoc")),
             notes: q.Select(["data", "notes"], q.Var("purOrderDoc")),
+          }
+        )
+      )
+    )
+  );
+};
+
+export const createMaterialIssue = (
+  code,
+  reqCode,
+  item,
+  valueRate,
+  issQty,
+  warehouse,
+  notes
+) => {
+  return db.query(
+    q.Create(q.Collection("material_issues"), {
+      data: {
+        code: code ?? "",
+        reqCode: reqCode ?? "",
+        item: item ?? "",
+        valueRate: valueRate ?? "",
+        issQty: issQty ?? "",
+        warehouse: warehouse ?? "",
+        notes: notes ?? "",
+      },
+    })
+  );
+};
+
+export const getAllMaterialIssues = () => {
+  return db.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("all_material_issues"))),
+      q.Lambda(
+        "docRef",
+        q.Let(
+          {
+            doc: q.Get(q.Var("docRef")),
+          },
+          {
+            id: q.Select(["ref", "id"], q.Var("doc")),
+            code: q.Select(["data", "code"], q.Var("doc")),
+            reqCode: q.Select(["data", "reqCode"], q.Var("doc")),
+            item: q.Select(["data", "item"], q.Var("doc")),
+            valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
+            issQty: q.Select(["data", "issQty"], q.Var("doc")),
+            warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
+            notes: q.Select(["data", "notes"], q.Var("doc")),
           }
         )
       )
