@@ -5,10 +5,10 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import StyledButton from "./styledButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
     "& .MuiAccordionSummary-content": {
       margin: 0,
       display: "inline-block",
@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiButton-outlined": {
       border: "none",
     },
+    "& .MuiIconButton-root": {
+      padding: 0,
+      position: "absolute",
+      top: 10,
+      right: 50,
+    },
   },
 }));
 
@@ -40,11 +46,16 @@ export default function SimpleAccordion(props) {
   return (
     <div className={classes.root}>
       <Accordion>
-        <AccordionSummary>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon style={{ color: "#14142B" }} />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
           <StyledButton
             variant="outlined"
             label={props.label}
             style={{
+              position: "relative",
               background: "#EFF0F6",
               borderRadius: "1rem",
               color: "#14142B",
@@ -54,7 +65,6 @@ export default function SimpleAccordion(props) {
               width: "11.375rem",
               marginBottom: "0.625rem",
             }}
-            endIcon={props.endIcon}
           ></StyledButton>
         </AccordionSummary>
         <AccordionDetails>

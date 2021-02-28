@@ -68,7 +68,6 @@ export default function Dropdown() {
           width: "70%",
         }}
       >
-        Items
         <KeyboardArrowDownIcon
           className={classes.rootIcon}
         ></KeyboardArrowDownIcon>
