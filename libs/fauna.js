@@ -348,3 +348,53 @@ export const getAllMaterialIssues = () => {
     )
   );
 };
+
+export const createStoreReceipt = (
+  code,
+  poCode,
+  item,
+  valueRate,
+  recQty,
+  warehouse,
+  notes
+) => {
+  return db.query(
+    q.Create(q.Collection("store_receipts"), {
+      data: {
+        code: code ?? "",
+        poCode: poCode ?? "",
+        item: item ?? "",
+        valueRate: valueRate ?? "",
+        recQty: recQty ?? "",
+        warehouse: warehouse ?? "",
+        notes: notes ?? "",
+      },
+    })
+  );
+};
+
+export const getAllStoreReceipts = () => {
+  return db.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("all_store_receipts"))),
+      q.Lambda(
+        "docRef",
+        q.Let(
+          {
+            doc: q.Get(q.Var("docRef")),
+          },
+          {
+            id: q.Select(["ref", "id"], q.Var("doc")),
+            code: q.Select(["data", "code"], q.Var("doc")),
+            poCode: q.Select(["data", "poCode"], q.Var("doc")),
+            item: q.Select(["data", "item"], q.Var("doc")),
+            valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
+            recQty: q.Select(["data", "recQty"], q.Var("doc")),
+            warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
+            notes: q.Select(["data", "notes"], q.Var("doc")),
+          }
+        )
+      )
+    )
+  );
+};

@@ -8,11 +8,11 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
+import StyledButton from "@/components/ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateMaterialIssue } from "@/actions/material-issues";
+import { useCreateStoreReceipt } from "@/actions/store-receipts";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
@@ -105,27 +105,27 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StyledFormMaterialIssues = (props) => {
+const StyledFormStoreReceipts = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, control } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
     let code = data.code;
-    let reqCode = data.reqCode;
+    let poCode = data.poCode;
     let item = data.item;
     let valueRate = data.valueRate;
-    let issQty = data.issQty;
+    let recQty = data.recQty;
     let warehouse = data.warehouse;
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateMaterialIssue(
+      const { error, data } = await useCreateStoreReceipt(
         code,
-        reqCode,
+        poCode,
         item,
         valueRate,
-        issQty,
+        recQty,
         warehouse,
         notes
       );
@@ -168,7 +168,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Material Issues
+            Store Receipts
           </Typography>
           <Typography
             style={{
@@ -178,7 +178,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a material issue
+            Create a store receipt
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -263,8 +263,8 @@ const StyledFormMaterialIssues = (props) => {
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <StyledAutoCompleteForm
-                      label={"Floor Req. Code"}
-                      name="reqCode"
+                      label={"P.O. Code"}
+                      name="poCode"
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -351,14 +351,14 @@ const StyledFormMaterialIssues = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Issued Qty."}
+                      label={"Received Qty."}
                       size={"small"}
-                      name={"issQty"}
+                      name={"recQty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.issQty ? true : false}
+                      error={errors.recQty ? true : false}
                     />
                   </div>
                 </Paper>
@@ -456,4 +456,4 @@ const StyledFormMaterialIssues = (props) => {
   );
 };
 
-export default withSnackbar(StyledFormMaterialIssues);
+export default withSnackbar(StyledFormStoreReceipts);
