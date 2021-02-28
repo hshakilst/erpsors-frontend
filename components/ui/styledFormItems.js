@@ -130,6 +130,11 @@ const useStyles = makeStyles((theme) =>
       //   width: "100%",
       // },
     },
+    add: {
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
+    },
   })
 );
 

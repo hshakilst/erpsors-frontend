@@ -14,8 +14,6 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateWarehouses } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
-import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -142,15 +140,6 @@ const useStyles = makeStyles((theme) =>
       // [theme.breakpoints.up("xs")]: {
       //   width: "100%",
       // },
-    },
-    inputInput: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
     },
     add: {
       [theme.breakpoints.down("xs")]: {

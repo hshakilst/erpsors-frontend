@@ -116,15 +116,6 @@ const useStyles = makeStyles((theme) =>
         width: "100%",
       },
     },
-    inputInput: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "100%",
-      },
-    },
     add: {
       [theme.breakpoints.down("xs")]: {
         display: "none",
