@@ -17,11 +17,20 @@ export default async (req, res) => {
         res.status(200).json(query.data);
         break;
       case "POST":
-        const { code, reqCode, valueRate, issQty, warehouse, notes } = req.body;
+        const {
+          code,
+          reqCode,
+          item,
+          valueRate,
+          issQty,
+          warehouse,
+          notes,
+        } = req.body;
 
         const result = await createMaterialIssue(
           code,
           reqCode,
+          item,
           valueRate,
           issQty,
           warehouse,

@@ -13,8 +13,8 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateMaterialIssue } from "@/actions/material-issues";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
+// import StyledSelectForm from "@/components/ui/styledSelectForm";
+// import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 
 const useStyles = makeStyles((theme) =>
@@ -113,6 +113,7 @@ const StyledFormMaterialIssues = (props) => {
     console.log(data);
     let code = data.code;
     let reqCode = data.reqCode;
+    let item = data.item;
     let valueRate = data.valueRate;
     let issQty = data.issQty;
     let warehouse = data.warehouse;
@@ -122,6 +123,7 @@ const StyledFormMaterialIssues = (props) => {
       const { error, data } = await useCreateMaterialIssue(
         code,
         reqCode,
+        item,
         valueRate,
         issQty,
         warehouse,

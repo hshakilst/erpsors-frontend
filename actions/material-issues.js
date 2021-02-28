@@ -11,6 +11,7 @@ export const useGetAllMaterialIssues = () => {
 export const useCreateMaterialIssue = async (
   code,
   reqCode,
+  item,
   valueRate,
   issQty,
   warehouse,
@@ -19,6 +20,7 @@ export const useCreateMaterialIssue = async (
   const res = await axios.post("/api/material-issues", {
     code,
     reqCode,
+    item,
     valueRate,
     issQty,
     warehouse,

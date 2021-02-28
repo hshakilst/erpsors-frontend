@@ -7,7 +7,7 @@ import StyledFormMaterialIssues from "@/components/ui/styledFormMaterialIssues";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableItems from "@/components/ui/styledTableItems";
+import StyledTableMaterialIssues from "@/components/ui/styledTableMaterialIssues";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -75,7 +75,7 @@ const MaterialIssues = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableItems></StyledTableItems>
+                <StyledTableMaterialIssues></StyledTableMaterialIssues>
               </StyledTableCard>
             </Paper>
           </Grid>
