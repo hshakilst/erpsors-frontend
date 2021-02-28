@@ -130,6 +130,11 @@ const useStyles = makeStyles((theme) =>
       //   width: "100%",
       // },
     },
+    add: {
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
+    },
   })
 );
 
@@ -232,7 +237,10 @@ const StyledFormItems = (props) => {
               style={{ color: "#14142B", fontSize: "1.125rem" }}
             ></AddOutlinedIcon>
           </div>
-          <div style={{ textAlign: "right", float: "left" }}>
+          <div
+            className={classes.add}
+            style={{ textAlign: "right", float: "left" }}
+          >
             <Link
               component="button"
               variant="body2"

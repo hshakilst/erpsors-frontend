@@ -71,6 +71,10 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
+      [theme.breakpoints.up("xs")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+      },
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -84,29 +88,37 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
     },
     inputRoot: {
-      fontSize: "1rem",
-      fontWeight: 400,
-      color: "#14142B",
-      letterSpacing: "0.047rem",
       lineHeight: 0,
-      paddingLeft: "1.25rem",
+      // paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: "1rem",
+        fontSize: ".975rem",
         fontWeight: 400,
         color: "#14142B",
-        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
       },
-    },
-    inputInput: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
+      "& .MuiInputBase-input": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: "#14142B",
+        letterSpacing: "0.047rem",
+        paddingTop: "0.4rem",
+        paddingLeft: "1.25rem",
+      },
       [theme.breakpoints.up("md")]: {
         width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
+      },
+    },
+    add: {
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
       },
     },
   })
@@ -197,7 +209,10 @@ const StyledFormStoreRequisitions = (props) => {
               style={{ color: "#14142B", fontSize: "1.125rem" }}
             ></AddOutlinedIcon>
           </div>
-          <div style={{ textAlign: "right", float: "left" }}>
+          <div
+            className={classes.add}
+            style={{ textAlign: "right", float: "left" }}
+          >
             <Link
               component="button"
               variant="body2"

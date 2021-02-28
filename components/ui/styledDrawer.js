@@ -8,8 +8,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import StyledButton from "./styledButton";
-import ChevronRightOutlinedIcon from "@material-ui/icons/ChevronRightOutlined";
 import StyledAccordion from "@/components/ui/styledAccordion";
 
 const StyledDrawer = (props) => {
@@ -104,38 +102,10 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        <StyledAccordion
-          label={"Tab-Focus"}
-          endIcon={
-            <ChevronRightOutlinedIcon
-              style={{ color: "#14142B" }}
-            ></ChevronRightOutlinedIcon>
-          }
-        ></StyledAccordion>
-        <StyledAccordion
-          label={"Active"}
-          endIcon={
-            <ChevronRightOutlinedIcon
-              style={{ color: "#14142B" }}
-            ></ChevronRightOutlinedIcon>
-          }
-        ></StyledAccordion>
-        <StyledAccordion
-          label={"Initial"}
-          endIcon={
-            <ChevronRightOutlinedIcon
-              style={{ color: "#14142B" }}
-            ></ChevronRightOutlinedIcon>
-          }
-        ></StyledAccordion>
-        <StyledAccordion
-          label={"Turnips"}
-          endIcon={
-            <ChevronRightOutlinedIcon
-              style={{ color: "#14142B" }}
-            ></ChevronRightOutlinedIcon>
-          }
-        ></StyledAccordion>
+        <StyledAccordion label={"Tab-Focus"}></StyledAccordion>
+        <StyledAccordion label={"Active"}></StyledAccordion>
+        <StyledAccordion label={"Initial"}></StyledAccordion>
+        <StyledAccordion label={"Turnips"}></StyledAccordion>
       </List>
       <List
         style={{
@@ -150,14 +120,7 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        <StyledAccordion
-          label={"Initial"}
-          endIcon={
-            <ChevronRightOutlinedIcon
-              style={{ color: "#14142B" }}
-            ></ChevronRightOutlinedIcon>
-          }
-        ></StyledAccordion>
+        <StyledAccordion label={"Initial"}></StyledAccordion>
         <StyledAccordion label={"Turnips"}></StyledAccordion>
         <StyledAccordion label={"Broccoil"}></StyledAccordion>
       </List>
