@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import StyledButton from "./styledButton";
 import ChevronRightOutlinedIcon from "@material-ui/icons/ChevronRightOutlined";
+import StyledAccordion from "@/components/ui/styledAccordion";
 
 const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -103,106 +104,38 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        {["Tab-Focus", "Active", "Initial", "Turnips"].map((text, index) => (
-          <ListItem
-            button
-            key={text}
-            style={{
-              background: "#EFF0F6",
-              borderRadius: "1rem",
-              color: "#14142B",
-              fontSize: "1rem",
-              fontWeight: 400,
-              letterSpacing: "0.047rem",
-              width: "11.375rem",
-              margin: "auto",
-              marginBottom: "0.625rem",
-              "&:hover": {
-                boxShadow:
-                  "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-              },
-            }}
-          >
-            <ListItemIcon>
-              {index % 2 === 0 ? (
-                <ChevronRightOutlinedIcon />
-              ) : (
-                <ChevronRightOutlinedIcon />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-        {/* <StyledButton
+        <StyledAccordion
           label={"Tab-Focus"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
           endIcon={
             <ChevronRightOutlinedIcon
               style={{ color: "#14142B" }}
             ></ChevronRightOutlinedIcon>
           }
-        ></StyledButton>
-        <StyledButton
-          variant="outlined"
+        ></StyledAccordion>
+        <StyledAccordion
           label={"Active"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
           endIcon={
             <ChevronRightOutlinedIcon
               style={{ color: "#14142B" }}
             ></ChevronRightOutlinedIcon>
           }
-        ></StyledButton>
-        <StyledButton
-          variant="outlined"
+        ></StyledAccordion>
+        <StyledAccordion
           label={"Initial"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
           endIcon={
             <ChevronRightOutlinedIcon
               style={{ color: "#14142B" }}
             ></ChevronRightOutlinedIcon>
           }
-        ></StyledButton>
-        <StyledButton
-          variant="outlined"
+        ></StyledAccordion>
+        <StyledAccordion
           label={"Turnips"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
-        ></StyledButton> */}
+          endIcon={
+            <ChevronRightOutlinedIcon
+              style={{ color: "#14142B" }}
+            ></ChevronRightOutlinedIcon>
+          }
+        ></StyledAccordion>
       </List>
       <List
         style={{
@@ -217,53 +150,16 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        <StyledButton
-          variant="outlined"
+        <StyledAccordion
           label={"Initial"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
           endIcon={
             <ChevronRightOutlinedIcon
               style={{ color: "#14142B" }}
             ></ChevronRightOutlinedIcon>
           }
-        ></StyledButton>
-        <StyledButton
-          variant="outlined"
-          label={"Turnips"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
-        ></StyledButton>
-        <StyledButton
-          variant="outlined"
-          label={"Broccoil"}
-          style={{
-            background: "#EFF0F6",
-            borderRadius: "1rem",
-            color: "#14142B",
-            fontSize: "1rem",
-            fontWeight: 400,
-            letterSpacing: "0.047rem",
-            width: "11.375rem",
-            marginBottom: "0.625rem",
-          }}
-        ></StyledButton>
+        ></StyledAccordion>
+        <StyledAccordion label={"Turnips"}></StyledAccordion>
+        <StyledAccordion label={"Broccoil"}></StyledAccordion>
       </List>
     </div>
   );
