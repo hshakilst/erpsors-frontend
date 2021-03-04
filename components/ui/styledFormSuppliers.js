@@ -237,12 +237,17 @@ const StyledFormSuppliers = (props) => {
             Create an Supplier
           </Typography>
         </div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", marginTop: ".5rem" }}>
           <div
             style={{
+              height: "1.3rem",
+              width: "1.3rem",
               textAlign: "right",
               float: "left",
               marginRight: "0.313rem",
+              border: "1px solid #14142B",
+              borderRadius: "50%",
+              cursor: "pointer",
             }}
           >
             <AddOutlinedIcon
@@ -374,26 +379,6 @@ const StyledFormSuppliers = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              {/* <Grid
-                className={classes.gridItem}
-                item
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <StyledSelect
-                      placeholder={"Items"}
-                      className={classes.selectRootContainer}
-                    ></StyledSelect>
-                  </div>
-                </Paper>
-              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}

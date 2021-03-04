@@ -198,12 +198,17 @@ const StyledFormStoreRequisitions = (props) => {
             Create a store requisition
           </Typography>
         </div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", marginTop: ".5rem" }}>
           <div
             style={{
+              height: "1.3rem",
+              width: "1.3rem",
               textAlign: "right",
               float: "left",
               marginRight: "0.313rem",
+              border: "1px solid #14142B",
+              borderRadius: "50%",
+              cursor: "pointer",
             }}
           >
             <AddOutlinedIcon

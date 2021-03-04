@@ -226,16 +226,24 @@ const StyledFormItems = (props) => {
             Create an item
           </Typography>
         </div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", marginTop: ".5rem" }}>
           <div
             style={{
+              height: "1.3rem",
+              width: "1.3rem",
               textAlign: "right",
               float: "left",
               marginRight: "0.313rem",
+              border: "1px solid #14142B",
+              borderRadius: "50%",
+              cursor: "pointer",
             }}
           >
             <AddOutlinedIcon
-              style={{ color: "#14142B", fontSize: "1.125rem" }}
+              style={{
+                color: "#14142B",
+                fontSize: "1.125rem",
+              }}
             ></AddOutlinedIcon>
           </div>
           <div
