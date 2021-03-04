@@ -47,3 +47,9 @@ export const useCreateItem = async (
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useDeleteItem = async (id) => {
+  const res = await axios.delete(`/api/items/${id}`);
+  mutate("/api/items");
+  return { error: res.data.error, data: res.data.data };
+};

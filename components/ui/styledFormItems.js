@@ -148,7 +148,7 @@ const StyledFormItems = (props) => {
   const onSubmit = async (data) => {
     console.log(data);
     let code = data.code;
-    let item = data.name;
+    let name = data.name;
     let type = data.type;
     let opnQty = data.opnQty;
     let priceRate = data.priceRate;
