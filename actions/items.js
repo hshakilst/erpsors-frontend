@@ -53,3 +53,36 @@ export const useDeleteItem = async (id) => {
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useUpdateItem = async (
+  id,
+  code,
+  name,
+  type,
+  opnQty,
+  priceRate,
+  valueRate,
+  unit,
+  warehouse,
+  status,
+  group,
+  image,
+  notes
+) => {
+  const res = await axios.patch(`/api/items/${id}`, {
+    code,
+    name,
+    type,
+    opnQty,
+    priceRate,
+    valueRate,
+    unit,
+    warehouse,
+    status,
+    group,
+    image,
+    notes,
+  });
+  mutate("/api/items");
+  return { error: res.data.error, data: res.data.data };
+};

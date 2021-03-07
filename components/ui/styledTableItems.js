@@ -191,11 +191,13 @@ const EnhancedTableToolbar = (props) => {
   };
 
   const handleDelete = () => {
-    setIsDisabledDelete(true);
-    setTimeout(async () => {
-      await props.handleDelete();
-      setIsDisabledDelete(false);
-    }, 500);
+    if (confirm("Delete selected items?")) {
+      setIsDisabledDelete(true);
+      setTimeout(async () => {
+        await props.handleDelete();
+        setIsDisabledDelete(false);
+      }, 500);
+    }
   };
   return (
     <Toolbar
@@ -326,7 +328,7 @@ const EnhancedTable = (props) => {
     }
   }, [data]);
 
-  if (error) return <h1>error</h1>;
+  // if (error) return <h1>error</h1>;
   if (loading) return <h1>loading</h1>;
 
   const handleDeleteMultiple = () => {
@@ -336,15 +338,18 @@ const EnhancedTable = (props) => {
       console.log(JSON.stringify({ id: data.ref, error }));
       if (error) errors.push({ id: data.ref, error });
     });
-    props.enqueueSnackbar(
-      `${JSON.stringify({
-        errors: errors,
-      })}`,
-      {
-        variant: "success",
-      }
-    );
-    setSelected([]);
+    if (errors.length === 0)
+      setTimeout(() => {
+        props.enqueueSnackbar(
+          `${JSON.stringify({
+            errors: errors,
+          })}`,
+          {
+            variant: "success",
+          }
+        );
+        setSelected([]);
+      }, 1500);
   };
 
   const handleRequestSort = (event, property) => {
@@ -453,18 +458,32 @@ const EnhancedTable = (props) => {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.type}</TableCell>
-                      <TableCell align="right">{row.opnQty}</TableCell>
-                      <TableCell align="right">{row.priceRate}</TableCell>
-                      <TableCell align="right">{row.valueRate}</TableCell>
-                      <TableCell align="left">{row.unit}</TableCell>
                       <TableCell align="left">
-                        {row.warehouse.id
-                          ? `${row.warehouse.id}: ${row.warehouse.name}`
-                          : row.warehouse}
+                        {row.name ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">
+                        {row.type ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.opnQty ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.priceRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.valueRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.unit ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.warehouse?.id
+                          ? `${row.warehouse.id}: ${row.warehouse.name}`
+                          : "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.status ?? "(Empty)"}
+                      </TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
