@@ -18,7 +18,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
-import { useGetAllItems } from "@/actions/items";
+import { useGetAllItems, useDeleteItem } from "@/actions/items";
+import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -184,8 +185,19 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
+  const [isDisabledDelete, setIsDisabledDelete] = React.useState(false);
   const handleRefresh = () => {
     props.refreshRows();
+  };
+
+  const handleDelete = () => {
+    if (confirm("Delete selected items?")) {
+      setIsDisabledDelete(true);
+      setTimeout(async () => {
+        await props.handleDelete();
+        setIsDisabledDelete(false);
+      }, 500);
+    }
   };
   return (
     <Toolbar
@@ -226,7 +238,11 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton aria-label="delete">
+          <IconButton
+            disabled={isDisabledDelete}
+            aria-label="delete"
+            onClick={handleDelete}
+          >
             <DeleteIcon style={{ color: "#14142B" }} />
           </IconButton>
         </Tooltip>
@@ -294,7 +310,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable(props) {
+const EnhancedTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
@@ -302,13 +318,39 @@ export default function EnhancedTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
+  const [count, setCount] = React.useState(0);
 
   const { error, data, loading, mutate } = useGetAllItems();
   React.useEffect(() => {
-    if (data) setRows(data);
+    if (data) {
+      if (data !== rows) setRows(data);
+      setCount(data.length);
+    }
   }, [data]);
-  if (error) return <h1>error</h1>;
+
+  // if (error) return <h1>error</h1>;
   if (loading) return <h1>loading</h1>;
+
+  const handleDeleteMultiple = () => {
+    const errors = [];
+    selected.map(async (row) => {
+      const { error, data } = await useDeleteItem(row);
+      console.log(JSON.stringify({ id: data.ref, error }));
+      if (error) errors.push({ id: data.ref, error });
+    });
+    if (errors.length === 0)
+      setTimeout(() => {
+        props.enqueueSnackbar(
+          `${JSON.stringify({
+            errors: errors,
+          })}`,
+          {
+            variant: "success",
+          }
+        );
+        setSelected([]);
+      }, 1500);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -318,19 +360,19 @@ export default function EnhancedTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.code);
+      const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, code) => {
-    const selectedIndex = selected.indexOf(code);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, code);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -346,7 +388,7 @@ export default function EnhancedTable(props) {
   };
 
   const handleChangePage = (event, newPage) => {
-    if (newPage <= rows.length / rowsPerPage) setPage(newPage);
+    if (newPage <= count / rowsPerPage) setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -354,10 +396,10 @@ export default function EnhancedTable(props) {
     setPage(0);
   };
 
-  const isSelected = (code) => selected.indexOf(code) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -365,6 +407,8 @@ export default function EnhancedTable(props) {
         <EnhancedTableToolbar
           refreshRows={mutate}
           numSelected={selected.length}
+          handleDelete={handleDeleteMultiple}
+          enqueueSnackbar={props.enqueueSnackbar}
         />
         <TableContainer>
           <Table
@@ -380,20 +424,20 @@ export default function EnhancedTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={count}
               headCells={props.headCells}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.code);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.code)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -414,18 +458,32 @@ export default function EnhancedTable(props) {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.type}</TableCell>
-                      <TableCell align="right">{row.opnQty}</TableCell>
-                      <TableCell align="right">{row.priceRate}</TableCell>
-                      <TableCell align="right">{row.valueRate}</TableCell>
-                      <TableCell align="left">{row.unit}</TableCell>
                       <TableCell align="left">
-                        {row.warehouse.id
-                          ? `${row.warehouse.id}: ${row.warehouse.name}`
-                          : row.warehouse}
+                        {row.name ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">
+                        {row.type ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.opnQty ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.priceRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.valueRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.unit ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.warehouse?.id
+                          ? `${row.warehouse.id}: ${row.warehouse.name}`
+                          : "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.status ?? "(Empty)"}
+                      </TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
@@ -443,7 +501,7 @@ export default function EnhancedTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -452,4 +510,6 @@ export default function EnhancedTable(props) {
       </Paper>
     </div>
   );
-}
+};
+
+export default withSnackbar(EnhancedTable);
