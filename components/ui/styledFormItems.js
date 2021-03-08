@@ -234,8 +234,8 @@ const StyledFormItems = (props) => {
               textAlign: "right",
               float: "left",
               marginRight: "0.313rem",
-              border: "1px solid #14142B",
-              borderRadius: "50%",
+              border: "0.063rem solid #D9DBE9",
+              borderRadius: "1rem",
               cursor: "pointer",
             }}
           >
@@ -243,6 +243,7 @@ const StyledFormItems = (props) => {
               style={{
                 color: "#14142B",
                 fontSize: "1.125rem",
+                marginRight: "0.018rem",
               }}
             ></AddOutlinedIcon>
           </div>
