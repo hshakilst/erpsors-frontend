@@ -66,19 +66,42 @@ const getAllWarehouses = () => {
   );
 };
 
+const getAllWarehouseCodes = () => {
+  return db.query(q.Paginate(q.Match(q.Index("all_warehouse_codes"))));
+};
+
 export default async (req, res) => {
   try {
     const {
-      query: { id, name },
+      query: { filter },
       method,
     } = req;
 
     switch (method) {
       case "GET":
         //FIXME:Pagination support for ui table
-        const query = await getAllWarehouses();
-        res.status(200).json(query.data);
+        if (filter === "codes") {
+          const warehouseCodesQuery = await getAllWarehouseCodes();
+          const warehouseCodes = [];
+
+          warehouseCodesQuery.data.map((row) => {
+            const warehouse = {
+              id: row[0],
+              code: row[1],
+              name: row[2],
+            };
+            warehouseCodes.push(warehouse);
+          });
+
+          res.status(200).json(warehouseCodes);
+        } else if (Object.keys(req.query).length === 0) {
+          const query = await getAllWarehouses();
+          res.status(200).json(query.data);
+        } else {
+          res.status(400).json({ error: true, data: "Bad Request" });
+        }
         break;
+
       case "POST":
         const {
           code,

@@ -10,7 +10,7 @@ export const useGetAllItems = () => {
 
 export const useGetItemById = (id) => {
   const { data, error, ...rest } = useSWR(
-    id ? `/api/v1/posts/${id}` : null,
+    id ? `/api/items/${id}` : null,
     fetcher
   );
   return { data, error, loading: !data && !error, ...rest };
@@ -85,4 +85,10 @@ export const useUpdateItem = async (
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
+};
+
+export const useGetItemCodes = () => {
+  const { data, error, ...rest } = useSWR("/api/items?filter=codes", fetcher);
+
+  return { data, error, loading: !data && !error, ...rest };
 };

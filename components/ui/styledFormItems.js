@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
+import { useGetWarehouseCodes } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
@@ -146,7 +147,6 @@ const StyledFormItems = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let name = data.name;
     let type = data.type;
@@ -535,6 +535,7 @@ const StyledFormItems = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      fetch={useGetWarehouseCodes}
                     />
                   </div>
                 </Paper>

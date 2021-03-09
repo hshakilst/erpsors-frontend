@@ -68,8 +68,8 @@ export default async (req, res) => {
 
     switch (method) {
       case "GET":
-        // Get data from your database
-        res.status(200).json({ id, name: `User ${name}` });
+        const itemQuery = await getItemById(id);
+        res.status(200).json(itemQuery.data);
         break;
       case "PATCH":
         const resUpdate = await updateItemById(

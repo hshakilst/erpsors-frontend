@@ -1,16 +1,9 @@
 import React from "react";
-// import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-// import Input from "@material-ui/core/Input";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import MenuItem from "@material-ui/core/MenuItem";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import Select from "@material-ui/core/Select";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Controller } from "react-hook-form";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -47,14 +40,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StyledAutoCompleteForm({
+const StyledAutoCompleteForm = ({
   onChange,
   control,
   name,
   label,
   defaultValue,
   required,
-}) {
+  fetch,
+}) => {
   const top100Films = [
     { name: "The Shawshank Redemption", id: 1994 },
     { name: "The Godfather", id: 1972 },
@@ -162,14 +156,24 @@ export default function StyledAutoCompleteForm({
     { name: "Monty Python and the Holy Grail", id: 1975 },
   ];
   const classes = useStyles();
+  const { data, error, loading } = fetch();
+  const [options, setOptions] = React.useState([]);
+
+  React.useEffect(() => {
+    if (data) {
+      if (data !== options) setOptions(data);
+    }
+  }, [data]);
+
   return (
     <Controller
       render={(props) => (
         <Autocomplete
           {...props}
-          options={top100Films}
+          options={options}
+          loading={loading}
           autoHighlight
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => `${option.code} : ${option.name}`}
           getOptionSelected={(option, value) => option.id === value.id} //FIXME:"Change equality condition to check id"
           renderInput={(params) => (
             <TextField
@@ -184,6 +188,14 @@ export default function StyledAutoCompleteForm({
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "disabled", // disable autocomplete and autofill
+                endAdornment: (
+                  <React.Fragment>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </React.Fragment>
+                ),
               }}
               required={required}
             />
@@ -220,4 +232,6 @@ export default function StyledAutoCompleteForm({
       rules={{ required: required }}
     />
   );
-}
+};
+
+export default StyledAutoCompleteForm;

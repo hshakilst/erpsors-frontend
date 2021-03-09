@@ -69,19 +69,41 @@ const getAllItems = () => {
   );
 };
 
+const getAllItemCodes = () => {
+  return db.query(q.Paginate(q.Match(q.Index("all_item_codes"))));
+};
+
 export default async (req, res) => {
   try {
     const {
-      query: { id, name },
+      query: { filter },
       method,
     } = req;
 
     switch (method) {
       case "GET":
         //FIXME:Pagination support for ui table
-        const itemsQuery = await getAllItems();
-        res.status(200).json(itemsQuery.data);
+        if (filter === "codes") {
+          const itemCodesQuery = await getAllItemCodes();
+          const itemCodes = [];
+          itemCodesQuery.data.map((row) => {
+            const item = {
+              id: row[0],
+              code: row[1],
+              name: row[2],
+            };
+            itemCodes.push(item);
+          });
+          res.status(200).json(itemCodes);
+        } else if (Object.keys(req.query).length === 0) {
+          const itemsQuery = await getAllItems();
+
+          res.status(200).json(itemsQuery.data);
+        } else {
+          res.status(400).json({ error: true, data: "Bad Request" });
+        }
         break;
+
       case "POST":
         const {
           code,
@@ -114,6 +136,7 @@ export default async (req, res) => {
         );
         res.status(200).json({ error: false, data: result });
         break;
+
       default:
         res.setHeader("Allow", ["GET", "POST"]);
         res.status(405).end(`Method ${method} Not Allowed`);

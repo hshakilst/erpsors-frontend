@@ -37,3 +37,12 @@ export const useCreateWarehouses = async (
   mutate("/api/warehouses");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetWarehouseCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/warehouses?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};
