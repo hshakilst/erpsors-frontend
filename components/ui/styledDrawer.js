@@ -102,7 +102,7 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        <StyledAccordion label={"Tab-Focus"}></StyledAccordion>
+        <StyledAccordion label={"Inventory"}></StyledAccordion>
         <StyledAccordion label={"Active"}></StyledAccordion>
         <StyledAccordion label={"Initial"}></StyledAccordion>
         <StyledAccordion label={"Turnips"}></StyledAccordion>

@@ -16,6 +16,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import StyledSelectTable from "./styledSelectTable";
+import StyledDatagridTable from "./styledData-grid";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -681,7 +682,10 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper className={classes.paperTable}>
-                  <Box>{props.children}</Box>
+                  <Box>
+                    <StyledDatagridTable></StyledDatagridTable>
+                  </Box>
+                  {/* <Box>{props.children}</Box> */}
                 </Paper>
               </Grid>
             </Grid>
