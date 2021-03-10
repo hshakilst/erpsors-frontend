@@ -1,5 +1,4 @@
 import React from "react";
-import StyledNavbar from "@/components/ui/styledNavbar";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -52,7 +51,6 @@ const StoreRequisitions = (props) => {
 
   return (
     <BaseLayout>
-      <StyledNavbar></StyledNavbar>
       <div className={classes.root}>
         <Grid container spacing={2}>
           <Grid className={classes.gridItem} item lg={8} md={6} sm={12} xs={12}>

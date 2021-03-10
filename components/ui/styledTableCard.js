@@ -682,10 +682,7 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper className={classes.paperTable}>
-                  <Box>
-                    <StyledDatagridTable></StyledDatagridTable>
-                  </Box>
-                  {/* <Box>{props.children}</Box> */}
+                  <Box>{props.children}</Box>
                 </Paper>
               </Grid>
             </Grid>

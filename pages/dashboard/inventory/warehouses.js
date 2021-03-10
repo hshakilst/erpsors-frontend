@@ -43,7 +43,6 @@ const Warehouses = (props) => {
   const classes = useStyles();
   return (
     <BaseLayout>
-      <StyledNavbar></StyledNavbar>
       <div className={classes.root}>
         <Grid container spacing={2}>
           <Grid

@@ -188,14 +188,6 @@ const StyledAutoCompleteForm = ({
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "disabled", // disable autocomplete and autofill
-                endAdornment: (
-                  <React.Fragment>
-                    {loading ? (
-                      <CircularProgress color="inherit" size={20} />
-                    ) : null}
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
               }}
               required={required}
             />
