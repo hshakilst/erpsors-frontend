@@ -6,15 +6,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import StyledButton from "./styledButton";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Link from "next/link";
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,127 +71,7 @@ export default function SimpleAccordion(props) {
             }}
           ></StyledButton>
         </AccordionSummary>
-        <AccordionDetails>
-          <List
-            style={{
-              width: "100%",
-              background: "#EFF0F6",
-              borderRadius: "1rem",
-              paddingTop: "1rem",
-              paddingBottom: "1rem",
-              paddingRight: "1rem",
-              paddingLeft: "1rem",
-            }}
-          >
-            <ListItem alignItems="center">
-              {/* <ListItemIcon>
-                {
-                  <LocalMallOutlinedIcon
-                    style={{ color: "#14142B" }}
-                  ></LocalMallOutlinedIcon>
-                }
-              </ListItemIcon> */}
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/items">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Items
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/suppliers">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Suppliers
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/warehouses">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Warehouses
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/purchase-orders">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Purchases
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/store-requisitions">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Requisitions
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-          </List>
-        </AccordionDetails>
+        <AccordionDetails>{props.children}</AccordionDetails>
       </Accordion>
     </div>
   );
