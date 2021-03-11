@@ -222,6 +222,46 @@ const StyledDrawer = (props) => {
                 }
               />
             </ListItem>
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/dashboard/inventory/material-issues">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Issues
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/dashboard/inventory/store-receipts">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Receipts
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
           </List>
         </StyledAccordion>
         <StyledAccordion label={"Active"}></StyledAccordion>

@@ -536,7 +536,7 @@ const StyledFormItems = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetch={useGetWarehouseCodes}
+                      fetchOptions={useGetWarehouseCodes}
                     />
                   </div>
                 </Paper>

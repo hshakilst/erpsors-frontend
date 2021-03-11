@@ -16,6 +16,8 @@ import { useCreateMaterialIssue } from "@/actions/material-issues";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+import { useGetWarehouseCodes } from "@/actions/warehouses";
+import { useGetItemCodes } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -262,13 +264,31 @@ const StyledFormMaterialIssues = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledAutoCompleteForm
+                    {/* //TODO:After Impleminting floor requisitions implement StyledAutoComplete */}
+                    {/* <StyledAutoCompleteForm
                       label={"Floor Req. Code"}
                       name="reqCode"
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                    /> */}
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Floor Req. Code"}
+                      size={"small"}
+                      name={"reqCode"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.reqCode ? true : false}
                     />
                   </div>
                 </Paper>
@@ -293,6 +313,7 @@ const StyledFormMaterialIssues = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      fetchOptions={useGetItemCodes}
                     />
                   </div>
                 </Paper>
@@ -383,6 +404,7 @@ const StyledFormMaterialIssues = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      fetchOptions={useGetWarehouseCodes}
                     />
                   </div>
                 </Paper>

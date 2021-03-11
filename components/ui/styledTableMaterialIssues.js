@@ -267,7 +267,7 @@ export default function EnhancedTable() {
   const { error, data, loading, mutate } = useGetAllMaterialIssues();
 
   React.useEffect(() => {
-    if (data && !loading) setRows(data);
+    if (data) setRows(data);
   }, [data]);
 
   if (error) {

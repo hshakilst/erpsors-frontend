@@ -39,3 +39,12 @@ export const useCreateSupplier = async (
   mutate("/api/suppliers");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetSupplierCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/suppliers?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};

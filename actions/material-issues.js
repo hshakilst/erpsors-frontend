@@ -29,3 +29,12 @@ export const useCreateMaterialIssue = async (
   mutate("/api/material-issues");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetMaterialIssueCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/material-issues?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};

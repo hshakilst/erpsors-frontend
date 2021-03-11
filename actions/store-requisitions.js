@@ -25,3 +25,12 @@ export const useCreateStoreRequisition = async (
   mutate("/api/store-requisitions");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetStoreRequisitionCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/store-requisitions?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};

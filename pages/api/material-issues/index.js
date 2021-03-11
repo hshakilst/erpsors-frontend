@@ -54,18 +54,37 @@ const getAllMaterialIssues = () => {
   );
 };
 
+const getAllMaterialIssueCodes = () => {
+  return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
+};
+
 export default async (req, res) => {
   try {
     const {
-      query: { id, name },
+      query: { filter },
       method,
     } = req;
 
     switch (method) {
       case "GET":
         //FIXME:Pagination support for ui table
-        const query = await getAllMaterialIssues();
-        res.status(200).json(query.data);
+        if (filter === "codes") {
+          const query = await getAllMaterialIssueCodes();
+          const codes = [];
+          query.data.map((row) => {
+            const code = {
+              id: row[0],
+              code: row[1],
+            };
+            codes.push(code);
+          });
+          res.status(200).json(codes);
+        } else if (Object.keys(req.query).length === 0) {
+          const query = await getAllMaterialIssues();
+          res.status(200).json(query.data);
+        } else {
+          res.status(400).json({ error: true, data: "Bad Request" });
+        }
         break;
       case "POST":
         const {

@@ -16,6 +16,10 @@ import { useCreatePurchaseOrder } from "@/actions/purchase-orders";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+import {useGetStoreRequisitionCodes} from "@/actions/store-requisitions";
+import { useGetSupplierCodes } from "@/actions/suppliers";
+import { useGetWarehouseCodes } from "@/actions/warehouses";
+import {useGetItemCodes} from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -325,6 +329,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
+                      fetchOptions={useGetStoreRequisitionCodes}
                     />
                   </div>
                 </Paper>
@@ -350,6 +355,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
+                      fetchOptions={useGetItemCodes}
                     />
                   </div>
                 </Paper>
@@ -409,6 +415,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
+                      fetchOptions={useGetSupplierCodes}
                     />
                   </div>
                 </Paper>
@@ -533,6 +540,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
+                      fetchOptions={useGetWarehouseCodes}
                     />
                   </div>
                 </Paper>

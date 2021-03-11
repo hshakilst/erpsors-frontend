@@ -35,3 +35,12 @@ export const useCreatePurchaseOrder = async (
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetPurchaseOrderCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/purchase-orders?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};

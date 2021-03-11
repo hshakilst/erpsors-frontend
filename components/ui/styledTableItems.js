@@ -318,24 +318,21 @@ const EnhancedTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
-  const [count, setCount] = React.useState(0);
 
   const { error, data, loading, mutate } = useGetAllItems();
   React.useEffect(() => {
     if (data) {
-      if (data !== rows) setRows(data);
-      setCount(data.length);
+      setRows(data);
     }
   }, [data]);
 
-  // if (error) return <h1>error</h1>;
+  if (error) return <h1>error</h1>;
   if (loading) return <h1>loading</h1>;
 
   const handleDeleteMultiple = () => {
     const errors = [];
     selected.map(async (row) => {
       const { error, data } = await useDeleteItem(row);
-      console.log(JSON.stringify({ id: data.ref, error }));
       if (error) errors.push({ id: data.ref, error });
     });
     if (errors.length === 0)
@@ -388,7 +385,7 @@ const EnhancedTable = (props) => {
   };
 
   const handleChangePage = (event, newPage) => {
-    if (newPage <= count / rowsPerPage) setPage(newPage);
+    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -399,7 +396,7 @@ const EnhancedTable = (props) => {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -424,7 +421,7 @@ const EnhancedTable = (props) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={count}
+              rowCount={rows.length}
               headCells={props.headCells}
             />
             <TableBody>
@@ -501,7 +498,7 @@ const EnhancedTable = (props) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={count}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

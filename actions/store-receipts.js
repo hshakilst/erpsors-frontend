@@ -29,3 +29,12 @@ export const useCreateStoreReceipt = async (
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };
 };
+
+export const useGetStoreReceiptCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/store-receipts?filter=codes",
+    fetcher
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
+};
