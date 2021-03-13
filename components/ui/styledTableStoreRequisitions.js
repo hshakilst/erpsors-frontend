@@ -19,6 +19,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { useGetAllStoreRequisitions } from "@/actions/store-requisitions";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -60,7 +61,12 @@ const headCells = [
     disablePadding: false,
     label: "Required Qty",
   },
-  { id: "warehouse", numeric: false, disablePadding: false, label: "Warehouse" },
+  {
+    id: "warehouse",
+    numeric: false,
+    disablePadding: false,
+    label: "Warehouse",
+  },
   { id: "notes", numeric: false, disablePadding: false, label: "Notes" },
 ];
 
@@ -239,7 +245,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+const EnhancedTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
@@ -395,4 +401,6 @@ export default function EnhancedTable() {
       </Paper>
     </div>
   );
-}
+};
+
+export default withSnackbar(EnhancedTable);

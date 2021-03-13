@@ -55,7 +55,6 @@ const headCells = [
   },
   { id: "company", numeric: false, disablePadding: false, label: "Company" },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
-  { id: "item", numeric: false, disablePadding: false, label: "Item" },
   {
     id: "opnBalance",
     numeric: true,
@@ -156,7 +155,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -415,7 +413,6 @@ export default function EnhancedTable() {
                       </TableCell>
                       <TableCell align="left">{row.company}</TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.item}</TableCell>
                       <TableCell align="right">{row.opnBalance}</TableCell>
                       <TableCell align="left">{row.phone}</TableCell>
                       <TableCell align="left">{row.address}</TableCell>

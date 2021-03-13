@@ -30,11 +30,46 @@ export const useCreateStoreReceipt = async (
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetStoreReceiptCodes = () => {
+export const useGetAllStoreReceiptCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/store-receipts?filter=codes",
     fetcher
   );
 
   return { data, error, loading: !data && !error, ...rest };
+};
+
+export const useDeleteStoreReceiptById = async (id) => {
+  const res = await axios.delete(`/api/store-receipts/${id}`);
+  mutate("/api/store-receipts");
+  return { error: res.data.error, data: res.data.data };
+};
+
+export const useGetStoreReceiptById = (id) => {
+  const { data, error, ...rest } = useSWR(
+    id ? `/api/store-receipts/${id}` : null,
+    fetcher
+  );
+  return { data, error, loading: !data && !error, ...rest };
+};
+
+export const useUpdateStoreReceiptById = async (
+  id,
+  poCode,
+  item,
+  valueRate,
+  recQty,
+  warehouse,
+  notes
+) => {
+  const res = await axios.patch(`/api/store-receipts/${id}`, {
+    poCode,
+    item,
+    valueRate,
+    recQty,
+    warehouse,
+    notes,
+  });
+  mutate("/api/store-receipts");
+  return { error: res.data.error, data: res.data.data };
 };

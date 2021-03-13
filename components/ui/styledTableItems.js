@@ -18,7 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
-import { useGetAllItems, useDeleteItem } from "@/actions/items";
+import { useGetAllItems, useDeleteItemById } from "@/actions/items";
 import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
@@ -186,6 +186,7 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const [isDisabledDelete, setIsDisabledDelete] = React.useState(false);
+
   const handleRefresh = () => {
     props.refreshRows();
   };
@@ -196,7 +197,7 @@ const EnhancedTableToolbar = (props) => {
       setTimeout(async () => {
         await props.handleDelete();
         setIsDisabledDelete(false);
-      }, 500);
+      }, 1000);
     }
   };
   return (
@@ -332,7 +333,7 @@ const EnhancedTable = (props) => {
   const handleDeleteMultiple = () => {
     const errors = [];
     selected.map(async (row) => {
-      const { error, data } = await useDeleteItem(row);
+      const { error, data } = await useDeleteItemById(row);
       if (error) errors.push({ id: data.ref, error });
     });
     if (errors.length === 0)
@@ -405,7 +406,6 @@ const EnhancedTable = (props) => {
           refreshRows={mutate}
           numSelected={selected.length}
           handleDelete={handleDeleteMultiple}
-          enqueueSnackbar={props.enqueueSnackbar}
         />
         <TableContainer>
           <Table
@@ -475,7 +475,7 @@ const EnhancedTable = (props) => {
                       </TableCell>
                       <TableCell align="left">
                         {row.warehouse?.id
-                          ? `${row.warehouse.id}: ${row.warehouse.name}`
+                          ? `${row.warehouse.code}: ${row.warehouse.name}`
                           : "(Empty)"}
                       </TableCell>
                       <TableCell align="left">

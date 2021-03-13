@@ -17,8 +17,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useGetAllMaterialIssues } from "@/actions/material-issues";
+import {
+  useGetAllMaterialIssues,
+  useDeleteMaterialIssueById,
+} from "@/actions/material-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -152,9 +156,20 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
+  const [isDisabledDelete, setIsDisabledDelete] = React.useState(false);
 
   const handleRefresh = () => {
     props.refreshRows();
+  };
+
+  const handleDelete = () => {
+    if (confirm("Delete selected items?")) {
+      setIsDisabledDelete(true);
+      setTimeout(async () => {
+        await props.handleDelete();
+        setIsDisabledDelete(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -196,7 +211,11 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton aria-label="delete">
+          <IconButton
+            disabled={isDisabledDelete}
+            aria-label="delete"
+            onClick={handleDelete}
+          >
             <DeleteIcon style={{ color: "#14142B" }} />
           </IconButton>
         </Tooltip>
@@ -256,7 +275,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+const EnhancedTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
@@ -279,6 +298,26 @@ export default function EnhancedTable() {
     //FIXME: Loading screen for table
     // setRows([{ name: "Loading" }]);
   }
+
+  const handleDeleteMultiple = () => {
+    const errors = [];
+    selected.map(async (rowID) => {
+      const { error, data } = await useDeleteMaterialIssueById(rowID);
+      if (error) errors.push({ id: data.ref, error });
+    });
+    if (errors.length === 0)
+      setTimeout(() => {
+        props.enqueueSnackbar(
+          `${JSON.stringify({
+            errors: errors,
+          })}`,
+          {
+            variant: "success",
+          }
+        );
+        setSelected([]);
+      }, 1500);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -335,6 +374,7 @@ export default function EnhancedTable() {
         <EnhancedTableToolbar
           refreshRows={mutate}
           numSelected={selected.length}
+          handleDelete={handleDeleteMultiple}
         />
         <TableContainer>
           <Table
@@ -389,7 +429,7 @@ export default function EnhancedTable() {
                       </TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">{row.issQty}</TableCell>
-                      <TableCell align="left">{`${row.warehouse.id}: ${row.warehouse.name}`}</TableCell>
+                      <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>
                   );
@@ -414,4 +454,6 @@ export default function EnhancedTable() {
       </Paper>
     </div>
   );
-}
+};
+
+export default withSnackbar(EnhancedTable);

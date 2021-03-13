@@ -17,7 +17,7 @@ import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetWarehouseCodes } from "@/actions/warehouses";
-import { useGetItemCodes } from "@/actions/items";
+import { useGetAllItemCodes } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -313,7 +313,7 @@ const StyledFormMaterialIssues = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetItemCodes}
+                      fetchOptions={useGetAllItemCodes}
                     />
                   </div>
                 </Paper>
