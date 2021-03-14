@@ -12,6 +12,7 @@ export const useCreatePurchaseOrder = async (
   code,
   reqCode,
   item,
+  rate,
   appQty,
   supplier,
   purMode,
@@ -24,6 +25,7 @@ export const useCreatePurchaseOrder = async (
     code,
     reqCode,
     item,
+    rate,
     appQty,
     supplier,
     purMode,
@@ -63,23 +65,23 @@ export const useUpdatePurchaseOrdersById = async (
   id,
   reqCode,
   item,
+  rate,
   appQty,
   supplier,
   purMode,
   creDays,
   purBy,
-  warehouse,
   notes
 ) => {
   const res = await axios.patch(`/api/purchase-orders/${id}`, {
     reqCode,
     item,
+    rate,
     appQty,
     supplier,
     purMode,
     creDays,
     purBy,
-    warehouse,
     notes,
   });
   mutate("/api/purchase-orders");

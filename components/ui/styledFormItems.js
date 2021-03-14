@@ -13,7 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
@@ -151,10 +151,8 @@ const StyledFormItems = (props) => {
     let name = data.name;
     let type = data.type;
     let opnQty = data.opnQty;
-    let priceRate = data.priceRate;
     let valueRate = data.valueRate;
     let unit = data.unit;
-    let warehouse = data.warehouse;
     let status = data.status;
     let group = data.group;
     let image = data.image;
@@ -166,10 +164,8 @@ const StyledFormItems = (props) => {
         name,
         type,
         opnQty,
-        priceRate,
         valueRate,
         unit,
-        warehouse,
         status,
         group,
         image,
@@ -366,9 +362,6 @@ const StyledFormItems = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="finished-good">
-                        {"Finished Goods"}
-                      </MenuItem>
                       <MenuItem value="sub-assembly">
                         {"Sub-Assemblies"}
                       </MenuItem>
@@ -410,7 +403,7 @@ const StyledFormItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -442,7 +435,7 @@ const StyledFormItems = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -464,7 +457,7 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Value Rate"}
+                      label={"Rate of Value"}
                       size={"small"}
                       name={"valueRate"}
                       //FIXME:Add validation pattern
@@ -516,7 +509,7 @@ const StyledFormItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -536,11 +529,11 @@ const StyledFormItems = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}

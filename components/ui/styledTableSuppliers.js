@@ -17,8 +17,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import { useGetAllSuppliers } from "@/actions/suppliers";
+import { useGetAllSuppliers, useDeleteSupplierById } from "@/actions/suppliers";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -176,9 +177,20 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
+  const [isDisabledDelete, setIsDisabledDelete] = React.useState(false);
 
   const handleRefresh = () => {
     props.refreshRows();
+  };
+
+  const handleDelete = () => {
+    if (confirm("Delete selected items?")) {
+      setIsDisabledDelete(true);
+      setTimeout(async () => {
+        await props.handleDelete();
+        setIsDisabledDelete(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -220,7 +232,11 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton aria-label="delete">
+          <IconButton
+            disabled={isDisabledDelete}
+            aria-label="delete"
+            onClick={handleDelete}
+          >
             <DeleteIcon style={{ color: "#14142B" }} />
           </IconButton>
         </Tooltip>
@@ -284,7 +300,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+const EnhancedTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
@@ -308,6 +324,26 @@ export default function EnhancedTable() {
     // setRows([{ name: "Loading" }]);
   }
 
+  const handleDeleteMultiple = () => {
+    const errors = [];
+    selected.map(async (rowID) => {
+      const { error, data } = await useDeleteSupplierById(rowID);
+      if (error) errors.push({ id: data.ref, error });
+    });
+    if (errors.length === 0)
+      setTimeout(() => {
+        props.enqueueSnackbar(
+          `${JSON.stringify({
+            errors: errors,
+          })}`,
+          {
+            variant: "success",
+          }
+        );
+        setSelected([]);
+      }, 1500);
+  };
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -316,19 +352,19 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -352,7 +388,7 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -363,6 +399,7 @@ export default function EnhancedTable() {
         <EnhancedTableToolbar
           refreshRows={mutate}
           numSelected={selected.length}
+          handleDelete={handleDeleteMultiple}
         />
         <TableContainer>
           <Table
@@ -444,4 +481,5 @@ export default function EnhancedTable() {
       </Paper>
     </div>
   );
-}
+};
+export default withSnackbar(EnhancedTable);

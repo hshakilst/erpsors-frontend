@@ -61,9 +61,15 @@ const headCells = [
     id: "reqCode",
     numeric: false,
     disablePadding: false,
-    label: "Store Req. Code",
+    label: "Req. Code",
   },
   { id: "item", numeric: false, disablePadding: false, label: "Item" },
+  {
+    id: "rate",
+    numeric: true,
+    disablePadding: false,
+    label: "Value Rate",
+  },
   {
     id: "appQty",
     numeric: true,
@@ -84,7 +90,7 @@ const headCells = [
   },
   {
     id: "creDays",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Credit Days",
   },
@@ -93,12 +99,6 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: "Purchased By",
-  },
-  {
-    id: "warehouse",
-    numeric: false,
-    disablePadding: false,
-    label: "Warehouse",
   },
   { id: "notes", numeric: false, disablePadding: false, label: "Notes" },
 ];
@@ -345,19 +345,19 @@ const EnhancedTable = (props) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -381,7 +381,7 @@ const EnhancedTable = (props) => {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -441,18 +441,18 @@ const EnhancedTable = (props) => {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{`${row.reqCode.id}`}</TableCell>
+                      <TableCell align="left">{row.reqCode.code}</TableCell>
                       <TableCell align="left">
-                        {`${row.item.id}: ${row.item.name}`}
+                        {`${row.item.code}: ${row.item.name}`}
                       </TableCell>
+                      <TableCell align="right">{row.rate}</TableCell>
                       <TableCell align="right">{row.appQty}</TableCell>
-                      <TableCell align="left">{`${row.supplier.id}: ${row.supplier.name}`}</TableCell>
+                      <TableCell align="left">{`${row.supplier.code}: ${row.supplier.name}`}</TableCell>
                       <TableCell align="left">{row.purMode}</TableCell>
-                      <TableCell align="right">
-                        {row.creDays || "N/A"}
+                      <TableCell align="left">
+                        {row.creDays ? `${row.creDays} Days` : "N/A"}
                       </TableCell>
                       <TableCell align="left">{row.purBy}</TableCell>
-                      <TableCell align="left">{`${row.warehouse.id}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>
                   );

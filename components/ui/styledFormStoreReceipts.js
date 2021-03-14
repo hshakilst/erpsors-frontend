@@ -16,7 +16,7 @@ import { useCreateStoreReceipt } from "@/actions/store-receipts";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 import { useGetAllItemCodes } from "@/actions/items";
 import { useGetAllPurchaseOrderCodes } from "@/actions/purchase-orders";
 
@@ -388,7 +388,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
                     />
                   </div>
                 </Paper>

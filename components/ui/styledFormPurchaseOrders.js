@@ -16,9 +16,8 @@ import { useCreatePurchaseOrder } from "@/actions/purchase-orders";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetStoreRequisitionCodes } from "@/actions/store-requisitions";
-import { useGetSupplierCodes } from "@/actions/suppliers";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllStoreRequisitionCodes } from "@/actions/store-requisitions";
+import { useGetAllSupplierCodes } from "@/actions/suppliers";
 import { useGetAllItemCodes } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
@@ -147,7 +146,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormPurchaseOrders = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, watch } = useForm();
+  const { register, handleSubmit, errors, control, watch, reset } = useForm();
   const watchPurMode = watch("purMode");
 
   const onSubmit = async (data) => {
@@ -155,12 +154,12 @@ const StyledFormPurchaseOrders = (props) => {
     let code = data.code;
     let reqCode = data.reqCode;
     let item = data.item;
+    let rate = data.rate;
     let appQty = data.appQty;
     let supplier = data.supplier;
     let purMode = data.purMode;
     let creDays = data.creDays;
     let purBy = data.purBy;
-    let warehouse = data.warehouse;
     let notes = data.notes;
 
     try {
@@ -168,12 +167,12 @@ const StyledFormPurchaseOrders = (props) => {
         code,
         reqCode,
         item,
+        rate,
         appQty,
         supplier,
         purMode,
         creDays,
         purBy,
-        warehouse,
         notes
       );
       if (!error)
@@ -329,7 +328,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
-                      fetchOptions={useGetStoreRequisitionCodes}
+                      fetchOptions={useGetAllStoreRequisitionCodes}
                     />
                   </div>
                 </Paper>
@@ -356,6 +355,40 @@ const StyledFormPurchaseOrders = (props) => {
                       control={control}
                       required={true}
                       fetchOptions={useGetAllItemCodes}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Rate"}
+                      size={"small"}
+                      required={true}
+                      name={"rate"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.rate ? true : false}
                     />
                   </div>
                 </Paper>
@@ -415,7 +448,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       required={true}
-                      fetchOptions={useGetSupplierCodes}
+                      fetchOptions={useGetAllSupplierCodes}
                     />
                   </div>
                 </Paper>
@@ -522,32 +555,6 @@ const StyledFormPurchaseOrders = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <StyledAutoCompleteForm
-                      label={"Warehouse"}
-                      name="warehouse"
-                      defaultValue={null}
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      control={control}
-                      required={true}
-                      fetchOptions={useGetWarehouseCodes}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
                 lg={!(watchPurMode === "credit") ? 12 : 6}
                 md={12}
                 sm={12}
@@ -605,6 +612,9 @@ const StyledFormPurchaseOrders = (props) => {
                 color: "#5F2EEA",
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
+              }}
+              onClick={() => {
+                reset();
               }}
             ></StyledButton>
           </div>

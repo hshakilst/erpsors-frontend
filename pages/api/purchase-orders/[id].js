@@ -16,12 +16,12 @@ const updatePurchaseOrderById = (
   id,
   reqCode,
   item,
+  rate,
   appQty,
   supplier,
   purMode,
   creDays,
   purBy,
-  warehouse,
   notes
 ) => {
   return db.query(
@@ -29,12 +29,12 @@ const updatePurchaseOrderById = (
       data: {
         reqCode,
         item,
+        rate,
         appQty,
         supplier,
         purMode,
         creDays,
         purBy,
-        warehouse,
         notes,
       },
     })
@@ -51,12 +51,12 @@ export default async (req, res) => {
     const {
       reqCode,
       item,
+      rate,
       appQty,
       supplier,
       purMode,
       creDays,
       purBy,
-      warehouse,
       notes,
     } = req.body;
 
@@ -70,12 +70,12 @@ export default async (req, res) => {
           id,
           reqCode,
           item,
+          rate,
           appQty,
           supplier,
           purMode,
           creDays,
           purBy,
-          warehouse,
           notes
         );
         res.status(200).json({ error: false, data: resUpdate });

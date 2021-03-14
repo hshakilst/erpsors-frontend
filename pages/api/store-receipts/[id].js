@@ -52,13 +52,10 @@ export default async (req, res) => {
       case "PATCH":
         const resUpdate = await updateStoreReceiptById(
           id,
-          reqCode,
+          poCode,
           item,
-          appQty,
-          supplier,
-          purMode,
-          creDays,
-          purBy,
+          valueRate,
+          recQty,
           warehouse,
           notes
         );

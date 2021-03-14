@@ -73,19 +73,19 @@ function EnhancedTableHead(props) {
       id: "opnQty",
       numeric: true,
       disablePadding: false,
-      label: "Opn. Qty",
+      label: "Quantity",
     },
-    {
-      id: "priceRate",
-      numeric: true,
-      disablePadding: false,
-      label: "Price Rate",
-    },
+    // {
+    //   id: "priceRate",
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: "Price Rate",
+    // },
     {
       id: "valueRate",
       numeric: true,
       disablePadding: false,
-      label: "Value Rate",
+      label: "Rate",
     },
     {
       id: "unit",
@@ -93,12 +93,12 @@ function EnhancedTableHead(props) {
       disablePadding: false,
       label: "Unit",
     },
-    {
-      id: "warehouse",
-      numeric: false,
-      disablePadding: false,
-      label: "Warehouse",
-    },
+    // {
+    //   id: "warehouse",
+    //   numeric: false,
+    //   disablePadding: false,
+    //   label: "Warehouse",
+    // },
     {
       id: "status",
       numeric: false,
@@ -464,20 +464,20 @@ const EnhancedTable = (props) => {
                       <TableCell align="right">
                         {row.opnQty ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="right">
+                      {/* <TableCell align="right">
                         {row.priceRate ?? "(Empty)"}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="right">
                         {row.valueRate ?? "(Empty)"}
                       </TableCell>
                       <TableCell align="left">
                         {row.unit ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="left">
+                      {/* <TableCell align="left">
                         {row.warehouse?.id
                           ? `${row.warehouse.code}: ${row.warehouse.name}`
                           : "(Empty)"}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="left">
                         {row.status ?? "(Empty)"}
                       </TableCell>
