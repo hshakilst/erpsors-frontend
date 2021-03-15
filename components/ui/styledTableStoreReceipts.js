@@ -65,10 +65,22 @@ const headCells = [
   },
   { id: "item", numeric: false, disablePadding: false, label: "Item" },
   {
+    id: "opnRate",
+    numeric: true,
+    disablePadding: false,
+    label: "Opening Rate",
+  },
+  {
+    id: "opnQty",
+    numeric: true,
+    disablePadding: false,
+    label: "Opening Qty.",
+  },
+  {
     id: "valueRate",
     numeric: true,
     disablePadding: false,
-    label: "Rate of Value",
+    label: "Received Rate",
   },
   {
     id: "recQty",
@@ -140,6 +152,10 @@ const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
+    minHeight: "0px",
+    "& @media (min-width: 600px) .MuiToolbar-regular": {
+      minHeight: "0px",
+    },
   },
   highlight:
     theme.palette.type === "light"
@@ -423,13 +439,15 @@ const EnhancedTable = (props) => {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{row.poCode.id}</TableCell>
+                      <TableCell align="left">{row.poCode.code}</TableCell>
                       <TableCell align="left">
-                        {`${row.item.id}: ${row.item.name}`}
+                        {`${row.item.code}: ${row.item.name}`}
                       </TableCell>
+                      <TableCell align="right">{row.opnRate}</TableCell>
+                      <TableCell align="right">{row.opnQty}</TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">{row.recQty}</TableCell>
-                      <TableCell align="left">{`${row.warehouse.id}: ${row.warehouse.name}`}</TableCell>
+                      <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>
                   );

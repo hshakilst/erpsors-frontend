@@ -4,7 +4,7 @@ import { SentryInitialize } from "@/libs/sentry";
 
 SentryInitialize();
 
-const createMaterialIssue = (
+const createStoreIssue = (
   code,
   reqCode,
   item,
@@ -14,7 +14,7 @@ const createMaterialIssue = (
   notes
 ) => {
   return db.query(
-    q.Create(q.Collection("material_issues"), {
+    q.Create(q.Collection("store_issues"), {
       data: {
         code: code ?? "",
         reqCode: reqCode ?? "",
@@ -28,10 +28,10 @@ const createMaterialIssue = (
   );
 };
 
-const getAllMaterialIssues = () => {
+const getAllStoreIssues = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_material_issues"))),
+      q.Paginate(q.Match(q.Index("all_store_issues"))),
       q.Lambda(
         "docRef",
         q.Let(
@@ -54,7 +54,7 @@ const getAllMaterialIssues = () => {
   );
 };
 
-const getAllMaterialIssueCodes = () => {
+const getAllStoreIssueCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
 };
 
@@ -69,7 +69,7 @@ export default async (req, res) => {
       case "GET":
         //FIXME:Pagination support for ui table
         if (filter === "codes") {
-          const query = await getAllMaterialIssueCodes();
+          const query = await getAllStoreIssueCodes();
           const codes = [];
           query.data.map((row) => {
             const code = {
@@ -80,7 +80,7 @@ export default async (req, res) => {
           });
           res.status(200).json(codes);
         } else if (Object.keys(req.query).length === 0) {
-          const query = await getAllMaterialIssues();
+          const query = await getAllStoreIssues();
           res.status(200).json(query.data);
         } else {
           res.status(400).json({ error: true, data: "Bad Request" });
@@ -97,7 +97,7 @@ export default async (req, res) => {
           notes,
         } = req.body;
 
-        const result = await createMaterialIssue(
+        const result = await createStoreIssue(
           code,
           reqCode,
           item,

@@ -13,8 +13,6 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateStoreReceipt } from "@/actions/store-receipts";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 import { useGetAllItemCodes } from "@/actions/items";

@@ -18,9 +18,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import {
-  useGetAllMaterialIssues,
-  useDeleteMaterialIssueById,
-} from "@/actions/material-issues";
+  useGetAllStoreIssues,
+  useDeleteStoreIssueById,
+} from "@/actions/store-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 
@@ -65,10 +65,22 @@ const headCells = [
   },
   { id: "item", numeric: false, disablePadding: false, label: "Item" },
   {
+    id: "opnRate",
+    numeric: true,
+    disablePadding: false,
+    label: "Opening Rate",
+  },
+  {
+    id: "opnQty",
+    numeric: true,
+    disablePadding: false,
+    label: "Opening Qty.",
+  },
+  {
     id: "valueRate",
     numeric: true,
     disablePadding: false,
-    label: "Rate of Value",
+    label: "Issued Rate",
   },
   {
     id: "issQty",
@@ -140,6 +152,10 @@ const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
+    minHeight: "0px",
+    "& @media (min-width: 600px) .MuiToolbar-regular": {
+      minHeight: "0px",
+    },
   },
   highlight:
     theme.palette.type === "light"
@@ -205,7 +221,7 @@ const EnhancedTableToolbar = (props) => {
             letterSpacing: "0.047rem",
           }}
         >
-          {"Material Issues"}
+          {"Store Issues"}
         </Typography>
       )}
 
@@ -283,7 +299,7 @@ const EnhancedTable = (props) => {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { error, data, loading, mutate } = useGetAllMaterialIssues();
+  const { error, data, loading, mutate } = useGetAllStoreIssues();
 
   React.useEffect(() => {
     if (data) setRows(data);
@@ -302,7 +318,7 @@ const EnhancedTable = (props) => {
   const handleDeleteMultiple = () => {
     const errors = [];
     selected.map(async (rowID) => {
-      const { error, data } = await useDeleteMaterialIssueById(rowID);
+      const { error, data } = await useDeleteStoreIssueById(rowID);
       if (error) errors.push({ id: data.ref, error });
     });
     if (errors.length === 0)
@@ -423,10 +439,12 @@ const EnhancedTable = (props) => {
                       >
                         {row.code}
                       </TableCell>
-                      <TableCell align="left">{row.reqCode.id}</TableCell>
+                      <TableCell align="left">{row.reqCode}</TableCell>
                       <TableCell align="left">
-                        {`${row.item.id}: ${row.item.name}`}
+                        {`${row.item.code}: ${row.item.name}`}
                       </TableCell>
+                      <TableCell align="right">{row.opnRate}</TableCell>
+                      <TableCell align="right">{row.opnValue}</TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">{row.issQty}</TableCell>
                       <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>

@@ -12,7 +12,7 @@ import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateMaterialIssue } from "@/actions/material-issues";
+import { useCreateStoreIssue } from "@/actions/store-issues";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StyledFormMaterialIssues = (props) => {
+const StyledFormStoreIssues = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, control } = useForm();
 
@@ -122,7 +122,7 @@ const StyledFormMaterialIssues = (props) => {
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateMaterialIssue(
+      const { error, data } = await useCreateStoreIssue(
         code,
         reqCode,
         item,
@@ -170,7 +170,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Material Issues
+            Store Issues
           </Typography>
           <Typography
             style={{
@@ -180,7 +180,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a material issue
+            Create a store issue
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -478,4 +478,4 @@ const StyledFormMaterialIssues = (props) => {
   );
 };
 
-export default withSnackbar(StyledFormMaterialIssues);
+export default withSnackbar(StyledFormStoreIssues);

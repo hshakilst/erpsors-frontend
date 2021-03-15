@@ -225,7 +225,7 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/material-issues">
+                  <Link href="/dashboard/inventory/store-issues">
                     <a>
                       <Typography
                         style={{
@@ -264,9 +264,9 @@ const StyledDrawer = (props) => {
             </ListItem>
           </List>
         </StyledAccordion>
-        <StyledAccordion label={"Active"}></StyledAccordion>
+        {/* <StyledAccordion label={"Active"}></StyledAccordion>
         <StyledAccordion label={"Initial"}></StyledAccordion>
-        <StyledAccordion label={"Turnips"}></StyledAccordion>
+        <StyledAccordion label={"Turnips"}></StyledAccordion> */}
       </List>
       <List
         style={{
@@ -281,9 +281,9 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
-        <StyledAccordion label={"Initial"}></StyledAccordion>
-        <StyledAccordion label={"Turnips"}></StyledAccordion>
-        <StyledAccordion label={"Broccoil"}></StyledAccordion>
+        <StyledAccordion label={"Account"}></StyledAccordion>
+        <StyledAccordion label={"Settings"}></StyledAccordion>
+        <StyledAccordion label={"Logout"}></StyledAccordion>
       </List>
     </div>
   );

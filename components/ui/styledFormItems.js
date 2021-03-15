@@ -150,7 +150,7 @@ const StyledFormItems = (props) => {
     let code = data.code;
     let name = data.name;
     let type = data.type;
-    let opnQty = data.opnQty;
+    let qty = data.qty;
     let valueRate = data.valueRate;
     let unit = data.unit;
     let status = data.status;
@@ -163,7 +163,7 @@ const StyledFormItems = (props) => {
         code,
         name,
         type,
-        opnQty,
+        qty,
         valueRate,
         unit,
         status,
@@ -393,12 +393,12 @@ const StyledFormItems = (props) => {
                       }}
                       label={"Opening Qty."}
                       size={"small"}
-                      name={"opnQty"}
+                      name={"qty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnQty ? true : false}
+                      error={errors.qty ? true : false}
                     />
                   </div>
                 </Paper>

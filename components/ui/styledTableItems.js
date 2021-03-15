@@ -70,7 +70,7 @@ function EnhancedTableHead(props) {
     { id: "name", numeric: false, disablePadding: false, label: "Name" },
     { id: "type", numeric: false, disablePadding: false, label: "Type" },
     {
-      id: "opnQty",
+      id: "qty",
       numeric: true,
       disablePadding: false,
       label: "Quantity",
@@ -462,7 +462,7 @@ const EnhancedTable = (props) => {
                         {row.type ?? "(Empty)"}
                       </TableCell>
                       <TableCell align="right">
-                        {row.opnQty ?? "(Empty)"}
+                        {row.qty ?? "(Empty)"}
                       </TableCell>
                       {/* <TableCell align="right">
                         {row.priceRate ?? "(Empty)"}

@@ -2,11 +2,11 @@ import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledFormMaterialIssues from "@/components/ui/styledFormMaterialIssues";
+import StyledFormStoreIssues from "@/components/ui/styledFormStoreIssues";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableMaterialIssues from "@/components/ui/styledTableMaterialIssues";
+import StyledTableStoreIssues from "@/components/ui/styledTableStoreIssues";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const MaterialIssues = (props) => {
+const StoreIssues = (props) => {
   const classes = useStyles();
 
   return (
@@ -55,7 +55,7 @@ const MaterialIssues = (props) => {
         <Grid container spacing={2}>
           <Grid className={classes.gridItem} item lg={8} md={6} sm={12} xs={12}>
             <Paper className={classes.paper}>
-              <StyledFormMaterialIssues></StyledFormMaterialIssues>
+              <StyledFormStoreIssues></StyledFormStoreIssues>
             </Paper>
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
@@ -73,7 +73,7 @@ const MaterialIssues = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableMaterialIssues></StyledTableMaterialIssues>
+                <StyledTableStoreIssues></StyledTableStoreIssues>
               </StyledTableCard>
             </Paper>
           </Grid>
@@ -83,4 +83,4 @@ const MaterialIssues = (props) => {
   );
 };
 
-export default MaterialIssues;
+export default StoreIssues;

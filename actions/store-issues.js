@@ -2,13 +2,13 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "@/actions";
 import axios from "axios";
 
-export const useGetAllMaterialIssues = () => {
-  const { data, error, ...rest } = useSWR("/api/material-issues", fetcher);
+export const useGetAllStoreIssues = () => {
+  const { data, error, ...rest } = useSWR("/api/store-issues", fetcher);
 
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateMaterialIssue = async (
+export const useCreateStoreIssue = async (
   code,
   reqCode,
   item,
@@ -17,7 +17,7 @@ export const useCreateMaterialIssue = async (
   warehouse,
   notes
 ) => {
-  const res = await axios.post("/api/material-issues", {
+  const res = await axios.post("/api/store-issues", {
     code,
     reqCode,
     item,
@@ -26,34 +26,34 @@ export const useCreateMaterialIssue = async (
     warehouse,
     notes,
   });
-  mutate("/api/material-issues");
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetMaterialIssueCodes = () => {
+export const useGetStoreIssueCodes = () => {
   const { data, error, ...rest } = useSWR(
-    "/api/material-issues?filter=codes",
+    "/api/store-issues?filter=codes",
     fetcher
   );
 
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useDeleteMaterialIssueById = async (id) => {
-  const res = await axios.delete(`/api/material-issues/${id}`);
-  mutate("/api/material-issues");
+export const useDeleteStoreIssueById = async (id) => {
+  const res = await axios.delete(`/api/store-issues/${id}`);
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetMaterialIssuesById = (id) => {
+export const useGetStoreIssuesById = (id) => {
   const { data, error, ...rest } = useSWR(
-    id ? `/api/material-issues/${id}` : null,
+    id ? `/api/store-issues/${id}` : null,
     fetcher
   );
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdateMaterialIssuesById = async (
+export const useUpdateStoreIssuesById = async (
   id,
   reqCode,
   item,
@@ -62,7 +62,7 @@ export const useUpdateMaterialIssuesById = async (
   warehouse,
   notes
 ) => {
-  const res = await axios.patch(`/api/material-issues/${id}`, {
+  const res = await axios.patch(`/api/store-issues/${id}`, {
     reqCode,
     item,
     valueRate,
@@ -70,6 +70,6 @@ export const useUpdateMaterialIssuesById = async (
     warehouse,
     notes,
   });
-  mutate("/api/material-issues");
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };

@@ -4,15 +4,15 @@ import { query as q } from "faunadb";
 
 SentryInitialize();
 
-const getMaterialIssuesById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("material_issues"), id)));
+const getStoreIssuesById = (id) => {
+  return db.query(q.Get(q.Ref(q.Collection("store_issues"), id)));
 };
 
-const deleteMaterialIssuesById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("material_issues"), id)));
+const deleteStoreIssuesById = (id) => {
+  return db.query(q.Delete(q.Ref(q.Collection("store_issues"), id)));
 };
 
-const updateMaterialIssuesById = (
+const updateStoreIssuesById = (
   id,
   reqCode,
   item,
@@ -22,7 +22,7 @@ const updateMaterialIssuesById = (
   notes
 ) => {
   return db.query(
-    q.Update(q.Ref(q.Collection("material_issues"), id), {
+    q.Update(q.Ref(q.Collection("store_issues"), id), {
       data: {
         reqCode,
         item,
@@ -46,11 +46,11 @@ export default async (req, res) => {
 
     switch (method) {
       case "GET":
-        const query = await getMaterialIssuesById(id);
+        const query = await getStoreIssuesById(id);
         res.status(200).json(query.data);
         break;
       case "PATCH":
-        const resUpdate = await updateMaterialIssuesById(
+        const resUpdate = await updateStoreIssuesById(
           id,
           reqCode,
           item,
@@ -62,7 +62,7 @@ export default async (req, res) => {
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":
-        const resDelete = await deleteMaterialIssuesById(id);
+        const resDelete = await deleteStoreIssuesById(id);
         res.status(200).json({ error: false, data: resDelete });
         break;
       default:

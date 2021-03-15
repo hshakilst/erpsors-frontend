@@ -128,6 +128,10 @@ const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
+    minHeight: "0px",
+    "& @media (min-width: 600px) .MuiToolbar-regular": {
+      minHeight: "0px",
+    },
   },
   highlight:
     theme.palette.type === "light"

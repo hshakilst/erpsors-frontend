@@ -507,9 +507,6 @@ const StyledFormSuppliers = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="finished-good">
-                        {"Finished Goods"}
-                      </MenuItem>
                       <MenuItem value="sub-assembly">
                         {"Sub-Assemblies"}
                       </MenuItem>
