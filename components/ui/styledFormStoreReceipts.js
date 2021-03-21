@@ -13,12 +13,10 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateStoreReceipt } from "@/actions/store-receipts";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
-import { useGetItemCodes } from "@/actions/items";
-import { useGetPurchaseOrderCodes } from "@/actions/purchase-orders";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllItemCodes } from "@/actions/items";
+import { useGetAllPurchaseOrderCodes } from "@/actions/purchase-orders";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -118,7 +116,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormStoreReceipts = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -292,7 +290,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetPurchaseOrderCodes}
+                      fetchOptions={useGetAllPurchaseOrderCodes}
                     />
                   </div>
                 </Paper>
@@ -317,7 +315,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetItemCodes}
+                      fetchOptions={useGetAllItemCodes}
                     />
                   </div>
                 </Paper>
@@ -408,7 +406,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
                     />
                   </div>
                 </Paper>
@@ -474,6 +472,7 @@ const StyledFormStoreReceipts = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
+              onClick={() => reset()}
             ></StyledButton>
           </div>
         </div>

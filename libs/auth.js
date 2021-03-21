@@ -18,9 +18,14 @@ export const useAuth = () => {
 
 export const withAuthUser = (Component) => {
   return (props) => {
+    const [user, setUser] = React.useState(null);
     const { data, error, loading } = useGetUser();
+
+    React.useEffect(() => {
+      if (data) setUser(data.data);
+    }, [data]);
     if (error) return <Redirect to={"/login"} ssr={true}></Redirect>;
-    if (!data && loading)
+    if (loading)
       return (
         <BaseLayout className="dashboard">
           <Skeleton variant="text" animation="wave" width="40ch" height="7ch" />
@@ -29,13 +34,12 @@ export const withAuthUser = (Component) => {
           <Skeleton variant="text" animation="wave" width="40ch" height="5ch" />
         </BaseLayout>
       );
-    if (!data?.data.emailVerified)
+    if (!user?.emailVerified)
       return (
         <BaseLayout className="dashboard">
           <h3>Your account is not verified yet!</h3>
         </BaseLayout>
       );
-    const user = data?.data ?? null;
     return <Component user={user} {...props}></Component>;
   };
 };

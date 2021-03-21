@@ -1,4 +1,4 @@
-import { db } from "@/libs/fauna";
+import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
 
@@ -8,23 +8,30 @@ const createStoreReceipt = (
   code,
   poCode,
   item,
+  opnRate,
+  opnQty,
   valueRate,
   recQty,
   warehouse,
   notes
 ) => {
   return db.query(
-    q.Create(q.Collection("store_receipts"), {
-      data: {
-        code: code ?? "",
-        poCode: poCode ?? "",
-        item: item ?? "",
-        valueRate: valueRate ?? "",
-        recQty: recQty ?? "",
-        warehouse: warehouse ?? "",
-        notes: notes ?? "",
-      },
-    })
+    q.Do(
+      q.Create(q.Collection("store_receipts"), {
+        data: {
+          code: code ?? "",
+          poCode: poCode ?? "",
+          item: item ?? "",
+          opnRate: opnRate ?? "",
+          opnQty: opnQty ?? "",
+          valueRate: valueRate ?? "",
+          recQty: recQty ?? "",
+          warehouse: warehouse ?? "",
+          notes: notes ?? "",
+        },
+      }),
+      q.Call("OnReceiveUpdateItem", item.id, recQty, valueRate)
+    )
   );
 };
 
@@ -43,6 +50,8 @@ const getAllStoreReceipts = () => {
             code: q.Select(["data", "code"], q.Var("doc")),
             poCode: q.Select(["data", "poCode"], q.Var("doc")),
             item: q.Select(["data", "item"], q.Var("doc")),
+            opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
+            opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
             valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
             recQty: q.Select(["data", "recQty"], q.Var("doc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
@@ -55,7 +64,6 @@ const getAllStoreReceipts = () => {
 };
 
 const getAllStoreReceiptCodes = () => {
-  //FIXME: Create Index "all_store_receipt_codes"
   return db.query(q.Paginate(q.Match(q.Index("all_store_receipt_codes"))));
 };
 
@@ -98,10 +106,16 @@ export default async (req, res) => {
           notes,
         } = req.body;
 
+        const query = await getOpeningItemRateQtyById(item.id);
+        const opnRate = query.data[0][0];
+        const opnQty = query.data[0][1];
+
         const result = await createStoreReceipt(
           code,
           poCode,
           item,
+          opnRate,
+          opnQty,
           valueRate,
           recQty,
           warehouse,

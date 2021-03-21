@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Controller } from "react-hook-form";
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledAutoCompleteForm = ({
-  onChange,
   control,
   name,
   label,
@@ -49,7 +48,6 @@ const StyledAutoCompleteForm = ({
   required,
   fetchOptions,
 }) => {
-
   const classes = useStyles();
   const { data, error, loading } = fetchOptions();
   const [options, setOptions] = React.useState([]);
@@ -68,7 +66,9 @@ const StyledAutoCompleteForm = ({
           options={options}
           loading={loading}
           autoHighlight
-          getOptionLabel={(option) => `${option.code}${option.name ? " : "+option.name : ""}`}
+          getOptionLabel={(option) =>
+            `${option.code}${option.name ? " : " + option.name : ""}`
+          }
           getOptionSelected={(option, value) => option.id === value.id} //FIXME:"Change equality condition to check id"
           renderInput={(params) => (
             <TextField
@@ -85,6 +85,17 @@ const StyledAutoCompleteForm = ({
                 autoComplete: "disabled", // disable autocomplete and autofill
               }}
               required={required}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <React.Fragment>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : null}
+                    {params.InputProps.endAdornment}
+                  </React.Fragment>
+                ),
+              }}
             />
           )}
           //TODO:"Render option menu

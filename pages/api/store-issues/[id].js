@@ -4,37 +4,31 @@ import { query as q } from "faunadb";
 
 SentryInitialize();
 
-const getPurchaseOrderById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("purchase_orders"), id)));
+const getStoreIssuesById = (id) => {
+  return db.query(q.Get(q.Ref(q.Collection("store_issues"), id)));
 };
 
-const deletePurchaseOrdersById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("purchase_orders"), id)));
+const deleteStoreIssuesById = (id) => {
+  return db.query(q.Delete(q.Ref(q.Collection("store_issues"), id)));
 };
 
-const updatePurchaseOrderById = (
+const updateStoreIssuesById = (
   id,
   reqCode,
   item,
-  rate,
-  appQty,
-  supplier,
-  purMode,
-  creDays,
-  purBy,
+  valueRate,
+  issQty,
+  warehouse,
   notes
 ) => {
   return db.query(
-    q.Update(q.Ref(q.Collection("purchase_orders"), id), {
+    q.Update(q.Ref(q.Collection("store_issues"), id), {
       data: {
         reqCode,
         item,
-        rate,
-        appQty,
-        supplier,
-        purMode,
-        creDays,
-        purBy,
+        valueRate,
+        issQty,
+        warehouse,
         notes,
       },
     })
@@ -48,40 +42,27 @@ export default async (req, res) => {
       method,
     } = req;
 
-    const {
-      reqCode,
-      item,
-      rate,
-      appQty,
-      supplier,
-      purMode,
-      creDays,
-      purBy,
-      notes,
-    } = req.body;
+    const { reqCode, item, valueRate, issQty, warehouse, notes } = req.body;
 
     switch (method) {
       case "GET":
-        const query = await getPurchaseOrderById(id);
+        const query = await getStoreIssuesById(id);
         res.status(200).json(query.data);
         break;
       case "PATCH":
-        const resUpdate = await updatePurchaseOrderById(
+        const resUpdate = await updateStoreIssuesById(
           id,
           reqCode,
           item,
-          rate,
-          appQty,
-          supplier,
-          purMode,
-          creDays,
-          purBy,
+          valueRate,
+          issQty,
+          warehouse,
           notes
         );
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":
-        const resDelete = await deletePurchaseOrdersById(id);
+        const resDelete = await deleteStoreIssuesById(id);
         res.status(200).json({ error: false, data: resDelete });
         break;
       default:

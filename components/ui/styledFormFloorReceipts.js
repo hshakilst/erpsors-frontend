@@ -184,7 +184,7 @@ export default function StyledFormFloorReceipts() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Material Issue Code"}
+                    label={"Store issue Code"}
                     size={"small"}
                   />
                 </div>

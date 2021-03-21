@@ -20,11 +20,9 @@ export const useCreateItem = async (
   code,
   name,
   type,
-  opnQty,
-  priceRate,
+  qty,
   valueRate,
   unit,
-  warehouse,
   status,
   group,
   image,
@@ -34,11 +32,9 @@ export const useCreateItem = async (
     code,
     name,
     type,
-    opnQty,
-    priceRate,
+    qty,
     valueRate,
     unit,
-    warehouse,
     status,
     group,
     image,
@@ -48,36 +44,30 @@ export const useCreateItem = async (
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useDeleteItem = async (id) => {
+export const useDeleteItemById = async (id) => {
   const res = await axios.delete(`/api/items/${id}`);
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useUpdateItem = async (
+export const useUpdateItemById = async (
   id,
-  code,
   name,
   type,
-  opnQty,
-  priceRate,
+  qty,
   valueRate,
   unit,
-  warehouse,
   status,
   group,
   image,
   notes
 ) => {
   const res = await axios.patch(`/api/items/${id}`, {
-    code,
     name,
     type,
-    opnQty,
-    priceRate,
+    qty,
     valueRate,
     unit,
-    warehouse,
     status,
     group,
     image,
@@ -87,7 +77,7 @@ export const useUpdateItem = async (
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetItemCodes = () => {
+export const useGetAllItemCodes = () => {
   const { data, error, ...rest } = useSWR("/api/items?filter=codes", fetcher);
 
   return { data, error, loading: !data && !error, ...rest };

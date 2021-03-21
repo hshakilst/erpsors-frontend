@@ -2,74 +2,74 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "@/actions";
 import axios from "axios";
 
-export const useGetAllStoreReceipts = () => {
-  const { data, error, ...rest } = useSWR("/api/store-receipts", fetcher);
+export const useGetAllStoreIssues = () => {
+  const { data, error, ...rest } = useSWR("/api/store-issues", fetcher);
 
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateStoreReceipt = async (
+export const useCreateStoreIssue = async (
   code,
-  poCode,
+  reqCode,
   item,
   valueRate,
-  recQty,
+  issQty,
   warehouse,
   notes
 ) => {
-  const res = await axios.post("/api/store-receipts", {
+  const res = await axios.post("/api/store-issues", {
     code,
-    poCode,
+    reqCode,
     item,
     valueRate,
-    recQty,
+    issQty,
     warehouse,
     notes,
   });
-  mutate("/api/store-receipts");
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetAllStoreReceiptCodes = () => {
+export const useGetStoreIssueCodes = () => {
   const { data, error, ...rest } = useSWR(
-    "/api/store-receipts?filter=codes",
+    "/api/store-issues?filter=codes",
     fetcher
   );
 
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useDeleteStoreReceiptById = async (id) => {
-  const res = await axios.delete(`/api/store-receipts/${id}`);
-  mutate("/api/store-receipts");
+export const useDeleteStoreIssueById = async (id) => {
+  const res = await axios.delete(`/api/store-issues/${id}`);
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetStoreReceiptById = (id) => {
+export const useGetStoreIssuesById = (id) => {
   const { data, error, ...rest } = useSWR(
-    id ? `/api/store-receipts/${id}` : null,
+    id ? `/api/store-issues/${id}` : null,
     fetcher
   );
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdateStoreReceiptById = async (
+export const useUpdateStoreIssuesById = async (
   id,
-  poCode,
+  reqCode,
   item,
   valueRate,
-  recQty,
+  issQty,
   warehouse,
   notes
 ) => {
-  const res = await axios.patch(`/api/store-receipts/${id}`, {
-    poCode,
+  const res = await axios.patch(`/api/store-issues/${id}`, {
+    reqCode,
     item,
     valueRate,
-    recQty,
+    issQty,
     warehouse,
     notes,
   });
-  mutate("/api/store-receipts");
+  mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
 };

@@ -14,8 +14,8 @@ import { useForm } from "react-hook-form";
 import { useCreateStoreRequisition } from "@/actions/store-requisitions";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
-import {useGetItemCodes} from "@/actions/items";
-import {useGetWarehouseCodes} from "@/actions/warehouses";
+import { useGetAllItemCodes } from "@/actions/items";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormStoreRequisitions = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -276,6 +276,7 @@ const StyledFormStoreRequisitions = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -300,7 +301,8 @@ const StyledFormStoreRequisitions = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetItemCodes}
+                      fetchOptions={useGetAllItemCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -334,6 +336,8 @@ const StyledFormStoreRequisitions = (props) => {
                         required: true,
                       })}
                       error={errors.reqQty ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -358,7 +362,8 @@ const StyledFormStoreRequisitions = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -424,6 +429,7 @@ const StyledFormStoreRequisitions = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
+              onClick={() => reset()}
             ></StyledButton>
           </div>
         </div>

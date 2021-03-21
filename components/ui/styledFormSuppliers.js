@@ -155,10 +155,9 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormSuppliers = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let company = data.company;
     let name = data.name;
@@ -313,6 +312,7 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -346,6 +346,7 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.company ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -379,6 +380,7 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.company ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -412,6 +414,8 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.opnBalance ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -445,6 +449,8 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.phone ? true : false}
+                      required
+                      type={"tel"}
                     />
                   </div>
                 </Paper>
@@ -478,6 +484,7 @@ const StyledFormSuppliers = (props) => {
                         required: true,
                       })}
                       error={errors.address ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -503,12 +510,10 @@ const StyledFormSuppliers = (props) => {
                       name="type"
                       defaultValue={""}
                       control={control}
+                      required
                     >
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
-                      </MenuItem>
-                      <MenuItem value="finished-good">
-                        {"Finished Goods"}
                       </MenuItem>
                       <MenuItem value="sub-assembly">
                         {"Sub-Assemblies"}
@@ -539,6 +544,7 @@ const StyledFormSuppliers = (props) => {
                       name="status"
                       defaultValue=""
                       control={control}
+                      required
                     >
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
@@ -599,7 +605,7 @@ const StyledFormSuppliers = (props) => {
                       name={"image"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.image ? true : false}
                     />
@@ -632,7 +638,7 @@ const StyledFormSuppliers = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -667,6 +673,7 @@ const StyledFormSuppliers = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
+              onClick={() => reset()}
             ></StyledButton>
           </div>
         </div>

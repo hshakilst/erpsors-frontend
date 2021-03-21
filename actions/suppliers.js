@@ -40,11 +40,56 @@ export const useCreateSupplier = async (
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetSupplierCodes = () => {
+export const useGetAllSupplierCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/suppliers?filter=codes",
     fetcher
   );
 
   return { data, error, loading: !data && !error, ...rest };
+};
+
+export const useDeleteSupplierById = async (id) => {
+  const res = await axios.delete(`/api/suppliers/${id}`);
+  mutate("/api/suppliers");
+  return { error: res.data.error, data: res.data.data };
+};
+
+export const useGetSupplierById = (id) => {
+  const { data, error, ...rest } = useSWR(
+    id ? `/api/suppliers/${id}` : null,
+    fetcher
+  );
+  return { data, error, loading: !data && !error, ...rest };
+};
+
+export const useUpdateSupplierById = async (
+  id,
+  company,
+  name,
+  type,
+  opnBalance,
+  // item,
+  address,
+  phone,
+  status,
+  group,
+  image,
+  notes
+) => {
+  const res = await axios.patch(`/api/suppliers/${id}`, {
+    company,
+    name,
+    type,
+    opnBalance,
+    // item,
+    address,
+    phone,
+    status,
+    group,
+    image,
+    notes,
+  });
+  mutate("/api/suppliers");
+  return { error: res.data.error, data: res.data.data };
 };

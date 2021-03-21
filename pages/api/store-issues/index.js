@@ -1,37 +1,44 @@
-import { db } from "@/libs/fauna";
+import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
 
 SentryInitialize();
 
-const createMaterialIssue = (
+const createStoreIssue = (
   code,
   reqCode,
   item,
+  opnRate,
+  opnQty,
   valueRate,
   issQty,
   warehouse,
   notes
 ) => {
   return db.query(
-    q.Create(q.Collection("material_issues"), {
-      data: {
-        code: code ?? "",
-        reqCode: reqCode ?? "",
-        item: item ?? "",
-        valueRate: valueRate ?? "",
-        issQty: issQty ?? "",
-        warehouse: warehouse ?? "",
-        notes: notes ?? "",
-      },
-    })
+    q.Do(
+      q.Create(q.Collection("store_issues"), {
+        data: {
+          code: code ?? "",
+          reqCode: reqCode ?? "",
+          item: item ?? "",
+          opnRate: opnRate ?? "",
+          opnQty: opnQty ?? "",
+          valueRate: valueRate ?? "",
+          issQty: issQty ?? "",
+          warehouse: warehouse ?? "",
+          notes: notes ?? "",
+        },
+      }),
+      q.Call("OnIssueUpdateItem", item.id, issQty)
+    )
   );
 };
 
-const getAllMaterialIssues = () => {
+const getAllStoreIssues = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_material_issues"))),
+      q.Paginate(q.Match(q.Index("all_store_issues"))),
       q.Lambda(
         "docRef",
         q.Let(
@@ -43,6 +50,8 @@ const getAllMaterialIssues = () => {
             code: q.Select(["data", "code"], q.Var("doc")),
             reqCode: q.Select(["data", "reqCode"], q.Var("doc")),
             item: q.Select(["data", "item"], q.Var("doc")),
+            opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
+            opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
             valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
             issQty: q.Select(["data", "issQty"], q.Var("doc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
@@ -54,7 +63,7 @@ const getAllMaterialIssues = () => {
   );
 };
 
-const getAllMaterialIssueCodes = () => {
+const getAllStoreIssueCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
 };
 
@@ -69,7 +78,7 @@ export default async (req, res) => {
       case "GET":
         //FIXME:Pagination support for ui table
         if (filter === "codes") {
-          const query = await getAllMaterialIssueCodes();
+          const query = await getAllStoreIssueCodes();
           const codes = [];
           query.data.map((row) => {
             const code = {
@@ -80,7 +89,7 @@ export default async (req, res) => {
           });
           res.status(200).json(codes);
         } else if (Object.keys(req.query).length === 0) {
-          const query = await getAllMaterialIssues();
+          const query = await getAllStoreIssues();
           res.status(200).json(query.data);
         } else {
           res.status(400).json({ error: true, data: "Bad Request" });
@@ -97,10 +106,16 @@ export default async (req, res) => {
           notes,
         } = req.body;
 
-        const result = await createMaterialIssue(
+        const query = await getOpeningItemRateQtyById(item.id);
+        const opnRate = query.data[0][0];
+        const opnQty = query.data[0][1];
+
+        const result = await createStoreIssue(
           code,
           reqCode,
           item,
+          opnRate,
+          opnQty,
           valueRate,
           issQty,
           warehouse,

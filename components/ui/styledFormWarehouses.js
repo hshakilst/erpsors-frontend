@@ -154,15 +154,14 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormWarehouses = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let name = data.name;
     let type = data.type;
-    let capacity = data.capacity;
-    let items = data.items;
+    // let capacity = data.capacity;
+    // let items = data.items;
     let incharge = data.incharge;
     let address = data.address;
     let phone = data.phone;
@@ -176,7 +175,7 @@ const StyledFormWarehouses = (props) => {
         code,
         name,
         type,
-        capacity,
+        // capacity,
         incharge,
         address,
         phone,
@@ -311,6 +310,7 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                      required
                     />
                     {/* <StyledAutoComplete
                       labels=
@@ -347,6 +347,7 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.name ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -372,6 +373,7 @@ const StyledFormWarehouses = (props) => {
                       name="type"
                       defaultValue={""}
                       control={control}
+                      required
                     >
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
@@ -387,7 +389,7 @@ const StyledFormWarehouses = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 className={classes.gridItem}
                 item
                 lg={6}
@@ -419,7 +421,7 @@ const StyledFormWarehouses = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -449,6 +451,7 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.incharge ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -482,6 +485,7 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.address ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -515,6 +519,8 @@ const StyledFormWarehouses = (props) => {
                         required: true,
                       })}
                       error={errors.phone ? true : false}
+                      required
+                      type={"tel"}
                     />
                   </div>
                 </Paper>
@@ -540,6 +546,7 @@ const StyledFormWarehouses = (props) => {
                       name="status"
                       defaultValue=""
                       control={control}
+                      required
                     >
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
@@ -600,7 +607,7 @@ const StyledFormWarehouses = (props) => {
                       name={"image"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.image ? true : false}
                     />
@@ -610,7 +617,7 @@ const StyledFormWarehouses = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={12}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -633,7 +640,7 @@ const StyledFormWarehouses = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -668,6 +675,7 @@ const StyledFormWarehouses = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
+              onClick={() => reset()}
             ></StyledButton>
           </div>
         </div>

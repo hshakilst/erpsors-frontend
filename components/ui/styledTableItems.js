@@ -18,7 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
-import { useGetAllItems, useDeleteItem } from "@/actions/items";
+import { useGetAllItems, useDeleteItemById } from "@/actions/items";
 import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
@@ -70,35 +70,35 @@ function EnhancedTableHead(props) {
     { id: "name", numeric: false, disablePadding: false, label: "Name" },
     { id: "type", numeric: false, disablePadding: false, label: "Type" },
     {
-      id: "opnQty",
-      numeric: true,
-      disablePadding: false,
-      label: "Opn. Qty",
-    },
-    {
-      id: "priceRate",
-      numeric: true,
-      disablePadding: false,
-      label: "Price Rate",
-    },
-    {
       id: "valueRate",
       numeric: true,
       disablePadding: false,
-      label: "Value Rate",
+      label: "Rate",
     },
+    {
+      id: "qty",
+      numeric: true,
+      disablePadding: false,
+      label: "Quantity",
+    },
+    // {
+    //   id: "priceRate",
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: "Price Rate",
+    // },
     {
       id: "unit",
       numeric: false,
       disablePadding: false,
       label: "Unit",
     },
-    {
-      id: "warehouse",
-      numeric: false,
-      disablePadding: false,
-      label: "Warehouse",
-    },
+    // {
+    //   id: "warehouse",
+    //   numeric: false,
+    //   disablePadding: false,
+    //   label: "Warehouse",
+    // },
     {
       id: "status",
       numeric: false,
@@ -186,6 +186,7 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
   const [isDisabledDelete, setIsDisabledDelete] = React.useState(false);
+
   const handleRefresh = () => {
     props.refreshRows();
   };
@@ -196,7 +197,7 @@ const EnhancedTableToolbar = (props) => {
       setTimeout(async () => {
         await props.handleDelete();
         setIsDisabledDelete(false);
-      }, 500);
+      }, 1000);
     }
   };
   return (
@@ -332,7 +333,7 @@ const EnhancedTable = (props) => {
   const handleDeleteMultiple = () => {
     const errors = [];
     selected.map(async (row) => {
-      const { error, data } = await useDeleteItem(row);
+      const { error, data } = await useDeleteItemById(row);
       if (error) errors.push({ id: data.ref, error });
     });
     if (errors.length === 0)
@@ -346,7 +347,7 @@ const EnhancedTable = (props) => {
           }
         );
         setSelected([]);
-      }, 1500);
+      }, 3000);
   };
 
   const handleRequestSort = (event, property) => {
@@ -405,7 +406,6 @@ const EnhancedTable = (props) => {
           refreshRows={mutate}
           numSelected={selected.length}
           handleDelete={handleDeleteMultiple}
-          enqueueSnackbar={props.enqueueSnackbar}
         />
         <TableContainer>
           <Table
@@ -462,22 +462,22 @@ const EnhancedTable = (props) => {
                         {row.type ?? "(Empty)"}
                       </TableCell>
                       <TableCell align="right">
-                        {row.opnQty ?? "(Empty)"}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.priceRate ?? "(Empty)"}
-                      </TableCell>
-                      <TableCell align="right">
                         {row.valueRate ?? "(Empty)"}
                       </TableCell>
+                      <TableCell align="right">
+                        {row.qty ?? "(Empty)"}
+                      </TableCell>
+                      {/* <TableCell align="right">
+                        {row.priceRate ?? "(Empty)"}
+                      </TableCell> */}
                       <TableCell align="left">
                         {row.unit ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="left">
+                      {/* <TableCell align="left">
                         {row.warehouse?.id
-                          ? `${row.warehouse.id}: ${row.warehouse.name}`
+                          ? `${row.warehouse.code}: ${row.warehouse.name}`
                           : "(Empty)"}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="left">
                         {row.status ?? "(Empty)"}
                       </TableCell>

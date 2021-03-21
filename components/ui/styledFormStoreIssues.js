@@ -12,12 +12,10 @@ import StyledButton from "./styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateMaterialIssue } from "@/actions/material-issues";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
+import { useCreateStoreIssue } from "@/actions/store-issues";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
-import { useGetItemCodes } from "@/actions/items";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllItemCodes, useGetItemById } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -115,9 +113,12 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StyledFormMaterialIssues = (props) => {
+const StyledFormStoreIssues = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, watch, reset } = useForm();
+
+  let watchItem = watch("item");
+  let { data: itemData } = useGetItemById(watchItem?.id);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -130,7 +131,7 @@ const StyledFormMaterialIssues = (props) => {
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateMaterialIssue(
+      const { error, data } = await useCreateStoreIssue(
         code,
         reqCode,
         item,
@@ -178,7 +179,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Material Issues
+            Store Issues
           </Typography>
           <Typography
             style={{
@@ -188,7 +189,7 @@ const StyledFormMaterialIssues = (props) => {
               letterSpacing: "0.047rem",
             }}
           >
-            Create a material issue
+            Create a store issue
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
@@ -266,6 +267,7 @@ const StyledFormMaterialIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      required
                       error={errors.code ? true : false}
                     />
                   </div>
@@ -308,6 +310,7 @@ const StyledFormMaterialIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      required
                       error={errors.reqCode ? true : false}
                     />
                   </div>
@@ -333,7 +336,8 @@ const StyledFormMaterialIssues = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetItemCodes}
+                      fetchOptions={useGetAllItemCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -366,7 +370,11 @@ const StyledFormMaterialIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      value={itemData ? itemData.valueRate : ""}
                       error={errors.valueRate ? true : false}
+                      readOnly
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -400,6 +408,8 @@ const StyledFormMaterialIssues = (props) => {
                         required: true,
                       })}
                       error={errors.issQty ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -424,7 +434,8 @@ const StyledFormMaterialIssues = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -455,7 +466,7 @@ const StyledFormMaterialIssues = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -490,7 +501,8 @@ const StyledFormMaterialIssues = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-            ></StyledButton>
+              onClick={() => reset()}
+            />
           </div>
         </div>
       </form>
@@ -498,4 +510,4 @@ const StyledFormMaterialIssues = (props) => {
   );
 };
 
-export default withSnackbar(StyledFormMaterialIssues);
+export default withSnackbar(StyledFormStoreIssues);

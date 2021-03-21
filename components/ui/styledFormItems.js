@@ -13,7 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateItem } from "@/actions/items";
-import { useGetWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
@@ -139,22 +139,21 @@ const useStyles = makeStyles((theme) =>
         display: "none",
       },
     },
+    '& input[type="file" i]': { appearance: "" },
   })
 );
 
 const StyledFormItems = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
     let code = data.code;
     let name = data.name;
     let type = data.type;
-    let opnQty = data.opnQty;
-    let priceRate = data.priceRate;
+    let qty = data.qty;
     let valueRate = data.valueRate;
     let unit = data.unit;
-    let warehouse = data.warehouse;
     let status = data.status;
     let group = data.group;
     let image = data.image;
@@ -165,11 +164,9 @@ const StyledFormItems = (props) => {
         code,
         name,
         type,
-        opnQty,
-        priceRate,
+        qty,
         valueRate,
         unit,
-        warehouse,
         status,
         group,
         image,
@@ -302,6 +299,7 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -335,6 +333,7 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.name ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -361,13 +360,11 @@ const StyledFormItems = (props) => {
                       //FIXME:Add validation pattern
                       control={control}
                       defaultValue={""}
+                      required
                       // error={errors.type ? true : false}
                     >
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
-                      </MenuItem>
-                      <MenuItem value="finished-good">
-                        {"Finished Goods"}
                       </MenuItem>
                       <MenuItem value="sub-assembly">
                         {"Sub-Assemblies"}
@@ -400,17 +397,19 @@ const StyledFormItems = (props) => {
                       }}
                       label={"Opening Qty."}
                       size={"small"}
-                      name={"opnQty"}
+                      name={"qty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnQty ? true : false}
+                      error={errors.qty ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -442,7 +441,7 @@ const StyledFormItems = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -464,7 +463,7 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Value Rate"}
+                      label={"Rate of Value"}
                       size={"small"}
                       name={"valueRate"}
                       //FIXME:Add validation pattern
@@ -472,6 +471,8 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.valueRate ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -502,6 +503,7 @@ const StyledFormItems = (props) => {
                       // error={errors.unit ? true : false}
                       control={control}
                       defaultValue={""}
+                      required
                     >
                       <MenuItem value="pair">{"Pairs"}</MenuItem>
                       <MenuItem value="pc">{"Pieces"}</MenuItem>
@@ -516,7 +518,7 @@ const StyledFormItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -536,11 +538,11 @@ const StyledFormItems = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetWarehouseCodes}
+                      fetchOptions={useGetAllWarehouseCodes}
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -567,6 +569,7 @@ const StyledFormItems = (props) => {
                       // error={errors.status ? true : false}
                       control={control}
                       defaultValue={""}
+                      required
                     >
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
@@ -700,7 +703,8 @@ const StyledFormItems = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-            ></StyledButton>
+              onClick={() => reset()}
+            />
           </div>
         </div>
       </form>
