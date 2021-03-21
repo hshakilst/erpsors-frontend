@@ -60,7 +60,9 @@ const MaterialReceipts = (props) => {
           </Grid>
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
             <Paper className={classes.paper}>
-              <StyledInventoryHistory></StyledInventoryHistory>
+              <StyledInventoryHistory
+                style={{ paddingBottom: "7.2rem" }}
+              ></StyledInventoryHistory>
             </Paper>
           </Grid>
           <Grid

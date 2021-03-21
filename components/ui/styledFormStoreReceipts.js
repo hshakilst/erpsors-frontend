@@ -105,6 +105,14 @@ const useStyles = makeStyles((theme) =>
         paddingTop: "0.5rem",
       },
     },
+    add: {
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+    },
   })
 );
 
@@ -184,19 +192,31 @@ const StyledFormStoreReceipts = (props) => {
             Create a store receipt
           </Typography>
         </div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", marginTop: ".5rem" }}>
           <div
             style={{
+              height: "1.3rem",
+              width: "1.3rem",
               textAlign: "right",
               float: "left",
               marginRight: "0.313rem",
+              border: "0.063rem solid #D9DBE9",
+              borderRadius: "1rem",
+              cursor: "pointer",
             }}
           >
             <AddOutlinedIcon
-              style={{ color: "#14142B", fontSize: "1.125rem" }}
+              style={{
+                color: "#14142B",
+                fontSize: "1.125rem",
+                marginRight: "0.018rem",
+              }}
             ></AddOutlinedIcon>
           </div>
-          <div style={{ textAlign: "right", float: "left" }}>
+          <div
+            className={classes.add}
+            style={{ textAlign: "right", float: "left" }}
+          >
             <Link
               component="button"
               variant="body2"
