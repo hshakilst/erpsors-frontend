@@ -417,7 +417,7 @@ const StyledFormStoreReceipts = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.notes ? true : false}
                     />
