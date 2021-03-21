@@ -1,4 +1,4 @@
-import { db } from "@/libs/fauna";
+import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
 
@@ -22,8 +22,8 @@ const createStoreReceipt = (
           code: code ?? "",
           poCode: poCode ?? "",
           item: item ?? "",
-          opnRate:opnRate ?? "",
-          opnQty:opnQty ?? "",
+          opnRate: opnRate ?? "",
+          opnQty: opnQty ?? "",
           valueRate: valueRate ?? "",
           recQty: recQty ?? "",
           warehouse: warehouse ?? "",
@@ -67,10 +67,6 @@ const getAllStoreReceiptCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_store_receipt_codes"))));
 };
 
-const getOpeningItemRateQtyById = (id)=>{
-  return db.query(q.Paginate(q.Match(q.Index("item_rate_qty_by_id"), id)));
-}
-
 export default async (req, res) => {
   try {
     const {
@@ -113,6 +109,7 @@ export default async (req, res) => {
         const query = await getOpeningItemRateQtyById(item.id);
         const opnRate = query.data[0][0];
         const opnQty = query.data[0][1];
+
         const result = await createStoreReceipt(
           code,
           poCode,

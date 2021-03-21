@@ -59,7 +59,7 @@ const headCells = [
   },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
   { id: "type", numeric: false, disablePadding: false, label: "Type" },
-  { id: "capacity", numeric: true, disablePadding: false, label: "Capacity" },
+  // { id: "capacity", numeric: true, disablePadding: false, label: "Capacity" },
   // {
   //   id: "items",
   //   numeric: false,
@@ -345,7 +345,7 @@ const EnhancedTable = (props) => {
           }
         );
         setSelected([]);
-      }, 1500);
+      }, 3000);
   };
 
   const handleRequestSort = (event, property) => {
@@ -403,6 +403,7 @@ const EnhancedTable = (props) => {
         <EnhancedTableToolbar
           refreshRows={mutate}
           numSelected={selected.length}
+          handleDelete={handleDeleteMultiple}
         />
         <TableContainer>
           <Table
@@ -453,7 +454,7 @@ const EnhancedTable = (props) => {
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="left">{row.type}</TableCell>
-                      <TableCell align="right">{row.capacity}</TableCell>
+                      {/* <TableCell align="right">{row.capacity}</TableCell> */}
                       {/* <TableCell align="left">{row.items}</TableCell> */}
                       <TableCell align="left">{row.incharge}</TableCell>
                       <TableCell align="left">{row.address}</TableCell>

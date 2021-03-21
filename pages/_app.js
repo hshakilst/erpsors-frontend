@@ -6,6 +6,7 @@ import theme from "@/components/ui/theme";
 import { SentryInitialize } from "@/libs/sentry";
 import { AuthProvider } from "@/libs/auth";
 import StyledNavbar from "@/components/ui/styledNavbar";
+
 SentryInitialize();
 
 function MyApp({ Component, pageProps, err }) {

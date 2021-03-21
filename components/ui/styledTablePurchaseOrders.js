@@ -338,7 +338,7 @@ const EnhancedTable = (props) => {
           }
         );
         setSelected([]);
-      }, 1500);
+      }, 3000);
   };
 
   const handleRequestSort = (event, property) => {

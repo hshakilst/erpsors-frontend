@@ -13,11 +13,9 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateStoreIssue } from "@/actions/store-issues";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import { useGetAllItemCodes } from "@/actions/items";
+import { useGetAllItemCodes, useGetItemById } from "@/actions/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -109,7 +107,10 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormStoreIssues = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, watch, reset } = useForm();
+
+  let watchItem = watch("item");
+  let { data: itemData } = useGetItemById(watchItem?.id);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -246,6 +247,7 @@ const StyledFormStoreIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      required
                       error={errors.code ? true : false}
                     />
                   </div>
@@ -288,6 +290,7 @@ const StyledFormStoreIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      required
                       error={errors.reqCode ? true : false}
                     />
                   </div>
@@ -314,6 +317,7 @@ const StyledFormStoreIssues = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllItemCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -346,7 +350,11 @@ const StyledFormStoreIssues = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      value={itemData ? itemData.valueRate : ""}
                       error={errors.valueRate ? true : false}
+                      readOnly
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -380,6 +388,8 @@ const StyledFormStoreIssues = (props) => {
                         required: true,
                       })}
                       error={errors.issQty ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -405,6 +415,7 @@ const StyledFormStoreIssues = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllWarehouseCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -435,7 +446,7 @@ const StyledFormStoreIssues = (props) => {
                       name={"notes"}
                       //FIXME:Add validation pattern
                       inputRef={register({
-                        required: true,
+                        required: false,
                       })}
                       error={errors.notes ? true : false}
                     />
@@ -470,7 +481,8 @@ const StyledFormStoreIssues = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-            ></StyledButton>
+              onClick={() => reset()}
+            />
           </div>
         </div>
       </form>

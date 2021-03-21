@@ -70,6 +70,12 @@ function EnhancedTableHead(props) {
     { id: "name", numeric: false, disablePadding: false, label: "Name" },
     { id: "type", numeric: false, disablePadding: false, label: "Type" },
     {
+      id: "valueRate",
+      numeric: true,
+      disablePadding: false,
+      label: "Rate",
+    },
+    {
       id: "qty",
       numeric: true,
       disablePadding: false,
@@ -81,12 +87,6 @@ function EnhancedTableHead(props) {
     //   disablePadding: false,
     //   label: "Price Rate",
     // },
-    {
-      id: "valueRate",
-      numeric: true,
-      disablePadding: false,
-      label: "Rate",
-    },
     {
       id: "unit",
       numeric: false,
@@ -347,7 +347,7 @@ const EnhancedTable = (props) => {
           }
         );
         setSelected([]);
-      }, 1500);
+      }, 3000);
   };
 
   const handleRequestSort = (event, property) => {
@@ -462,14 +462,14 @@ const EnhancedTable = (props) => {
                         {row.type ?? "(Empty)"}
                       </TableCell>
                       <TableCell align="right">
+                        {row.valueRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="right">
                         {row.qty ?? "(Empty)"}
                       </TableCell>
                       {/* <TableCell align="right">
                         {row.priceRate ?? "(Empty)"}
                       </TableCell> */}
-                      <TableCell align="right">
-                        {row.valueRate ?? "(Empty)"}
-                      </TableCell>
                       <TableCell align="left">
                         {row.unit ?? "(Empty)"}
                       </TableCell>

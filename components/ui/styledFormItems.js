@@ -139,12 +139,13 @@ const useStyles = makeStyles((theme) =>
         display: "none",
       },
     },
+    '& input[type="file" i]': { appearance: "" },
   })
 );
 
 const StyledFormItems = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control } = useForm();
+  const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
     let code = data.code;
@@ -298,6 +299,7 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.code ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -331,6 +333,7 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.name ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -357,6 +360,7 @@ const StyledFormItems = (props) => {
                       //FIXME:Add validation pattern
                       control={control}
                       defaultValue={""}
+                      required
                       // error={errors.type ? true : false}
                     >
                       <MenuItem value="raw-material">
@@ -399,6 +403,8 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.qty ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -465,6 +471,8 @@ const StyledFormItems = (props) => {
                         required: true,
                       })}
                       error={errors.valueRate ? true : false}
+                      required
+                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -495,6 +503,7 @@ const StyledFormItems = (props) => {
                       // error={errors.unit ? true : false}
                       control={control}
                       defaultValue={""}
+                      required
                     >
                       <MenuItem value="pair">{"Pairs"}</MenuItem>
                       <MenuItem value="pc">{"Pieces"}</MenuItem>
@@ -560,6 +569,7 @@ const StyledFormItems = (props) => {
                       // error={errors.status ? true : false}
                       control={control}
                       defaultValue={""}
+                      required
                     >
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
@@ -693,7 +703,8 @@ const StyledFormItems = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-            ></StyledButton>
+              onClick={() => reset()}
+            />
           </div>
         </div>
       </form>

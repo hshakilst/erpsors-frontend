@@ -332,7 +332,7 @@ const EnhancedTable = (props) => {
           }
         );
         setSelected([]);
-      }, 1500);
+      }, 3000);
   };
 
   const handleRequestSort = (event, property) => {
@@ -444,7 +444,7 @@ const EnhancedTable = (props) => {
                         {`${row.item.code}: ${row.item.name}`}
                       </TableCell>
                       <TableCell align="right">{row.opnRate}</TableCell>
-                      <TableCell align="right">{row.opnValue}</TableCell>
+                      <TableCell align="right">{row.opnQty}</TableCell>
                       <TableCell align="right">{row.valueRate}</TableCell>
                       <TableCell align="right">{row.issQty}</TableCell>
                       <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
