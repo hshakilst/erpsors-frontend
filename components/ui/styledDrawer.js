@@ -14,26 +14,26 @@ import Link from "next/link";
 const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      zIndex: 9999999,
+      // zIndex: 9999999,
       backgroundColor: "#fff",
       "& .MuiList-padding": {
         paddingTop: 0,
         paddingBottom: "0px",
       },
-      "& .MuiTypography-h6": {
-        fontSize: "2rem",
-        fontWeight: 800,
-      },
-      "& .MuiSvgIcon-fontSizeLarge": {
-        fontSize: "3rem",
-        color: "#14142B",
-      },
-      "& .makeStyles-root-56 .MuiList-padding": {
-        paddingTop: 0,
-      },
-      "& .makeStyles-drawerPaper-33": {
-        background: "#EFF0F6",
-      },
+      // "& .MuiTypography-h6": {
+      //   fontSize: "2rem",
+      //   fontWeight: 800,
+      // },
+      // "& .MuiSvgIcon-fontSizeLarge": {
+      //   fontSize: "3rem",
+      //   color: "#14142B",
+      // },
+      // "& .MuiList-padding": {
+      //   paddingTop: 0,
+      // },
+      // "& .makeStyles-drawerPaper-33": {
+      //   background: "#EFF0F6",
+      // },
       "& .MuiDrawer-paper": {
         backgroundColor: "#EFF0F6",
         flexDirection: "none",
@@ -51,6 +51,9 @@ const StyledDrawer = (props) => {
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: props.drawerWidth,
+    },
+    listIcon: {
+      minWidth: 8,
     },
   }));
 
@@ -78,7 +81,7 @@ const StyledDrawer = (props) => {
           </Typography>,
         ].map((text, index) => (
           <ListItem key={index}>
-            <ListItemIcon>
+            <ListItemIcon style={{ minWidth: 56 }}>
               {
                 <LocalMallOutlinedIcon
                   fontSize={"large"}
@@ -103,6 +106,40 @@ const StyledDrawer = (props) => {
           textAlign: "center",
         }}
       >
+        <StyledAccordion label={"Dashboard"}>
+          <List
+            style={{
+              width: "100%",
+              background: "#EFF0F6",
+              borderRadius: "1rem",
+              paddingTop: "1rem",
+              paddingBottom: "1rem",
+              paddingRight: "1rem",
+              paddingLeft: "1rem",
+            }}
+          >
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/dashboard">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Overview
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
+          </List>
+        </StyledAccordion>
         <StyledAccordion label={"Inventory"}>
           <List
             style={{
@@ -115,17 +152,30 @@ const StyledDrawer = (props) => {
               paddingLeft: "1rem",
             }}
           >
-            <ListItem alignItems="center">
-              {/* <ListItemIcon>
-                {
-                  <LocalMallOutlinedIcon
-                    style={{ color: "#14142B" }}
-                  ></LocalMallOutlinedIcon>
-                }
-              </ListItemIcon> */}
+            <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/items">
+                  <Link href="/inventory">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Overview
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/inventory/items">
                     <a>
                       <Typography
                         style={{
@@ -145,7 +195,7 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/suppliers">
+                  <Link href="/inventory/suppliers">
                     <a>
                       <Typography
                         style={{
@@ -165,7 +215,7 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/warehouses">
+                  <Link href="/inventory/warehouses">
                     <a>
                       <Typography
                         style={{
@@ -185,27 +235,7 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/purchase-orders">
-                    <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Purchases
-                      </Typography>
-                    </a>
-                  </Link>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary={
-                  <Link href="/dashboard/inventory/store-requisitions">
+                  <Link href="/inventory/store-requisitions">
                     <a>
                       <Typography
                         style={{
@@ -225,7 +255,48 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/store-issues">
+                  <Link href="/inventory/purchase-orders">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Purchases
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
+
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/inventory/store-receipts">
+                    <a>
+                      <Typography
+                        style={{
+                          color: "#14142B",
+                          fontSize: "1rem",
+                          fontWeight: 400,
+                          letterSpacing: "0.047rem",
+                        }}
+                      >
+                        Receipts
+                      </Typography>
+                    </a>
+                  </Link>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary={
+                  <Link href="/inventory/store-issues">
                     <a>
                       <Typography
                         style={{
@@ -245,7 +316,7 @@ const StyledDrawer = (props) => {
             <ListItem>
               <ListItemText
                 primary={
-                  <Link href="/dashboard/inventory/store-receipts">
+                  <Link href="/inventory/reports">
                     <a>
                       <Typography
                         style={{
@@ -255,7 +326,7 @@ const StyledDrawer = (props) => {
                           letterSpacing: "0.047rem",
                         }}
                       >
-                        Receipts
+                        Reports
                       </Typography>
                     </a>
                   </Link>
@@ -264,9 +335,7 @@ const StyledDrawer = (props) => {
             </ListItem>
           </List>
         </StyledAccordion>
-        {/* <StyledAccordion label={"Active"}></StyledAccordion>
-        <StyledAccordion label={"Initial"}></StyledAccordion>
-        <StyledAccordion label={"Turnips"}></StyledAccordion> */}
+        <StyledAccordion label={"Production"}></StyledAccordion>
       </List>
       <List
         style={{

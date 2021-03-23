@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
       position: "absolute",
       top: 10,
-      right: 50,
+      right: 40,
     },
     "& .MuiTypography-body1": {
       margin: "auto",
