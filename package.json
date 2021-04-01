@@ -25,7 +25,7 @@
     "faunadb": "^4.1.0",
     "firebase": "^8.2.9",
     "firebase-admin": "^9.5.0",
-    "next": "10.0.3",
+    "next": "^10.1.2",
     "next-iron-session": "^4.1.12",
     "node-fetch": "^2.6.1",
     "notistack": "^1.0.3",
@@ -33,6 +33,6 @@
     "react-dom": "17.0.1",
     "react-hook-form": "^6.15.3",
     "react-select": "^4.1.0",
-    "swr": "^0.3.11"
+    "swr": "^0.5.5"
   }
 }

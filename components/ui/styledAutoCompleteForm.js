@@ -47,6 +47,7 @@ const StyledAutoCompleteForm = ({
   defaultValue,
   required,
   fetchOptions,
+  ...props
 }) => {
   const classes = useStyles();
   const { data, error, loading } = fetchOptions();

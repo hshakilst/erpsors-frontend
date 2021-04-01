@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function styledSelectForm({
+export default function StyledSelectForm({
   name,
   label,
   control,

@@ -16,6 +16,7 @@ import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
 import { useGetAllItemCodes } from "@/actions/items";
 import { useGetAllWarehouseCodes } from "@/actions/warehouses";
+import StyledDatePicker from "./styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -139,6 +140,7 @@ const StyledFormStoreRequisitions = (props) => {
     let item = data.item;
     let reqQty = data.reqQty;
     let warehouse = data.warehouse;
+    let reqDate = data.reqDate;
     let notes = data.notes;
 
     try {
@@ -372,6 +374,33 @@ const StyledFormStoreRequisitions = (props) => {
                 item
                 className={classes.gridItem}
                 lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"Required By"}
+                      name="reqDate"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      required
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.reqDate ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}

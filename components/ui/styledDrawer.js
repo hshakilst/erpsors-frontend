@@ -14,7 +14,7 @@ import Link from "next/link";
 const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      // zIndex: 9999999,
+      zIndex: 1030,
       backgroundColor: "#fff",
       "& .MuiList-padding": {
         paddingTop: 0,
@@ -37,6 +37,7 @@ const StyledDrawer = (props) => {
       "& .MuiDrawer-paper": {
         backgroundColor: "#EFF0F6",
         flexDirection: "none",
+        zIndex: 1030,
       },
       "& .MuiDrawer-paperAnchorDockedLeft": {
         border: "none",

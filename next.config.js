@@ -1,5 +1,5 @@
-const path = require('path')
-const SentryWebpackPlugin = require('@sentry/webpack-plugin')
+const path = require("path");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
   SENTRY_ORG,
@@ -8,16 +8,16 @@ const {
   NODE_ENV,
   VERCEL_GITHUB_COMMIT_SHA,
   VERCEL_GITLAB_COMMIT_SHA,
-  VERCEL_BITBUCKET_COMMIT_SHA
-} = process.env
+  VERCEL_BITBUCKET_COMMIT_SHA,
+} = process.env;
 
 const COMMIT_SHA =
   VERCEL_GITHUB_COMMIT_SHA ||
   VERCEL_GITLAB_COMMIT_SHA ||
-  VERCEL_BITBUCKET_COMMIT_SHA
+  VERCEL_BITBUCKET_COMMIT_SHA;
 
-process.env.SENTRY_DSN = SENTRY_DSN
-const basePath = ''
+process.env.SENTRY_DSN = SENTRY_DSN;
+const basePath = "";
 
 module.exports = {
   productionBrowserSourceMaps: true,
@@ -25,10 +25,10 @@ module.exports = {
     // Make the COMMIT_SHA available to the client so that Sentry events can be
     // marked for the release they belong to. It may be undefined if running
     // outside of Vercel
-    NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA
+    NEXT_PUBLIC_COMMIT_SHA: COMMIT_SHA,
   },
   webpack: (config, options) => {
-    config.resolve.alias['@'] = path.resolve(__dirname)
+    config.resolve.alias["@"] = path.resolve(__dirname);
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
     // @sentry/node will run in a Node.js environment. @sentry/node will use
     // Node.js-only APIs to catch even more unhandled exceptions.
@@ -44,18 +44,18 @@ module.exports = {
     // So ask Webpack to replace @sentry/node imports with @sentry/browser when
     // building the browser's bundle
     if (!options.isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/browser'
+      config.resolve.alias["@sentry/node"] = "@sentry/browser";
     }
 
     // Define an environment variable so source code can check whether or not
     // it's running on the server so we can correctly initialize Sentry
     config.plugins.push(
       new options.webpack.DefinePlugin({
-        'process.env.NEXT_IS_SERVER': JSON.stringify(
+        "process.env.NEXT_IS_SERVER": JSON.stringify(
           options.isServer.toString()
-        )
+        ),
       })
-    )
+    );
 
     // When all the Sentry configuration env variables are available/configured
     // The Sentry webpack plugin gets pushed to the webpack plugins to build
@@ -68,19 +68,22 @@ module.exports = {
       SENTRY_PROJECT &&
       SENTRY_AUTH_TOKEN &&
       COMMIT_SHA &&
-      NODE_ENV === 'production'
+      NODE_ENV === "production"
     ) {
       config.plugins.push(
         new SentryWebpackPlugin({
-          include: '.next',
-          ignore: ['node_modules'],
-          stripPrefix: ['webpack://_N_E/'],
+          include: ".next",
+          ignore: ["node_modules"],
+          stripPrefix: ["webpack://_N_E/"],
           urlPrefix: `~${basePath}/_next`,
-          release: COMMIT_SHA
+          release: COMMIT_SHA,
         })
-      )
+      );
     }
-    return config
+    return config;
   },
-  basePath
-}
+  basePath,
+  future: {
+    webpack5: true,
+  },
+};

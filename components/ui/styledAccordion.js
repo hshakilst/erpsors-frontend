@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleAccordion(props) {
+export default function StyledAccordion(props) {
   const classes = useStyles();
 
   return (
