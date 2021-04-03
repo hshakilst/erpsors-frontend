@@ -187,6 +187,7 @@ const StyledFormStoreRequisitions = (props) => {
     {
       item: "",
       reqQty: "",
+      action: "+",
     },
   ]);
 
@@ -197,7 +198,7 @@ const StyledFormStoreRequisitions = (props) => {
   };
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { item: "", reqQty: "" }]);
+    setInputFields([...inputFields, { item: "", reqQty: "", action: "-" }]);
   };
 
   const handleRemoveFields = (index) => {
@@ -518,18 +519,21 @@ const StyledFormStoreRequisitions = (props) => {
                       borderRadius: "1rem",
                     }}
                   >
-                    <IconButton
-                      style={{ borderRadius: "1rem" }}
-                      onClick={() => handleAddFields()}
-                    >
-                      <AddIcon style={{ color: "#14142B" }}></AddIcon>
-                    </IconButton>
-                    {/* <IconButton
-                      style={{ borderRadius: "1rem" }}
-                      onClick={() => handleRemoveFields(index)}
-                    >
-                      <RemoveIcon style={{ color: "#14142B" }}></RemoveIcon>
-                    </IconButton> */}
+                    {inputField.action === "+" ? (
+                      <IconButton
+                        style={{ borderRadius: "1rem" }}
+                        onClick={() => handleAddFields()}
+                      >
+                        <AddIcon style={{ color: "#14142B" }}></AddIcon>
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        style={{ borderRadius: "1rem" }}
+                        onClick={() => handleRemoveFields(index)}
+                      >
+                        <RemoveIcon style={{ color: "#14142B" }}></RemoveIcon>
+                      </IconButton>
+                    )}
                   </Paper>
                 </Grid>
               </Grid>
