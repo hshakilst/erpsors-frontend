@@ -561,7 +561,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6", zIndex: "99" }}
+                  style={{ background: "#EFF0F6", zIndex: 1030 }}
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>

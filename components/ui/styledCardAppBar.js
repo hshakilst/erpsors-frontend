@@ -70,7 +70,7 @@ const StyledCardAppBar = (props) => {
       alignItems: "center",
       justifyContent: "center",
       color: "#A0A3BD",
-      zIndex: 99,
+      zIndex: 1030,
       "& .MuiSvgIcon-root": {
         fontSize: "1.8rem",
       },

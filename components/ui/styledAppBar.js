@@ -22,7 +22,7 @@ const StyledAppBar = (props) => {
       // top: 0,
       // left: 0,
       // width: "100%",
-      // zIndex: "1030",
+      zIndex: 1030,
       flexGrow: 1,
       "& .MuiIconButton-root": {
         padding: 0,
@@ -95,7 +95,7 @@ const StyledAppBar = (props) => {
       alignItems: "center",
       justifyContent: "center",
       color: "#000",
-      zIndex: 99,
+      zIndex: 1030,
     },
     inputRoot: {
       color: "inherit",
@@ -116,7 +116,7 @@ const StyledAppBar = (props) => {
     sectionDesktop: {
       // position: "fixed",
       right: "28px",
-      zIndex: "1030",
+      zIndex: 1030,
       display: "none",
       color: "#000",
       padding: 0,

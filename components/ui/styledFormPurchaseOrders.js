@@ -380,15 +380,15 @@ const StyledFormPurchaseOrders = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Rate"}
+                      label={"Approved Qty."}
                       size={"small"}
                       required={true}
-                      name={"rate"}
+                      name={"appQty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.rate ? true : false}
+                      error={errors.appQty ? true : false}
                     />
                   </div>
                 </Paper>
@@ -414,15 +414,15 @@ const StyledFormPurchaseOrders = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Approved Qty."}
+                      label={"Rate"}
                       size={"small"}
                       required={true}
-                      name={"appQty"}
+                      name={"rate"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.appQty ? true : false}
+                      error={errors.rate ? true : false}
                     />
                   </div>
                 </Paper>
