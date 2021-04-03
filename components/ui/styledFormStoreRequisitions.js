@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@material-ui/core";
+import { IconButton, Link } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
@@ -16,7 +16,9 @@ import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
 import { useGetAllItemCodes } from "@/actions/items";
 import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import StyledDatePicker from "./styledDatePicker";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -51,6 +53,9 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "1rem",
       "& .MuiPaper-elevation1": {
         boxShadow: "none",
+      },
+      "& .MuiTouchRipple-root": {
+        top: 0,
       },
     },
     gridItem: {
@@ -140,7 +145,6 @@ const StyledFormStoreRequisitions = (props) => {
     let item = data.item;
     let reqQty = data.reqQty;
     let warehouse = data.warehouse;
-    let reqDate = data.reqDate;
     let notes = data.notes;
 
     try {
@@ -177,6 +181,29 @@ const StyledFormStoreRequisitions = (props) => {
         autoHideDuration: 10000,
       });
     }
+  };
+
+  const [inputFields, setInputFields] = useState([
+    {
+      item: "",
+      reqQty: "",
+    },
+  ]);
+
+  const handleChangeInput = (index, event) => {
+    const values = [...inputFields];
+    values[index][event.target.name] = event.target.value;
+    setInputFields(values);
+  };
+
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { item: "", reqQty: "" }]);
+  };
+
+  const handleRemoveFields = (index) => {
+    const values = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
   };
 
   return (
@@ -383,33 +410,6 @@ const StyledFormStoreRequisitions = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledDatePicker
-                      label={"Required By"}
-                      name="reqDate"
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      required
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.reqDate ? true : false}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
                     <TextField
                       fullWidth
                       InputProps={{
@@ -432,6 +432,109 @@ const StyledFormStoreRequisitions = (props) => {
               </Grid>
             </Grid>
           </div>
+        </Box>
+        <Box style={{ marginTop: "1rem" }}>
+          {inputFields.map((inputField, index) => (
+            <div className={classes.rootGrid} style={{ marginBottom: ".5rem" }}>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  className={classes.gridItem}
+                  lg={6}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
+                  <Paper className={classes.paper}>
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <TocOutlinedIcon fontSize="large" />
+                      </div>
+                      <StyledAutoCompleteForm
+                        label={"Item"}
+                        name="item"
+                        value={inputField.item}
+                        onChange={(event) => handleChangeInput(index, event)}
+                        defaultValue={null}
+                        //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                        //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                        control={control}
+                        fetchOptions={useGetAllItemCodes}
+                        required
+                      />
+                    </div>
+                  </Paper>
+                </Grid>
+                <Grid
+                  item
+                  className={classes.gridItem}
+                  lg={5}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
+                  <Paper className={classes.paper}>
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <TocOutlinedIcon fontSize="large" />
+                      </div>
+                      <TextField
+                        fullWidth
+                        InputProps={{
+                          disableUnderline: true,
+                        }}
+                        classes={{
+                          root: classes.inputRoot,
+                        }}
+                        label={"Required Qty."}
+                        size={"small"}
+                        name={"reqQty"}
+                        value={inputField.reqQty}
+                        onChange={(event) => handleChangeInput(index, event)}
+                        //FIXME:Add validation pattern
+                        inputRef={register({
+                          required: true,
+                        })}
+                        error={errors.reqQty ? true : false}
+                        required
+                        type={"number"}
+                      />
+                    </div>
+                  </Paper>
+                </Grid>
+                <Grid
+                  item
+                  className={classes.gridItem}
+                  lg={1}
+                  md={4}
+                  sm={4}
+                  xs={4}
+                  style={{ margin: "auto" }}
+                >
+                  <Paper
+                    style={{
+                      marginTop: ".3rem",
+                      backgroundColor: "#fff",
+                      borderRadius: "1rem",
+                    }}
+                  >
+                    <IconButton
+                      style={{ borderRadius: "1rem" }}
+                      onClick={() => handleAddFields()}
+                    >
+                      <AddIcon style={{ color: "#14142B" }}></AddIcon>
+                    </IconButton>
+                    {/* <IconButton
+                      style={{ borderRadius: "1rem" }}
+                      onClick={() => handleRemoveFields(index)}
+                    >
+                      <RemoveIcon style={{ color: "#14142B" }}></RemoveIcon>
+                    </IconButton> */}
+                  </Paper>
+                </Grid>
+              </Grid>
+            </div>
+          ))}
         </Box>
         <div style={{ float: "right", marginTop: "1rem" }}>
           <div style={{ float: "left" }}>
