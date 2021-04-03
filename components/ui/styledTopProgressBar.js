@@ -11,6 +11,7 @@ export default function StyledTopProgressBar(props) {
           return 0;
         }
         const diff = Math.random() * 10;
+        console.log("a");
         return Math.min(oldProgress + diff, 100);
       });
     }, 500);
@@ -26,7 +27,7 @@ export default function StyledTopProgressBar(props) {
         variant="determinate"
         value={progress}
         color="primary"
-        style={{ zIndex: 1031 }}
+        style={{ zIndex: 9999 }}
       />
     </Fade>
   );
