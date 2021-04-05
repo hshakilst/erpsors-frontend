@@ -6,7 +6,7 @@ import StyledFormItems from "@/components/ui/styledFormItems";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableItems from "@/components/ui/styledTableItems";
+import StyledDataGrid from "@/components/ui/styledData-grid";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -61,7 +61,7 @@ const Inventory = (props) => {
           <Grid item className={classes.gridItem} lg={4} md={6} sm={12} xs={12}>
             <Paper className={classes.paper}>
               <StyledInventoryHistory
-                style={{ paddingBottom: "11.7rem" }}
+                style={{ paddingBottom: "16.2rem" }}
               ></StyledInventoryHistory>
             </Paper>
           </Grid>
@@ -75,7 +75,7 @@ const Inventory = (props) => {
           >
             <Paper className={classes.paper}>
               <StyledTableCard>
-                <StyledTableItems></StyledTableItems>
+                <StyledDataGrid></StyledDataGrid>
               </StyledTableCard>
             </Paper>
           </Grid>
