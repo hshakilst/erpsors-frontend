@@ -135,7 +135,6 @@ const StyledFormStoreRequisitions = (props) => {
   const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let item = data.item;
     let reqQty = data.reqQty;
