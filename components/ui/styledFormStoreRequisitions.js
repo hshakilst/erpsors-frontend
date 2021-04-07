@@ -19,6 +19,7 @@ import { useGetAllWarehouseCodes } from "@/actions/warehouses";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { useState } from "react";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -99,6 +100,7 @@ const useStyles = makeStyles((theme) =>
       lineHeight: 0,
       // paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
+        lineHeight: 0,
         fontSize: ".975rem",
         fontWeight: 400,
         color: "#14142B",
@@ -137,11 +139,27 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormStoreRequisitions = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    control,
+    reset,
+    getValues,
+    setValue,
+    formState,
+  } = useForm();
+
+  const [inputFields, setInputFields] = useState([
+    {
+      action: "+",
+    },
+  ]);
 
   const onSubmit = async (data) => {
+    console.log(data);
     let code = data.code;
-    let item = data.item;
+    let items = data.items;
     let reqQty = data.reqQty;
     let warehouse = data.warehouse;
     let notes = data.notes;
@@ -149,7 +167,7 @@ const StyledFormStoreRequisitions = (props) => {
     try {
       const { error, data } = await useCreateStoreRequisition(
         code,
-        item,
+        items,
         reqQty,
         warehouse,
         notes
@@ -182,22 +200,12 @@ const StyledFormStoreRequisitions = (props) => {
     }
   };
 
-  const [inputFields, setInputFields] = useState([
-    {
-      item: "",
-      reqQty: "",
-      action: "+",
-    },
-  ]);
-
   const handleChangeInput = (index, event) => {
-    const values = [...inputFields];
-    values[index][event.target.name] = event.target.value;
-    setInputFields(values);
+    setValue(index, event.target.value);
   };
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { item: "", reqQty: "", action: "-" }]);
+    setInputFields([...inputFields, { action: "-" }]);
   };
 
   const handleRemoveFields = (index) => {
@@ -311,9 +319,9 @@ const StyledFormStoreRequisitions = (props) => {
                 </Paper>
               </Grid>
               <Grid
-                item
                 className={classes.gridItem}
-                lg={6}
+                item
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}
@@ -323,50 +331,20 @@ const StyledFormStoreRequisitions = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledAutoCompleteForm
-                      label={"Item"}
-                      name="item"
-                      defaultValue={null}
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      control={control}
-                      fetchOptions={useGetAllItemCodes}
-                      required
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <TextField
-                      fullWidth
+                    <StyledDatePicker
                       InputProps={{
                         disableUnderline: true,
                       }}
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Required Qty."}
-                      size={"small"}
-                      name={"reqQty"}
-                      //FIXME:Add validation pattern
+                      label={"Date"}
+                      name={"date"}
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.reqQty ? true : false}
+                      // error={errors.date ? true : false}
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -433,14 +411,16 @@ const StyledFormStoreRequisitions = (props) => {
             </Grid>
           </div>
         </Box>
+
+        {/* add multiple items form */}
         <Box style={{ marginTop: "1rem" }}>
           {inputFields.map((inputField, index) => (
-            <Fade in={true}>
+            <Fade in={true} key={index}>
               <div
                 className={classes.rootGrid}
                 style={{ marginBottom: ".5rem" }}
               >
-                <Grid container spacing={2}>
+                <Grid container spacing={2} justify="center">
                   <Grid
                     item
                     className={classes.gridItem}
@@ -456,9 +436,10 @@ const StyledFormStoreRequisitions = (props) => {
                         </div>
                         <StyledAutoCompleteForm
                           label={"Item"}
-                          name="item"
-                          value={inputField.item}
-                          onChange={(event) => handleChangeInput(index, event)}
+                          name={`items[${index}].item`}
+                          onChange={(event) =>
+                            handleChangeInput(`items[${index}].item`, event)
+                          }
                           defaultValue={null}
                           //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                           //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -492,14 +473,15 @@ const StyledFormStoreRequisitions = (props) => {
                           }}
                           label={"Required Qty."}
                           size={"small"}
-                          name={"reqQty"}
-                          value={inputField.reqQty}
-                          onChange={(event) => handleChangeInput(index, event)}
+                          name={`items[${index}].reqQty`}
+                          onChange={(event) =>
+                            handleChangeInput(`items[${index}].reqQty`, event)
+                          }
                           //FIXME:Add validation pattern
                           inputRef={register({
                             required: true,
                           })}
-                          error={errors.reqQty ? true : false}
+                          // error={errors.reqQty ? true : false}
                           required
                           type={"number"}
                         />
@@ -513,7 +495,6 @@ const StyledFormStoreRequisitions = (props) => {
                     md={4}
                     sm={4}
                     xs={4}
-                    style={{ margin: "auto" }}
                   >
                     <Paper
                       style={{
@@ -524,14 +505,16 @@ const StyledFormStoreRequisitions = (props) => {
                     >
                       {inputField.action === "+" ? (
                         <IconButton
-                          style={{ borderRadius: "1rem" }}
+                          aria-label={`add-item-${index}`}
+                          style={{ borderRadius: "1rem", width: "100%" }}
                           onClick={() => handleAddFields()}
                         >
                           <AddIcon style={{ color: "#14142B" }}></AddIcon>
                         </IconButton>
                       ) : (
                         <IconButton
-                          style={{ borderRadius: "1rem" }}
+                          aria-label={`add-item-${index}`}
+                          style={{ borderRadius: "1rem", width: "100%" }}
                           onClick={() => handleRemoveFields(index)}
                         >
                           <RemoveIcon style={{ color: "#14142B" }}></RemoveIcon>

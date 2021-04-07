@@ -158,16 +158,7 @@ const StyledDrawer = (props) => {
                 primary={
                   <Link href="/inventory">
                     <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Overview
-                      </Typography>
+                      <Typography>Overview</Typography>
                     </a>
                   </Link>
                 }
@@ -211,16 +202,7 @@ const StyledDrawer = (props) => {
                 primary={
                   <Link href="/inventory/store-requisitions">
                     <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Requisitions
-                      </Typography>
+                      <Typography>Requisitions</Typography>
                     </a>
                   </Link>
                 }
@@ -243,16 +225,7 @@ const StyledDrawer = (props) => {
                 primary={
                   <Link href="/inventory/store-receipts">
                     <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Receipts
-                      </Typography>
+                      <Typography>Receipts</Typography>
                     </a>
                   </Link>
                 }
@@ -274,16 +247,7 @@ const StyledDrawer = (props) => {
                 primary={
                   <Link href="/inventory/reports">
                     <a>
-                      <Typography
-                        style={{
-                          color: "#14142B",
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          letterSpacing: "0.047rem",
-                        }}
-                      >
-                        Reports
-                      </Typography>
+                      <Typography>Reports</Typography>
                     </a>
                   </Link>
                 }

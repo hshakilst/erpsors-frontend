@@ -484,6 +484,7 @@ const StyledFormPurchaseOrders = (props) => {
                   </div>
                 </Paper>
               </Grid>
+              {/*//TODO:set up react hook form built in triggers as a condition for showing credit days*/}
               {watchPurMode === "credit" && (
                 <Grid
                   item
