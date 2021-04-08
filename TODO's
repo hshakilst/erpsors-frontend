@@ -1,5 +1,5 @@
-//TODO:
+//TODO: (do) Improve delete function
 
-(done) forwarding refs for all styled components for info https://reactjs.org/docs/forwarding-refs.html
-(do) Implement Mono-Repo Micro-service Architecture
-(do) Improve delete function
+//TODO: (do) Improve and polish store requisitions
+
+//TODO: (do) UseReact Spring animation & transition https://www.react-spring.io/docs/hooks/use-transition

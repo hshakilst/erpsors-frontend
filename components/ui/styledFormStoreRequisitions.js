@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
-import { IconButton, Link, Fade } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
-import TextField from "@material-ui/core/TextField";
-import { useForm } from "react-hook-form";
-import { useCreateStoreRequisition } from "@/actions/store-requisitions";
+import {
+  IconButton,
+  Link,
+  Fade,
+  Card,
+  Typography,
+  Box,
+  Paper,
+  Grid,
+  TextField,
+  CircularProgress,
+} from "@material-ui/core";
+import { AddOutlined, TocOutlined, Add, Remove } from "@material-ui/icons";
+
+import StyledButton from "@/components/ui/styledButton";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+
+import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
+
+import { useCreateStoreRequisition } from "@/actions/store-requisitions";
 import { useGetAllItemCodes } from "@/actions/items";
 import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { useState } from "react";
-import StyledDatePicker from "@/components/ui/styledDatePicker";
+import useAsync from "@/libs/useAsync";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -156,48 +162,52 @@ const StyledFormStoreRequisitions = (props) => {
     },
   ]);
 
-  const onSubmit = async (data) => {
+  //TODO: Implement this async mechanism unto all the other forms
+  const {
+    execute: createRequisition,
+    status,
+    loading,
+    value,
+    error,
+  } = useAsync((code, items, reqQty, warehouse, notes) => {
+    return useCreateStoreRequisition(code, items, reqQty, warehouse, notes)
+      .then((error, data) => {
+        if (!error)
+          props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+            variant: "success",
+          });
+        else
+          props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+            variant: "error",
+          });
+      })
+      .catch((error) => {
+        props.enqueueSnackbar(`${JSON.stringify(error)}`, {
+          variant: "error",
+        });
+      });
+  }, false);
+
+  const onSubmit = (data) => {
     console.log(data);
     let code = data.code;
     let items = data.items;
     let reqQty = data.reqQty;
     let warehouse = data.warehouse;
     let notes = data.notes;
-
-    try {
-      const { error, data } = await useCreateStoreRequisition(
-        code,
-        items,
-        reqQty,
-        warehouse,
-        notes
-      );
-      if (!error)
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
-          variant: "success",
-        });
-      else
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
-          variant: "error",
-        });
-    } catch (error) {
-      props.enqueueSnackbar(
-        //FIXME: Change below code before deploying to production
-        `${JSON.stringify(error)}`,
-        {
-          variant: "error",
-        }
-      );
-    }
+    // createStoreRequisition.run(code, items, reqQty, warehouse, notes);
+    // console.log(createStoreRequisition.loading);
+    createRequisition(code, items, reqQty, warehouse, notes);
   };
 
   const onError = (errors) => {
-    if (errors) {
-      props.enqueueSnackbar("Errors", {
+    props.enqueueSnackbar(
+      //FIXME: Change below code before deploying to production
+      `${JSON.stringify(errors)}`,
+      {
         variant: "error",
-        autoHideDuration: 10000,
-      });
-    }
+      }
+    );
   };
 
   const handleChangeInput = (index, event) => {
@@ -250,13 +260,13 @@ const StyledFormStoreRequisitions = (props) => {
               cursor: "pointer",
             }}
           >
-            <AddOutlinedIcon
+            <AddOutlined
               style={{
                 color: "#14142B",
                 fontSize: "1.125rem",
                 marginRight: "0.018rem",
               }}
-            ></AddOutlinedIcon>
+            ></AddOutlined>
           </div>
           <div
             className={classes.add}
@@ -295,7 +305,7 @@ const StyledFormStoreRequisitions = (props) => {
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
+                      <TocOutlined fontSize="large" />
                     </div>
                     <TextField
                       fullWidth
@@ -329,7 +339,7 @@ const StyledFormStoreRequisitions = (props) => {
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
+                      <TocOutlined fontSize="large" />
                     </div>
                     <StyledDatePicker
                       InputProps={{
@@ -360,7 +370,7 @@ const StyledFormStoreRequisitions = (props) => {
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
+                      <TocOutlined fontSize="large" />
                     </div>
                     <StyledAutoCompleteForm
                       label={"Warehouse"}
@@ -386,7 +396,7 @@ const StyledFormStoreRequisitions = (props) => {
                 <Paper className={classes.paper}>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
+                      <TocOutlined fontSize="large" />
                     </div>
                     <TextField
                       fullWidth
@@ -432,7 +442,7 @@ const StyledFormStoreRequisitions = (props) => {
                     <Paper className={classes.paper}>
                       <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                          <TocOutlinedIcon fontSize="large" />
+                          <TocOutlined fontSize="large" />
                         </div>
                         <StyledAutoCompleteForm
                           label={"Item"}
@@ -461,7 +471,7 @@ const StyledFormStoreRequisitions = (props) => {
                     <Paper className={classes.paper}>
                       <div className={classes.search}>
                         <div className={classes.searchIcon}>
-                          <TocOutlinedIcon fontSize="large" />
+                          <TocOutlined fontSize="large" />
                         </div>
                         <TextField
                           fullWidth
@@ -509,7 +519,7 @@ const StyledFormStoreRequisitions = (props) => {
                           style={{ borderRadius: "1rem", width: "100%" }}
                           onClick={() => handleAddFields()}
                         >
-                          <AddIcon style={{ color: "#14142B" }}></AddIcon>
+                          <Add style={{ color: "#14142B" }}></Add>
                         </IconButton>
                       ) : (
                         <IconButton
@@ -540,7 +550,15 @@ const StyledFormStoreRequisitions = (props) => {
                 marginRight: "0.625rem",
               }}
               type="submit"
-            ></StyledButton>
+              disabled={loading}
+            >
+              {loading && (
+                <CircularProgress
+                  style={{ marginLeft: -10, marginRight: 8 }}
+                  size={20}
+                />
+              )}
+            </StyledButton>
           </div>
           <div style={{ float: "left" }}>
             <StyledButton
