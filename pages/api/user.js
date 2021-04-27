@@ -1,5 +1,8 @@
 import withSession from "@/libs/withSession";
 import admin from "@/libs/firebase/firebaseAdmin";
+import LogRocket from "logrocket";
+
+LogRocket.init("ogzvmk/demo");
 
 export default withSession(async (req, res) => {
   const sessionCookie = await req.session.get("sessionCookie");

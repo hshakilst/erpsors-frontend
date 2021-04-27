@@ -8,35 +8,33 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShortTextOutlinedIcon from "@material-ui/icons/ShortTextOutlined";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
-import { Typography } from "@material-ui/core";
-import StyledCardAppBar from "@/components/ui/styledCardAppBar";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import StyledSelectTable from "./styledSelectTable";
-import StyledDatagridTable from "./styledData-grid";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
+import StyledSelectForm from "@/components/ui/styledSelectForm";
+import { useForm } from "react-hook-form";
+import MenuItem from "@material-ui/core/MenuItem";
+import TodayIcon from "@material-ui/icons/Today";
+import EventIcon from "@material-ui/icons/Event";
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       padding: theme.spacing(0),
     },
-    media: {
-      height: 0,
-      paddingTop: "56.25%",
-    },
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: "rotate(180deg)",
-    },
+    // media: {
+    //   height: 0,
+    //   paddingTop: "56.25%",
+    // },
+    // expand: {
+    //   transform: "rotate(0deg)",
+    //   marginLeft: "auto",
+    //   transition: theme.transitions.create("transform", {
+    //     duration: theme.transitions.duration.shortest,
+    //   }),
+    // },
+    // expandOpen: {
+    //   transform: "rotate(180deg)",
+    // },
     rootGrid: {
       flexGrow: 1,
       padding: theme.spacing(1),
@@ -44,12 +42,10 @@ const useStyles = makeStyles((theme) =>
     },
     paper: {
       padding: theme.spacing(0),
-      textAlign: "left",
+      // textAlign: "left",
       paddingLeft: "1.25rem",
       borderRadius: "1rem",
-      "& .MuiPaper-elevation1": {
-        boxShadow: "none",
-      },
+
       "& .MuiButton-outlined": {
         border: "none",
         marginLeft: 0,
@@ -58,36 +54,45 @@ const useStyles = makeStyles((theme) =>
         },
       },
     },
-    paperDropdown: {
-      paddingTop: theme.spacing(1.3),
-      paddingBottom: theme.spacing(1.3),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      borderRadius: "1rem",
-      "& .MuiButton-text": {
-        padding: 0,
-      },
-    },
-    paperTable: {
-      padding: theme.spacing(0),
-      textAlign: "left",
-      borderRadius: "1rem",
-      "& .MuiPaper-elevation1": {
-        boxShadow: "none",
-      },
-      "& .MuiButton-outlined": {
-        border: "none",
-        marginLeft: 0,
-        "&:hover": {
-          backgroundColor: "#EFF0F6",
-        },
-      },
-    },
-    paperIcon: {
+    // paperDropdown: {
+    //   paddingTop: theme.spacing(1.3),
+    //   paddingBottom: theme.spacing(1.3),
+    //   paddingLeft: theme.spacing(2),
+    //   paddingRight: theme.spacing(2),
+    //   borderRadius: "1rem",
+    //   "& .MuiButton-text": {
+    //     padding: 0,
+    //   },
+    // },
+    // paperTable: {
+    //   padding: theme.spacing(0),
+    //   textAlign: "left",
+    //   borderRadius: "1rem",
+    //   "& .MuiPaper-elevation1": {
+    //     boxShadow: "none",
+    //   },
+    //   "& .MuiButton-outlined": {
+    //     border: "none",
+    //     marginLeft: 0,
+    //     "&:hover": {
+    //       backgroundColor: "#EFF0F6",
+    //     },
+    //   },
+    // },
+    // paperIcon: {
+    //   textAlign: "center",
+    //   "& .MuiAppBar-colorPrimary": {
+    //     background: "#EFF0F6",
+    //     paddingRight: "20px",
+    //   },
+    // },
+    gridDropdown: {
+      flexDirection: "column",
+      flexGrow: 1,
+      justifyContent: "end",
       textAlign: "center",
-      "& .MuiAppBar-colorPrimary": {
+      "& .MuiSelect-select:focus": {
         background: "#EFF0F6",
-        paddingRight: "20px",
       },
     },
     gridItem: {
@@ -95,147 +100,26 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       justifyContent: "center",
       textAlign: "center",
-      "& .MuiButton-outlined": {
-        padding: "0.5rem 0px",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        textTransform: "capitalize",
-        marginLeft: 0,
-      },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
-      "& .MuiMenu-paper": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "red",
-        letterSpacing: "0.047rem",
-      },
+      // "& .MuiButton-outlined": {
+      //   padding: "0.5rem 0px",
+      //   fontSize: "1rem",
+      //   fontWeight: 400,
+      //   color: "#14142B",
+      //   letterSpacing: "0.047rem",
+      //   textTransform: "capitalize",
+      //   marginLeft: 0,
+      // },
+      // "& .MuiAppBar-colorPrimary": {
+      //   background: "#fff",
+      // },
+      // "& .MuiMenu-paper": {
+      //   fontSize: "1rem",
+      //   fontWeight: 400,
+      //   color: "red",
+      //   letterSpacing: "0.047rem",
+      // },
     },
-    gridDropdownOne: {
-      display: "none",
-      [theme.breakpoints.down("xs")]: {
-        display: "block",
-      },
-      [theme.breakpoints.down("sm")]: {
-        display: "block",
-      },
-      flexDirection: "column",
-      flexGrow: 1,
-      justifyContent: "end",
-      textAlign: "center",
-      "& .MuiButton-outlined": {
-        padding: "0.5rem 0px",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        textTransform: "capitalize",
-        marginLeft: 0,
-      },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
-      "& .MuiMenu-paper": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "red",
-        letterSpacing: "0.047rem",
-      },
-    },
-    gridDropdownTwo: {
-      [theme.breakpoints.down("xs")]: {
-        display: "none",
-      },
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
-      flexDirection: "column",
-      flexGrow: 1,
-      justifyContent: "center",
-      textAlign: "center",
-      "& .MuiButton-outlined": {
-        padding: "0.5rem 0px",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        textTransform: "capitalize",
-        marginLeft: 0,
-      },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
-      "& .MuiMenu-paper": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "red",
-        letterSpacing: "0.047rem",
-      },
-    },
-    gridItemOne: {
-      display: "none",
-      [theme.breakpoints.down("xs")]: {
-        display: "block",
-      },
-      [theme.breakpoints.down("sm")]: {
-        display: "block",
-      },
-      flexDirection: "column",
-      flexGrow: 1,
-      justifyContent: "center",
-      textAlign: "center",
-      "& .MuiButton-outlined": {
-        padding: "0.5rem 0px",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        textTransform: "capitalize",
-        marginLeft: 0,
-      },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
-      "& .MuiMenu-paper": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "red",
-        letterSpacing: "0.047rem",
-      },
-    },
-    gridItemTwo: {
-      [theme.breakpoints.down("xs")]: {
-        display: "none",
-      },
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
-      flexDirection: "column",
-      flexGrow: 1,
-      justifyContent: "right",
-      textAlign: "right",
-      "& .MuiButton-outlined": {
-        padding: "0.5rem 0px",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        textTransform: "capitalize",
-        marginLeft: 0,
-      },
-      "& .MuiAppBar-colorPrimary": {
-        background: "#fff",
-      },
-      "& .MuiMenu-paper": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "red",
-        letterSpacing: "0.047rem",
-      },
-    },
+
     search: {
       height: "3.5rem",
       position: "relative",
@@ -265,21 +149,44 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#A0A3BD",
+      color: "#14142B",
     },
     inputRoot: {
+      lineHeight: 0,
+      // paddingLeft: "1.25rem",
+      "& .MuiInputLabel-animated": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: "#14142B",
+        lineHeight: 0,
+        paddingLeft: "1.25rem",
+        paddingTop: "0.5rem",
+      },
+      "& .MuiInputBase-input": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: "#14142B",
+        letterSpacing: "0.047rem",
+        paddingTop: "0.4rem",
+        paddingLeft: "1.25rem",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
+      },
+    },
+    inputInput: {
       padding: theme.spacing(1.8, 2, 0, 0),
       paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
       fontSize: "1rem",
       fontWeight: 400,
       color: "#14142B",
       letterSpacing: "0.047rem",
-    },
-    inputInput: {
-      padding: theme.spacing(2.5, 0, 0, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
     },
     searchTableCard: {
       height: "3.5rem",
@@ -328,56 +235,56 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
       paddingLeft: "1.6rem",
     },
-    inputRootTableCard: {
-      lineHeight: 0,
-      "& .MuiInputLabel-animated": {
-        fontSize: ".975rem",
-        fontWeight: 400,
-        color: "#14142B",
-        lineHeight: 0,
-        paddingLeft: "1.25rem",
-        paddingTop: "0.5rem",
-      },
-      "& .MuiInputBase-inputMarginDense": {
-        paddingLeft: "5.5rem",
-        paddingTop: "1.25rem",
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-      },
-    },
-    inputRootTableCardFilter: {
-      lineHeight: 0,
-      "& .MuiInputLabel-animated": {
-        fontSize: ".975rem",
-        fontWeight: 400,
-        color: "#14142B",
-        lineHeight: 0,
-        paddingLeft: "1.25rem",
-        paddingTop: "0.5rem",
-      },
-      "& .MuiInputBase-inputMarginDense": {
-        fontSize: "1rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-      },
-      "& .MuiInputBase-input": {
-        fontSize: ".975rem",
-        fontWeight: 400,
-        color: "#14142B",
-        letterSpacing: "0.047rem",
-        paddingTop: "0.4rem",
-        paddingLeft: "1.25rem",
-      },
-    },
-    inputInputTableCard: {
-      padding: theme.spacing(1.5, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-    },
+    // inputRootTableCard: {
+    //   lineHeight: 0,
+    //   "& .MuiInputLabel-animated": {
+    //     fontSize: ".975rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     lineHeight: 0,
+    //     paddingLeft: "1.25rem",
+    //     paddingTop: "0.5rem",
+    //   },
+    //   "& .MuiInputBase-inputMarginDense": {
+    //     paddingLeft: "5.5rem",
+    //     paddingTop: "1.25rem",
+    //     fontSize: "1rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     letterSpacing: "0.047rem",
+    //   },
+    // },
+    // inputRootTableCardFilter: {
+    //   lineHeight: 0,
+    //   "& .MuiInputLabel-animated": {
+    //     fontSize: ".975rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     lineHeight: 0,
+    //     paddingLeft: "1.25rem",
+    //     paddingTop: "0.5rem",
+    //   },
+    //   "& .MuiInputBase-inputMarginDense": {
+    //     fontSize: "1rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     letterSpacing: "0.047rem",
+    //   },
+    //   "& .MuiInputBase-input": {
+    //     fontSize: ".975rem",
+    //     fontWeight: 400,
+    //     color: "#14142B",
+    //     letterSpacing: "0.047rem",
+    //     paddingTop: "0.4rem",
+    //     paddingLeft: "1.25rem",
+    //   },
+    // },
+    // inputInputTableCard: {
+    //   padding: theme.spacing(1.5, 1, 1, 0),
+    //   paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
+    //   transition: theme.transitions.create("width"),
+    //   width: "100%",
+    // },
   })
 );
 
@@ -387,6 +294,7 @@ const TextFieldComponent = (props) => {
 
 export default function StyledTableCard(props) {
   const classes = useStyles();
+  const { register, handleSubmit, errors, control, reset } = useForm();
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -399,56 +307,7 @@ export default function StyledTableCard(props) {
           <Box>
             <Grid container spacing={2}>
               <Grid
-                className={classes.gridDropdownOne}
-                item
-                lg={3}
-                md={3}
-                sm={10}
-                xs={9}
-              >
-                <Paper
-                  className={classes.paperDropdown}
-                  style={{ background: "#EFF0F6" }}
-                >
-                  <Box>
-                    <Grid
-                      container
-                      spacing={0}
-                      style={{
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Grid
-                        item
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        style={{ textAlign: "left" }}
-                      >
-                        <ShortTextOutlinedIcon
-                          style={{
-                            fontSize: "2rem",
-                            color: "14142B",
-                          }}
-                        ></ShortTextOutlinedIcon>
-                      </Grid>
-                      <Grid
-                        item
-                        lg={9}
-                        md={9}
-                        sm={9}
-                        xs={9}
-                        style={{ textAlign: "left" }}
-                      >
-                        <StyledSelectTable></StyledSelectTable>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid
-                className={classes.gridDropdownTwo}
+                className={classes.gridItem}
                 item
                 lg={3}
                 md={3}
@@ -456,64 +315,41 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper
-                  className={classes.paperDropdown}
+                  className={classes.paper}
                   style={{ background: "#EFF0F6" }}
                 >
-                  <Box>
-                    <Grid
-                      container
-                      spacing={0}
-                      style={{
-                        flexDirection: "row",
+                  <div className={classes.searchTableCard}>
+                    <div className={classes.searchIconTableCard}>
+                      <ShortTextOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledSelectForm
+                      classes={{
+                        root: classes.gridDropdown,
                       }}
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      control={control}
+                      defaultValue={"items"}
+                      // error={errors.type ? true : false}
                     >
-                      <Grid
-                        item
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        style={{ textAlign: "left" }}
-                      >
-                        <ShortTextOutlinedIcon
-                          style={{
-                            fontSize: "2rem",
-                            color: "14142B",
-                          }}
-                        ></ShortTextOutlinedIcon>
-                      </Grid>
-                      <Grid
-                        item
-                        lg={9}
-                        md={9}
-                        sm={9}
-                        xs={9}
-                        style={{ textAlign: "left" }}
-                      >
-                        <StyledSelectTable></StyledSelectTable>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItemOne}
-                lg={2}
-                md={2}
-                sm={2}
-                xs={3}
-                style={{ margin: "auto" }}
-              >
-                <Paper className={classes.paperIcon}>
-                  <StyledCardAppBar></StyledCardAppBar>
+                      <MenuItem value="items">{"Items"}</MenuItem>
+                      <MenuItem value="suppliers">{"Suppliers"}</MenuItem>
+                      <MenuItem value="warehouses">{"Warehouses"}</MenuItem>
+                      <MenuItem value="requisitions">{"Requisitions"}</MenuItem>
+                      <MenuItem value="purchases">{"Purchase"}</MenuItem>
+                      <MenuItem value="receipts">
+                        {"Material Receipts"}
+                      </MenuItem>
+                      <MenuItem value="issues">{"Material Issues"}</MenuItem>
+                    </StyledSelectForm>
+                  </div>
                 </Paper>
               </Grid>
               <Grid
                 item
                 className={classes.gridItem}
-                lg={7}
-                md={7}
+                lg={9}
+                md={9}
                 sm={12}
                 xs={12}
               >
@@ -523,7 +359,7 @@ export default function StyledTableCard(props) {
                 >
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                      <SearchIcon style={{ fontSize: "1.875rem" }} />
+                      <SearchIcon fontSize="large" />
                     </div>
                     <TextField
                       placeholder="Search…"
@@ -532,68 +368,9 @@ export default function StyledTableCard(props) {
                         disableUnderline: true,
                       }}
                       classes={{
-                        root: classes.inputRoot,
+                        root: classes.inputInput,
                       }}
                     />
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItemTwo}
-                lg={2}
-                md={2}
-                sm={2}
-                xs={2}
-                style={{ margin: "auto" }}
-              >
-                <Paper className={classes.paperIcon}>
-                  <StyledCardAppBar></StyledCardAppBar>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={4}
-                md={6}
-                sm={12}
-                xs={12}
-              >
-                <Paper
-                  className={classes.paper}
-                  style={{ background: "#EFF0F6", zIndex: 1030 }}
-                >
-                  <div className={classes.searchTableCard}>
-                    <div className={classes.searchIconTableCard}>
-                      <TocOutlinedIcon fontSize="large" />
-                      <Typography
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          color: "#14142B",
-                          letterSpacing: "0.047rem",
-                          lineHeight: 0,
-                          paddingLeft: "1.25rem",
-                        }}
-                      >
-                        From
-                      </Typography>
-                    </div>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="dd/MM/yyyy"
-                        margin="normal"
-                        maxDate={new Date()}
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                          "aria-label": "change date",
-                        }}
-                        TextFieldComponent={TextFieldComponent}
-                      />
-                    </MuiPickersUtilsProvider>
                   </div>
                 </Paper>
               </Grid>
@@ -611,35 +388,47 @@ export default function StyledTableCard(props) {
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>
-                      <TocOutlinedIcon fontSize="large" />
-                      <Typography
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: 400,
-                          color: "#14142B",
-                          letterSpacing: "0.047rem",
-                          lineHeight: 0,
-                          paddingLeft: "1.25rem",
-                        }}
-                      >
-                        To
-                      </Typography>
+                      <TodayIcon fontSize="large" />
                     </div>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="dd/MM/yyyy"
-                        margin="normal"
-                        maxDate={new Date()}
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                          "aria-label": "change date",
-                        }}
-                        TextFieldComponent={TextFieldComponent}
-                      />
-                    </MuiPickersUtilsProvider>
+                    <StyledDatePicker
+                      label={"From"}
+                      name="fromDate"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.reqDate ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={4}
+                md={6}
+                sm={12}
+                xs={12}
+              >
+                <Paper
+                  className={classes.paper}
+                  style={{ background: "#EFF0F6" }}
+                >
+                  <div className={classes.searchTableCard}>
+                    <div className={classes.searchIconTableCard}>
+                      <EventIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"To"}
+                      name="toDate"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.reqDate ? true : false}
+                    />
                   </div>
                 </Paper>
               </Grid>
@@ -657,7 +446,7 @@ export default function StyledTableCard(props) {
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>
-                      <TocOutlinedIcon fontSize="large" />
+                      <FilterListIcon fontSize="large" />
                     </div>
                     <TextField
                       fullWidth
@@ -665,7 +454,7 @@ export default function StyledTableCard(props) {
                         disableUnderline: true,
                       }}
                       classes={{
-                        root: classes.inputRootTableCardFilter,
+                        root: classes.inputRoot,
                       }}
                       label={"Filter By"}
                       size={"small"}

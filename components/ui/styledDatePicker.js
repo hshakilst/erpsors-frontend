@@ -46,7 +46,6 @@ export default function StyledDatePicker(props) {
         {...props}
         autoOk
         clearable
-        disablePast
         label={props.label}
         format="dd/MM/yyyy"
         InputProps={{

@@ -11,25 +11,28 @@ const StyledNavbar = (props) => {
     setMobileOpen(!mobileOpen);
   };
   const router = useRouter();
-  if (router.pathname === "/login" || router.pathname === "/register")
-    return null;
-  return (
-    <NoSsr>
-      <CssBaseline>
-        <StyledAppBar
-          drawerWidth={240}
-          handleDrawerToggle={handleDrawerToggle}
-        />
-        <StyledDrawer
-          drawerWidth={240}
-          handleDrawerToggle={handleDrawerToggle}
-          mobileOpen={mobileOpen}
-        >
-          {props.children}
-        </StyledDrawer>
-      </CssBaseline>
-    </NoSsr>
-  );
+  if (
+    router.pathname?.split("/")[1] === "dashboard" ||
+    router.pathname?.split("/")[1] === "inventory"
+  )
+    return (
+      <NoSsr>
+        <CssBaseline>
+          <StyledAppBar
+            drawerWidth={240}
+            handleDrawerToggle={handleDrawerToggle}
+          />
+          <StyledDrawer
+            drawerWidth={240}
+            handleDrawerToggle={handleDrawerToggle}
+            mobileOpen={mobileOpen}
+          >
+            {props.children}
+          </StyledDrawer>
+        </CssBaseline>
+      </NoSsr>
+    );
+  return null;
 };
 
 export default StyledNavbar;

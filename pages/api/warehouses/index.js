@@ -1,7 +1,9 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
+import LogRocket from "logrocket";
 
+LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const createWarehouse = (

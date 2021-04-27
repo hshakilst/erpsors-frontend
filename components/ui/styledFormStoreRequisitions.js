@@ -370,7 +370,7 @@ const StyledFormStoreRequisitions = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              <Grid
+              {/* <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -396,11 +396,11 @@ const StyledFormStoreRequisitions = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
-                lg={12}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}

@@ -68,7 +68,7 @@ const headCells = [
     id: "rate",
     numeric: true,
     disablePadding: false,
-    label: "Value Rate",
+    label: "Rate",
   },
   {
     id: "appQty",
@@ -225,6 +225,7 @@ const EnhancedTableToolbar = (props) => {
             fontWeight: 600,
             color: "#14142B",
             letterSpacing: "0.047rem",
+            textAlign: "left",
           }}
         >
           {"Purchase Orders"}

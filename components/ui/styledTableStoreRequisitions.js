@@ -195,6 +195,7 @@ const EnhancedTableToolbar = (props) => {
             fontWeight: 600,
             color: "#14142B",
             letterSpacing: "0.047rem",
+            textAlign: "left",
           }}
         >
           {"Store Requisitions"}

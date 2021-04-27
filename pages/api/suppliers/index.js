@@ -1,7 +1,9 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
+import LogRocket from "logrocket";
 
+LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const createSupplier = (
@@ -83,24 +85,24 @@ export default async (req, res) => {
     switch (method) {
       case "GET":
         //FIXME:Pagination support for ui table
-       if (filter === "codes") {
-         const query = await getAllSupplierCodes();
-         const codes = [];
-         query.data.map((row) => {
-           const code = {
-             id: row[0],
-             code: row[1],
-             name: row[2]
-           };
-           codes.push(code);
-         });
-         res.status(200).json(codes);
-       } else if (Object.keys(req.query).length === 0) {
-         const query = await getAllSuppliers();
-         res.status(200).json(query.data);
-       } else {
-         res.status(400).json({ error: true, data: "Bad Request" });
-       }
+        if (filter === "codes") {
+          const query = await getAllSupplierCodes();
+          const codes = [];
+          query.data.map((row) => {
+            const code = {
+              id: row[0],
+              code: row[1],
+              name: row[2],
+            };
+            codes.push(code);
+          });
+          res.status(200).json(codes);
+        } else if (Object.keys(req.query).length === 0) {
+          const query = await getAllSuppliers();
+          res.status(200).json(query.data);
+        } else {
+          res.status(400).json({ error: true, data: "Bad Request" });
+        }
         break;
 
       case "POST":
