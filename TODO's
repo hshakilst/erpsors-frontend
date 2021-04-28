@@ -4,3 +4,4 @@
 (do) Implement Mono-Repo Micro-service Architecture
 (do) Improve delete function
 (do) Log Rocket Config
+(do) Change parameter passing style from (...) to ({...})

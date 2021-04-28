@@ -50,10 +50,7 @@ const useStyles = makeStyles((theme) =>
       paddingTop: "1rem",
       paddingBottom: "1rem",
       borderRadius: "1rem",
-      "& .MuiPaper-elevation1": {
-        boxShadow: "none",
-      },
-      "& .MuiPaper-elevation2": {
+      "& .MuiPaper-root": {
         boxShadow: "none",
       },
       "& .MuiTableCell-footer": {
@@ -65,6 +62,19 @@ const useStyles = makeStyles((theme) =>
       "&  .MTableToolbar-highlight-48": {
         color: "#5F2EEA",
         backgroundColor: "transparent",
+      },
+      "& .MTableToolbar-root-47": {
+        backgroundColor: "#D9DBE9",
+        borderTopLeftRadius: "1rem",
+        borderTopRightRadius: "1rem",
+      },
+      "& .MTableHeader-header-55": {
+        backgroundColor: "#EFF0F6",
+      },
+      "& .MuiTablePagination-toolbar": {
+        backgroundColor: "#D9DBE9",
+        borderBottomLeftRadius: "1rem",
+        borderBottomRightRadius: "1rem",
       },
     },
     gridItem: {
@@ -164,14 +174,14 @@ const Reports = (props) => {
                 columns={columns}
                 data={data}
                 editable={{
-                  onRowAdd: (newData) =>
-                    new Promise((resolve, reject) => {
-                      setTimeout(() => {
-                        setData([...data, newData]);
+                  // onRowAdd: (newData) =>
+                  //   new Promise((resolve, reject) => {
+                  //     setTimeout(() => {
+                  //       setData([...data, newData]);
 
-                        resolve();
-                      }, 1000);
-                    }),
+                  //       resolve();
+                  //     }, 1000);
+                  //   }),
                   onRowUpdate: (newData, oldData) =>
                     new Promise((resolve, reject) => {
                       setTimeout(() => {

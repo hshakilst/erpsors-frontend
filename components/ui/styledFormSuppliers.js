@@ -163,7 +163,6 @@ const StyledFormSuppliers = (props) => {
     let name = data.name;
     let type = data.type;
     let opnBalance = data.opnBalance;
-    let item = data.item;
     let address = data.address;
     let phone = data.phone;
     let status = data.status;
@@ -176,11 +175,10 @@ const StyledFormSuppliers = (props) => {
         code,
         company,
         name,
-        type,
         opnBalance,
-        item,
-        address,
         phone,
+        address,
+        type,
         status,
         group,
         image,
