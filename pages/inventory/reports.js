@@ -45,34 +45,42 @@ const useStyles = makeStyles((theme) =>
       },
     },
     paper: {
+      color: "#14142B",
       padding: theme.spacing(2),
       textAlign: "center",
       paddingTop: "1rem",
       paddingBottom: "1rem",
       borderRadius: "1rem",
       "& .MuiPaper-root": {
+        color: "#14142B",
         boxShadow: "none",
       },
       "& .MuiTableCell-footer": {
+        color: "#14142B",
         borderBottom: "none",
       },
       "& .MuiCheckbox-colorSecondary.Mui-checked": {
         color: "#5F2EEA",
       },
-      "&  .MTableToolbar-highlight-48": {
-        color: "#5F2EEA",
-        backgroundColor: "transparent",
-      },
-      "& .MTableToolbar-root-47": {
+      // "&  .MTableToolbar-highlight-148": {
+      //   color: "#5F2EEA",
+      //   backgroundColor: "transparent",
+      // },
+      "& .MuiToolbar-root": {
+        color: "#14142B",
         backgroundColor: "#D9DBE9",
         borderTopLeftRadius: "1rem",
         borderTopRightRadius: "1rem",
       },
-      "& .MTableHeader-header-55": {
+      "& .MuiTableCell-head": {
+        color: "#14142B",
         backgroundColor: "#EFF0F6",
       },
       "& .MuiTablePagination-toolbar": {
+        color: "#14142B",
         backgroundColor: "#D9DBE9",
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         borderBottomLeftRadius: "1rem",
         borderBottomRightRadius: "1rem",
       },
@@ -209,6 +217,7 @@ const Reports = (props) => {
                   actionsColumnIndex: -1,
                   exportButton: true,
                   selection: true,
+                  filtering: true,
                 }}
               />
             </Paper>
