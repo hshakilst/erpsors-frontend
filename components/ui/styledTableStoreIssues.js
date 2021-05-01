@@ -20,9 +20,11 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import {
   useGetAllStoreIssues,
   useDeleteStoreIssueById,
+  useUpdateStoreIssuesById,
 } from "@/actions/store-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
+import { Button } from "@material-ui/core";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -95,6 +97,7 @@ const headCells = [
     label: "Warehouse",
   },
   { id: "notes", numeric: false, disablePadding: false, label: "Notes" },
+  { id: "actions", numeric: false, disablePadding: false, label: "Actions" },
 ];
 
 function EnhancedTableHead(props) {
@@ -419,7 +422,7 @@ const EnhancedTable = (props) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      // onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -430,6 +433,7 @@ const EnhancedTable = (props) => {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
+                          onClick={(event) => handleClick(event, row.id)}
                         />
                       </TableCell>
                       <TableCell
@@ -450,6 +454,29 @@ const EnhancedTable = (props) => {
                       <TableCell align="right">{row.issQty}</TableCell>
                       <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="outlined"
+                          onClick={() =>
+                            new Promise((resolve, reject) => {
+                              setTimeout(async () => {
+                                await useUpdateStoreIssuesById({
+                                  id: row.id,
+                                  isPosted: true,
+                                });
+                                resolve();
+                              }, 1000);
+                            }).then(() => {
+                              props.enqueueSnackbar("Posted to items ledger!", {
+                                variant: "success",
+                              });
+                            })
+                          }
+                          disabled={row.isPosted}
+                        >
+                          {row.isPosted ? "Posted" : "Post"}
+                        </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

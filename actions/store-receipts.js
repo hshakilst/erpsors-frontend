@@ -15,7 +15,8 @@ export const useCreateStoreReceipt = async (
   valueRate,
   recQty,
   warehouse,
-  notes
+  notes,
+  isPosted
 ) => {
   const res = await axios.post("/api/store-receipts", {
     code,
@@ -25,6 +26,7 @@ export const useCreateStoreReceipt = async (
     recQty,
     warehouse,
     notes,
+    isPosted
   });
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };
@@ -54,13 +56,14 @@ export const useGetStoreReceiptById = (id) => {
 };
 
 export const useUpdateStoreReceiptById = async (
-  id,
+  {id,
   poCode,
   item,
   valueRate,
   recQty,
   warehouse,
-  notes
+  notes,
+  isPosted}
 ) => {
   const res = await axios.patch(`/api/store-receipts/${id}`, {
     poCode,
@@ -69,6 +72,7 @@ export const useUpdateStoreReceiptById = async (
     recQty,
     warehouse,
     notes,
+    isPosted
   });
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };

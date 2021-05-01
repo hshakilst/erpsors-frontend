@@ -121,6 +121,7 @@ const StyledFormStoreIssues = (props) => {
     let issQty = data.issQty;
     let warehouse = data.warehouse;
     let notes = data.notes;
+    let isPosted = data.isPosted;
 
     try {
       const { error, data } = await useCreateStoreIssue(
@@ -130,7 +131,8 @@ const StyledFormStoreIssues = (props) => {
         valueRate,
         issQty,
         warehouse,
-        notes
+        notes,
+        isPosted
       );
       if (!error)
         props.enqueueSnackbar(`${JSON.stringify(data)}`, {

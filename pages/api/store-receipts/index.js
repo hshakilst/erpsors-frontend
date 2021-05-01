@@ -15,7 +15,8 @@ const createStoreReceipt = (
   valueRate,
   recQty,
   warehouse,
-  notes
+  notes,
+  isPosted
 ) => {
   return db.query(
     q.Do(
@@ -30,6 +31,7 @@ const createStoreReceipt = (
           recQty: recQty ?? "",
           warehouse: warehouse ?? "",
           notes: notes ?? "",
+          isPosted: isPosted ?? false
         },
       }),
       q.Call("OnReceiveUpdateItem", item.id, recQty, valueRate)
@@ -58,6 +60,7 @@ const getAllStoreReceipts = () => {
             recQty: q.Select(["data", "recQty"], q.Var("doc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
             notes: q.Select(["data", "notes"], q.Var("doc")),
+            isPosted: q.Select(["data", "isPosted"], q.Var("doc")),
           }
         )
       )
@@ -106,6 +109,7 @@ export default async (req, res) => {
           recQty,
           warehouse,
           notes,
+          isPosted
         } = req.body;
 
         const query = await getOpeningItemRateQtyById(item.id);
@@ -121,7 +125,8 @@ export default async (req, res) => {
           valueRate,
           recQty,
           warehouse,
-          notes
+          notes,
+          isPosted
         );
         res.status(200).json({ error: false, data: result });
         break;

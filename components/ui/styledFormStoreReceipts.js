@@ -119,6 +119,7 @@ const StyledFormStoreReceipts = (props) => {
     let recQty = data.recQty;
     let warehouse = data.warehouse;
     let notes = data.notes;
+    let isPosted = false;
 
     try {
       const { error, data } = await useCreateStoreReceipt(
@@ -128,7 +129,8 @@ const StyledFormStoreReceipts = (props) => {
         valueRate,
         recQty,
         warehouse,
-        notes
+        notes,
+        isPosted
       );
       if (!error)
         props.enqueueSnackbar(`${JSON.stringify(data)}`, {

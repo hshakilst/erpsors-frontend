@@ -15,7 +15,8 @@ export const useCreateStoreIssue = async (
   valueRate,
   issQty,
   warehouse,
-  notes
+  notes,
+  isPosted
 ) => {
   const res = await axios.post("/api/store-issues", {
     code,
@@ -25,6 +26,7 @@ export const useCreateStoreIssue = async (
     issQty,
     warehouse,
     notes,
+    isPosted
   });
   mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };
@@ -54,13 +56,14 @@ export const useGetStoreIssuesById = (id) => {
 };
 
 export const useUpdateStoreIssuesById = async (
-  id,
+  {id,
   reqCode,
   item,
   valueRate,
   issQty,
   warehouse,
-  notes
+  notes,
+  isPosted}
 ) => {
   const res = await axios.patch(`/api/store-issues/${id}`, {
     reqCode,
@@ -69,6 +72,7 @@ export const useUpdateStoreIssuesById = async (
     issQty,
     warehouse,
     notes,
+    isPosted
   });
   mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };

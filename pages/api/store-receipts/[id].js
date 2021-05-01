@@ -21,7 +21,8 @@ const updateStoreReceiptById = (
   valueRate,
   recQty,
   warehouse,
-  notes
+  notes,
+  isPosted
 ) => {
   return db.query(
     q.Update(q.Ref(q.Collection("store_receipts"), id), {
@@ -32,6 +33,7 @@ const updateStoreReceiptById = (
         recQty,
         warehouse,
         notes,
+        isPosted
       },
     })
   );
@@ -44,7 +46,7 @@ export default async (req, res) => {
       method,
     } = req;
 
-    const { poCode, item, valueRate, recQty, warehouse, notes } = req.body;
+    const { poCode, item, valueRate, recQty, warehouse, notes, isPosted } = req.body;
 
     switch (method) {
       case "GET":
@@ -59,7 +61,8 @@ export default async (req, res) => {
           valueRate,
           recQty,
           warehouse,
-          notes
+          notes,
+          isPosted
         );
         res.status(200).json({ error: false, data: resUpdate });
         break;

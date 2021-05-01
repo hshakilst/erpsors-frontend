@@ -5,3 +5,4 @@
 (do) Improve delete function
 (do) Log Rocket Config
 (do) Change parameter passing style from (...) to ({...})
+(do) Implement input mask for codes
