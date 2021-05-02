@@ -56,7 +56,9 @@ const getAllItemsLedger = () => {
           },
           {
             id: q.Select(["ref", "id"], q.Var("doc")),
-            date: q.Select(["ts"], q.Var("doc")),
+            date: q.ToString(q.ToDate(
+              q.Epoch(q.Select(["ts"], q.Var("doc")), "microseconds")
+            )),
             code: q.Select(["data", "code"], q.Var("doc")),
             type: q.Select(["data", "type"], q.Var("doc")),
             itemCode: q.Select(["data", "itemCode"], q.Var("doc")),
@@ -67,10 +69,10 @@ const getAllItemsLedger = () => {
             recQty: q.Select(["data", "recQty"], q.Var("doc")),
             issRate: q.Select(["data", "issRate"], q.Var("doc")),
             issQty: q.Select(["data", "issQty"], q.Var("doc")),
-            cloRate: q.Select(["data", "issRate"], q.Var("doc")),
-            cloQty: q.Select(["data", "issQty"], q.Var("doc")),
-            warehouseCode: q.Select(["data", "issRate"], q.Var("doc")),
-            warehouseName: q.Select(["data", "issQty"], q.Var("doc")),
+            cloRate: q.Select(["data", "cloRate"], q.Var("doc")),
+            cloQty: q.Select(["data", "cloQty"], q.Var("doc")),
+            warehouseCode: q.Select(["data", "warehouseCode"], q.Var("doc")),
+            warehouseName: q.Select(["data", "warehouseName"], q.Var("doc")),
           }
         )
       )

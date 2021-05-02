@@ -4,6 +4,10 @@
   outline: 0;
 }
 
+html {
+  background-color: #EFF0F6;
+}
+
 a {
   text-decoration: none;
 }
@@ -36,3 +40,4 @@ img {
   border-radius: 16px;
   width: 6px;
 } */
+

@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Inventory = (props) => {
+const Items = (props) => {
   const classes = useStyles();
 
   return (
@@ -85,4 +85,4 @@ const Inventory = (props) => {
   );
 };
 
-export default Inventory;
+export default Items;

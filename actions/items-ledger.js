@@ -3,7 +3,7 @@ import { fetcher } from "@/actions";
 import axios from "axios";
 
 export const useGetAllItemsLedger = () => {
-  const { data, error, ...rest } = useSWR("/api/items-ledger", fetcher);
+  const { data, error,  ...rest } = useSWR("/api/items-ledger", fetcher);
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -48,11 +48,11 @@ export const useCreateItemLedger = async (
   return { error: res.data.error, data: res.data.data };
 };
 
-// export const useDeleteItemLedgerById = async (id) => {
-//   const res = await axios.delete(`/api/items-ledger/${id}`);
-//   mutate("/api/items");
-//   return { error: res.data.error, data: res.data.data };
-// };
+export const useDeleteItemLedgerById = async (id) => {
+  const res = await axios.delete(`/api/items-ledger/${id}`);
+  mutate("/api/items");
+  return { error: res.data.error, data: res.data.data };
+};
 
 // export const useUpdateItemLedgerById = async (
 //   id,

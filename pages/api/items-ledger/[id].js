@@ -6,38 +6,43 @@ import LogRocket from "logrocket";
 LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
-const getStoreIssuesById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("store_issues"), id)));
+const getItemLedgerById = (id) => {
+  return db.query(q.Get(q.Ref(q.Collection("items_ledger"), id)));
 };
 
-const deleteStoreIssuesById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("store_issues"), id)));
+const deleteItemLedgerById = (id) => {
+  return db.query(q.Delete(q.Ref(q.Collection("items_ledger"), id)));
 };
 
-const updateStoreIssuesById = (
-  id,
-  reqCode,
-  item,
-  valueRate,
-  issQty,
-  warehouse,
-  notes,
-  isPosted
-) => {
-  return db.query(
-    q.Update(q.Ref(q.Collection("store_issues"), id), {
-      data: {
-        reqCode,
-        item,
-        valueRate,
-        issQty,
-        warehouse,
-        notes,
-        isPosted
-      },
-    })
-  );
-};
+// const updateItemLedgerById = (
+//   id,
+//   code, //store-receipt or store-issues codes
+//   type, //store-receipt or store-issues
+//   itemCode,
+//   itemName,
+//   opnRate,
+//   opnQty,
+//   recRate,
+//   recQty,
+//   issRate,
+//   issQty,
+//   warehouseCode,
+//   warehouseName
+// ) => {
+//   return db.query(
+//     q.Update(q.Ref(q.Collection("store_issues"), id), {
+//       data: {
+//         reqCode,
+//         item,
+//         valueRate,
+//         issQty,
+//         warehouse,
+//         notes,
+//         isPosted,
+//       },
+//     })
+//   );
+// };
 
 export default async (req, res) => {
   try {
@@ -50,28 +55,28 @@ export default async (req, res) => {
 
     switch (method) {
       case "GET":
-        const query = await getStoreIssuesById(id);
+        const query = await getItemLedgerById(id);
         res.status(200).json(query.data);
         break;
-      case "PATCH":
-        const resUpdate = await updateStoreIssuesById(
-          id,
-          reqCode,
-          item,
-          valueRate,
-          issQty,
-          warehouse,
-          notes,
-          isPosted
-        );
-        res.status(200).json({ error: false, data: resUpdate });
-        break;
+      // case "PATCH":
+      //   const resUpdate = await updateStoreIssuesById(
+      //     id,
+      //     reqCode,
+      //     item,
+      //     valueRate,
+      //     issQty,
+      //     warehouse,
+      //     notes,
+      //     isPosted
+      //   );
+      //   res.status(200).json({ error: false, data: resUpdate });
+      //   break;
       case "DELETE":
-        const resDelete = await deleteStoreIssuesById(id);
+        const resDelete = await deleteItemLedgerById(id);
         res.status(200).json({ error: false, data: resDelete });
         break;
       default:
-        res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
+        res.setHeader("Allow", ["GET", "DELETE"]);
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
