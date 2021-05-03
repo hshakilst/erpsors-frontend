@@ -1,7 +1,7 @@
 import withSession from "@/libs/withSession";
-import LogRocket from "logrocket";
+// import LogRocket from "logrocket";
 
-LogRocket.init("ogzvmk/demo");
+// LogRocket.init("ogzvmk/demo");
 
 export default withSession(async (req, res) => {
   try {

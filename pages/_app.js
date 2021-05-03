@@ -10,10 +10,10 @@ import StyledNavbar from "@/components/ui/styledNavbar";
 import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
 import LogRocket from "logrocket";
-import setupLogRocketReact from "logrocket-react";
+// import setupLogRocketReact from "logrocket-react";
 
-LogRocket.init("ogzvmk/demo");
-setupLogRocketReact(LogRocket);
+// LogRocket.init("ogzvmk/demo");
+// setupLogRocketReact(LogRocket);
 
 SentryInitialize();
 

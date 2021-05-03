@@ -1,9 +1,9 @@
 import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
-import LogRocket from "logrocket";
+// import LogRocket from "logrocket";
 
-LogRocket.init("ogzvmk/demo");
+// LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const createItemsLedger = (
@@ -56,9 +56,9 @@ const getAllItemsLedger = () => {
           },
           {
             id: q.Select(["ref", "id"], q.Var("doc")),
-            date: q.ToString(q.ToDate(
-              q.Epoch(q.Select(["ts"], q.Var("doc")), "microseconds")
-            )),
+            date: q.ToString(
+              q.ToDate(q.Epoch(q.Select(["ts"], q.Var("doc")), "microseconds"))
+            ),
             code: q.Select(["data", "code"], q.Var("doc")),
             type: q.Select(["data", "type"], q.Var("doc")),
             itemCode: q.Select(["data", "itemCode"], q.Var("doc")),
@@ -115,10 +115,10 @@ export default async (req, res) => {
 
         const cloQty = Number(opnQty) + Number(recQty) - Number(issQty);
         const cloValue =
-          (Number(opnQty) * Number(opnRate)) +
-          (Number(recQty) * Number(recRate)) -
-          (Number(issQty) * Number(issRate));
-        const cloRate = (cloValue / cloQty);
+          Number(opnQty) * Number(opnRate) +
+          Number(recQty) * Number(recRate) -
+          Number(issQty) * Number(issRate);
+        const cloRate = cloValue / cloQty;
 
         const result = await createItemsLedger(
           code,

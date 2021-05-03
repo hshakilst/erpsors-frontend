@@ -8,7 +8,7 @@ import { withSnackbar } from "notistack";
 import { Typography } from "@material-ui/core";
 
 const columns = [
-  { titel: "ID", field: "id", hidden: true },
+  { title: "ID", field: "id", hidden: true },
   {
     title: "Date",
     field: "date",
@@ -87,12 +87,13 @@ const columns = [
 
 const StyledTableReports = (props) => {
   const { error, data, loading, mutate, isValidating } = useGetAllItemsLedger();
-  React.useEffect(() => {}, [data]);
+
   return (
     <StyledMaterialTable
       label={"Store Reports"}
       columns={columns}
       data={data}
+      fetch={useGetAllItemsLedger}
       loading={loading}
       refresh={mutate}
       deleteById={useDeleteItemLedgerById}

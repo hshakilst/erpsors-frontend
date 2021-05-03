@@ -1,9 +1,9 @@
 import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
-import LogRocket from "logrocket";
+// import LogRocket from "logrocket";
 
-LogRocket.init("ogzvmk/demo");
+// LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const createStoreIssue = (
@@ -31,7 +31,7 @@ const createStoreIssue = (
           issQty: issQty ?? "",
           warehouse: warehouse ?? "",
           notes: notes ?? "",
-          isPosted: isPosted ?? false
+          isPosted: isPosted ?? false,
         },
       }),
       q.Call("OnIssueUpdateItem", item.id, issQty)
@@ -109,7 +109,7 @@ export default async (req, res) => {
           issQty,
           warehouse,
           notes,
-          isPosted
+          isPosted,
         } = req.body;
 
         const query = await getOpeningItemRateQtyById(item.id);

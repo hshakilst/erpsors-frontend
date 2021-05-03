@@ -1,9 +1,9 @@
 import { db } from "@/libs/fauna";
 import { SentryInitialize } from "@/libs/sentry";
 import { query as q } from "faunadb";
-import LogRocket from "logrocket";
+// import LogRocket from "logrocket";
 
-LogRocket.init("ogzvmk/demo");
+// LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const getStoreIssuesById = (id) => {
@@ -33,7 +33,7 @@ const updateStoreIssuesById = (
         issQty,
         warehouse,
         notes,
-        isPosted
+        isPosted,
       },
     })
   );
@@ -46,7 +46,15 @@ export default async (req, res) => {
       method,
     } = req;
 
-    const { reqCode, item, valueRate, issQty, warehouse, notes, isPosted } = req.body;
+    const {
+      reqCode,
+      item,
+      valueRate,
+      issQty,
+      warehouse,
+      notes,
+      isPosted,
+    } = req.body;
 
     switch (method) {
       case "GET":

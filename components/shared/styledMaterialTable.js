@@ -115,8 +115,19 @@ const tableIcons = {
 
 const StyledMaterialTable = (props) => {
   const classes = useStyles();
+  const {
+    error,
+    data,
+    loading,
+    mutate,
+    isValidating,
+    revalidate,
+  } = props.fetch();
   // const [columns, setColumns] = React.useState(props.columns);
-  const [data, setData] = React.useState(props.data);
+  // const [data, setData] = React.useState(props.data);
+  // React.useEffect(() => {
+  //   setData(props.data);
+  // }, [props.data]);
   // const { error, data, loading, mutate, isValidating } = props.fetch();
   // const [rows, setRows] = React.useState([]);
   // if (data && !loading) setRows(data);
@@ -136,7 +147,7 @@ const StyledMaterialTable = (props) => {
         icons={tableIcons}
         columns={props.columns}
         data={data}
-        isLoading={props.loading}
+        isLoading={loading}
         editable={{
           // onRowAdd: (newData) =>
           //   new Promise((resolve, reject) => {
@@ -161,10 +172,10 @@ const StyledMaterialTable = (props) => {
             new Promise((resolve, reject) => {
               setTimeout(async () => {
                 await props.deleteById(oldRow.id);
-                const rows = [...data];
-                const index = oldRow.tableData.id;
-                rows.splice(index, 1);
-                setData([...rows]);
+                // const rows = [...data];
+                // const index = oldRow.tableData.id;
+                // rows.splice(index, 1);
+                // setData([...rows]);
 
                 resolve();
               }, 1000);
@@ -177,8 +188,8 @@ const StyledMaterialTable = (props) => {
             isFreeAction: true,
             onClick: () =>
               new Promise((resolve, reject) => {
-                setTimeout(async () => {
-                  await props.refresh();
+                setTimeout(() => {
+                  revalidate();
                   resolve();
                 }, 1000);
               }),
