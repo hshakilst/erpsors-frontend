@@ -20,11 +20,12 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import {
   useGetAllStoreIssues,
   useDeleteStoreIssueById,
-  useUpdateStoreIssuesById,
+  useUpdateStoreIssueById,
 } from "@/actions/store-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 import { Button } from "@material-ui/core";
+import { useCreateItemLedger } from "@/actions/items-ledger";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -79,7 +80,7 @@ const headCells = [
     label: "Opening Qty.",
   },
   {
-    id: "valueRate",
+    id: "issRate",
     numeric: true,
     disablePadding: false,
     label: "Issued Rate",
@@ -450,7 +451,7 @@ const EnhancedTable = (props) => {
                       </TableCell>
                       <TableCell align="right">{row.opnRate}</TableCell>
                       <TableCell align="right">{row.opnQty}</TableCell>
-                      <TableCell align="right">{row.valueRate}</TableCell>
+                      <TableCell align="right">{row.issRate}</TableCell>
                       <TableCell align="right">{row.issQty}</TableCell>
                       <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
@@ -460,12 +461,26 @@ const EnhancedTable = (props) => {
                           onClick={() =>
                             new Promise((resolve, reject) => {
                               setTimeout(async () => {
-                                await useUpdateStoreIssuesById({
+                                await useCreateItemLedger({
+                                  code: row.code,
+                                  type: "store-issues",
+                                  itemCode: row.item.code,
+                                  itemName: row.item.name,
+                                  opnRate: row.opnRate,
+                                  opnQty: row.opnQty,
+                                  recRate: 0,
+                                  recQty: 0,
+                                  issRate: row.issRate,
+                                  issQty: row.issQty,
+                                  warehouseCode: row.warehouse.code,
+                                  warehouseName: row.warehouse.name,
+                                });
+                                await useUpdateStoreIssueById({
                                   id: row.id,
                                   isPosted: true,
                                 });
                                 resolve();
-                              }, 1000);
+                              }, 100);
                             }).then(() => {
                               props.enqueueSnackbar("Posted to items ledger!", {
                                 variant: "success",

@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableReports from "@/components/ui/tables/styledTableReports";
+import StyledTableCard from "@/components/ui/styledTableCard";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -71,7 +72,11 @@ const Reports = (props) => {
             sm={12}
             xs={12}
           >
-            <StyledTableReports></StyledTableReports>
+            <Paper className={classes.paper}>
+              <StyledTableCard>
+                <StyledTableReports></StyledTableReports>
+              </StyledTableCard>
+            </Paper>
           </Grid>
         </Grid>
       </div>

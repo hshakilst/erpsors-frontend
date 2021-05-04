@@ -3,100 +3,121 @@ import {
   useGetAllItemsLedger,
   useDeleteItemLedgerById,
 } from "@/actions/items-ledger";
-import StyledMaterialTable from "@/components/shared/styledMaterialTable";
 import { withSnackbar } from "notistack";
-import { Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
+import StyledDataGrid from "@/components/ui/styledDataGrid";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const columns = [
-  { title: "ID", field: "id", hidden: true },
+  { headerName: "ID", field: "id", hide: true },
   {
-    title: "Date",
+    headerName: "Date",
     field: "date",
     type: "date",
-    dateSetting: { loacle: "bn_BD" },
-    render: (rowData) => (
-      <Typography variant="inherit">{rowData.date}</Typography>
-    ),
+    width: 115,
+    align: "justify",
   },
   {
-    title: "Transaction Code",
+    headerName: "Transaction Code",
     field: "code",
-    //   editComponent: (props) => (
-    //     <input
-    //       type="text"
-    //       value={props.value}
-    //       onChange={(e) => props.onChange(e.target.value)}
-    //     />
-    //   ),
+    width: 180,
+    align: "justify",
   },
   {
-    title: "Transaction Type",
+    headerName: "Transaction Type",
     field: "type",
+    width: 180,
+    align: "justify",
   },
-  { title: "Item Code", field: "itemCode" },
-  { title: "Item Name", field: "itemName" },
+  { headerName: "Item Code", field: "itemCode", width: 130, align: "justify" },
+  { headerName: "Item Name", field: "itemName", width: 135, align: "justify" },
   {
-    title: "Opening Rate",
+    headerName: "Opening Rate",
     field: "opnRate",
-    type: "numeric",
+    type: "number",
+    width: 150,
+    align: "justify",
   },
   {
-    title: "Opening Quantity",
+    headerName: "Opening Quantity",
     field: "opnQty",
-    type: "numeric",
+    type: "number",
+    width: 180,
+    align: "justify",
   },
   {
-    title: "Received Rate",
+    headerName: "Received Rate",
     field: "recRate",
-    type: "numeric",
+    type: "number",
+    width: 155,
+    align: "justify",
   },
   {
-    title: "Received Quantity",
+    headerName: "Received Quantity",
     field: "recQty",
-    type: "numeric",
+    type: "number",
+    width: 185,
+    align: "justify",
   },
   {
-    title: "Issue Rate",
+    headerName: "Issue Rate",
     field: "issRate",
-    type: "numeric",
+    type: "number",
+    width: 125,
+    align: "justify",
   },
   {
-    title: "Issue Quantity",
+    headerName: "Issue Quantity",
     field: "issQty",
-    type: "numeric",
+    type: "number",
+    width: 155,
+    align: "justify",
   },
   {
-    title: "Closing Rate",
+    headerName: "Closing Rate",
     field: "cloRate",
-    type: "numeric",
+    type: "number",
+    width: 145,
+    align: "justify",
   },
   {
-    title: "Closing Quantity",
+    headerName: "Closing Quantity",
     field: "cloQty",
-    type: "numeric",
+    type: "number",
+    width: 170,
+    align: "justify",
   },
   {
-    title: "Warehouse Code",
+    headerName: "Warehouse Code",
     field: "warehouseCode",
+    width: 175,
+    align: "justify",
   },
   {
-    title: "Warehouse Name",
+    headerName: "Warehouse Name",
     field: "warehouseName",
+    width: 180,
+    align: "justify",
+  },
+  {
+    headerName: "Actions",
+    field: "actions",
+    width: 105,
+    align: "justify",
+    renderCell: (params) => (
+      <IconButton onClick={() => useDeleteItemLedgerById(params.row.id)}>
+        <DeleteForeverIcon style={{ color: "#14142B" }} />
+      </IconButton>
+    ),
   },
 ];
 
 const StyledTableReports = (props) => {
-  const { error, data, loading, mutate, isValidating } = useGetAllItemsLedger();
-
   return (
-    <StyledMaterialTable
+    <StyledDataGrid
       label={"Store Reports"}
       columns={columns}
-      data={data}
       fetch={useGetAllItemsLedger}
-      loading={loading}
-      refresh={mutate}
-      deleteById={useDeleteItemLedgerById}
     />
   );
 };

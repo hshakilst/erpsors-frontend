@@ -12,7 +12,7 @@ const createStoreIssue = (
   item,
   opnRate,
   opnQty,
-  valueRate,
+  issRate,
   issQty,
   warehouse,
   notes,
@@ -27,7 +27,7 @@ const createStoreIssue = (
           item: item ?? "",
           opnRate: opnRate ?? "",
           opnQty: opnQty ?? "",
-          valueRate: valueRate ?? "",
+          issRate: issRate ?? "",
           issQty: issQty ?? "",
           warehouse: warehouse ?? "",
           notes: notes ?? "",
@@ -56,7 +56,7 @@ const getAllStoreIssues = () => {
             item: q.Select(["data", "item"], q.Var("doc")),
             opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
             opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
-            valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
+            issRate: q.Select(["data", "issRate"], q.Var("doc")),
             issQty: q.Select(["data", "issQty"], q.Var("doc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
             notes: q.Select(["data", "notes"], q.Var("doc")),
@@ -105,7 +105,7 @@ export default async (req, res) => {
           code,
           reqCode,
           item,
-          valueRate,
+          issRate,
           issQty,
           warehouse,
           notes,
@@ -115,14 +115,16 @@ export default async (req, res) => {
         const query = await getOpeningItemRateQtyById(item.id);
         const opnRate = query.data[0][0];
         const opnQty = query.data[0][1];
-
+        if (Number(opnQty) < Number(issQty)) {
+          res.status(403).json({ error: false, data: "Insufficient quantity" });
+        }
         const result = await createStoreIssue(
           code,
           reqCode,
           item,
           opnRate,
           opnQty,
-          valueRate,
+          issRate,
           issQty,
           warehouse,
           notes,
