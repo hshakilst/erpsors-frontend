@@ -6,82 +6,197 @@ import {
 import StyledMaterialTable from "@/components/shared/styledMaterialTable";
 import { withSnackbar } from "notistack";
 import { Typography } from "@material-ui/core";
+import EnhancedTable from "@/components/ui/tables/enhancedTable"
+import DeleteIcon from "@material-ui/icons/Delete";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+
+// const columns = [
+//   { title: "ID", field: "id", hidden: true },
+//   {
+//     title: "Date",
+//     field: "date",
+//     type: "date",
+//     dateSetting: { loacle: "bn_BD" },
+//     render: (rowData) => (
+//       <Typography variant="inherit">{rowData.date}</Typography>
+//     ),
+//   },
+//   {
+//     title: "Transaction Code",
+//     field: "code",
+//     //   editComponent: (props) => (
+//     //     <input
+//     //       type="text"
+//     //       value={props.value}
+//     //       onChange={(e) => props.onChange(e.target.value)}
+//     //     />
+//     //   ),
+//   },
+//   {
+//     title: "Transaction Type",
+//     field: "type",
+//   },
+//   { title: "Item Code", field: "itemCode" },
+//   { title: "Item Name", field: "itemName" },
+//   {
+//     title: "Opening Rate",
+//     field: "opnRate",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Opening Quantity",
+//     field: "opnQty",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Received Rate",
+//     field: "recRate",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Received Quantity",
+//     field: "recQty",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Issue Rate",
+//     field: "issRate",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Issue Quantity",
+//     field: "issQty",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Closing Rate",
+//     field: "cloRate",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Closing Quantity",
+//     field: "cloQty",
+//     type: "numeric",
+//   },
+//   {
+//     title: "Warehouse Code",
+//     field: "warehouseCode",
+//   },
+//   {
+//     title: "Warehouse Name",
+//     field: "warehouseName",
+//   },
+// ];
 
 const columns = [
-  { title: "ID", field: "id", hidden: true },
   {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { loacle: "bn_BD" },
-    render: (rowData) => (
-      <Typography variant="inherit">{rowData.date}</Typography>
-    ),
+    id: "date",
+    label: "Date",
+    align: "left",
+    width: "2rem",
+    render: (row) => <>{row.date}</>,
   },
   {
-    title: "Transaction Code",
-    field: "code",
-    //   editComponent: (props) => (
-    //     <input
-    //       type="text"
-    //       value={props.value}
-    //       onChange={(e) => props.onChange(e.target.value)}
-    //     />
-    //   ),
+    id: "code",
+    label: "Transaction Code",
+    align: "left",
+    render: (row) => <>{row.code}</>,
   },
   {
-    title: "Transaction Type",
-    field: "type",
-  },
-  { title: "Item Code", field: "itemCode" },
-  { title: "Item Name", field: "itemName" },
-  {
-    title: "Opening Rate",
-    field: "opnRate",
-    type: "numeric",
+    id: "type",
+    disablePadding: false,
+    label: "Transaction Type",
+    align: "left",
+    // width: 100,
+    render: (row) => <>{row.type}</>,
   },
   {
-    title: "Opening Quantity",
-    field: "opnQty",
-    type: "numeric",
+    id: "itemCode",
+    label: "Item Code",
+    align: "left",
+    // width: 100,
+    render: (row) => <>{row.itemCode}</>,
   },
   {
-    title: "Received Rate",
-    field: "recRate",
-    type: "numeric",
+    id: "itemName",
+    label: "Item Name",
+    align: "left",
+    // width: 100,
+    render: (row) => <>{row.itemName}</>,
   },
   {
-    title: "Received Quantity",
-    field: "recQty",
-    type: "numeric",
+    id: "opnRate",
+    label: "Opening Rate",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.opnRate}</>,
   },
   {
-    title: "Issue Rate",
-    field: "issRate",
-    type: "numeric",
+    id: "opnQty",
+    label: "Opening Quantity",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.opnQty}</>,
   },
   {
-    title: "Issue Quantity",
-    field: "issQty",
-    type: "numeric",
+    id: "recRate",
+    label: "Received Rate",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.recRate}</>,
   },
   {
-    title: "Closing Rate",
-    field: "cloRate",
-    type: "numeric",
+    id: "recQty",
+    label: "Received Quantity",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.recQty}</>,
+  },
+
+  {
+    id: "issRate",
+    label: "Issued Rate",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.issRate}</>,
   },
   {
-    title: "Closing Quantity",
-    field: "cloQty",
-    type: "numeric",
+    id: "issQty",
+    label: "Issued Quantity",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.issQty}</>,
   },
   {
-    title: "Warehouse Code",
-    field: "warehouseCode",
+    id: "cloRate",
+    label: "Closing Rate",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.cloRate}</>,
   },
   {
-    title: "Warehouse Name",
-    field: "warehouseName",
+    id: "cloQty",
+    label: "Closing Quantity",
+    align: "right",
+    // width: 100,
+    render: (row) => <>{row.cloQty}</>,
+  },
+  {
+    id: "warehouseCode",
+    disablePadding: false,
+    label: "Warehouse Code",
+    align: "left",
+    // width: 100,
+    render: (row) => <>{row.warehouseCode}</>,
+  },
+  {
+    id: "warehouseName",
+    disablePadding: false,
+    label: "Warehouse Name",
+    align: "left",
+    // width: 100,
+    render: (row) => <>{row.warehouseName}</>,
   },
 ];
 
@@ -89,14 +204,44 @@ const StyledTableReports = (props) => {
   const { error, data, loading, mutate, isValidating } = useGetAllItemsLedger();
 
   return (
-    <StyledMaterialTable
+    // <StyledMaterialTable
+    //   label={"Store Reports"}
+    //   columns={columns}
+    //   data={data}
+    //   fetch={useGetAllItemsLedger}
+    //   loading={loading}
+    //   refresh={mutate}
+    //   deleteById={useDeleteItemLedgerById}
+    // />
+    <EnhancedTable
+      fetch={useGetAllItemsLedger}
       label={"Store Reports"}
       columns={columns}
-      data={data}
-      fetch={useGetAllItemsLedger}
-      loading={loading}
-      refresh={mutate}
-      deleteById={useDeleteItemLedgerById}
+      onSelectToolbarActions={[
+        {
+          title: "Delete",
+          icon: <DeleteIcon style={{ color: "#14142B" }} />,
+          onClick: () => {
+            console.log("Delete");
+          },
+        },
+      ]}
+      toolbarActions={[
+        {
+          title: "Filter",
+          icon: <FilterListIcon style={{ color: "#14142B" }} />,
+          onClick: () => {
+            console.log("Filter");
+          },
+        },
+        {
+          title: "Refresh",
+          icon: <RefreshRoundedIcon style={{ color: "#14142B" }} />,
+          onClick: () => {
+            mutate();
+          },
+        },
+      ]}
     />
   );
 };

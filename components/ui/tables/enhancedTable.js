@@ -15,13 +15,6 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
-// import {
-//   useGetAllStoreRequisitions,
-//   useDeleteStoreRequisitionById,
-// } from "@/actions/store-requisitions";
-import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {
@@ -50,29 +43,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: "code",
-    numeric: false,
-    disablePadding: true,
-    label: "Code",
-  },
-  { id: "item", numeric: false, disablePadding: false, label: "Item" },
-  {
-    id: "reqQty",
-    numeric: true,
-    disablePadding: false,
-    label: "Required Qty",
-  },
-  {
-    id: "warehouse",
-    numeric: false,
-    disablePadding: false,
-    label: "Warehouse",
-  },
-  { id: "notes", numeric: false, disablePadding: false, label: "Notes" },
-];
-
 function EnhancedTableHead(props) {
   const {
     classes,
@@ -98,12 +68,14 @@ function EnhancedTableHead(props) {
             inputProps={{ "aria-label": "select all" }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {props.headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={headCell.align}
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
+            width={headCell.width}
+            style={headCell.style}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -149,20 +121,6 @@ const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
-  //   const handleRefresh = () => {
-  //     props.refreshRows();
-  //   };
-
-  //   const handleDelete = () => {
-  //     if (confirm("Delete selected items?")) {
-  //       setIsDisabledDelete(true);
-  //       setTimeout(async () => {
-  //         await props.handleDelete();
-  //         setIsDisabledDelete(false);
-  //       }, 1000);
-  //     }
-  //   };
-
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -204,7 +162,10 @@ const EnhancedTableToolbar = (props) => {
       {numSelected > 0 ? (
         <>
           {props.onSelectToolbarActions.map((action) => (
-            <Tooltip title={action.title}>
+            <Tooltip
+              title={action.title}
+              key={props.onSelectToolbarActions.indexOf(action)}
+            >
               <IconButton
                 aria-label={`aria-label-${action.title}`}
                 onClick={action.onClick}
@@ -217,7 +178,10 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <>
           {props.toolbarActions.map((action) => (
-            <Tooltip title={action.title}>
+            <Tooltip
+              title={action.title}
+              key={props.toolbarActions.indexOf(action)}
+            >
               <IconButton
                 aria-label={`aria-label-${action}`}
                 onClick={action.onClick}
@@ -270,7 +234,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTable = (props) => {
+const EnhancedTable = (props) => {  //fetch, label, columns
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");
@@ -294,25 +258,25 @@ const EnhancedTable = (props) => {
     // setRows([{ name: "Loading" }]);
   }
 
-  const handleDeleteMultiple = () => {
-    const errors = [];
-    selected.map(async (rowID) => {
-      const { error, data } = await props.deleteRowById(rowID);
-      if (error) errors.push({ id: data.ref, error });
-    });
-    if (errors.length === 0)
-      setTimeout(() => {
-        props.enqueueSnackbar(
-          `${JSON.stringify({
-            errors: errors,
-          })}`,
-          {
-            variant: "success",
-          }
-        );
-        setSelected([]);
-      }, 3000);
-  };
+  // const handleDeleteMultiple = () => {
+  //   const errors = [];
+  //   selected.map(async (rowID) => {
+  //     const { error, data } = await props.deleteRowById(rowID);
+  //     if (error) errors.push({ id: data.ref, error });
+  //   });
+  //   if (errors.length === 0)
+  //     setTimeout(() => {
+  //       props.enqueueSnackbar(
+  //         `${JSON.stringify({
+  //           errors: errors,
+  //         })}`,
+  //         {
+  //           variant: "success",
+  //         }
+  //       );
+  //       setSelected([]);
+  //     }, 3000);
+  // };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -369,31 +333,8 @@ const EnhancedTable = (props) => {
         <EnhancedTableToolbar
           label={props.label}
           numSelected={selected.length}
-          onSelectToolbarActions={[
-            {
-              title: "Delete",
-              icon: () => <DeleteIcon style={{ color: "#14142B" }} />,
-              onClick: () => {
-                console.log("Delete");
-              },
-            },
-          ]}
-          toolbarActions={[
-            {
-              title: "Filter",
-              icon: () => <FilterListIcon style={{ color: "#14142B" }} />,
-              onClick: () => {
-                console.log("Filter");
-              },
-            },
-            {
-              title: "Refresh",
-              icon: () => <RefreshRoundedIcon style={{ color: "#14142B" }} />,
-              onClick: () => {
-                mutate();
-              },
-            },
-          ]}
+          onSelectToolbarActions={props.onSelectToolbarActions}
+          toolbarActions={props.toolbarActions}
         />
         <TableContainer>
           <Table
@@ -401,6 +342,7 @@ const EnhancedTable = (props) => {
             aria-labelledby={`aria-labelled-by-${props.label}`}
             size="small"
             aria-label={`aria-label-${props.label}`}
+            stickyHeader
           >
             <EnhancedTableHead
               classes={classes}
@@ -410,13 +352,14 @@ const EnhancedTable = (props) => {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              headCells={props.columns}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  const labelId = `enhanced-table-row-${index}`;
 
                   return (
                     <TableRow
@@ -436,29 +379,16 @@ const EnhancedTable = (props) => {
                       </TableCell>
                       {props.columns.map((column) => (
                         <TableCell
-                          component="th"
+                          component="td"
                           id={labelId}
                           scope={column.scope}
-                          padding={column.padding}
+                          padding={column.disablePadding ? "none" : "default"}
+                          key={props.columns.indexOf(column)}
                           align={column.align}
                         >
-                          {row[`${column.field}`]}
+                          {column.render(row)}
                         </TableCell>
                       ))}
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.code}
-                      </TableCell>
-                      <TableCell align="left">
-                        {`${row.item.code}: ${row.item.name}`}
-                      </TableCell>
-                      <TableCell align="right">{row.reqQty}</TableCell>
-                      <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
-                      <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>
                   );
                 })}
