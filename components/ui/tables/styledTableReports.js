@@ -59,6 +59,7 @@ const columns = [
     width: 185,
     align: "justify",
   },
+
   {
     headerName: "Issue Rate",
     field: "issRate",
