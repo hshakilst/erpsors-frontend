@@ -6,6 +6,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableReports from "@/components/ui/tables/styledTableReports";
 import StyledTableCard from "@/components/ui/styledTableCard";
+import { withAuthUser } from "@/libs/auth";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -84,4 +85,4 @@ const Reports = (props) => {
   );
 };
 
-export default Reports;
+export default withAuthUser(Reports);

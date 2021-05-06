@@ -7,6 +7,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableStoreReceipts from "@/components/ui/styledTableStoreReceipts";
+import { withAuthUser } from "@/libs/auth";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -83,4 +84,4 @@ const MaterialReceipts = (props) => {
   );
 };
 
-export default MaterialReceipts;
+export default withAuthUser(MaterialReceipts);

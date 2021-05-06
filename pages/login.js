@@ -10,17 +10,17 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import { Box, Grid, Typography, Paper, Link } from "@material-ui/core";
 import { withSnackbar } from "notistack";
 import { useAuth } from "@/libs/auth";
+import { useGetUser } from "@/actions/user";
+import Redirect from "@/components/shared/redirect";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 function Login(props) {
-  // const { mutateUser } = useUser({
-  //   redirectTo: "/dashboard",
-  //   redirectIfFound: true,
-  // });
   const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let email = data.email;
     let password = data.password;
 
@@ -29,11 +29,12 @@ function Login(props) {
         email,
         password
       );
-      if (!error)
-        props.enqueueSnackbar("Session set", {
+      if (!error) {
+        props.enqueueSnackbar(`${data}`, {
           variant: "success",
         });
-      else
+        router.push("/inventory");
+      } else
         props.enqueueSnackbar(`${JSON.stringify(data)}`, {
           variant: "error",
         });

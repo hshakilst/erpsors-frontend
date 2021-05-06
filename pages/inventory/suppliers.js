@@ -7,6 +7,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableSuppliers from "@/components/ui/styledTableSuppliers";
+import { withAuthUser } from "@/libs/auth";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -84,4 +85,4 @@ const Suppliers = (props) => {
   );
 };
 
-export default Suppliers;
+export default withAuthUser(Suppliers);

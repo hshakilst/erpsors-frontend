@@ -4,6 +4,8 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import Redirect from "@/components/shared/redirect";
 import { useGetUser } from "@/actions/user";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { CircularProgress } from "@material-ui/core";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 
@@ -18,29 +20,29 @@ export const useAuth = () => {
 
 export const withAuthUser = (Component) => {
   return (props) => {
-    const [user, setUser] = React.useState(null);
+    // const [user, setUser] = React.useState(null);
     const { data, error, loading } = useGetUser();
 
-    React.useEffect(() => {
-      if (data) setUser(data.data);
-    }, [data]);
-    if (error) return <Redirect to={"/login"} ssr={true}></Redirect>;
+    // React.useEffect(() => {
+    //   if (data) setUser(data.data);
+    // }, [data]);
+
+    if (error) return <Redirect to={"/login"} />;
+
     if (loading)
       return (
         <BaseLayout className="dashboard">
-          <Skeleton variant="text" animation="wave" width="40ch" height="7ch" />
-          <Skeleton variant="text" animation="wave" width="40ch" height="5ch" />
-          <Skeleton variant="text" animation="wave" width="40ch" height="5ch" />
-          <Skeleton variant="text" animation="wave" width="40ch" height="5ch" />
+          <CircularProgress size={40} />
         </BaseLayout>
       );
-    if (!user?.emailVerified)
+
+    if (!data?.data.emailVerified)
       return (
         <BaseLayout className="dashboard">
           <h3>Your account is not verified yet!</h3>
         </BaseLayout>
       );
-    return <Component user={user} {...props}></Component>;
+    return <Component user={data?.data} {...props}></Component>;
   };
 };
 

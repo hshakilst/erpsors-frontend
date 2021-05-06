@@ -7,6 +7,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTablePurchaseOrders from "@/components/ui/styledTablePurchaseOrders";
+import { withAuthUser } from "@/libs/auth";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -85,4 +86,4 @@ const PurchaseOrders = (props) => {
   );
 };
 
-export default PurchaseOrders;
+export default withAuthUser(PurchaseOrders);

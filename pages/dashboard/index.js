@@ -25,20 +25,20 @@ const Dashboard = (props) => {
   );
 };
 
-export const getServerSideProps = withSession(async function ({ req, res }) {
-  const sessionCookie = await req.session.get("sessionCookie");
-  if (sessionCookie === undefined) {
-    res.setHeader("location", "/login");
-    res.statusCode = 302;
-    res.end();
-    return { props: {} };
-  }
+// export const getServerSideProps = withSession(async function ({ req, res }) {
+//   const sessionCookie = await req.session.get("sessionCookie");
+//   if (sessionCookie === undefined) {
+//     res.setHeader("location", "/login");
+//     res.statusCode = 302;
+//     res.end();
+//     return { props: {} };
+//   }
 
-  return {
-    props: {
-      sessionCookie: sessionCookie,
-    },
-  };
-});
+//   return {
+//     props: {
+//       sessionCookie: sessionCookie,
+//     },
+//   };
+// });
 
 export default withAuthUser(Dashboard);

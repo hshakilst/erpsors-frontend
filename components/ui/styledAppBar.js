@@ -14,6 +14,10 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
+import { Typography } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import { withAuthUser } from "@/libs/auth";
+import { useLogOut } from "@/actions/user";
 
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -28,6 +32,7 @@ const StyledAppBar = (props) => {
         padding: 0,
         height: "2.375rem",
         width: "2.375rem",
+        zIndex: 1030,
       },
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
@@ -188,8 +193,22 @@ const StyledAppBar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Typography style={{ textAlign: "center", fontWeight: 600 }}>
+        {`${props.user.email.split("@")[0] || "Guest"}`}
+      </Typography>
+      <Divider />
+      <MenuItem style={{ textAlign: "center" }} onClick={handleMenuClose}>
+        My Profile
+      </MenuItem>
+      <MenuItem
+        style={{ textAlign: "center" }}
+        onClick={() => {
+          useLogOut();
+          handleMenuClose();
+        }}
+      >
+        Log Out
+      </MenuItem>
     </Menu>
   );
 
@@ -363,4 +382,4 @@ const StyledAppBar = (props) => {
   );
 };
 
-export default StyledAppBar;
+export default withAuthUser(StyledAppBar);

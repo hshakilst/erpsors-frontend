@@ -100,17 +100,17 @@ const columns = [
     width: 180,
     align: "justify",
   },
-  {
-    headerName: "Actions",
-    field: "actions",
-    width: 105,
-    align: "justify",
-    renderCell: (params) => (
-      <IconButton onClick={() => useDeleteItemLedgerById(params.row.id)}>
-        <DeleteForeverIcon style={{ color: "#14142B" }} />
-      </IconButton>
-    ),
-  },
+  // {
+  //   headerName: "Actions",
+  //   field: "actions",
+  //   width: 105,
+  //   align: "justify",
+  //   renderCell: (params) => (
+  //     <IconButton onClick={() => useDeleteItemLedgerById(params.row.id)}>
+  //       <DeleteForeverIcon style={{ color: "#14142B" }} />
+  //     </IconButton>
+  //   ),
+  // },
 ];
 
 const StyledTableReports = (props) => {

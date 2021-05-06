@@ -1,11 +1,11 @@
-export const fetcher = (url) =>
-  fetch(url).then(async (res) => {
-    const result = await res.json();
+import axios from "axios";
 
+export const fetcher = (url) =>
+  axios.get(url).then((res) => {
     if (res.status !== 200) {
-      return Promise.reject(result);
+      return Promise.reject(res.data);
     } else {
-      return result;
+      return res.data;
     }
   });
 
