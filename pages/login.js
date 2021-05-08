@@ -75,7 +75,7 @@ function Login(props) {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh", minWidth: "100vw" }}
+        style={{ minHeight: "100vh"}}
       >
         <Grid
           item
