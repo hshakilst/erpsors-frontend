@@ -2,7 +2,7 @@ import React, { useContext, createContext } from "react";
 import firebaseAuthDef from "@/libs/firebase/firebaseAuthDef";
 import BaseLayout from "@/components/layouts/baseLayout";
 import Redirect from "@/components/shared/redirect";
-import { useGetUser } from "@/actions/user";
+import { useGetUser } from "@/adapters/user";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { CircularProgress } from "@material-ui/core";
 import { useRouter } from "next/router";

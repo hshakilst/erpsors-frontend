@@ -1,5 +1,5 @@
 import useSWR, { mutate } from "swr";
-import { fetcher } from "@/actions";
+import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllWarehouses = () => {

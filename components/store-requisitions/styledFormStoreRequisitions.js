@@ -11,11 +11,11 @@ import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
-import { useCreateStoreRequisition } from "@/actions/store-requisitions";
+import { useCreateStoreRequisition } from "@/adapters/store-requisitions";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
-import { useGetAllItemCodes } from "@/actions/items";
-import { useGetAllWarehouseCodes } from "@/actions/warehouses";
+import { useGetAllItemCodes } from "@/adapters/items";
+import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
 import StyledDatePicker from "../ui/styledDatePicker";
 
 const useStyles = makeStyles((theme) =>

@@ -20,7 +20,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import {
   useGetAllPurchaseOrders,
   useDeletePurchaseOrdersById,
-} from "@/actions/purchase-orders";
+} from "@/adapters/purchase-orders";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 

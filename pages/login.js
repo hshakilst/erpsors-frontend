@@ -10,7 +10,7 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import { Box, Grid, Typography, Paper, Link } from "@material-ui/core";
 import { withSnackbar } from "notistack";
 import { useAuth } from "@/libs/auth";
-import { useGetUser } from "@/actions/user";
+import { useGetUser } from "@/adapters/user";
 import Redirect from "@/components/shared/redirect";
 import { useRouter } from "next/router";
 import axios from "axios";

@@ -12,7 +12,7 @@ import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateSupplier } from "@/actions/suppliers";
+import { useCreateSupplier } from "@/adapters/suppliers";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 // import StyledSelect from "@/components/ui/styledSelect";
 

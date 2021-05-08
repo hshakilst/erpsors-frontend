@@ -12,11 +12,11 @@ import StyledButton from "@/components/ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateStoreReceipt } from "@/actions/store-receipts";
+import { useCreateStoreReceipt } from "@/adapters/store-receipts";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import { useGetAllItemCodes } from "@/actions/items";
-import { useGetAllPurchaseOrderCodes } from "@/actions/purchase-orders";
+import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
+import { useGetAllItemCodes } from "@/adapters/items";
+import { useGetAllPurchaseOrderCodes } from "@/adapters/purchase-orders";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

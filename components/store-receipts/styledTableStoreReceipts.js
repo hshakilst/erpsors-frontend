@@ -21,11 +21,11 @@ import {
   useGetAllStoreReceipts,
   useDeleteStoreReceiptById,
   useUpdateStoreReceiptById,
-} from "@/actions/store-receipts";
+} from "@/adapters/store-receipts";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 import { Button } from "@material-ui/core";
-import { useCreateItemLedger } from "@/actions/items-ledger";
+import { useCreateItemLedger } from "@/adapters/items-ledger";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {

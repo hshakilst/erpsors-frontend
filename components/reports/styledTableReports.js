@@ -2,7 +2,7 @@ import React from "react";
 import {
   useGetAllItemsLedger,
   useDeleteItemLedgerById,
-} from "@/actions/items-ledger";
+} from "@/adapters/items-ledger";
 import { withSnackbar } from "notistack";
 import { IconButton, Typography } from "@material-ui/core";
 import StyledDataGrid from "@/components/shared/tables/styledDataGrid";

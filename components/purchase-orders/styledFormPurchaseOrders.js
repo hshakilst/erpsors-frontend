@@ -12,13 +12,13 @@ import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreatePurchaseOrder } from "@/actions/purchase-orders";
+import { useCreatePurchaseOrder } from "@/adapters/purchase-orders";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetAllStoreRequisitionCodes } from "@/actions/store-requisitions";
-import { useGetAllSupplierCodes } from "@/actions/suppliers";
-import { useGetAllItemCodes } from "@/actions/items";
+import { useGetAllStoreRequisitionCodes } from "@/adapters/store-requisitions";
+import { useGetAllSupplierCodes } from "@/adapters/suppliers";
+import { useGetAllItemCodes } from "@/adapters/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

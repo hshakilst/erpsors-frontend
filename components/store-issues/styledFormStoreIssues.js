@@ -12,10 +12,10 @@ import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateStoreIssue } from "@/actions/store-issues";
+import { useCreateStoreIssue } from "@/adapters/store-issues";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import { useGetAllItemCodes, useGetItemById } from "@/actions/items";
+import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
+import { useGetAllItemCodes, useGetItemById } from "@/adapters/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

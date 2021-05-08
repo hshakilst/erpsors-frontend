@@ -12,7 +12,7 @@ import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useCreateWarehouses } from "@/actions/warehouses";
+import { useCreateWarehouses } from "@/adapters/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 
 const useStyles = makeStyles((theme) =>

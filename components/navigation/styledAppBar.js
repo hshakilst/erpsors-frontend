@@ -17,7 +17,7 @@ import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 import { Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import { withAuthUser } from "@/libs/auth";
-import { useLogOut } from "@/actions/user";
+import { useLogOut } from "@/adapters/user";
 
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({

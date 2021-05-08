@@ -21,11 +21,11 @@ import {
   useGetAllStoreIssues,
   useDeleteStoreIssueById,
   useUpdateStoreIssueById,
-} from "@/actions/store-issues";
+} from "@/adapters/store-issues";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 import { Button } from "@material-ui/core";
-import { useCreateItemLedger } from "@/actions/items-ledger";
+import { useCreateItemLedger } from "@/adapters/items-ledger";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {

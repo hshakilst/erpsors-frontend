@@ -3,7 +3,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import BaseLayout from "@/components/layouts/baseLayout";
 import withSession from "@/libs/withSession";
 import Redirect from "@/components/shared/redirect";
-import { useGetUser } from "@/actions/user";
+import { useGetUser } from "@/adapters/user";
 import { withAuthUser } from "@/libs/auth";
 
 const Dashboard = (props) => {

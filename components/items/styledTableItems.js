@@ -18,7 +18,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
-import { useGetAllItems, useDeleteItemById } from "@/actions/items";
+import { useGetAllItems, useDeleteItemById } from "@/adapters/items";
 import { withSnackbar } from "notistack";
 
 function descendingComparator(a, b, orderBy) {

@@ -20,7 +20,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import {
   useGetAllStoreRequisitions,
   useDeleteStoreRequisitionById,
-} from "@/actions/store-requisitions";
+} from "@/adapters/store-requisitions";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { withSnackbar } from "notistack";
 
