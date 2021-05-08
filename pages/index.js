@@ -1,5 +1,5 @@
 import React from "react";
-import StyledNavbar from "@/components/ui/styledNavbar";
+import StyledNavbar from "@/components/navigation/styledNavbar";
 import { Typography } from "@material-ui/core";
 import { useAuth } from "@/libs/auth";
 import BaseLayout from "@/components/layouts/baseLayout";

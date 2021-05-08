@@ -8,15 +8,17 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
+import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
-import { useCreateStoreRequisition } from "@/actions/store-requisitions";
-import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
+import { useCreatePurchaseOrder } from "@/actions/purchase-orders";
+import StyledSelectForm from "@/components/ui/styledSelectForm";
+import MenuItem from "@material-ui/core/MenuItem";
+import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+import { useGetAllStoreRequisitionCodes } from "@/actions/store-requisitions";
+import { useGetAllSupplierCodes } from "@/actions/suppliers";
 import { useGetAllItemCodes } from "@/actions/items";
-import { useGetAllWarehouseCodes } from "@/actions/warehouses";
-import StyledDatePicker from "./styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -119,6 +121,18 @@ const useStyles = makeStyles((theme) =>
         width: "100%",
       },
     },
+    selectRoot: {
+      paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
     add: {
       [theme.breakpoints.down("xs")]: {
         display: "none",
@@ -130,25 +144,35 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StyledFormStoreRequisitions = (props) => {
+const StyledFormPurchaseOrders = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset } = useForm();
+  const { register, handleSubmit, errors, control, watch, reset } = useForm();
+  const watchPurMode = watch("purMode");
 
   const onSubmit = async (data) => {
     console.log(data);
     let code = data.code;
+    let reqCode = data.reqCode;
     let item = data.item;
-    let reqQty = data.reqQty;
-    let warehouse = data.warehouse;
-    let reqDate = data.reqDate;
+    let rate = data.rate;
+    let appQty = data.appQty;
+    let supplier = data.supplier;
+    let purMode = data.purMode;
+    let creDays = data.creDays;
+    let purBy = data.purBy;
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateStoreRequisition(
+      const { error, data } = await useCreatePurchaseOrder(
         code,
+        reqCode,
         item,
-        reqQty,
-        warehouse,
+        rate,
+        appQty,
+        supplier,
+        purMode,
+        creDays,
+        purBy,
         notes
       );
       if (!error)
@@ -190,7 +214,7 @@ const StyledFormStoreRequisitions = (props) => {
               color: "#14142B",
             }}
           >
-            Store Requisitions
+            Purchase Orders
           </Typography>
           <Typography
             style={{
@@ -199,7 +223,7 @@ const StyledFormStoreRequisitions = (props) => {
               color: "#4E4B66",
             }}
           >
-            Create a store requisition
+            Create a purchase order
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
@@ -252,7 +276,7 @@ const StyledFormStoreRequisitions = (props) => {
               <Grid
                 className={classes.gridItem}
                 item
-                lg={12}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -272,13 +296,39 @@ const StyledFormStoreRequisitions = (props) => {
                       }}
                       label={"Code"}
                       size={"small"}
+                      required
                       name={"code"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
                       error={errors.code ? true : false}
-                      required
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledAutoCompleteForm
+                      label={"Store Req. Code"}
+                      name="reqCode"
+                      defaultValue={null}
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      control={control}
+                      required={true}
+                      fetchOptions={useGetAllStoreRequisitionCodes}
                     />
                   </div>
                 </Paper>
@@ -303,8 +353,8 @@ const StyledFormStoreRequisitions = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
+                      required={true}
                       fetchOptions={useGetAllItemCodes}
-                      required
                     />
                   </div>
                 </Paper>
@@ -330,16 +380,49 @@ const StyledFormStoreRequisitions = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Required Qty."}
+                      label={"Approved Qty."}
                       size={"small"}
-                      name={"reqQty"}
+                      required={true}
+                      name={"appQty"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.reqQty ? true : false}
-                      required
-                      type={"number"}
+                      error={errors.appQty ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Rate"}
+                      size={"small"}
+                      required={true}
+                      name={"rate"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.rate ? true : false}
                     />
                   </div>
                 </Paper>
@@ -358,19 +441,19 @@ const StyledFormStoreRequisitions = (props) => {
                       <TocOutlinedIcon fontSize="large" />
                     </div>
                     <StyledAutoCompleteForm
-                      label={"Warehouse"}
-                      name="warehouse"
+                      label={"Supplier"}
+                      name="supplier"
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      fetchOptions={useGetAllWarehouseCodes}
-                      required
+                      required={true}
+                      fetchOptions={useGetAllSupplierCodes}
                     />
                   </div>
                 </Paper>
               </Grid>
-              {/* <Grid
+              <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -383,24 +466,96 @@ const StyledFormStoreRequisitions = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledDatePicker
-                      label={"Required By"}
-                      name="reqDate"
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      required
+                    <StyledSelectForm
+                      label={"Mode of Purchase"}
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                      name={"purMode"}
+                      //FIXME:Add validation pattern
+                      control={control}
+                      defaultValue={""}
+                      required={true}
+                      // error={errors.type ? true : false}
+                    >
+                      <MenuItem value="cash">{"Cash/Cheque"}</MenuItem>
+                      <MenuItem value="credit">{"Credit"}</MenuItem>
+                    </StyledSelectForm>
+                  </div>
+                </Paper>
+              </Grid>
+              {watchPurMode === "credit" && (
+                <Grid
+                  item
+                  className={classes.gridItem}
+                  lg={6}
+                  md={12}
+                  sm={12}
+                  xs={12}
+                >
+                  <Paper className={classes.paper}>
+                    <div className={classes.search}>
+                      <div className={classes.searchIcon}>
+                        <TocOutlinedIcon fontSize="large" />
+                      </div>
+                      <StyledSelectForm
+                        label={"Credit Days"}
+                        classes={{
+                          root: classes.selectRoot,
+                        }}
+                        name={"creDays"}
+                        //FIXME:Add validation pattern
+                        control={control}
+                        defaultValue={""}
+                        // error={errors.type ? true : false}
+                      >
+                        <MenuItem value="7">{"7 Days"}</MenuItem>
+                        <MenuItem value="15">{"15 Days"}</MenuItem>
+                        <MenuItem value="30">{"30 Days"}</MenuItem>
+                      </StyledSelectForm>
+                    </div>
+                  </Paper>
+                </Grid>
+              )}
+
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Purchased By"}
+                      size={"small"}
+                      required={true}
+                      name={"purBy"}
+                      //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.reqDate ? true : false}
+                      error={errors.purQty ? true : false}
                     />
                   </div>
                 </Paper>
-              </Grid> */}
+              </Grid>
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
+                lg={!(watchPurMode === "credit") ? 12 : 6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -445,7 +600,7 @@ const StyledFormStoreRequisitions = (props) => {
                 boxShadow: "none",
                 marginRight: "0.625rem",
               }}
-              type="submit"
+              type={"submit"}
             ></StyledButton>
           </div>
           <div style={{ float: "left" }}>
@@ -458,7 +613,9 @@ const StyledFormStoreRequisitions = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-              onClick={() => reset()}
+              onClick={() => {
+                reset();
+              }}
             ></StyledButton>
           </div>
         </div>
@@ -467,4 +624,4 @@ const StyledFormStoreRequisitions = (props) => {
   );
 };
 
-export default withSnackbar(StyledFormStoreRequisitions);
+export default withSnackbar(StyledFormPurchaseOrders);

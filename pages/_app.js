@@ -6,7 +6,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import theme from "@/components/ui/theme";
 import { SentryInitialize } from "@/libs/sentry";
 import { AuthProvider } from "@/libs/auth";
-import StyledNavbar from "@/components/ui/styledNavbar";
+import StyledNavbar from "@/components/navigation/styledNavbar";
 import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
 import LogRocket from "logrocket";

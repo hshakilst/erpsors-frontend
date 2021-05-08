@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableReports from "@/components/ui/tables/styledTableReports";
+import StyledTableReports from "@/components/reports/styledTableReports";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import { withAuthUser } from "@/libs/auth";
 

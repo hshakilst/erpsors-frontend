@@ -8,7 +8,7 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
+import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) =>

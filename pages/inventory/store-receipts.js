@@ -2,11 +2,11 @@ import React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import StyledFormStoreReceipts from "@/components/ui/styledFormStoreReceipts";
+import StyledFormStoreReceipts from "@/components/store-receipts/styledFormStoreReceipts";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableStoreReceipts from "@/components/ui/styledTableStoreReceipts";
+import StyledTableStoreReceipts from "@/components/store-receipts/styledTableStoreReceipts";
 import { withAuthUser } from "@/libs/auth";
 
 const useStyles = makeStyles((theme) =>

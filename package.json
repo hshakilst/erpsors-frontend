@@ -29,6 +29,8 @@
     "logrocket-react": "^4.0.1",
     "material": "^0.4.3",
     "material-table": "^1.69.3",
+    "mobx": "^6.3.0",
+    "mobx-react": "^7.1.0",
     "next": "^10.1.2",
     "next-iron-session": "^4.1.12",
     "notistack": "^1.0.3",

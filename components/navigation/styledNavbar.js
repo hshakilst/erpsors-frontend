@@ -1,8 +1,8 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import NoSsr from "@material-ui/core/NoSsr";
-import StyledAppBar from "@/components/ui/styledAppBar";
-import StyledDrawer from "@/components/ui/styledDrawer";
+import StyledAppBar from "@/components/navigation/styledAppBar";
+import StyledDrawer from "@/components/navigation/styledDrawer";
 import { useRouter } from "next/router";
 
 const StyledNavbar = (props) => {

@@ -8,7 +8,7 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
-import StyledButton from "./styledButton";
+import StyledButton from "../ui/styledButton";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) =>
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       backgroundColor: "#EFF0F7",
       padding: theme.spacing(2),
-      paddingBottom: theme.spacing(6),
       borderRadius: "1rem",
     },
     paper: {
@@ -109,7 +108,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function StyledBillOfMaterials() {
+export default function StyledFormFloorReceipts() {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -123,7 +122,7 @@ export default function StyledBillOfMaterials() {
               letterSpacing: "0.047rem",
             }}
           >
-            Bill Of Materials
+            Floor Received
           </Typography>
           <Typography
             style={{
@@ -133,7 +132,7 @@ export default function StyledBillOfMaterials() {
               letterSpacing: "0.047rem",
             }}
           >
-            Bill Of Materials
+            Create a floor received report
           </Typography>
         </div>
         <div style={{ float: "right" }}>
@@ -170,7 +169,7 @@ export default function StyledBillOfMaterials() {
       <Box style={{ marginTop: "3.438rem" }}>
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
-            <Grid className={classes.gridItem} item xs={4}>
+            <Grid className={classes.gridItem} item xs={12}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -185,13 +184,13 @@ export default function StyledBillOfMaterials() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Code"}
+                    label={"Store issue Code"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid className={classes.gridItem} item xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -206,13 +205,55 @@ export default function StyledBillOfMaterials() {
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
-                    label={"Name"}
+                    label={"Item"}
                     size={"small"}
                   />
                 </div>
               </Paper>
             </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
+            <Grid className={classes.gridItem} item xs={6}>
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    label={"Received Qty."}
+                    size={"small"}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid item className={classes.gridItem} xs={6}>
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    label={"Warehouse"}
+                    size={"small"}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid item className={classes.gridItem} xs={6}>
               <Paper className={classes.paper}>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
@@ -233,163 +274,7 @@ export default function StyledBillOfMaterials() {
                 </div>
               </Paper>
             </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Item"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Order Qty."}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Order Cost"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid className={classes.gridItem} item xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Item"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Order Qty."}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid item className={classes.gridItem} xs={4}>
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    label={"Order Cost"}
-                    size={"small"}
-                  />
-                </div>
-              </Paper>
-            </Grid>
           </Grid>
-          <div style={{ float: "right", marginTop: "0.938rem" }}>
-            <div
-              style={{
-                textAlign: "right",
-                float: "left",
-                marginRight: "0.313rem",
-              }}
-            >
-              <AddOutlinedIcon
-                style={{ color: "#14142B", fontSize: "1.125rem" }}
-              ></AddOutlinedIcon>
-            </div>
-            <div style={{ textAlign: "right", float: "left" }}>
-              <Link
-                component="button"
-                variant="body2"
-                style={{
-                  fontWeight: 500,
-                  fontSize: "0.875rem",
-                  color: "#5F2EEA",
-                  letterSpacing: "0.063rem",
-                }}
-                onClick={() => {
-                  console.info("I'm a button.");
-                }}
-              >
-                Add an item row
-              </Link>
-            </div>
-          </div>
         </div>
       </Box>
       <div style={{ float: "right", marginTop: "1rem" }}>

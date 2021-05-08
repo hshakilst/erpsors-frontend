@@ -5,7 +5,7 @@ import {
 } from "@/actions/items-ledger";
 import { withSnackbar } from "notistack";
 import { IconButton, Typography } from "@material-ui/core";
-import StyledDataGrid from "@/components/ui/styledDataGrid";
+import StyledDataGrid from "@/components/shared/tables/styledDataGrid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const columns = [

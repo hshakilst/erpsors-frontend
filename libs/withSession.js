@@ -6,7 +6,7 @@ export default function withSession(handler) {
     // The password in this example is in plain text (inside `now.json`) for ease of deployment and understanding.
     // ⚠️ Do not reuse the same password, create a different password for you and store it in a secret management system
     // Example for Vercel: https://vercel.com/docs/v2/serverless-functions/env-and-secrets
-    password: process.env.SECRET_COOKIE_PASSWORD,
+    password: "%UBbassaZ:_mDJ9\:'F>+p.F)Evu(J,r4dR9",
     cookieName: "X9qGVVwp",
     cookieOptions: {
       // the next line allows to use the session in non-https environements like

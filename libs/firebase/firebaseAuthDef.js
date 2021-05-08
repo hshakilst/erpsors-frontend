@@ -50,6 +50,7 @@ const firebaseAuthDef = () => {
       // ...
       // const csrfToken = getCookie("csrfToken");
       setIdToken(idToken);
+      console.log(idToken);
       const res = await fetch("/api/login", {
         method: "post",
         body: JSON.stringify({ idToken: idToken }),
@@ -58,6 +59,7 @@ const firebaseAuthDef = () => {
       await firebase.auth().signOut();
       return await res.json(); // login api returns {error, data}
     } catch (error) {
+      console.log(error)
       return { error: true, data: error };
     }
   };
