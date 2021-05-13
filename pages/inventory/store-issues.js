@@ -7,7 +7,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableStoreIssues from "@/components/store-issues/styledTableStoreIssues";
-import { withAuthUser } from "@/libs/auth";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -84,4 +84,4 @@ const StoreIssues = (props) => {
   );
 };
 
-export default withAuthUser(StoreIssues);
+export default withPageAuthRequired(StoreIssues);

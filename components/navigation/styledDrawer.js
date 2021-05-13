@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import StyledAccordion from "@/components/ui/styledAccordion";
 import Link from "next/link";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -397,4 +398,4 @@ const StyledDrawer = (props) => {
   );
 };
 
-export default StyledDrawer;
+export default withPageAuthRequired(StyledDrawer);

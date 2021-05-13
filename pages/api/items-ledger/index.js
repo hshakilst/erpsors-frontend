@@ -1,9 +1,8 @@
-import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
+import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { SentryInitialize } from "@/libs/sentry";
-// import LogRocket from "logrocket";
+import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 
-// LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const createItemsLedger = (
@@ -84,7 +83,7 @@ const getAllItemsLedger = () => {
 //   return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
 // };
 
-export default async (req, res) => {
+export default withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { filter },
@@ -145,4 +144,4 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: true, data: error });
   }
-};
+});

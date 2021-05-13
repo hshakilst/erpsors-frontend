@@ -16,8 +16,10 @@ import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
 import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
 import { Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import { withAuthUser } from "@/libs/auth";
-import { useLogOut } from "@/adapters/user";
+import { useUser } from "@auth0/nextjs-auth0";
+import { useRouter } from "next/router";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import StyledAvatar from "@/components/ui/styledAvatar";
 
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -158,11 +160,18 @@ const StyledAppBar = (props) => {
   }));
 
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const router = useRouter();
+  const { user, error, isLoading } = useUser();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -182,6 +191,7 @@ const StyledAppBar = (props) => {
   };
 
   const menuId = "primary-search-account-menu";
+
   const renderMenu = (
     <Menu
       style={{ top: "3.25rem" }}
@@ -194,7 +204,7 @@ const StyledAppBar = (props) => {
       onClose={handleMenuClose}
     >
       <Typography style={{ textAlign: "center", fontWeight: 600 }}>
-        {`${props.user.email.split("@")[0] || "Guest"}`}
+        {user.nickname}
       </Typography>
       <Divider />
       <MenuItem style={{ textAlign: "center" }} onClick={handleMenuClose}>
@@ -203,7 +213,7 @@ const StyledAppBar = (props) => {
       <MenuItem
         style={{ textAlign: "center" }}
         onClick={() => {
-          useLogOut();
+          router.push("/api/auth/logout");
           handleMenuClose();
         }}
       >
@@ -224,7 +234,7 @@ const StyledAppBar = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem style={{ textAlign: "center" }}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge color="secondary">
             <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
@@ -232,7 +242,7 @@ const StyledAppBar = (props) => {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem style={{ textAlign: "center" }}>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge color="secondary">
             <MailOutlineOutlinedIcon></MailOutlineOutlinedIcon>
@@ -240,7 +250,7 @@ const StyledAppBar = (props) => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem style={{ textAlign: "center" }}>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge color="secondary">
             <TuneOutlinedIcon></TuneOutlinedIcon>
@@ -248,16 +258,19 @@ const StyledAppBar = (props) => {
         </IconButton>
         <p>Settings</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem style={{ textAlign: "center" }} onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
+          <StyledAvatar
+            image={user.picture}
+            text={user.name || user.nickname}
+          />
         </IconButton>
-        <p>Account</p>
+        <p>{user.name || user.nickname}</p>
       </MenuItem>
     </Menu>
   );
@@ -352,7 +365,10 @@ const StyledAppBar = (props) => {
                   marginTop: "0.75rem",
                 }}
               >
-                <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
+                <StyledAvatar
+                  image={user.picture}
+                  text={user.name || user.nickname}
+                />
               </IconButton>
             </div>
             <div
@@ -382,4 +398,4 @@ const StyledAppBar = (props) => {
   );
 };
 
-export default withAuthUser(StyledAppBar);
+export default withPageAuthRequired(StyledAppBar);

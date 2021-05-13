@@ -7,7 +7,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableItems from "@/components/items/styledTableItems";
-import { withAuthUser } from "@/libs/auth";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -86,4 +86,4 @@ const Items = (props) => {
   );
 };
 
-export default withAuthUser(Items);
+export default withPageAuthRequired(Items);

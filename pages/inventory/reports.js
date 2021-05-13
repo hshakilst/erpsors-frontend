@@ -6,7 +6,7 @@ import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import BaseLayout from "@/components/layouts/baseLayout";
 import StyledTableReports from "@/components/reports/styledTableReports";
 import StyledTableCard from "@/components/ui/styledTableCard";
-import { withAuthUser } from "@/libs/auth";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -85,4 +85,4 @@ const Reports = (props) => {
   );
 };
 
-export default withAuthUser(Reports);
+export default withPageAuthRequired(Reports);

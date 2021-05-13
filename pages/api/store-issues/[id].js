@@ -1,9 +1,8 @@
 import { db } from "@/libs/fauna";
 import { SentryInitialize } from "@/libs/sentry";
 import { query as q } from "faunadb";
-// import LogRocket from "logrocket";
+import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 
-// LogRocket.init("ogzvmk/demo");
 SentryInitialize();
 
 const getStoreIssuesById = (id) => {
@@ -39,22 +38,15 @@ const updateStoreIssuesById = (
   );
 };
 
-export default async (req, res) => {
+export default withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { id },
       method,
     } = req;
 
-    const {
-      reqCode,
-      item,
-      issRate,
-      issQty,
-      warehouse,
-      notes,
-      isPosted,
-    } = req.body;
+    const { reqCode, item, issRate, issQty, warehouse, notes, isPosted } =
+      req.body;
 
     switch (method) {
       case "GET":
@@ -85,4 +77,4 @@ export default async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: true, data: error });
   }
-};
+});
