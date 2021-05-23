@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
@@ -16,7 +16,7 @@ import { useCreateItem } from "@/adapters/items";
 import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
-import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+import StyledDropzoneDialog from "@/components/dropzone/StyledDropzoneDialog";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -224,7 +224,7 @@ const StyledFormItems = (props) => {
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
-          <div
+          {/* <div
             style={{
               height: "1.3rem",
               width: "1.3rem",
@@ -243,12 +243,12 @@ const StyledFormItems = (props) => {
                 marginRight: "0.018rem",
               }}
             ></AddOutlinedIcon>
-          </div>
+          </div> */}
           <div
             className={classes.add}
             style={{ textAlign: "right", float: "left" }}
           >
-            <Link
+            {/* <Link
               component="button"
               variant="body2"
               style={{
@@ -262,7 +262,8 @@ const StyledFormItems = (props) => {
               }}
             >
               Add multiple
-            </Link>
+            </Link> */}
+            <StyledDropzoneDialog />
           </div>
         </div>
       </Box>
