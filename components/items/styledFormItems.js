@@ -131,15 +131,6 @@ const useStyles = makeStyles((theme) =>
       //   width: "100%",
       // },
     },
-    add: {
-      [theme.breakpoints.down("xs")]: {
-        display: "none",
-      },
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
-    },
-    '& input[type="file" i]': { appearance: "" },
   })
 );
 
@@ -224,45 +215,7 @@ const StyledFormItems = (props) => {
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
-          {/* <div
-            style={{
-              height: "1.3rem",
-              width: "1.3rem",
-              textAlign: "right",
-              float: "left",
-              marginRight: "0.313rem",
-              border: "0.063rem solid #D9DBE9",
-              borderRadius: "1rem",
-              cursor: "pointer",
-            }}
-          >
-            <AddOutlinedIcon
-              style={{
-                color: "#14142B",
-                fontSize: "1.125rem",
-                marginRight: "0.018rem",
-              }}
-            ></AddOutlinedIcon>
-          </div> */}
-          <div
-            className={classes.add}
-            style={{ textAlign: "right", float: "left" }}
-          >
-            {/* <Link
-              component="button"
-              variant="body2"
-              style={{
-                fontWeight: 500,
-                fontSize: "0.875rem",
-                color: "#5F2EEA",
-                letterSpacing: "0.063rem",
-              }}
-              onClick={() => {
-                console.info("I'm a button.");
-              }}
-            >
-              Add multiple
-            </Link> */}
+          <div style={{ textAlign: "right", float: "left" }}>
             <StyledDropzoneDialog />
           </div>
         </div>

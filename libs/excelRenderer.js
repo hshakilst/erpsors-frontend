@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import XLSX from "xlsx";
-import { Table, TableCell, TableHead, TableRow } from "@material-ui/core";
+import {
+  Button,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Box,
+  TableContainer,
+  Paper,
+} from "@material-ui/core";
 
 export const ReactExcel = (props) => {
   const {
@@ -106,8 +116,8 @@ export const ReactExcel = (props) => {
   }, [initialData]);
 
   return (
-    <div className={reactExcelClassName}>
-      <div>
+    <Box className={reactExcelClassName}>
+      <Box my={2}>
         {sheetNames.map((name, idx) => (
           <Button
             key={idx}
@@ -116,19 +126,37 @@ export const ReactExcel = (props) => {
             className={`${
               activeSheet === idx ? `${activeSheetClassName}` : ""
             }`}
+            variant="text"
+            color="primary"
           >
             {name}
           </Button>
         ))}
-      </div>
+      </Box>
       {currentSheet && (
-        <Table>
-          {createTableHeader(Object.values(currentSheet)[0][0])}
-          {createTableBody(Object.values(currentSheet)[0])}
-        </Table>
+        <TableContainer style={{ borderRadius: 4 }}>
+          <Table
+            size="small"
+            style={{
+              minWidth: 650,
+              backgroundColor: "#EFF0F6",
+              boxShadow: "none",
+            }}
+          >
+            {createTableHeader(Object.values(currentSheet)[0][0])}
+            {createTableBody(Object.values(currentSheet)[0])}
+          </Table>
+        </TableContainer>
       )}
-    </div>
+    </Box>
   );
+};
+
+ReactExcel.propTypes = {
+  initialData: PropTypes.object,
+  onSheetUpdate: PropTypes.func,
+  activeSheetClassName: PropTypes.string,
+  reactExcelClassName: PropTypes.string,
 };
 
 export const readFile = (file) => {
@@ -147,6 +175,10 @@ export const readFile = (file) => {
   });
 };
 
+readFile.propTypes = {
+  file: PropTypes.object.isRequired,
+};
+
 export const generateObjects = (currentSheet) => {
   const rows = Object.values(currentSheet)[0];
   const keys = rows[0];
@@ -158,6 +190,6 @@ export const generateObjects = (currentSheet) => {
   return result;
 };
 
-// generateObjects.propTypes = {
-//   currentSheet: PropTypes.object.isRequired,
-// };
+generateObjects.propTypes = {
+  currentSheet: PropTypes.object.isRequired,
+};
