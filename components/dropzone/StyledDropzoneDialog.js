@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ReactExcel, readFile, generateObjects } from "@/libs/excelRenderer";
+import ItemsSchema from "@/validators/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -36,6 +37,7 @@ export default function StyledDropzoneDialog(props) {
   const [currentSheet, setCurrentSheet] = useState({});
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [objects, setObjects] = React.useState();
 
   const handleOpen = () => {
     setOpen(true);
@@ -45,6 +47,7 @@ export default function StyledDropzoneDialog(props) {
     setOpen(false);
     setInitialData(undefined);
     setCurrentSheet({});
+    setLoading(false);
   };
 
   const handleUpload = (event) => {
@@ -55,14 +58,30 @@ export default function StyledDropzoneDialog(props) {
       .catch((error) => console.error(error));
   };
 
-  const save = () => {
+  const save = async () => {
     setLoading(true);
-    setInterval(() => {
-      setLoading(false);
-    }, 10000);
-    const result = generateObjects(currentSheet);
+    const objects = await Promise.resolve().then(() =>
+      generateObjects(currentSheet)
+    );
     //save array of objects to backend
-    console.log(result);
+    objects.map((object) => {
+      ItemsSchema.validate(object, {
+        abortEarly: true,
+        strict: true,
+        stripUnknown: true,
+      })
+        .then((object) => {
+          object.isValidated = true;
+        })
+        .catch((error) => {
+          if (error.name === "ValidationError") {
+            object.isValidated = false;
+          } else {
+            console.log(error);
+          }
+        });
+    });
+    console.log(objects);
   };
 
   return (
@@ -103,7 +122,7 @@ export default function StyledDropzoneDialog(props) {
           ) : ( */}
           <Fade in={loading}>
             <Box>
-              <LinearProgress variant="determinate" value="100" />
+              <LinearProgress variant="determinate" value={100} />
               <Typography style={{ marginTop: 4 }}>{"100/100"}</Typography>
             </Box>
           </Fade>

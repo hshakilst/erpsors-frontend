@@ -1,6 +1,6 @@
-import yup from "yup";
+import * as yup from "yup";
 
-const schema = yup.object().shape({
+const itemsSchema = yup.object().shape({
   code: yup.string().required(),
   name: yup.string().required(),
   type: yup.string().required(),
@@ -8,7 +8,9 @@ const schema = yup.object().shape({
   valueRate: yup.number().required().positive(),
   unit: yup.string().required(),
   status: yup.string().required(),
-  group: yup.string().notRequired().ensure(),
-  image: yup.string().url().notRequired().ensure(),
-  notes: yup.string().notRequired().ensure(),
+  group: yup.string().optional().defined(), // can be empty but field name must be same
+  image: yup.string().url().optional().defined(), // can be empty but field name must be same
+  notes: yup.string().optional().defined(), // can be empty but field name must be same
 });
+
+export default itemsSchema;
