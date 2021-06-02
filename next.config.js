@@ -1,11 +1,6 @@
-// This file sets a custom webpack configuration to use your Next.js app
-// with Sentry.
-// https://nextjs.org/docs/api-reference/next.config.js/introduction
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
+const path = require("path");
 
 const { withSentryConfig } = require('@sentry/nextjs');
-const SentryCliPlugin = require("@sentry/webpack-plugin");
-const path = require("path");
 
 const moduleExports = {
   // Your existing module.exports
@@ -19,7 +14,6 @@ const moduleExports = {
   images: {
     domains: ["lh3.googleusercontent.com", "s.gravatar.com"],
   },
-
 };
 
 const SentryWebpackPluginOptions = {
@@ -30,15 +24,6 @@ const SentryWebpackPluginOptions = {
   //   urlPrefix, include, ignore
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
-  // plugins: [
-  //   new SentryCliPlugin({
-  //     include: ".",
-  //     ignoreFile: ".sentrycliignore",
-  //     ignore: ["node_modules", "webpack.config.js"],
-  //     configFile: "sentry.properties",
-
-  //   }),
-  // ],
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to
