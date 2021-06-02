@@ -1,9 +1,7 @@
 import { db } from "@/libs/fauna";
-import { SentryInitialize } from "@/libs/sentry";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-SentryInitialize();
+import { withSentry } from "@sentry/nextjs";
 
 const createItem = (
   code,
@@ -68,71 +66,73 @@ const getAllItemCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_item_codes"))));
 };
 
-export default withApiAuthRequired(async (req, res) => {
-  try {
-    const {
-      query: { filter },
-      method,
-    } = req;
+export default withSentry(
+  withApiAuthRequired(async (req, res) => {
+    try {
+      const {
+        query: { filter },
+        method,
+      } = req;
 
-    switch (method) {
-      case "GET":
-        //FIXME:Pagination support for ui table
-        if (filter === "codes") {
-          const itemCodesQuery = await getAllItemCodes();
-          const itemCodes = [];
-          itemCodesQuery.data.map((row) => {
-            const item = {
-              id: row[0],
-              code: row[1],
-              name: row[2],
-            };
-            itemCodes.push(item);
-          });
-          res.status(200).json(itemCodes);
-        } else if (Object.keys(req.query).length === 0) {
-          const itemsQuery = await getAllItems();
+      switch (method) {
+        case "GET":
+          //FIXME:Pagination support for ui table
+          if (filter === "codes") {
+            const itemCodesQuery = await getAllItemCodes();
+            const itemCodes = [];
+            itemCodesQuery.data.map((row) => {
+              const item = {
+                id: row[0],
+                code: row[1],
+                name: row[2],
+              };
+              itemCodes.push(item);
+            });
+            res.status(200).json(itemCodes);
+          } else if (Object.keys(req.query).length === 0) {
+            const itemsQuery = await getAllItems();
 
-          res.status(200).json(itemsQuery.data);
-        } else {
-          res.status(400).json({ error: true, data: "Bad Request" });
-        }
-        break;
+            res.status(200).json(itemsQuery.data);
+          } else {
+            res.status(400).json({ error: true, data: "Bad Request" });
+          }
+          break;
 
-      case "POST":
-        const {
-          code,
-          name,
-          type,
-          qty,
-          valueRate,
-          unit,
-          status,
-          group,
-          image,
-          notes,
-        } = req.body;
+        case "POST":
+          const {
+            code,
+            name,
+            type,
+            qty,
+            valueRate,
+            unit,
+            status,
+            group,
+            image,
+            notes,
+          } = req.body;
 
-        const result = await createItem(
-          code,
-          name,
-          type,
-          qty,
-          valueRate,
-          unit,
-          status,
-          group,
-          image,
-          notes
-        );
-        res.status(200).json({ error: false, data: result });
-        break;
+          const result = await createItem(
+            code,
+            name,
+            type,
+            qty,
+            valueRate,
+            unit,
+            status,
+            group,
+            image,
+            notes
+          );
+          res.status(200).json({ error: false, data: result });
+          break;
 
-      default:
-        res.setHeader("Allow", ["GET", "POST"]);
-        res.status(405).end(`Method ${method} Not Allowed`);
+        default:
+          res.setHeader("Allow", ["GET", "POST"]);
+          res.status(405).end(`Method ${method} Not Allowed`);
+      }
+    } catch (error) {
+      res.status(500).json({ error: true, data: error });
     }
-  } catch (error) {
-    res.status(500).json({ error: true, data: error });
-  }
-});
+  })
+);

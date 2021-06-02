@@ -1,9 +1,7 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
-import { SentryInitialize } from "@/libs/sentry";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-SentryInitialize();
+import { withSentry } from "@sentry/nextjs";
 
 const createStoreRequisition = (code, item, reqQty, warehouse, notes) => {
   return db.query(
@@ -47,7 +45,7 @@ const getAllStoreRequisitionCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_store_requisition_codes"))));
 };
 
-export default withApiAuthRequired(async (req, res) => {
+export default withSentry(withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { filter },
@@ -95,4 +93,4 @@ export default withApiAuthRequired(async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: true, data: error });
   }
-});
+}));

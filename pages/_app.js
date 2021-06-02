@@ -4,18 +4,11 @@ import React from "react";
 import StyledSnackbar from "@/components/ui/styledSnackbar";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "@/components/ui/theme";
-import { SentryInitialize } from "@/libs/sentry";
 import StyledNavbar from "@/components/navigation/styledNavbar";
 import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
-import LogRocket from "logrocket";
-import setupLogRocketReact from "logrocket-react";
 import { UserProvider } from "@auth0/nextjs-auth0";
 
-LogRocket.init("ogzvmk/demo");
-setupLogRocketReact(LogRocket);
-
-SentryInitialize();
 
 const progress = new ProgressBar({
   size: 3,
