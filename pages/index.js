@@ -52,14 +52,6 @@ const Index = (props) => {
                 label={"Sign In"}
                 onClick={() => router.push("/api/auth/login")}
               ></StyledButton>
-              <button
-                type="button"
-                onClick={() => {
-                  throw new Error("Sentry Frontend Error");
-                }}
-              >
-                Throw error
-              </button>
             </Paper>
           </Grid>
         </Grid>
