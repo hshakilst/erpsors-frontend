@@ -3,10 +3,10 @@ import {
   DataGrid,
   GridToolbar,
   GridToolbarContainer,
-  GridColumnsToolbarButton,
-  GridFilterToolbarButton,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
   GridToolbarExport,
-  GridDensitySelector,
+  GridToolbarDensitySelector,
 } from "@material-ui/data-grid";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
@@ -92,9 +92,9 @@ function CustomToolbar(props) {
         <Grid item className={classes.gridItem} xs={12}>
           <Paper className={classes.paper}>
             <div>
-              <GridDensitySelector />
-              <GridColumnsToolbarButton />
-              <GridFilterToolbarButton />
+              <GridToolbarDensitySelector />
+              <GridToolbarColumnsButton />
+              <GridToolbarFilterButton />
               <GridToolbarExport />
             </div>
           </Paper>
