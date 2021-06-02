@@ -94,4 +94,4 @@ export default withSentry(withApiAuthRequired(async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: true, data: error });
   }
-}));
+});

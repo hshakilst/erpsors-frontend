@@ -1,7 +1,6 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { withSentry } from "@sentry/nextjs";
 
 const createItem = (
   code,
@@ -66,8 +65,7 @@ const getAllItemCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_item_codes"))));
 };
 
-export default withApiAuthRequired(
-  withSentry(async (req, res) => {
+export default withApiAuthRequired(async (req, res) => {
     try {
       const {
         query: { filter },
@@ -134,5 +132,4 @@ export default withApiAuthRequired(
     } catch (error) {
       res.status(500).json({ error: true, data: error });
     }
-  })
-);
+  });
