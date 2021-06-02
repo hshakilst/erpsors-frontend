@@ -9,7 +9,7 @@ const moduleExports = {
     return config;
   },
   future: {
-    webpack5: false,
+    webpack5: true,
   },
   images: {
     domains: ["lh3.googleusercontent.com", "s.gravatar.com"],
