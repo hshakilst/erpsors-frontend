@@ -68,7 +68,7 @@ const getAllWarehouseCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_warehouse_codes"))));
 };
 
-export default withSentry(withApiAuthRequired(async (req, res) => {
+export default withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { filter },

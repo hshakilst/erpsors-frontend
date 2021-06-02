@@ -1,7 +1,6 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { withSentry } from "@sentry/nextjs";
 
 const getWarehouseById = (id) => {
   return db.query(q.Get(q.Ref(q.Collection("warehouses"), id)));
@@ -42,7 +41,7 @@ const updateWarehouseById = (
   );
 };
 
-export default withSentry(withApiAuthRequired(async (req, res) => {
+export default withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { id },
