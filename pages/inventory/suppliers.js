@@ -6,7 +6,6 @@ import StyledFormSuppliers from "@/components/suppliers/styledFormSuppliers";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableSuppliers from "@/components/suppliers/styledTableSuppliers";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
@@ -74,9 +73,7 @@ const Suppliers = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledTableCard>
-                <StyledTableSuppliers></StyledTableSuppliers>
-              </StyledTableCard>
+              <StyledTableCard defaultValue={"suppliers"}></StyledTableCard>
             </Paper>
           </Grid>
         </Grid>

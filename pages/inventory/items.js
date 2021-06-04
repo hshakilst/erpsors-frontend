@@ -6,7 +6,6 @@ import StyledFormItems from "@/components/items/styledFormItems";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableItems from "@/components/items/styledTableItems";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
@@ -75,8 +74,7 @@ const Items = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledTableCard>
-                <StyledTableItems></StyledTableItems>
+              <StyledTableCard defaultValue={"items"}>
               </StyledTableCard>
             </Paper>
           </Grid>

@@ -6,7 +6,6 @@ import StyledFormStoreRequisitions from "@/components/store-requisitions/styledF
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableStoreRequisitions from "@/components/store-requisitions/styledTableStoreRequisitions";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
@@ -75,9 +74,7 @@ const StoreRequisitions = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledTableCard>
-                <StyledTableStoreRequisitions></StyledTableStoreRequisitions>
-              </StyledTableCard>
+              <StyledTableCard defaultValue={"requisitions"}></StyledTableCard>
             </Paper>
           </Grid>
         </Grid>

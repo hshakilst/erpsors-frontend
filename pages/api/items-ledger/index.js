@@ -1,10 +1,12 @@
 import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { withSentry } from "@sentry/nextjs";
 
 const createItemsLedger = (
   code,
   type,
+  itemId,
   itemCode,
   itemName,
   opnRate,
@@ -18,6 +20,11 @@ const createItemsLedger = (
   warehouseCode,
   warehouseName
 ) => {
+   if (type === "store-issues")
+     db.query(q.Call("OnIssueUpdateItem", itemId, issQty));
+   else if (type === "store-receipts")
+     db.query(q.Call("OnReceiveUpdateItem", itemId, recQty, recRate));
+
   return db.query(
     q.Create(q.Collection("items_ledger"), {
       data: {
@@ -80,12 +87,9 @@ const getAllItemsLedger = () => {
 //   return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
 // };
 
-export default withApiAuthRequired(async (req, res) => {
+const handler = withApiAuthRequired(async (req, res) => {
   try {
-    const {
-      query: { filter },
-      method,
-    } = req;
+    const { method } = req;
 
     switch (method) {
       case "GET":
@@ -95,8 +99,9 @@ export default withApiAuthRequired(async (req, res) => {
         break;
       case "POST":
         const {
-          code, //store-receipt or store-issues codes
-          type, //store-receipt or store-issues
+          code, //store-receipts or store-issues codes
+          type, //store-receipts or store-issues
+          itemId,
           itemCode,
           itemName,
           opnRate,
@@ -119,6 +124,7 @@ export default withApiAuthRequired(async (req, res) => {
         const result = await createItemsLedger(
           code,
           type,
+          itemId,
           itemCode,
           itemName,
           opnRate,
@@ -142,3 +148,5 @@ export default withApiAuthRequired(async (req, res) => {
     res.status(500).json({ error: true, data: error });
   }
 });
+
+export default withSentry(handler);

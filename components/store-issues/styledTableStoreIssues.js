@@ -464,6 +464,7 @@ const EnhancedTable = (props) => {
                                 await useCreateItemLedger({
                                   code: row.code,
                                   type: "store-issues",
+                                  itemId: row.item.id,
                                   itemCode: row.item.code,
                                   itemName: row.item.name,
                                   opnRate: row.opnRate,

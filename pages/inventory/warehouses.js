@@ -6,7 +6,6 @@ import StyledFormWarehouses from "@/components/warehouses/styledFormWarehouses";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableWarehouses from "@/components/warehouses/styledTableWarehouses";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
@@ -74,9 +73,7 @@ const Warehouses = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledTableCard>
-                <StyledTableWarehouses></StyledTableWarehouses>
-              </StyledTableCard>
+              <StyledTableCard defaultValue={"warehouses"}></StyledTableCard>
             </Paper>
           </Grid>
         </Grid>

@@ -9,7 +9,6 @@ import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
 import { UserProvider } from "@auth0/nextjs-auth0";
 
-
 const progress = new ProgressBar({
   size: 3,
   color: "#5F2EEA",
@@ -20,10 +19,6 @@ const progress = new ProgressBar({
 Router.events.on("routeChangeStart", progress.start);
 Router.events.on("routeChangeComplete", progress.finish);
 Router.events.on("routeChangeError", progress.finish);
-
-export function reportWebVitals(metric) {
-  console.log(metric);
-}
 
 function MyApp({ Component, pageProps, err }) {
   return (

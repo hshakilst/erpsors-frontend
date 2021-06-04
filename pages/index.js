@@ -6,7 +6,6 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import StyledButton from "@/components/ui/styledButton";
 import { Divider, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { getSession } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -61,14 +60,16 @@ const Index = (props) => {
 };
 
 export const getServerSideProps = ({ req, res }) => {
+  const { getSession } = require("@auth0/nextjs-auth0");
   const session = getSession(req, res);
-  if (session?.user)
+  if (session?.user) {
     return {
       redirect: {
         destination: "/dashboard",
         permanent: false,
       },
     };
+  }
   return { props: {} };
 };
 export default Index;

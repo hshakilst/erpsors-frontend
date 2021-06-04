@@ -51,7 +51,7 @@ export const useDeleteItemById = async (id) => {
 };
 
 export const useUpdateItemById = async (
-  id,
+  {id,
   name,
   type,
   qty,
@@ -60,7 +60,7 @@ export const useUpdateItemById = async (
   status,
   group,
   image,
-  notes
+  notes}
 ) => {
   const res = await axios.patch(`/api/items/${id}`, {
     name,

@@ -1,6 +1,7 @@
 import { db, getOpeningItemRateQtyById } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { withSentry } from "@sentry/nextjs";
 
 const createStoreIssue = (
   code,
@@ -15,7 +16,7 @@ const createStoreIssue = (
   isPosted
 ) => {
   return db.query(
-    q.Do(
+    // q.Do(
       q.Create(q.Collection("store_issues"), {
         data: {
           code: code ?? "",
@@ -29,9 +30,9 @@ const createStoreIssue = (
           notes: notes ?? "",
           isPosted: isPosted ?? false,
         },
-      }),
-      q.Call("OnIssueUpdateItem", item.id, issQty)
-    )
+      })
+      // q.Call("OnIssueUpdateItem", item.id, issQty)
+    //)
   );
 };
 
@@ -68,7 +69,7 @@ const getAllStoreIssueCodes = () => {
   return db.query(q.Paginate(q.Match(q.Index("all_material_issue_codes"))));
 };
 
-export default withApiAuthRequired(async (req, res) => {
+const handler = withApiAuthRequired(async (req, res) => {
   try {
     const {
       query: { filter },
@@ -136,3 +137,5 @@ export default withApiAuthRequired(async (req, res) => {
     res.status(500).json({ error: true, data: error });
   }
 });
+
+export default withSentry(handler);

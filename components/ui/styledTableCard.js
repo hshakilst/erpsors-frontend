@@ -6,7 +6,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import ShortTextOutlinedIcon from "@material-ui/icons/ShortTextOutlined";
-import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
 import StyledDatePicker from "@/components/ui/styledDatePicker";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
@@ -15,26 +14,48 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TodayIcon from "@material-ui/icons/Today";
 import EventIcon from "@material-ui/icons/Event";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import dynamic from "next/dynamic";
+
+const StyledTableItems = dynamic(
+  () => import("@/components/items/styledTableItems"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTablePurchaseOrders = dynamic(
+  () => import("@/components/purchase-orders/styledTablePurchaseOrders"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTableStoreIssues = dynamic(
+  () => import("@/components/store-issues/styledTableStoreIssues"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTableStoreReceipts = dynamic(
+  () => import("@/components/store-receipts/styledTableStoreReceipts"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTableStoreRequisitions = dynamic(
+  () => import("@/components/store-requisitions/styledTableStoreRequisitions"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTableSuppliers = dynamic(
+  () => import("@/components/suppliers/styledTableSuppliers"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
+const StyledTableWarehouses = dynamic(
+  () => import("@/components/warehouses/styledTableWarehouses"),
+  { ssr: false, loading: () => <p>...</p> }
+);
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       padding: theme.spacing(0),
     },
-    // media: {
-    //   height: 0,
-    //   paddingTop: "56.25%",
-    // },
-    // expand: {
-    //   transform: "rotate(0deg)",
-    //   marginLeft: "auto",
-    //   transition: theme.transitions.create("transform", {
-    //     duration: theme.transitions.duration.shortest,
-    //   }),
-    // },
-    // expandOpen: {
-    //   transform: "rotate(180deg)",
-    // },
     rootGrid: {
       flexGrow: 1,
       padding: theme.spacing(1),
@@ -54,38 +75,6 @@ const useStyles = makeStyles((theme) =>
         },
       },
     },
-    // paperDropdown: {
-    //   paddingTop: theme.spacing(1.3),
-    //   paddingBottom: theme.spacing(1.3),
-    //   paddingLeft: theme.spacing(2),
-    //   paddingRight: theme.spacing(2),
-    //   borderRadius: "1rem",
-    //   "& .MuiButton-text": {
-    //     padding: 0,
-    //   },
-    // },
-    // paperTable: {
-    //   padding: theme.spacing(0),
-    //   textAlign: "left",
-    //   borderRadius: "1rem",
-    //   "& .MuiPaper-elevation1": {
-    //     boxShadow: "none",
-    //   },
-    //   "& .MuiButton-outlined": {
-    //     border: "none",
-    //     marginLeft: 0,
-    //     "&:hover": {
-    //       backgroundColor: "#EFF0F6",
-    //     },
-    //   },
-    // },
-    // paperIcon: {
-    //   textAlign: "center",
-    //   "& .MuiAppBar-colorPrimary": {
-    //     background: "#EFF0F6",
-    //     paddingRight: "20px",
-    //   },
-    // },
     gridDropdown: {
       flexDirection: "column",
       flexGrow: 1,
@@ -100,24 +89,6 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       justifyContent: "center",
       textAlign: "center",
-      // "& .MuiButton-outlined": {
-      //   padding: "0.5rem 0px",
-      //   fontSize: "1rem",
-      //   fontWeight: 400,
-      //   color: "#14142B",
-      //   letterSpacing: "0.047rem",
-      //   textTransform: "capitalize",
-      //   marginLeft: 0,
-      // },
-      // "& .MuiAppBar-colorPrimary": {
-      //   background: "#fff",
-      // },
-      // "& .MuiMenu-paper": {
-      //   fontSize: "1rem",
-      //   fontWeight: 400,
-      //   color: "red",
-      //   letterSpacing: "0.047rem",
-      // },
     },
 
     search: {
@@ -235,67 +206,23 @@ const useStyles = makeStyles((theme) =>
       color: "#14142B",
       paddingLeft: "1.6rem",
     },
-    // inputRootTableCard: {
-    //   lineHeight: 0,
-    //   "& .MuiInputLabel-animated": {
-    //     fontSize: ".975rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     lineHeight: 0,
-    //     paddingLeft: "1.25rem",
-    //     paddingTop: "0.5rem",
-    //   },
-    //   "& .MuiInputBase-inputMarginDense": {
-    //     paddingLeft: "5.5rem",
-    //     paddingTop: "1.25rem",
-    //     fontSize: "1rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     letterSpacing: "0.047rem",
-    //   },
-    // },
-    // inputRootTableCardFilter: {
-    //   lineHeight: 0,
-    //   "& .MuiInputLabel-animated": {
-    //     fontSize: ".975rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     lineHeight: 0,
-    //     paddingLeft: "1.25rem",
-    //     paddingTop: "0.5rem",
-    //   },
-    //   "& .MuiInputBase-inputMarginDense": {
-    //     fontSize: "1rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     letterSpacing: "0.047rem",
-    //   },
-    //   "& .MuiInputBase-input": {
-    //     fontSize: ".975rem",
-    //     fontWeight: 400,
-    //     color: "#14142B",
-    //     letterSpacing: "0.047rem",
-    //     paddingTop: "0.4rem",
-    //     paddingLeft: "1.25rem",
-    //   },
-    // },
-    // inputInputTableCard: {
-    //   padding: theme.spacing(1.5, 1, 1, 0),
-    //   paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
-    //   transition: theme.transitions.create("width"),
-    //   width: "100%",
-    // },
   })
 );
 
-const TextFieldComponent = (props) => {
-  return <TextField {...props} disabled={true} />;
-};
+// const TextFieldComponent = (props) => {
+//   return <TextField {...props} disabled={true} />;
+// };
 
 export default function StyledTableCard(props) {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset } = useForm();
+  const { register, handleSubmit, errors, control, reset, watch } = useForm();
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  /***
+   * when rendering watchedTableType value is becoming undefined so passing the peops value
+   ***/
+  let watchedTableType = watch("tableType") || props.defaultValue;
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -326,10 +253,10 @@ export default function StyledTableCard(props) {
                       classes={{
                         root: classes.gridDropdown,
                       }}
-                      name={"type"}
+                      name={"tableType"}
                       //FIXME:Add validation pattern
                       control={control}
-                      defaultValue={"items"}
+                      defaultValue={props.defaultValue}
                       // error={errors.type ? true : false}
                     >
                       <MenuItem value="items">{"Items"}</MenuItem>
@@ -337,10 +264,8 @@ export default function StyledTableCard(props) {
                       <MenuItem value="warehouses">{"Warehouses"}</MenuItem>
                       <MenuItem value="requisitions">{"Requisitions"}</MenuItem>
                       <MenuItem value="purchases">{"Purchase"}</MenuItem>
-                      <MenuItem value="receipts">
-                        {"Material Receipts"}
-                      </MenuItem>
-                      <MenuItem value="issues">{"Material Issues"}</MenuItem>
+                      <MenuItem value="receipts">{"Store Receipts"}</MenuItem>
+                      <MenuItem value="issues">{"Store Issues"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>
@@ -471,7 +396,37 @@ export default function StyledTableCard(props) {
                 xs={12}
               >
                 <Paper className={classes.paperTable}>
-                  <Box>{props.children}</Box>
+                  <Box>
+                    {() => {
+                      switch (watchedTableType) {
+                        case "items":
+                          return <StyledTableItems />;
+                          break;
+                        case "suppliers":
+                          return <StyledTableSuppliers />;
+                          break;
+                        case "warehouses":
+                          return <StyledTableWarehouses />;
+                          break;
+                        case "requisitions":
+                          return <StyledTableStoreRequisitions />;
+                          break;
+                        case "purchases":
+                          return <StyledTablePurchaseOrders />;
+                          break;
+                        case "receipts":
+                          return <StyledTableStoreReceipts />;
+                          break;
+                        case "issues":
+                          return <StyledTableStoreIssues />;
+                          break;
+
+                        default:
+                          return null;
+                          break;
+                      }
+                    }}
+                  </Box>
                 </Paper>
               </Grid>
             </Grid>

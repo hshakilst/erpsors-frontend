@@ -6,7 +6,6 @@ import StyledFormPurchaseOrders from "@/components/purchase-orders/styledFormPur
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
 import StyledTableCard from "@/components/ui/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTablePurchaseOrders from "@/components/purchase-orders/styledTablePurchaseOrders";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const useStyles = makeStyles((theme) =>
@@ -75,9 +74,7 @@ const PurchaseOrders = (props) => {
             xs={12}
           >
             <Paper className={classes.paper}>
-              <StyledTableCard>
-                <StyledTablePurchaseOrders></StyledTablePurchaseOrders>
-              </StyledTableCard>
+              <StyledTableCard defaultValue={"purchases"}></StyledTableCard>
             </Paper>
           </Grid>
         </Grid>

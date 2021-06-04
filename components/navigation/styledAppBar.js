@@ -9,7 +9,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import MailOutlineOutlinedIcon from "@material-ui/icons/MailOutlineOutlined";
@@ -20,6 +19,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import StyledAvatar from "@/components/ui/styledAvatar";
+import * as Sentry from "@sentry/nextjs";
 
 const StyledAppBar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -168,10 +168,7 @@ const StyledAppBar = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  const { user} = useUser();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -213,6 +210,7 @@ const StyledAppBar = (props) => {
       <MenuItem
         style={{ textAlign: "center" }}
         onClick={() => {
+          Sentry.configureScope((scope) => scope.setUser(null));
           router.push("/api/auth/logout");
           handleMenuClose();
         }}

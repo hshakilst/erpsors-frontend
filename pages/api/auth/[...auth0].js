@@ -1,3 +1,6 @@
 import { handleAuth } from "@auth0/nextjs-auth0";
+import {withSentry} from "@sentry/nextjs";
 
-export default handleAuth();
+const handler = handleAuth()
+
+export default withSentry(handler)
