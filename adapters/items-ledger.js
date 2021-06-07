@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllItemsLedger = () => {
-  const { data, error,  ...rest } = useSWR("/api/items-ledger", fetcher);
+  const { data, error, ...rest } = useSWR("/api/items-ledger", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -11,7 +13,10 @@ export const useGetAllItemsLedger = () => {
 export const useGetItemLedgerById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/items-ledger/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };

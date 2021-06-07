@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllWarehouses = () => {
-  const { data, error, ...rest } = useSWR("/api/warehouses", fetcher);
+  const { data, error, ...rest } = useSWR("/api/warehouses", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -12,7 +14,6 @@ export const useCreateWarehouses = async (
   code,
   name,
   type,
-  // capacity,
   incharge,
   address,
   phone,
@@ -25,7 +26,6 @@ export const useCreateWarehouses = async (
     code,
     name,
     type,
-    // capacity,
     incharge,
     address,
     phone,
@@ -41,7 +41,10 @@ export const useCreateWarehouses = async (
 export const useGetAllWarehouseCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/warehouses?filter=codes",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   return { data, error, loading: !data && !error, ...rest };
@@ -56,7 +59,10 @@ export const useDeleteWarehouseById = async (id) => {
 export const useGetWarehouseById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/warehouses/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -65,7 +71,6 @@ export const useUpdateWarehouseById = async (
   id,
   name,
   type,
-  // capacity,
   incharge,
   address,
   phone,
@@ -77,7 +82,6 @@ export const useUpdateWarehouseById = async (
   const res = await axios.patch(`/api/warehouses/${id}`, {
     name,
     type,
-    // capacity,
     incharge,
     address,
     phone,

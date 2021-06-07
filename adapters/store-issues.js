@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllStoreIssues = () => {
-  const { data, error, ...rest } = useSWR("/api/store-issues", fetcher);
+  const { data, error, ...rest } = useSWR("/api/store-issues", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -35,7 +37,10 @@ export const useCreateStoreIssue = async (
 export const useGetStoreIssueCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/store-issues?filter=codes",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   return { data, error, loading: !data && !error, ...rest };
@@ -50,7 +55,10 @@ export const useDeleteStoreIssueById = async (id) => {
 export const useGetStoreIssuesById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/store-issues/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };

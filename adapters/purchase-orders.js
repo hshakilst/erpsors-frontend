@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllPurchaseOrders = () => {
-  const { data, error, ...rest } = useSWR("/api/purchase-orders", fetcher);
+  const { data, error, ...rest } = useSWR("/api/purchase-orders", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -41,7 +43,10 @@ export const useCreatePurchaseOrder = async (
 export const useGetAllPurchaseOrderCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/purchase-orders?filter=codes",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   return { data, error, loading: !data && !error, ...rest };
@@ -56,7 +61,10 @@ export const useDeletePurchaseOrdersById = async (id) => {
 export const useGetPurchaseOrdersById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/purchase-orders/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };

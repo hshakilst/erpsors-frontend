@@ -1,7 +1,7 @@
 import faunadb, { query as q } from "faunadb";
 
 export const db = new faunadb.Client({
-  secret: "fnAEHo6abFACBd8TkzI8bDEOx5c6NBfclT4XXxBH",
+  secret: process.env.FAUNA_PRODUCTION_SECRET,
 });
 
 export const getOpeningItemRateQtyById = (id) => {

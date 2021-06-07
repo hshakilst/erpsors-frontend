@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllSuppliers = () => {
-  const { data, error, ...rest } = useSWR("/api/suppliers", fetcher);
+  const { data, error, ...rest } = useSWR("/api/suppliers", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -41,7 +43,10 @@ export const useCreateSupplier = async (
 export const useGetAllSupplierCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/suppliers?filter=codes",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   return { data, error, loading: !data && !error, ...rest };
@@ -56,7 +61,10 @@ export const useDeleteSupplierById = async (id) => {
 export const useGetSupplierById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/suppliers/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };

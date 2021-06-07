@@ -3,7 +3,9 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllStoreRequisitions = () => {
-  const { data, error, ...rest } = useSWR("/api/store-requisitions", fetcher);
+  const { data, error, ...rest } = useSWR("/api/store-requisitions", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -31,7 +33,10 @@ export const useCreateStoreRequisition = async ({
 export const useGetAllStoreRequisitionCodes = () => {
   const { data, error, ...rest } = useSWR(
     "/api/store-requisitions?filter=codes",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   return { data, error, loading: !data && !error, ...rest };
@@ -46,7 +51,10 @@ export const useDeleteStoreRequisitionById = async (id) => {
 export const useGetStoreRequisitionById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/store-requisitions/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };

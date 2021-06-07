@@ -1,8 +1,4 @@
 //TODO:
-
-(done) forwarding refs for all styled components for info https://reactjs.org/docs/forwarding-refs.html
-(do) Implement Mono-Repo Micro-service Architecture
-(do) Improve delete function
-(do) Log Rocket Config
-(do) Change parameter passing style from (...) to ({...})
-(do) Implement input mask for codes
+#Change all tables to Data Grid
+#Add editing option to tables.
+#Seperate FQL from api and structure them

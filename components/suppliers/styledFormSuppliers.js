@@ -512,10 +512,10 @@ const StyledFormSuppliers = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="sub-assembly">
-                        {"Sub-Assemblies"}
+                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
+                      <MenuItem value="packing-materials">
+                        {"Packing Materials"}
                       </MenuItem>
-                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>

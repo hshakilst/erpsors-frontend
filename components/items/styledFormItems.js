@@ -150,7 +150,7 @@ const StyledFormItems = (props) => {
   );}, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
-    console.log(data)
+    console.log(data.warehouse.code);
     let opnDate = data.opnDate;
     let code = data.code;
     let name = data.name;
@@ -164,7 +164,7 @@ const StyledFormItems = (props) => {
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
-    let warehouse = data.warehouse
+    let warehouse = data.warehouse.code
 
     try {
       const { error, data } = await useCreateItem({
@@ -181,7 +181,7 @@ const StyledFormItems = (props) => {
         group,
         image,
         notes,
-        warehouse,
+        warehouse
       });
       if (!error)
         props.enqueueSnackbar(`Item ${code} added successfully.`, {
@@ -299,10 +299,15 @@ const StyledFormItems = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="sub-assembly">
-                        {"Sub-Assemblies"}
+                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
+                      <MenuItem value="packing-materials">
+                        {"Packing Materials"}
                       </MenuItem>
-                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
+                      <MenuItem value="store">{"Store"}</MenuItem>
+                      <MenuItem value="wip">{"WIP"}</MenuItem>
+                      <MenuItem value="finished-goods">
+                        {"Finished Goods"}
+                      </MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>
@@ -464,7 +469,9 @@ const StyledFormItems = (props) => {
                         root: classes.inputRoot,
                       }}
                       value={rate}
-                      onChange={(event)=>{setRate(event.target.value)}}
+                      onChange={(event) => {
+                        setRate(event.target.value);
+                      }}
                       label={"Rate of Value"}
                       size={"small"}
                       name={"valueRate"}
@@ -540,6 +547,7 @@ const StyledFormItems = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllWarehouseCodes}
+                      required
                     />
                   </div>
                 </Paper>

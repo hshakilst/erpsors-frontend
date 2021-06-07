@@ -378,13 +378,15 @@ const StyledFormWarehouses = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="finished-good">
+                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
+                      <MenuItem value="packing-materials">
+                        {"Packing Materials"}
+                      </MenuItem>
+                      <MenuItem value="store">{"Store"}</MenuItem>
+                      <MenuItem value="wip">{"WIP"}</MenuItem>
+                      <MenuItem value="finished-goods">
                         {"Finished Goods"}
                       </MenuItem>
-                      <MenuItem value="sub-assembly">
-                        {"Sub-Assemblies"}
-                      </MenuItem>
-                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>

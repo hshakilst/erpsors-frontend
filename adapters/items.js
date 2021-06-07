@@ -3,7 +3,7 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllItems = () => {
-  const { data, error, ...rest } = useSWR("/api/items", fetcher);
+  const { data, error, ...rest } = useSWR("/api/items", fetcher, {revalidateOnFocus:false,});
 
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -11,7 +11,10 @@ export const useGetAllItems = () => {
 export const useGetItemById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/items/${id}` : null,
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
   return { data, error, loading: !data && !error, ...rest };
 };
@@ -94,7 +97,9 @@ export const useUpdateItemById = async ({
 };
 
 export const useGetAllItemCodes = () => {
-  const { data, error, ...rest } = useSWR("/api/items?filter=codes", fetcher);
+  const { data, error, ...rest } = useSWR("/api/items?filter=codes", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return { data, error, loading: !data && !error, ...rest };
 };
