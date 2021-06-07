@@ -10,7 +10,14 @@ const deleteStoreRequisitionById = (id) => {
   return db.query(q.Delete(q.Ref(q.Collection("store_requisitions"), id)));
 };
 
-const updateStoreRequisitionById = (id, item, reqQty, warehouse, notes) => {
+const updateStoreRequisitionById = ({
+  id,
+  item,
+  reqQty,
+  warehouse,
+  notes,
+  reqDate,
+}) => {
   return db.query(
     q.Update(q.Ref(q.Collection("store_requisitions"), id), {
       data: {
@@ -18,6 +25,7 @@ const updateStoreRequisitionById = (id, item, reqQty, warehouse, notes) => {
         reqQty,
         warehouse,
         notes,
+        reqDate,
       },
     })
   );
@@ -30,7 +38,7 @@ const handler = withApiAuthRequired(async (req, res) => {
       method,
     } = req;
 
-    const { item, reqQty, warehouse, notes } = req.body;
+    const { item, reqQty, warehouse, notes, reqDate } = req.body;
 
     switch (method) {
       case "GET":
@@ -38,13 +46,14 @@ const handler = withApiAuthRequired(async (req, res) => {
         res.status(200).json(query.data);
         break;
       case "PATCH":
-        const resUpdate = await updateStoreRequisitionById(
+        const resUpdate = await updateStoreRequisitionById({
           id,
           item,
           reqQty,
           warehouse,
-          notes
-        );
+          notes,
+          reqDate,
+        });
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":

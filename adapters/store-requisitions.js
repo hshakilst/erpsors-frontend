@@ -8,19 +8,21 @@ export const useGetAllStoreRequisitions = () => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateStoreRequisition = async (
+export const useCreateStoreRequisition = async ({
   code,
   item,
   reqQty,
   warehouse,
-  notes
-) => {
+  notes,
+  reqDate,
+}) => {
   const res = await axios.post("/api/store-requisitions", {
     code,
     item,
     reqQty,
     warehouse,
     notes,
+    reqDate,
   });
   mutate("/api/store-requisitions");
   return { error: res.data.error, data: res.data.data };

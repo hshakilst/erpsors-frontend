@@ -413,7 +413,6 @@ const StyledFormSuppliers = (props) => {
                       })}
                       error={errors.opnBalance ? true : false}
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>

@@ -147,10 +147,9 @@ const useStyles = makeStyles((theme) =>
 const StyledFormPurchaseOrders = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, control, watch, reset } = useForm();
-  const watchPurMode = watch("purMode");
+  let watchPurMode = watch("purMode");
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let reqCode = data.reqCode;
     let item = data.item;
@@ -389,6 +388,7 @@ const StyledFormPurchaseOrders = (props) => {
                         required: true,
                       })}
                       error={errors.appQty ? true : false}
+                      type={"number"}
                     />
                   </div>
                 </Paper>

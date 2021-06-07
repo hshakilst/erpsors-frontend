@@ -16,7 +16,7 @@ import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { withSnackbar } from "notistack";
 import { useGetAllItemCodes } from "@/adapters/items";
 import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
-import StyledDatePicker from "../ui/styledDatePicker";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -132,10 +132,9 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormStoreRequisitions = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset } = useForm();
+  const { register, handleSubmit, errors, control, reset, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let item = data.item;
     let reqQty = data.reqQty;
@@ -144,13 +143,14 @@ const StyledFormStoreRequisitions = (props) => {
     let notes = data.notes;
 
     try {
-      const { error, data } = await useCreateStoreRequisition(
+      const { error, data } = await useCreateStoreRequisition({
         code,
         item,
         reqQty,
         warehouse,
-        notes
-      );
+        notes,
+        reqDate,
+      });
       if (!error)
         props.enqueueSnackbar(`${JSON.stringify(data)}`, {
           variant: "success",
@@ -370,7 +370,7 @@ const StyledFormStoreRequisitions = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              {/* <Grid
+              <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -396,11 +396,11 @@ const StyledFormStoreRequisitions = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid> */}
+              </Grid>
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}
@@ -458,7 +458,7 @@ const StyledFormStoreRequisitions = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-              onClick={() => reset()}
+              onClick={() =>reset()}
             ></StyledButton>
           </div>
         </div>

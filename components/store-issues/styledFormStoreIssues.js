@@ -113,7 +113,6 @@ const StyledFormStoreIssues = (props) => {
   let { data: itemData } = useGetItemById(watchItem?.id);
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let reqCode = data.reqCode;
     let item = data.item;
@@ -356,7 +355,6 @@ const StyledFormStoreIssues = (props) => {
                       error={errors.valueRate ? true : false}
                       readOnly
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>

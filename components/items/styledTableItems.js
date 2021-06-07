@@ -67,43 +67,54 @@ function EnhancedTableHead(props) {
       disablePadding: true,
       label: "Code",
     },
-    { id: "name", numeric: false, disablePadding: false, label: "Name" },
-    { id: "type", numeric: false, disablePadding: false, label: "Type" },
     {
-      id: "valueRate",
-      numeric: true,
+      id: "opnDate",
+      numeric: false,
       disablePadding: false,
-      label: "Rate",
+      label: "Date",
     },
+
+    { id: "type", numeric: false, disablePadding: false, label: "Type" },
+
+    { id: "name", numeric: false, disablePadding: false, label: "Name" },
     {
       id: "qty",
-      numeric: true,
+      numeric: false,
       disablePadding: false,
       label: "Quantity",
     },
-    // {
-    //   id: "priceRate",
-    //   numeric: true,
-    //   disablePadding: false,
-    //   label: "Price Rate",
-    // },
     {
       id: "unit",
       numeric: false,
       disablePadding: false,
       label: "Unit",
     },
-    // {
-    //   id: "warehouse",
-    //   numeric: false,
-    //   disablePadding: false,
-    //   label: "Warehouse",
-    // },
+
+    { id: "valueRate", numeric: false, disablePadding: false, label: "Rate" },
+
+    {
+      id: "totalAmount",
+      numeric: false,
+      disablePadding: false,
+      label: "Total Amount",
+    },
     {
       id: "status",
       numeric: false,
       disablePadding: false,
       label: "Status",
+    },
+    {
+      id: "warehouse",
+      numeric: false,
+      disablePadding: false,
+      label: "Warehouse",
+    },
+    {
+      id: "shelfLife",
+      numeric: false,
+      disablePadding: false,
+      label: "Shelf Life",
     },
     {
       id: "group",
@@ -448,6 +459,7 @@ const EnhancedTable = (props) => {
                           inputProps={{ "aria-labelledby": labelId }}
                         />
                       </TableCell>
+
                       <TableCell
                         component="th"
                         id={labelId}
@@ -457,31 +469,35 @@ const EnhancedTable = (props) => {
                         {row.code}
                       </TableCell>
                       <TableCell align="left">
-                        {row.name ?? "(Empty)"}
+                        {row.opnDate ?? "(Empty)"}
                       </TableCell>
                       <TableCell align="left">
                         {row.type ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="right">
-                        {row.valueRate ?? "(Empty)"}
+                      <TableCell align="left">
+                        {row.name ?? "(Empty)"}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">
                         {row.qty ?? "(Empty)"}
                       </TableCell>
-                      {/* <TableCell align="right">
-                        {row.priceRate ?? "(Empty)"}
-                      </TableCell> */}
                       <TableCell align="left">
                         {row.unit ?? "(Empty)"}
                       </TableCell>
-                      {/* <TableCell align="left">
-                        {row.warehouse?.id
-                          ? `${row.warehouse.code}: ${row.warehouse.name}`
-                          : "(Empty)"}
-                      </TableCell> */}
+                      <TableCell align="left">
+                        {row.valueRate ?? "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">
+                        {row.totalAmount ?? "(Empty)"}
+                      </TableCell>
                       <TableCell align="left">
                         {row.status ?? "(Empty)"}
                       </TableCell>
+                      <TableCell align="left">
+                        {row.warehouse?.id
+                          ? `${row.warehouse.code}: ${row.warehouse.name}`
+                          : "(Empty)"}
+                      </TableCell>
+                      <TableCell align="left">{row.shelfLife || "N/A"}</TableCell>
                       <TableCell align="left">{row.group || "N/A"}</TableCell>
                       <TableCell align="left">{row.image || "N/A"}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>

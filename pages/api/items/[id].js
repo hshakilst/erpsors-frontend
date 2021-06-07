@@ -10,30 +10,38 @@ const deleteItemById = (id) => {
   return db.query(q.Delete(q.Ref(q.Collection("items"), id)));
 };
 
-const updateItemById = (
+const updateItemById = ({
   id,
+  opnDate,
   name,
   type,
   qty,
+  totalAmount,
   valueRate,
   unit,
   status,
+  shelfLife,
   group,
   image,
-  notes
-) => {
+  notes,
+  warehouse,
+}) => {
   return db.query(
     q.Update(q.Ref(q.Collection("items"), id), {
       data: {
+        opnDate,
         name,
         type,
         qty,
+        totalAmount,
         valueRate,
         unit,
         status,
+        shelfLife,
         group,
         image,
         notes,
+        warehouse,
       },
     })
   );
@@ -47,17 +55,20 @@ const handler = withApiAuthRequired(async (req, res) => {
     } = req;
 
     const {
+      opnDate,
+      code,
       name,
       type,
       qty,
-      priceRate,
+      totalAmount,
       valueRate,
       unit,
-      warehouse,
       status,
+      shelfLife,
       group,
       image,
       notes,
+      warehouse,
     } = req.body;
 
     switch (method) {
@@ -66,20 +77,22 @@ const handler = withApiAuthRequired(async (req, res) => {
         res.status(200).json(itemQuery.data);
         break;
       case "PATCH":
-        const resUpdate = await updateItemById(
+        const resUpdate = await updateItemById({
           id,
+          opnDate,
           name,
           type,
           qty,
-          priceRate,
+          totalAmount,
           valueRate,
           unit,
-          warehouse,
           status,
+          shelfLife,
           group,
           image,
-          notes
-        );
+          notes,
+          warehouse,
+        });
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":
@@ -95,4 +108,4 @@ const handler = withApiAuthRequired(async (req, res) => {
   }
 });
 
-export default handler
+export default handler;

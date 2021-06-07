@@ -51,6 +51,11 @@ const StyledTableWarehouses = dynamic(
   { ssr: false, loading: () => <p>...</p> }
 );
 
+const StyledTableReports = dynamic(
+  () => import("@/components/reports/styledTableReports"),
+  { ssr: false, loading: () => <p>...</p> }
+);
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -266,6 +271,7 @@ export default function StyledTableCard(props) {
                       <MenuItem value="purchases">{"Purchase"}</MenuItem>
                       <MenuItem value="receipts">{"Store Receipts"}</MenuItem>
                       <MenuItem value="issues">{"Store Issues"}</MenuItem>
+                      <MenuItem value="reports">{"Reports"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>
@@ -324,6 +330,9 @@ export default function StyledTableCard(props) {
                         required: true,
                       })}
                       error={errors.reqDate ? true : false}
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      control={control}
                     />
                   </div>
                 </Paper>
@@ -353,6 +362,9 @@ export default function StyledTableCard(props) {
                         required: true,
                       })}
                       error={errors.reqDate ? true : false}
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      control={control}
                     />
                   </div>
                 </Paper>
@@ -419,6 +431,9 @@ export default function StyledTableCard(props) {
                           break;
                         case "issues":
                           return <StyledTableStoreIssues />;
+                          break;
+                        case "reports":
+                          return <StyledTableReports />;
                           break;
 
                         default:

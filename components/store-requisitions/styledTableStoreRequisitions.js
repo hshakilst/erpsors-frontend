@@ -65,6 +65,12 @@ const headCells = [
     label: "Required Qty",
   },
   {
+    id: "reqDate",
+    numeric: true,
+    disablePadding: false,
+    label: "Required Date",
+  },
+  {
     id: "warehouse",
     numeric: false,
     disablePadding: false,
@@ -420,6 +426,7 @@ const EnhancedTable = (props) => {
                         {`${row.item.code}: ${row.item.name}`}
                       </TableCell>
                       <TableCell align="right">{row.reqQty}</TableCell>
+                      <TableCell align="left">{row.reqDate}</TableCell>
                       <TableCell align="left">{`${row.warehouse.code}: ${row.warehouse.name}`}</TableCell>
                       <TableCell align="left">{row.notes || "N/A"}</TableCell>
                     </TableRow>

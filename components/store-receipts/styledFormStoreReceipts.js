@@ -111,7 +111,6 @@ const StyledFormStoreReceipts = (props) => {
   const { register, handleSubmit, errors, control, reset } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let poCode = data.poCode;
     let item = data.item;

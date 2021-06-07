@@ -17,6 +17,8 @@ import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
 import MenuItem from "@material-ui/core/MenuItem";
 import StyledDropzoneDialog from "@/components/dropzone/StyledDropzoneDialog";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
+import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -136,45 +138,63 @@ const useStyles = makeStyles((theme) =>
 
 const StyledFormItems = (props) => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset } = useForm();
+  const { register, handleSubmit, errors, control, reset, watch, setValue } = useForm();
+  const [rate, setRate] = React.useState("");
+  let watchedQty = Number(watch("qty")) || 0;
+  let watchedTotalAmount = Number(watch("totalAmount")) || 0;
+
+  React.useEffect(() => {setRate(
+    isNaN(watchedTotalAmount / watchedQty)
+      ? ""
+      : String(watchedTotalAmount / watchedQty)
+  );}, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
+    console.log(data)
+    let opnDate = data.opnDate;
     let code = data.code;
     let name = data.name;
     let type = data.type;
     let qty = data.qty;
+    let totalAmount = data.totalAmount;
     let valueRate = data.valueRate;
     let unit = data.unit;
     let status = data.status;
+    let shelfLife = data.shelfLife;
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
+    let warehouse = data.warehouse
 
     try {
-      const { error, data } = await useCreateItem(
+      const { error, data } = await useCreateItem({
+        opnDate,
         code,
         name,
         type,
         qty,
+        totalAmount,
         valueRate,
         unit,
         status,
+        shelfLife,
         group,
         image,
-        notes
-      );
+        notes,
+        warehouse,
+      });
       if (!error)
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+        props.enqueueSnackbar(`Item ${code} added successfully.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+        props.enqueueSnackbar(`Adding Item ${code} was unsuccessful.`, {
           variant: "error",
         });
     } catch (error) {
       props.enqueueSnackbar(
         //FIXME: Change below code before deploying to production
-        `${JSON.stringify(error)}`,
+        `Something went wrong.`,
         {
           variant: "error",
         }
@@ -184,7 +204,7 @@ const StyledFormItems = (props) => {
 
   const onError = (errors) => {
     if (errors) {
-      props.enqueueSnackbar("Errors", {
+      props.enqueueSnackbar("Please check your inputs.", {
         variant: "error",
         autoHideDuration: 10000,
       });
@@ -224,6 +244,69 @@ const StyledFormItems = (props) => {
         <Box style={{ marginTop: "3.438rem" }}>
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"Opening Date"}
+                      name="opnDate"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      required
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.opnDate ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledSelectForm
+                      label={"Type"}
+                      classes={{
+                        root: classes.selectRoot,
+                      }}
+                      name={"type"}
+                      //FIXME:Add validation pattern
+                      control={control}
+                      defaultValue={""}
+                      required
+                      // error={errors.type ? true : false}
+                    >
+                      <MenuItem value="raw-material">
+                        {"Raw Materials"}
+                      </MenuItem>
+                      <MenuItem value="sub-assembly">
+                        {"Sub-Assemblies"}
+                      </MenuItem>
+                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
+                    </StyledSelectForm>
+                  </div>
+                </Paper>
+              </Grid>
               <Grid
                 className={classes.gridItem}
                 item
@@ -305,42 +388,6 @@ const StyledFormItems = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledSelectForm
-                      label={"Type"}
-                      classes={{
-                        root: classes.selectRoot,
-                      }}
-                      name={"type"}
-                      //FIXME:Add validation pattern
-                      control={control}
-                      defaultValue={""}
-                      required
-                      // error={errors.type ? true : false}
-                    >
-                      <MenuItem value="raw-material">
-                        {"Raw Materials"}
-                      </MenuItem>
-                      <MenuItem value="sub-assembly">
-                        {"Sub-Assemblies"}
-                      </MenuItem>
-                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
-                    </StyledSelectForm>
-                  </div>
-                </Paper>
-              </Grid>
-              <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
                     <TextField
                       fullWidth
                       InputProps={{
@@ -363,39 +410,6 @@ const StyledFormItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              {/* <Grid
-                item
-                className={classes.gridItem}
-                lg={6}
-                md={12}
-                sm={12}
-                xs={12}
-              >
-                <Paper className={classes.paper}>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <TocOutlinedIcon fontSize="large" />
-                    </div>
-                    <TextField
-                      fullWidth
-                      InputProps={{
-                        disableUnderline: true,
-                      }}
-                      classes={{
-                        root: classes.inputRoot,
-                      }}
-                      label={"Price Rate"}
-                      size={"small"}
-                      name={"priceRate"}
-                      //FIXME:Add validation pattern
-                      inputRef={register({
-                        required: true,
-                      })}
-                      error={errors.priceRate ? true : false}
-                    />
-                  </div>
-                </Paper>
-              </Grid> */}
               <Grid
                 item
                 className={classes.gridItem}
@@ -417,6 +431,41 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
+                      label={"Total Amount"}
+                      size={"small"}
+                      name={"totalAmount"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.totalAmount ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      value={rate}
+                      onChange={(event)=>{setRate(event.target.value)}}
                       label={"Rate of Value"}
                       size={"small"}
                       name={"valueRate"}
@@ -426,7 +475,6 @@ const StyledFormItems = (props) => {
                       })}
                       error={errors.valueRate ? true : false}
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>
@@ -472,7 +520,7 @@ const StyledFormItems = (props) => {
                   </div>
                 </Paper>
               </Grid>
-              {/* <Grid
+              <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -496,7 +544,7 @@ const StyledFormItems = (props) => {
                     />
                   </div>
                 </Paper>
-              </Grid> */}
+              </Grid>
               <Grid
                 item
                 className={classes.gridItem}
@@ -528,6 +576,39 @@ const StyledFormItems = (props) => {
                       <MenuItem value="active">{"Active"}</MenuItem>
                       <MenuItem value="inactive">{"Inactive"}</MenuItem>
                     </StyledSelectForm>
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"Shelf Life Days"}
+                      size={"small"}
+                      name={"shelfLife"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: false,
+                      })}
+                      error={errors.shelfLife ? true : false}
+                    />
                   </div>
                 </Paper>
               </Grid>

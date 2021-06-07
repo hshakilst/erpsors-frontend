@@ -2,13 +2,21 @@ import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 
-const createStoreRequisition = (code, item, reqQty, warehouse, notes) => {
+const createStoreRequisition = ({
+  code,
+  item,
+  reqQty,
+  warehouse,
+  notes,
+  reqDate,
+}) => {
   return db.query(
     q.Create(q.Collection("store_requisitions"), {
       data: {
         code: code ?? "",
         item: item ?? "",
         reqQty: reqQty ?? "",
+        reqDate: reqDate ?? "",
         warehouse: warehouse ?? "",
         notes: notes ?? "",
       },
@@ -31,6 +39,7 @@ const getAllStoreRequisitions = () => {
             code: q.Select(["data", "code"], q.Var("storeReqDoc")),
             item: q.Select(["data", "item"], q.Var("storeReqDoc")),
             reqQty: q.Select(["data", "reqQty"], q.Var("storeReqDoc")),
+            reqDate: q.Select(["data", "reqDate"], q.Var("storeReqDoc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("storeReqDoc")),
             notes: q.Select(["data", "notes"], q.Var("storeReqDoc")),
           }
@@ -74,15 +83,16 @@ const handler = withApiAuthRequired(async (req, res) => {
         break;
 
       case "POST":
-        const { code, item, reqQty, warehouse, notes } = req.body;
+        const { code, item, reqQty, warehouse, notes, reqDate } = req.body;
 
-        const result = await createStoreRequisition(
+        const result = await createStoreRequisition({
           code,
           item,
           reqQty,
           warehouse,
-          notes
-        );
+          notes,
+          reqDate,
+        });
         res.status(200).json({ error: false, data: result });
         break;
       default:

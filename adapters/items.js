@@ -16,29 +16,37 @@ export const useGetItemById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateItem = async (
+export const useCreateItem = async ({
+  opnDate,
   code,
   name,
   type,
   qty,
+  totalAmount,
   valueRate,
   unit,
   status,
+  shelfLife,
   group,
   image,
-  notes
-) => {
+  notes,
+  warehouse
+}) => {
   const res = await axios.post("/api/items", {
+    opnDate,
     code,
     name,
     type,
     qty,
+    totalAmount,
     valueRate,
     unit,
     status,
+    shelfLife,
     group,
     image,
     notes,
+    warehouse
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
@@ -50,28 +58,36 @@ export const useDeleteItemById = async (id) => {
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useUpdateItemById = async (
-  {id,
+export const useUpdateItemById = async ({
+  id,
+  opnDate,
   name,
   type,
   qty,
+  totalAmount,
   valueRate,
   unit,
   status,
+  shelfLife,
   group,
   image,
-  notes}
-) => {
+  notes,
+  warehouse
+}) => {
   const res = await axios.patch(`/api/items/${id}`, {
+    opnDate,
     name,
     type,
     qty,
+    totalAmount,
     valueRate,
     unit,
     status,
+    shelfLife,
     group,
     image,
     notes,
+    warehouse
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
