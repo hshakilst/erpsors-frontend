@@ -339,7 +339,6 @@ const StyledFormStoreRequisitions = (props) => {
                       })}
                       error={errors.reqQty ? true : false}
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>

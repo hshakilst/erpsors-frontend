@@ -388,7 +388,6 @@ const StyledFormPurchaseOrders = (props) => {
                         required: true,
                       })}
                       error={errors.appQty ? true : false}
-                      type={"number"}
                     />
                   </div>
                 </Paper>

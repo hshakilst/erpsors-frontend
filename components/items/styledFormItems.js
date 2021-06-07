@@ -405,7 +405,6 @@ const StyledFormItems = (props) => {
                       })}
                       error={errors.qty ? true : false}
                       required
-                      type={"number"}
                     />
                   </div>
                 </Paper>
