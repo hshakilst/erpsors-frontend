@@ -8,7 +8,8 @@ import StyledNavbar from "@/components/navigation/styledNavbar";
 import Router from "next/router";
 import ProgressBar from "@badrap/bar-of-progress";
 import { UserProvider } from "@auth0/nextjs-auth0";
-
+import Header from "@/components/shared/header"
+import Footer from "@/components/shared/footer";
 const progress = new ProgressBar({
   size: 3,
   color: theme.palette.primary.main,
@@ -23,6 +24,7 @@ Router.events.on("routeChangeError", progress.finish);
 function MyApp({ Component, pageProps, err }) {
   return (
     <>
+    <Header/>
       <ThemeProvider theme={theme}>
         <StyledSnackbar>
           <UserProvider>
@@ -31,6 +33,7 @@ function MyApp({ Component, pageProps, err }) {
           </UserProvider>
         </StyledSnackbar>
       </ThemeProvider>
+      <Footer/>
     </>
   );
 }
