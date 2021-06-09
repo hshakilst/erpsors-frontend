@@ -7,6 +7,7 @@ import { withSnackbar } from "notistack";
 import { IconButton, Typography } from "@material-ui/core";
 import StyledDataGrid from "@/components/shared/tables/styledDataGrid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { useTheme } from "@material-ui/core/styles";
 
 const columns = [
   { headerName: "ID", field: "id", hide: true },
@@ -107,13 +108,14 @@ const columns = [
   //   align: "justify",
   //   renderCell: (params) => (
   //     <IconButton onClick={() => useDeleteItemLedgerById(params.row.id)}>
-  //       <DeleteForeverIcon style={{ color: "#14142B" }} />
+  //       <DeleteForeverIcon style={{ color: theme.palette.grey.title }} />
   //     </IconButton>
   //   ),
   // },
 ];
 
 const StyledTableReports = (props) => {
+  const theme = useTheme();
   return (
     <StyledDataGrid
       label={"Store Reports"}

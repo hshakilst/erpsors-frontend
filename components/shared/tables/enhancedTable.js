@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -118,6 +118,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 const EnhancedTableToolbar = (props) => {
+  const theme = useTheme();
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
@@ -136,7 +137,7 @@ const EnhancedTableToolbar = (props) => {
           style={{
             fontSize: "1rem",
             fontWeight: 600,
-            color: "#14142B",
+            color: theme.palette.grey.title,
             letterSpacing: "0.047rem",
           }}
         >
@@ -150,7 +151,7 @@ const EnhancedTableToolbar = (props) => {
           style={{
             fontSize: "1.2rem",
             fontWeight: 600,
-            color: "#14142B",
+            color: theme.palette.grey.title,
             letterSpacing: "0.047rem",
             textAlign: "left",
           }}
@@ -199,10 +200,10 @@ const EnhancedTableToolbar = (props) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    backgroundColor: "#D9DBE9",
+    backgroundColor: theme.palette.grey.line,
     borderRadius: "1rem",
     "& .MuiTableRow-root.Mui-selected": {
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
     },
     "& .MuiCheckbox-colorSecondary.Mui-checked": {
       color: "#6A6D6D",
@@ -212,13 +213,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: theme.spacing(2),
     borderRadius: "1rem",
-    backgroundColor: "#D9DBE9",
+    backgroundColor: theme.palette.grey.line,
   },
   table: {
-    backgroundColor: "#EFF0F6",
+    backgroundColor: theme.palette.grey.inputBackground,
     fontSize: "1rem",
     fontWeight: 400,
-    color: "#14142B",
+    color: theme.palette.grey.title,
     letterSpacing: "0.047rem",
   },
   visuallyHidden: {
@@ -235,6 +236,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EnhancedTable = (props) => {  //fetch, label, columns
+  const theme = useTheme();
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("code");

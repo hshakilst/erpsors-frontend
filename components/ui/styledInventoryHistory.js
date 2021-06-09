@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { Link, List, ListItem } from "@material-ui/core";
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function StyledInventoryHistory(props) {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -37,7 +38,7 @@ export default function StyledInventoryHistory(props) {
             style={{
               fontSize: "1.125rem",
               fontWeight: 400,
-              color: "#14142B",
+              color: theme.palette.grey.title,
               letterSpacing: "0.047rem",
             }}
           >
@@ -47,7 +48,7 @@ export default function StyledInventoryHistory(props) {
             style={{
               fontSize: "0.75rem",
               fontWeight: 200,
-              color: "#4E4B66",
+              color: theme.palette.grey.body,
               letterSpacing: "0.047rem",
             }}
           >
@@ -61,7 +62,7 @@ export default function StyledInventoryHistory(props) {
             style={{
               fontWeight: 500,
               fontSize: "0.875rem",
-              color: "#5F2EEA",
+              color: theme.palette.primary.main,
               letterSpacing: "0.063rem",
             }}
             onClick={() => {
@@ -74,7 +75,7 @@ export default function StyledInventoryHistory(props) {
       </Box>
       <Box
         style={{
-          backgroundColor: "#EFF0F7",
+          backgroundColor: theme.palette.grey.inputBackground,
           marginTop: "2.5rem",
           borderRadius: "1rem",
           padding: "1rem",
@@ -86,7 +87,7 @@ export default function StyledInventoryHistory(props) {
             <ListItem>
               <Typography
                 style={{
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   fontSize: "0.75rem",
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
@@ -99,7 +100,7 @@ export default function StyledInventoryHistory(props) {
             <ListItem>
               <Typography
                 style={{
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   fontSize: "0.75rem",
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
@@ -112,7 +113,7 @@ export default function StyledInventoryHistory(props) {
             <ListItem>
               <Typography
                 style={{
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   fontSize: "0.75rem",
                   fontWeight: 500,
                   letterSpacing: "0.016rem",
@@ -126,7 +127,7 @@ export default function StyledInventoryHistory(props) {
             <ListItem>
               <Typography
                 style={{
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   fontSize: "0.75rem",
                   fontWeight: 500,
                   letterSpacing: "0.016rem",

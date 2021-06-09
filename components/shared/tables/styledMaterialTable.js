@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import MaterialTable from "material-table";
 import { forwardRef } from "react";
@@ -22,70 +22,43 @@ import UpdateIcon from "@material-ui/icons/Update";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    // root: {
-    //   flexGrow: 1,
-    //   backgroundColor: "#EFF0F6",
-    //   padding: theme.spacing(1.5),
-    //   // paddingTop: "6rem",
-    //   marginLeft: 240,
-    //   [theme.breakpoints.down("xs")]: {
-    //     marginLeft: 0,
-    //   },
-    //   [theme.breakpoints.up("lg")]: {
-    //     flexGrow: 1,
-    //     backgroundColor: "#EFF0F6",
-    //     padding: theme.spacing(1.5),
-    //     // paddingTop: "6rem",
-    //     marginLeft: 240,
-    //   },
-    // },
     paper: {
-      color: "#14142B",
+      color: theme.palette.grey.title,
       padding: theme.spacing(2),
       textAlign: "center",
       paddingTop: "1rem",
       paddingBottom: "1rem",
       borderRadius: "1rem",
       "& .MuiPaper-root": {
-        color: "#14142B",
+        color: theme.palette.grey.title,
         boxShadow: "none",
       },
       "& .MuiTableCell-footer": {
-        color: "#14142B",
+        color: theme.palette.grey.title,
         borderBottom: "none",
       },
       "& .MuiCheckbox-colorSecondary.Mui-checked": {
-        color: "#5F2EEA",
+        color: theme.palette.primary.main,
       },
-      // "&  .MTableToolbar-highlight-148": {
-      //   color: "#5F2EEA",
-      //   backgroundColor: "transparent",
-      // },
       "& .MuiToolbar-root": {
-        color: "#14142B",
-        backgroundColor: "#D9DBE9",
+        color: theme.palette.grey.title,
+        backgroundColor: theme.palette.grey.line,
         borderTopLeftRadius: "1rem",
         borderTopRightRadius: "1rem",
       },
       "& .MuiTableCell-head": {
-        color: "#14142B",
-        backgroundColor: "#EFF0F6",
+        color: theme.palette.grey.title,
+        backgroundColor: theme.palette.grey.inputBackground,
       },
       "& .MuiTablePagination-toolbar": {
-        color: "#14142B",
-        backgroundColor: "#D9DBE9",
+        color: theme.palette.grey.title,
+        backgroundColor: theme.palette.grey.line,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         borderBottomLeftRadius: "1rem",
         borderBottomRightRadius: "1rem",
       },
     },
-    // gridItem: {
-    //   flexDirection: "column",
-    //   flexGrow: 1,
-    //   justifyContent: "center",
-    //   textAlign: "center",
-    // },
   })
 );
 
@@ -114,6 +87,7 @@ const tableIcons = {
 };
 
 const StyledMaterialTable = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   const {
     error,

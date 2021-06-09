@@ -1,5 +1,10 @@
 import React from "react";
-import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  fade,
+  useTheme,
+} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -76,7 +81,7 @@ const useStyles = makeStyles((theme) =>
         border: "none",
         marginLeft: 0,
         "&:hover": {
-          backgroundColor: "#EFF0F6",
+          backgroundColor: theme.palette.grey.inputBackground,
         },
       },
     },
@@ -86,7 +91,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "end",
       textAlign: "center",
       "& .MuiSelect-select:focus": {
-        background: "#EFF0F6",
+        background: theme.palette.grey.inputBackground,
       },
     },
     gridItem: {
@@ -125,7 +130,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#14142B",
+      color: theme.palette.grey.title,
     },
     inputRoot: {
       lineHeight: 0,
@@ -133,7 +138,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputLabel-animated": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
@@ -141,7 +146,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-input": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
         paddingTop: "0.4rem",
         paddingLeft: "1.25rem",
@@ -161,7 +166,7 @@ const useStyles = makeStyles((theme) =>
       paddingLeft: `calc(1em + ${theme.spacing(0)}px)`,
       fontSize: "1rem",
       fontWeight: 400,
-      color: "#14142B",
+      color: theme.palette.grey.title,
       letterSpacing: "0.047rem",
     },
     searchTableCard: {
@@ -192,11 +197,11 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-root.Mui-disabled": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         paddingLeft: "5.5rem",
       },
       "& .MuiIconButton-root": {
-        color: "#14142B",
+        color: theme.palette.grey.title,
       },
     },
     searchIconTableCard: {
@@ -208,7 +213,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#14142B",
+      color: theme.palette.grey.title,
       paddingLeft: "1.6rem",
     },
   })
@@ -219,6 +224,7 @@ const useStyles = makeStyles((theme) =>
 // };
 
 export default function StyledTableCard(props) {
+  const theme = useTheme();
   const classes = useStyles();
   const { register, handleSubmit, errors, control, reset, watch } = useForm();
   const [selectedDate, setSelectedDate] = React.useState(new Date());
@@ -248,7 +254,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6" }}
+                  style={{ background: theme.palette.grey.inputBackground }}
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>
@@ -286,7 +292,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6" }}
+                  style={{ background: theme.palette.grey.inputBackground }}
                 >
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -315,7 +321,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6" }}
+                  style={{ background: theme.palette.grey.inputBackground }}
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>
@@ -347,7 +353,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6" }}
+                  style={{ background: theme.palette.grey.inputBackground }}
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>
@@ -379,7 +385,7 @@ export default function StyledTableCard(props) {
               >
                 <Paper
                   className={classes.paper}
-                  style={{ background: "#EFF0F6" }}
+                  style={{ background: theme.palette.grey.inputBackground }}
                 >
                   <div className={classes.searchTableCard}>
                     <div className={classes.searchIconTableCard}>

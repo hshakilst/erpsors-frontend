@@ -2,14 +2,14 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       "&:hover": {
-        background: "#EFF0F6",
+        background: theme.palette.grey.inputBackground,
       },
       "& .MuiButton-label": {
         justifyContent: "left",
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) =>
     rootIcon: {
       marginLeft: "1.25rem",
       fontSize: "2rem",
-      color: "#14142B",
+      color: theme.palette.grey.title,
       [theme.breakpoints.up("xs")]: {
         marginLeft: theme.spacing(6),
       },
@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) =>
     },
     rootMenu: {
       "& .MuiPaper-root": {
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
         borderRadius: "1rem",
         fontSize: "1rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
       },
     },
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function Dropdown() {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -61,7 +62,7 @@ export default function Dropdown() {
         style={{
           fontSize: "1rem",
           fontWeight: 400,
-          color: "#14142B",
+          color: theme.palette.grey.title,
           letterSpacing: "0.047rem",
           textTransform: "capitalize",
           paddingTop: "0.125rem",

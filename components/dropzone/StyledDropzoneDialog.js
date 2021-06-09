@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { ReactExcel, readFile, generateObjects } from "@/libs/excelRenderer";
 import ItemsSchema from "@/validators/items";
+import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function StyledDropzoneDialog(props) {
+  const theme = useTheme();
   const [initialData, setInitialData] = useState(undefined);
   const [currentSheet, setCurrentSheet] = useState({});
   const [open, setOpen] = React.useState(false);

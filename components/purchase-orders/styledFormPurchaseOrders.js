@@ -1,5 +1,10 @@
 import React from "react";
-import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  fade,
+  useTheme,
+} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "@material-ui/core";
@@ -19,6 +24,7 @@ import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllStoreRequisitionCodes } from "@/adapters/store-requisitions";
 import { useGetAllSupplierCodes } from "@/adapters/suppliers";
 import { useGetAllItemCodes } from "@/adapters/items";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -41,12 +47,12 @@ const useStyles = makeStyles((theme) =>
     },
     rootGrid: {
       flexGrow: 1,
-      backgroundColor: "#EFF0F7",
+      backgroundColor: theme.palette.grey.inputBackground,
       padding: theme.spacing(2),
       borderRadius: "1rem",
     },
     paper: {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.grey.background,
       padding: theme.spacing(0),
       textAlign: "left",
       paddingLeft: "1.25rem",
@@ -90,7 +96,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#14142B",
+      color: theme.palette.grey.title,
     },
     inputRoot: {
       lineHeight: 0,
@@ -98,7 +104,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputLabel-animated": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
@@ -106,7 +112,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-input": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
         paddingTop: "0.4rem",
         paddingLeft: "1.25rem",
@@ -123,15 +129,6 @@ const useStyles = makeStyles((theme) =>
     },
     selectRoot: {
       paddingLeft: "1.25rem",
-      // [theme.breakpoints.up("md")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("sm")]: {
-      //   width: "100%",
-      // },
-      // [theme.breakpoints.up("xs")]: {
-      //   width: "100%",
-      // },
     },
     add: {
       [theme.breakpoints.down("xs")]: {
@@ -145,24 +142,39 @@ const useStyles = makeStyles((theme) =>
 );
 
 const StyledFormPurchaseOrders = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   const { register, handleSubmit, errors, control, watch, reset } = useForm();
+  const [rate, setRate] = React.useState("");
+  let watchedQty = Number(watch("appQty")) || 0;
+  let watchedTotalAmount = Number(watch("totalAmount")) || 0;
   let watchPurMode = watch("purMode");
 
+  React.useEffect(() => {
+    setRate(
+      isNaN(watchedTotalAmount / watchedQty)
+        ? ""
+        : String(watchedTotalAmount / watchedQty)
+    );
+  }, [watchedQty, watchedTotalAmount]);
+
   const onSubmit = async (data) => {
+    console.log(data);
     let code = data.code;
-    let reqCode = data.reqCode;
-    let item = data.item;
+    let reqCode = data.reqCode.code;
+    let item = data.item.code;
     let rate = data.rate;
     let appQty = data.appQty;
-    let supplier = data.supplier;
+    let supplier = data.supplier.code;
     let purMode = data.purMode;
     let creDays = data.creDays;
     let purBy = data.purBy;
     let notes = data.notes;
+    let totalAmount = data.totalAmount;
+    let date = data.date;
 
     try {
-      const { error, data } = await useCreatePurchaseOrder(
+      const { error, data } = await useCreatePurchaseOrder({
         code,
         reqCode,
         item,
@@ -172,24 +184,25 @@ const StyledFormPurchaseOrders = (props) => {
         purMode,
         creDays,
         purBy,
-        notes
-      );
+        notes,
+        totalAmount,
+        date,
+      });
       if (!error)
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+        props.enqueueSnackbar(`PO ${code} added successfully.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
-          variant: "error",
-        });
+        props.enqueueSnackbar(
+          `Adding PO ${code} was unsuccessful. Reason: ${error.code}`,
+          {
+            variant: "error",
+          }
+        );
     } catch (error) {
-      props.enqueueSnackbar(
-        //FIXME: Change below code before deploying to production
-        `${JSON.stringify(error)}`,
-        {
-          variant: "error",
-        }
-      );
+      props.enqueueSnackbar(`Something went wrong.`, {
+        variant: "error",
+      });
     }
   };
 
@@ -210,7 +223,7 @@ const StyledFormPurchaseOrders = (props) => {
             style={{
               fontSize: "1.125rem",
               fontWeight: 400,
-              color: "#14142B",
+              color: theme.palette.grey.title,
             }}
           >
             Purchase Orders
@@ -219,7 +232,7 @@ const StyledFormPurchaseOrders = (props) => {
             style={{
               fontSize: "0.75rem",
               fontWeight: 200,
-              color: "#4E4B66",
+              color: theme.palette.grey.body,
             }}
           >
             Create a purchase order
@@ -240,7 +253,7 @@ const StyledFormPurchaseOrders = (props) => {
           >
             <AddOutlinedIcon
               style={{
-                color: "#14142B",
+                color: theme.palette.grey.title,
                 fontSize: "1.125rem",
                 marginRight: "0.018rem",
               }}
@@ -256,7 +269,7 @@ const StyledFormPurchaseOrders = (props) => {
               style={{
                 fontWeight: 500,
                 fontSize: "0.875rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 letterSpacing: "0.063rem",
               }}
               onClick={() => {
@@ -272,6 +285,33 @@ const StyledFormPurchaseOrders = (props) => {
         <Box style={{ marginTop: "3.438rem" }}>
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
+              <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"Date"}
+                      name="date"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      required
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.opnDate ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
               <Grid
                 className={classes.gridItem}
                 item
@@ -359,6 +399,32 @@ const StyledFormPurchaseOrders = (props) => {
                 </Paper>
               </Grid>
               <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledAutoCompleteForm
+                      label={"Supplier"}
+                      name="supplier"
+                      defaultValue={null}
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      control={control}
+                      required={true}
+                      fetchOptions={useGetAllSupplierCodes}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
                 item
                 className={classes.gridItem}
                 lg={6}
@@ -413,22 +479,22 @@ const StyledFormPurchaseOrders = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Rate"}
+                      label={"Total Amount"}
                       size={"small"}
-                      required={true}
-                      name={"rate"}
+                      name={"totalAmount"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.rate ? true : false}
+                      error={errors.totalAmount ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
               </Grid>
               <Grid
-                className={classes.gridItem}
                 item
+                className={classes.gridItem}
                 lg={6}
                 md={12}
                 sm={12}
@@ -439,15 +505,27 @@ const StyledFormPurchaseOrders = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledAutoCompleteForm
-                      label={"Supplier"}
-                      name="supplier"
-                      defaultValue={null}
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      control={control}
-                      required={true}
-                      fetchOptions={useGetAllSupplierCodes}
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      value={rate}
+                      onChange={(event) => {
+                        setRate(event.target.value);
+                      }}
+                      label={"Rate"}
+                      size={"small"}
+                      name={"rate"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.rate ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -594,7 +672,7 @@ const StyledFormPurchaseOrders = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #5F2EEA",
                 boxShadow: "none",
                 marginRight: "0.625rem",
@@ -608,7 +686,7 @@ const StyledFormPurchaseOrders = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}

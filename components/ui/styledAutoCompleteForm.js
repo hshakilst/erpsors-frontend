@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Controller } from "react-hook-form";
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   inputRoot: {
     fontSize: "1rem",
     fontWeight: 400,
-    color: "#14142B",
+    color: theme.palette.grey.title,
     letterSpacing: "0.047rem",
     lineHeight: 0,
     paddingTop: "0.5rem",
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputLabel-animated": {
       fontSize: "1rem",
       fontWeight: 400,
-      color: "#14142B",
+      color: theme.palette.grey.title,
       letterSpacing: "0.047rem",
       lineHeight: 0,
       paddingLeft: "1.25rem",
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-endAdornment': {
       right: "-0.75rem",
     },
-    "& .MuiIconButton-root": { color: "#14142B" },
+    "& .MuiIconButton-root": { color: theme.palette.grey.title },
   },
 }));
 
@@ -49,6 +49,7 @@ const StyledAutoCompleteForm = ({
   fetchOptions,
   ...props
 }) => {
+  const theme = useTheme();
   const classes = useStyles();
   const { data, error, loading } = fetchOptions();
   const [options, setOptions] = React.useState([]);

@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  fade,
+  useTheme,
+} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -11,7 +16,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputLabel-animated": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.4rem",
@@ -19,7 +24,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-input": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
         paddingTop: "0.4rem",
         paddingLeft: "1.25rem",
@@ -38,6 +43,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function StyledDatePicker(props) {
+  const theme = useTheme();
   const classes = useStyles();
   const [selectedDate, handleDateChange] = useState(null);
   return (

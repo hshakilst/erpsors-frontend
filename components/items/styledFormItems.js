@@ -1,10 +1,8 @@
 import React from "react";
-import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
+import { makeStyles, createStyles, fade, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
@@ -19,6 +17,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import StyledDropzoneDialog from "@/components/dropzone/StyledDropzoneDialog";
 import StyledDatePicker from "@/components/ui/styledDatePicker";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
+import { useGetAllSupplierCodes } from "@/adapters/suppliers";
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -41,12 +41,12 @@ const useStyles = makeStyles((theme) =>
     },
     rootGrid: {
       flexGrow: 1,
-      backgroundColor: "#EFF0F7",
+      backgroundColor: theme.palette.grey.inputBackground,
       padding: theme.spacing(2),
       borderRadius: "1rem",
     },
     paper: {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.grey.background,
       padding: theme.spacing(0),
       textAlign: "left",
       paddingLeft: "1.25rem",
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#14142B",
+      color: theme.palette.grey.title,
     },
     inputRoot: {
       lineHeight: 0,
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputLabel-animated": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-input": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
         paddingTop: "0.4rem",
         paddingLeft: "1.25rem",
@@ -137,6 +137,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const StyledFormItems = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   const { register, handleSubmit, errors, control, reset, watch, setValue } = useForm();
   const [rate, setRate] = React.useState("");
@@ -150,7 +151,6 @@ const StyledFormItems = (props) => {
   );}, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
-    console.log(data.warehouse.code);
     let opnDate = data.opnDate;
     let code = data.code;
     let name = data.name;
@@ -165,6 +165,7 @@ const StyledFormItems = (props) => {
     let image = data.image;
     let notes = data.notes;
     let warehouse = data.warehouse.code
+    let supplier = data.supplier.code
 
     try {
       const { error, data } = await useCreateItem({
@@ -181,19 +182,19 @@ const StyledFormItems = (props) => {
         group,
         image,
         notes,
-        warehouse
+        warehouse,
+        supplier
       });
       if (!error)
         props.enqueueSnackbar(`Item ${code} added successfully.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(`Adding Item ${code} was unsuccessful.`, {
+        props.enqueueSnackbar(`Adding Item ${code} was unsuccessful. Reason: ${error.code}`, {
           variant: "error",
         });
     } catch (error) {
       props.enqueueSnackbar(
-        //FIXME: Change below code before deploying to production
         `Something went wrong.`,
         {
           variant: "error",
@@ -219,7 +220,7 @@ const StyledFormItems = (props) => {
             style={{
               fontSize: "1.125rem",
               fontWeight: 400,
-              color: "#14142B",
+              color: theme.palette.grey.title,
             }}
           >
             Items
@@ -228,7 +229,7 @@ const StyledFormItems = (props) => {
             style={{
               fontSize: "0.75rem",
               fontWeight: 200,
-              color: "#4E4B66",
+              color: theme.palette.grey.body,
             }}
           >
             Create an item
@@ -294,20 +295,22 @@ const StyledFormItems = (props) => {
                       control={control}
                       defaultValue={""}
                       required
-                      // error={errors.type ? true : false}
+                      error={errors.type ? true : false}
                     >
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
-                      <MenuItem value="packing-materials">
+                      <MenuItem value="chemical">{"Chemicals"}</MenuItem>
+                      <MenuItem value="packing-material">
                         {"Packing Materials"}
                       </MenuItem>
-                      <MenuItem value="store">{"Store"}</MenuItem>
-                      <MenuItem value="wip">{"WIP"}</MenuItem>
-                      <MenuItem value="finished-goods">
+                      <MenuItem value="wip">{"Work In Process"}</MenuItem>
+                      <MenuItem value="finished-good">
                         {"Finished Goods"}
                       </MenuItem>
+                      <MenuItem value="git">{"Goods In Transit"}</MenuItem>
+                      <MenuItem value="mro">{"MRO Goods"}</MenuItem>
+                      <MenuItem value="consumable">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>
@@ -513,16 +516,46 @@ const StyledFormItems = (props) => {
                       defaultValue={""}
                       required
                     >
-                      <MenuItem value="pair">{"Pairs"}</MenuItem>
+                      <MenuItem value="pr">{"Pairs"}</MenuItem>
                       <MenuItem value="pc">{"Pieces"}</MenuItem>
                       <MenuItem value="kg">{"KGs"}</MenuItem>
                       <MenuItem value="m">{"Meters"}</MenuItem>
                       <MenuItem value="cm">{"Centimeters"}</MenuItem>
-                      <MenuItem value="feet">{"Feet"}</MenuItem>
-                      <MenuItem value="inch">{"Inches"}</MenuItem>
+                      <MenuItem value="ft">{"Feet"}</MenuItem>
+                      <MenuItem value="in">{"Inches"}</MenuItem>
                       <MenuItem value="g">{"Grams"}</MenuItem>
+                      <MenuItem value="rl">{"Reels"}</MenuItem>
+                      <MenuItem value="dz">{"Dozens"}</MenuItem>
+                      <MenuItem value="tin">{"Tins"}</MenuItem>
+                      <MenuItem value="l">{"Litres"}</MenuItem>
+                      <MenuItem value="pk">{"Packets"}</MenuItem>
                       <MenuItem value="unit">{"Units"}</MenuItem>
                     </StyledSelectForm>
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
+                className={classes.gridItem}
+                item
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledAutoCompleteForm
+                      label={"Supplier"}
+                      name="supplier"
+                      defaultValue={null}
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      control={control}
+                      fetchOptions={useGetAllSupplierCodes}
+                    />
                   </div>
                 </Paper>
               </Grid>
@@ -687,7 +720,7 @@ const StyledFormItems = (props) => {
               <Grid
                 item
                 className={classes.gridItem}
-                lg={6}
+                lg={12}
                 md={12}
                 sm={12}
                 xs={12}
@@ -727,7 +760,7 @@ const StyledFormItems = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #5F2EEA",
                 boxShadow: "none",
                 marginRight: "0.625rem",
@@ -741,7 +774,7 @@ const StyledFormItems = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}

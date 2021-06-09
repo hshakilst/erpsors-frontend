@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,6 +12,7 @@ import ImportExportOutlinedIcon from "@material-ui/icons/ImportExportOutlined";
 import HeightOutlinedIcon from "@material-ui/icons/HeightOutlined";
 
 const StyledCardAppBar = (props) => {
+  const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     grow: {
       flexGrow: 1,
@@ -69,7 +70,7 @@ const StyledCardAppBar = (props) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#A0A3BD",
+      color: theme.palette.grey.placeholder,
       zIndex: 1030,
       "& .MuiSvgIcon-root": {
         fontSize: "1.8rem",
@@ -84,16 +85,16 @@ const StyledCardAppBar = (props) => {
       paddingLeft: `calc(1em + ${theme.spacing(3)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       borderRadius: "1rem",
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
       [theme.breakpoints.up("md")]: {
         width: "40ch",
       },
     },
     sectionDesktop: {
       display: "none",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       padding: 0,
       paddingBottom: 0,
       "& .MuiIconButton-root": {
@@ -104,7 +105,7 @@ const StyledCardAppBar = (props) => {
       },
       "&:hover": {
         "& .MuiGrid-item": {
-          backgroundColor: "#fff",
+          backgroundColor: theme.palette.grey.background,
         },
       },
       [theme.breakpoints.up("md")]: {
@@ -113,7 +114,7 @@ const StyledCardAppBar = (props) => {
     },
     sectionMobile: {
       display: "flex",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       "& .MuiIconButton-root": {
         padding: 0,
         height: "2.5rem",
@@ -122,7 +123,7 @@ const StyledCardAppBar = (props) => {
       },
       "&:hover": {
         "& .MuiGrid-item": {
-          backgroundColor: "#fff",
+          backgroundColor: theme.palette.grey.background,
         },
       },
       [theme.breakpoints.up("md")]: {

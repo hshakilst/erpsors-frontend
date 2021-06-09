@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "@material-ui/core";
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function StyledOverviewList() {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -40,7 +41,7 @@ export default function StyledOverviewList() {
             style={{
               fontSize: "1.125rem",
               fontWeight: 400,
-              color: "#14142B",
+              color: theme.palette.grey.title,
               letterSpacing: "0.047rem",
             }}
           >
@@ -50,7 +51,7 @@ export default function StyledOverviewList() {
             style={{
               fontSize: "0.75rem",
               fontWeight: 200,
-              color: "#4E4B66",
+              color: theme.palette.grey.body,
               letterSpacing: "0.047rem",
             }}
           >
@@ -64,7 +65,7 @@ export default function StyledOverviewList() {
             style={{
               fontWeight: 500,
               fontSize: "0.875rem",
-              color: "#5F2EEA",
+              color: theme.palette.primary.main,
               letterSpacing: "0.063rem",
             }}
             onClick={() => {
@@ -77,7 +78,7 @@ export default function StyledOverviewList() {
       </Box>
       <Box
         style={{
-          backgroundColor: "#EFF0F7",
+          backgroundColor: theme.palette.grey.inputBackground,
           marginTop: "2.5rem",
           borderRadius: "1rem",
         }}
@@ -101,7 +102,7 @@ export default function StyledOverviewList() {
                 style={{
                   fontSize: "1.125rem",
                   fontWeight: 400,
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   letterSpacing: "0.047rem",
                   display: "inline-block",
                   paddingLeft: "0.5rem",
@@ -120,7 +121,7 @@ export default function StyledOverviewList() {
                 <LocalOfferOutlinedIcon
                   fontSize={"small"}
                   style={{
-                    color: "#00966D",
+                    color: theme.palette.success.dark,
                   }}
                 />
               }
@@ -134,7 +135,7 @@ export default function StyledOverviewList() {
                 style={{
                   fontWeight: 500,
                   fontSize: "0.688rem",
-                  color: "#00BA88",
+                  color: theme.palette.success.main,
                   letterSpacing: "0.063rem",
                   display: "inline-block",
                 }}
@@ -163,7 +164,7 @@ export default function StyledOverviewList() {
                 style={{
                   fontSize: "1.125rem",
                   fontWeight: 400,
-                  color: "#6E7191",
+                  color: theme.palette.grey.label,
                   letterSpacing: "0.047rem",
                   display: "inline-block",
                   paddingLeft: "0.5rem",
@@ -182,7 +183,7 @@ export default function StyledOverviewList() {
                 <LocalOfferOutlinedIcon
                   fontSize={"small"}
                   style={{
-                    color: "#00966D",
+                    color: theme.palette.success.dark,
                   }}
                 />
               }
@@ -196,7 +197,7 @@ export default function StyledOverviewList() {
                 style={{
                   fontWeight: 500,
                   fontSize: "0.688rem",
-                  color: "#00BA88",
+                  color: theme.palette.success.main,
                   letterSpacing: "0.063rem",
                   display: "inline-block",
                 }}

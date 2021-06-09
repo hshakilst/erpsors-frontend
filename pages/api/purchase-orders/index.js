@@ -2,7 +2,7 @@ import { db } from "@/libs/fauna";
 import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 
-const createPurchaseOrder = (
+const createPurchaseOrder = ({
   code,
   reqCode,
   item,
@@ -13,8 +13,10 @@ const createPurchaseOrder = (
   creDays,
   purBy,
   warehouse,
-  notes
-) => {
+  notes,
+  totalAmount,
+  date,
+}) => {
   return db.query(
     q.Create(q.Collection("purchase_orders"), {
       data: {
@@ -29,6 +31,8 @@ const createPurchaseOrder = (
         purBy: purBy ?? "",
         warehouse: warehouse ?? "",
         notes: notes ?? "",
+        totalAmount: totalAmount ?? "",
+        date: date ?? "",
       },
     })
   );
@@ -57,6 +61,11 @@ const getAllPurchaseOrders = () => {
             purBy: q.Select(["data", "purBy"], q.Var("purOrderDoc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("purOrderDoc")),
             notes: q.Select(["data", "notes"], q.Var("purOrderDoc")),
+            totalAmount: q.Select(
+              ["data", "totalAmount"],
+              q.Var("purOrderDoc")
+            ),
+            date: q.Select(["data", "date"], q.Var("purOrderDoc")),
           }
         )
       )
@@ -109,9 +118,11 @@ const handler = withApiAuthRequired(async (req, res) => {
           purBy,
           warehouse,
           notes,
+          totalAmount,
+          date,
         } = req.body;
 
-        const result = await createPurchaseOrder(
+        const result = await createPurchaseOrder({
           code,
           reqCode,
           item,
@@ -122,8 +133,10 @@ const handler = withApiAuthRequired(async (req, res) => {
           creDays,
           purBy,
           warehouse,
-          notes
-        );
+          notes,
+          totalAmount,
+          date,
+        });
         res.status(200).json({ error: false, data: result });
         break;
       default:

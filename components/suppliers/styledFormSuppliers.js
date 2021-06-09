@@ -1,5 +1,10 @@
 import React from "react";
-import { makeStyles, createStyles, fade } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  fade,
+  useTheme,
+} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { Link, MenuItem } from "@material-ui/core";
@@ -14,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
 import { useCreateSupplier } from "@/adapters/suppliers";
 import StyledSelectForm from "@/components/ui/styledSelectForm";
-// import StyledSelect from "@/components/ui/styledSelect";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -37,12 +41,12 @@ const useStyles = makeStyles((theme) =>
     },
     rootGrid: {
       flexGrow: 1,
-      backgroundColor: "#EFF0F7",
+      backgroundColor: theme.palette.grey.inputBackground,
       padding: theme.spacing(2),
       borderRadius: "1rem",
     },
     paper: {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.grey.background,
       padding: theme.spacing(0),
       textAlign: "left",
       paddingLeft: "1.25rem",
@@ -86,7 +90,7 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#14142B",
+      color: theme.palette.grey.title,
     },
     inputRoot: {
       lineHeight: 0,
@@ -94,7 +98,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputLabel-animated": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
@@ -102,7 +106,7 @@ const useStyles = makeStyles((theme) =>
       "& .MuiInputBase-input": {
         fontSize: ".975rem",
         fontWeight: 400,
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
         paddingTop: "0.4rem",
         paddingLeft: "1.25rem",
@@ -154,6 +158,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const StyledFormSuppliers = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   const { register, handleSubmit, errors, control, reset } = useForm();
 
@@ -219,7 +224,7 @@ const StyledFormSuppliers = (props) => {
             style={{
               fontSize: "1.125rem",
               fontWeight: 400,
-              color: "#14142B",
+              color: theme.palette.grey.title,
             }}
           >
             Suppliers
@@ -228,7 +233,7 @@ const StyledFormSuppliers = (props) => {
             style={{
               fontSize: "0.75rem",
               fontWeight: 200,
-              color: "#4E4B66",
+              color: theme.palette.grey.body,
             }}
           >
             Create an Supplier
@@ -249,7 +254,7 @@ const StyledFormSuppliers = (props) => {
           >
             <AddOutlinedIcon
               style={{
-                color: "#14142B",
+                color: theme.palette.grey.title,
                 fontSize: "1.125rem",
                 marginRight: "0.018rem",
               }}
@@ -265,7 +270,7 @@ const StyledFormSuppliers = (props) => {
               style={{
                 fontWeight: 500,
                 fontSize: "0.875rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 letterSpacing: "0.063rem",
               }}
               onClick={() => {
@@ -512,10 +517,14 @@ const StyledFormSuppliers = (props) => {
                       <MenuItem value="raw-material">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
-                      <MenuItem value="packing-materials">
+                      <MenuItem value="chemical">{"Chemicals"}</MenuItem>
+                      <MenuItem value="packing-material">
                         {"Packing Materials"}
                       </MenuItem>
+                      <MenuItem value="mro">
+                        {"MRO Goods"}
+                      </MenuItem>
+                      <MenuItem value="consumable">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>
@@ -652,7 +661,7 @@ const StyledFormSuppliers = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #5F2EEA",
                 boxShadow: "none",
                 marginRight: "0.625rem",
@@ -666,7 +675,7 @@ const StyledFormSuppliers = (props) => {
               style={{
                 background: "none",
                 padding: "0.25rem 1.5rem",
-                color: "#5F2EEA",
+                color: theme.palette.primary.main,
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}

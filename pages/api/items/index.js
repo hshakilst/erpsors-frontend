@@ -17,6 +17,7 @@ const createItem = ({
   image,
   notes,
   warehouse,
+  supplier
 }) => {
   return db.query(
     q.Create(q.Collection("items"), {
@@ -35,6 +36,7 @@ const createItem = ({
         image: image ?? "",
         notes: notes ?? "",
         warehouse: warehouse ?? "",
+        supplier: supplier ?? ""
       },
     })
   );
@@ -66,6 +68,7 @@ const getAllItems = () => {
             image: q.Select(["data", "image"], q.Var("itemDoc")),
             notes: q.Select(["data", "notes"], q.Var("itemDoc")),
             warehouse: q.Select(["data", "warehouse"], q.Var("itemDoc")),
+            supplier: q.Select(["data", "supplier"], q.Var("itemDoc")),
           }
         )
       )
@@ -124,6 +127,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           image,
           notes,
           warehouse,
+          supplier
         } = req.body;
 
         const result = await createItem({
@@ -141,6 +145,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           image,
           notes,
           warehouse,
+          supplier
         });
         res.status(200).json({ error: false, data: result });
         break;

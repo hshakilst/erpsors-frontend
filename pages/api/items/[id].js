@@ -25,6 +25,7 @@ const updateItemById = ({
   image,
   notes,
   warehouse,
+  supplier
 }) => {
   return db.query(
     q.Update(q.Ref(q.Collection("items"), id), {
@@ -42,6 +43,7 @@ const updateItemById = ({
         image,
         notes,
         warehouse,
+        supplier
       },
     })
   );
@@ -69,6 +71,7 @@ const handler = withApiAuthRequired(async (req, res) => {
       image,
       notes,
       warehouse,
+      supplier
     } = req.body;
 
     switch (method) {
@@ -92,6 +95,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           image,
           notes,
           warehouse,
+          supplier
         });
         res.status(200).json({ error: false, data: resUpdate });
         break;

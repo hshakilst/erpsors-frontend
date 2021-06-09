@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -20,17 +20,17 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiFormLabel-root": {
       fontSize: "1rem",
       fontWeight: 400,
-      color: "#14142B",
+      color: theme.palette.grey.title,
       letterSpacing: "0.047rem",
     },
     "& .MuiSelect-icon": {
-      color: "#14142B",
+      color: theme.palette.grey.title,
       top: "calc(50% - 9px)",
       right: 0,
       position: "absolute",
     },
     "& .MuiSelect-select:focus": {
-      background: "#EFF0F6",
+      background: theme.palette.grey.inputBackground,
     },
     "& .MuiInput-underline:before": {
       border: "none",
@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
       content: "none",
     },
     "& .MuiMenu-list": {
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
       fontSize: "1rem",
       fontWeight: 400,
-      color: "#14142B",
+      color: theme.palette.grey.title,
       letterSpacing: "0.047rem",
     },
   },
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleSelect() {
+  const theme = useTheme();
   const classes = useStyles();
   const [items, setAge] = React.useState("");
 

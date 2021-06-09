@@ -8,7 +8,7 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from "@material-ui/data-grid";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       position: "relative",
       "& .MuiPaper-root": {
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
       },
       "& .MuiGrid-spacing-xs-2 > .MuiGrid-item": {
         paddingTop: ".01rem",
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) =>
         },
       },
       "& .MuiDataGrid-root ": {
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
         borderRadius: "1rem",
       },
       "& .MuiDataGrid-root .MuiDataGrid-toolbar": {
@@ -42,17 +42,17 @@ const useStyles = makeStyles((theme) =>
         paddingBottom: ".5rem",
       },
       "& .MuiButton-textPrimary": {
-        color: "#14142B",
+        color: theme.palette.grey.title,
         letterSpacing: "0.047rem",
       },
       "& .MuiTypography-body1": {
         float: "left",
       },
       "& .MuiDataGrid-root .MuiDataGrid-columnsContainer": {
-        backgroundColor: "#D9DBE9",
+        backgroundColor: theme.palette.grey.line,
       },
       "& .MuiDataGrid-root .MuiDataGrid-footer": {
-        backgroundColor: "#D9DBE9",
+        backgroundColor: theme.palette.grey.line,
         borderBottomLeftRadius: "1rem",
         borderBottomRightRadius: "1rem",
       },
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 function CustomToolbar(props) {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <GridToolbarContainer>
@@ -79,7 +80,7 @@ function CustomToolbar(props) {
                 style={{
                   fontSize: "1.2rem",
                   fontWeight: 500,
-                  color: "#14142B",
+                  color: theme.palette.grey.title,
                   letterSpacing: "0.047rem",
                   marginTop: ".1rem",
                 }}

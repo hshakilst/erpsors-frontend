@@ -12,8 +12,10 @@ import {
   TableContainer,
   Paper,
 } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 export const ReactExcel = (props) => {
+  const theme = useTheme();
   const {
     initialData,
     onSheetUpdate,
@@ -139,7 +141,7 @@ export const ReactExcel = (props) => {
             size="small"
             style={{
               minWidth: 650,
-              backgroundColor: "#EFF0F6",
+              backgroundColor: theme.palette.grey.inputBackground,
               boxShadow: "none",
             }}
           >
@@ -152,12 +154,12 @@ export const ReactExcel = (props) => {
   );
 };
 
-ReactExcel.propTypes = {
-  initialData: PropTypes.object,
-  onSheetUpdate: PropTypes.func,
-  activeSheetClassName: PropTypes.string,
-  reactExcelClassName: PropTypes.string,
-};
+// ReactExcel.propTypes = {
+//   initialData: PropTypes.object,
+//   onSheetUpdate: PropTypes.func,
+//   activeSheetClassName: PropTypes.string,
+//   reactExcelClassName: PropTypes.string,
+// };
 
 export const readFile = (file) => {
   var reader = new FileReader();

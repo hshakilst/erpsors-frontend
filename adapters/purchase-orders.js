@@ -10,7 +10,7 @@ export const useGetAllPurchaseOrders = () => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreatePurchaseOrder = async (
+export const useCreatePurchaseOrder = async ({
   code,
   reqCode,
   item,
@@ -21,8 +21,10 @@ export const useCreatePurchaseOrder = async (
   creDays,
   purBy,
   warehouse,
-  notes
-) => {
+  notes,
+  totalAmount,
+  date,
+}) => {
   const res = await axios.post("/api/purchase-orders", {
     code,
     reqCode,
@@ -35,6 +37,8 @@ export const useCreatePurchaseOrder = async (
     purBy,
     warehouse,
     notes,
+    totalAmount,
+    date,
   });
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };
@@ -69,7 +73,7 @@ export const useGetPurchaseOrdersById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdatePurchaseOrdersById = async (
+export const useUpdatePurchaseOrdersById = async ({
   id,
   reqCode,
   item,
@@ -79,8 +83,10 @@ export const useUpdatePurchaseOrdersById = async (
   purMode,
   creDays,
   purBy,
-  notes
-) => {
+  notes,
+  totalAmount,
+  date,
+}) => {
   const res = await axios.patch(`/api/purchase-orders/${id}`, {
     reqCode,
     item,
@@ -91,6 +97,8 @@ export const useUpdatePurchaseOrdersById = async (
     creDays,
     purBy,
     notes,
+    totalAmount,
+    date,
   });
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };

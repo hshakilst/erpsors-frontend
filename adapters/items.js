@@ -33,7 +33,8 @@ export const useCreateItem = async ({
   group,
   image,
   notes,
-  warehouse
+  warehouse,
+  supplier
 }) => {
   const res = await axios.post("/api/items", {
     opnDate,
@@ -49,7 +50,8 @@ export const useCreateItem = async ({
     group,
     image,
     notes,
-    warehouse
+    warehouse,
+    supplier
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
@@ -75,7 +77,8 @@ export const useUpdateItemById = async ({
   group,
   image,
   notes,
-  warehouse
+  warehouse,
+  supplier
 }) => {
   const res = await axios.patch(`/api/items/${id}`, {
     opnDate,
@@ -90,7 +93,8 @@ export const useUpdateItemById = async ({
     group,
     image,
     notes,
-    warehouse
+    warehouse,
+    supplier
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };

@@ -3,9 +3,10 @@ import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const StyledInput = (props) => {
+  const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     root: {
       "& .MuiOutlinedInput-root": {
@@ -20,33 +21,17 @@ const StyledInput = (props) => {
         borderStyle: "none",
         marginBottom: -2,
       },
-      // "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      //   borderColor: "red"
-      // },
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        // borderColor: "transparent",
         borderStyle: "none",
       },
-      // "& .MuiOutlinedInput-input": {
-      //   color: "green"
-      // },
-      // "&:hover .MuiOutlinedInput-input": {
-      //   color: "red"
-      // },
-      // "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      //   color: "purple"
-      // },
       "& .MuiInputLabel-outlined": {
         marginLeft: 8,
         fontSize: "1rem",
         fontWeight: "400",
         letterSpacing: "0.047rem",
       },
-      // "&:hover .MuiInputLabel-outlined": {
-      //   color: "red"
-      // },
       "& .MuiInputLabel-outlined.Mui-focused": {
-        color: props.error ? "#C30052" : "#14142b",
+        color: props.error ? "#C30052" : theme.palette.grey.title,
       },
       "& .MuiGrid-root.MuiGrid-container": {
         borderRadius: "1rem",
@@ -54,9 +39,8 @@ const StyledInput = (props) => {
         paddingLeft: 12,
         paddingRight: 12,
         paddingBottom: 4,
-        backgroundColor: props.error ? "#FFDFED" : "#EFF0F6",
+        backgroundColor: props.error ? "#FFDFED" : theme.palette.grey.inputBackground,
         margin: "auto",
-        // border: `${props.error && "0.125rem solid #ED2E7E"}`,
       },
       "& .MuiIconButton-root": {
         paddingLeft: 0,

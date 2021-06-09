@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import StyledFormPurchaseOrders from "@/components/purchase-orders/styledFormPurchaseOrders";
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
       padding: theme.spacing(1.5),
       // paddingTop: "6rem",
       marginLeft: 240,
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) =>
       },
       [theme.breakpoints.up("lg")]: {
         flexGrow: 1,
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
         padding: theme.spacing(1.5),
         // paddingTop: "6rem",
         marginLeft: 240,
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const PurchaseOrders = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
 
   return (

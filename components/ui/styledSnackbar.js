@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { SnackbarProvider } from "notistack";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import IconButton from "@material-ui/core/IconButton";
@@ -35,6 +35,7 @@ const onClickDismiss = (key) => () => {
 };
 
 const StyledSnackbar = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <SnackbarProvider

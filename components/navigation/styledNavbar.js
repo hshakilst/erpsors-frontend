@@ -4,8 +4,10 @@ import NoSsr from "@material-ui/core/NoSsr";
 import StyledAppBar from "@/components/navigation/styledAppBar";
 import StyledDrawer from "@/components/navigation/styledDrawer";
 import { useRouter } from "next/router";
+import { useTheme } from "@material-ui/core/styles";
 
 const StyledNavbar = (props) => {
+  const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

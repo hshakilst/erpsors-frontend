@@ -1,12 +1,14 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,createStyles,useTheme } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
   root: {
     "& .MuiButton-containedPrimary": {
       color: "#F7F7FC",
-      background: "#5F2EEA",
+      background: theme.palette.primary.main,
     },
     "& .MuiButton-root": {
       padding: "0.5rem 1.875rem",
@@ -16,9 +18,10 @@ const useStyles = makeStyles({
       textTransform: "capitalize",
     },
   },
-});
+}));
 
 const StyledButton = (props) => {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <div className={classes.root}>

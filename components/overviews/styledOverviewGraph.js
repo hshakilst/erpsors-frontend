@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function StyledOverviewGraph(props) {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -38,7 +39,7 @@ export default function StyledOverviewGraph(props) {
         style={{
           fontSize: "1.125rem",
           fontWeight: 400,
-          color: "#14142B",
+          color: theme.palette.grey.title,
           letterSpacing: "0.047rem",
           marginBottom: "1rem",
         }}
@@ -47,7 +48,7 @@ export default function StyledOverviewGraph(props) {
       </Typography>
       <Box
         style={{
-          backgroundColor: "#EFF0F7",
+          backgroundColor: theme.palette.grey.inputBackground,
           border: "1px solid #74D8AF",
           borderRadius: "0.25rem",
           paddingTop: "0.5rem",
@@ -64,7 +65,7 @@ export default function StyledOverviewGraph(props) {
           style={{
             fontWeight: 200,
             fontSize: "0.75rem",
-            color: "#4E4B66",
+            color: theme.palette.grey.body,
             letterSpacing: "0.063rem",
             paddingRight: "0.313rem",
           }}
@@ -82,12 +83,12 @@ export default function StyledOverviewGraph(props) {
             <KeyboardArrowUpOutlinedIcon
               fontSize={"small"}
               style={{
-                color: "#00BA88",
+                color: theme.palette.success.main,
               }}
             />
           }
           style={{
-            backgroundColor: "#EFF0F7",
+            backgroundColor: theme.palette.grey.inputBackground,
             borderRadius: "1rem",
             boxShadow: "none",
           }}
@@ -96,7 +97,7 @@ export default function StyledOverviewGraph(props) {
             style={{
               fontWeight: 500,
               fontSize: "0.688rem",
-              color: "#00BA88",
+              color: theme.palette.success.main,
               letterSpacing: "0.063rem",
               display: "inline-block",
             }}

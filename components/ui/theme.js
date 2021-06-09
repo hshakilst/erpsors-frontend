@@ -6,7 +6,7 @@ const theme = createMuiTheme({
       light: "#BCA4FF",
       main: "#5F2EEA",
       dark: "#2A00A2",
-      contrastText: "#fff",
+      contrastText: "#FFFFFF",
     },
     secondary: {
       light: "#82E9FF",
@@ -34,7 +34,7 @@ const theme = createMuiTheme({
       main: "#F4B740",
       dark: "#946200",
     },
-    greyScale: {
+    grey: {
       background: "#FFFFFF",
       inputBackground: "#EFF0F6",
       offWhite: "#FCFCFC",

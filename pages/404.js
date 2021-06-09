@@ -1,4 +1,4 @@
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -11,15 +11,15 @@ import Router from "next/router";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
       [theme.breakpoints.up("lg")]: {
         flexGrow: 1,
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
         padding: theme.spacing(2),
       },
     },
     box: {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.grey.background,
       borderRadius: "1rem",
     },
     image: {
@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function NotFound(props) {
+  const theme = useTheme();
   const classes = useStyles();
 
   return (
@@ -81,7 +82,7 @@ export default function NotFound(props) {
                 <Typography
                   style={{
                     fontWeight: 700,
-                    color: "#14142B",
+                    color: theme.palette.grey.title,
                     paddingTop: "4rem",
                   }}
                   variant="h1"
@@ -91,7 +92,7 @@ export default function NotFound(props) {
                 <Typography
                   style={{
                     fontWeight: 500,
-                    color: "#14142B",
+                    color: theme.palette.grey.title,
                     paddingTop: "2rem",
                   }}
                   variant="h4"
@@ -101,7 +102,7 @@ export default function NotFound(props) {
                 <Typography
                   style={{
                     fontWeight: 300,
-                    color: "#14142B",
+                    color: theme.palette.grey.title,
                     paddingTop: ".5rem",
                   }}
                 >
@@ -115,7 +116,7 @@ export default function NotFound(props) {
                     style={{
                       background: "none",
                       padding: "0.25rem 1.5rem",
-                      color: "#5F2EEA",
+                      color: theme.palette.primary.main,
                       border: "0.125rem solid #5F2EEA",
                       boxShadow: "none",
                       marginRight: "0.625rem",

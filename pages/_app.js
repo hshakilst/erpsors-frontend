@@ -11,7 +11,7 @@ import { UserProvider } from "@auth0/nextjs-auth0";
 
 const progress = new ProgressBar({
   size: 3,
-  color: "#5F2EEA",
+  color: theme.palette.primary.main,
   className: "bar-of-progress",
   delay: 100,
 });

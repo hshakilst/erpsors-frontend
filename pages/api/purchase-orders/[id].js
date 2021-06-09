@@ -10,7 +10,7 @@ const deletePurchaseOrdersById = (id) => {
   return db.query(q.Delete(q.Ref(q.Collection("purchase_orders"), id)));
 };
 
-const updatePurchaseOrderById = (
+const updatePurchaseOrderById = ({
   id,
   reqCode,
   item,
@@ -20,8 +20,10 @@ const updatePurchaseOrderById = (
   purMode,
   creDays,
   purBy,
-  notes
-) => {
+  notes,
+  totalAmount,
+  date,
+}) => {
   return db.query(
     q.Update(q.Ref(q.Collection("purchase_orders"), id), {
       data: {
@@ -34,6 +36,8 @@ const updatePurchaseOrderById = (
         creDays,
         purBy,
         notes,
+        totalAmount,
+        date,
       },
     })
   );
@@ -56,6 +60,8 @@ const handler = withApiAuthRequired(async (req, res) => {
       creDays,
       purBy,
       notes,
+      totalAmount,
+      date,
     } = req.body;
 
     switch (method) {
@@ -64,7 +70,7 @@ const handler = withApiAuthRequired(async (req, res) => {
         res.status(200).json(query.data);
         break;
       case "PATCH":
-        const resUpdate = await updatePurchaseOrderById(
+        const resUpdate = await updatePurchaseOrderById({
           id,
           reqCode,
           item,
@@ -74,8 +80,10 @@ const handler = withApiAuthRequired(async (req, res) => {
           purMode,
           creDays,
           purBy,
-          notes
-        );
+          notes,
+          totalAmount,
+          date,
+        });
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":

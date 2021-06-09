@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -22,12 +22,9 @@ import StyledAvatar from "@/components/ui/styledAvatar";
 import * as Sentry from "@sentry/nextjs";
 
 const StyledAppBar = (props) => {
+  const theme = useTheme();
   const useStyles = makeStyles((theme) => ({
     grow: {
-      // position: "fixed",
-      // top: 0,
-      // left: 0,
-      // width: "100%",
       zIndex: 1030,
       flexGrow: 1,
       "& .MuiIconButton-root": {
@@ -39,9 +36,6 @@ const StyledAppBar = (props) => {
       "& .MuiIconButton-edgeEnd": {
         marginRight: 0,
       },
-      // "& .makeStyles-sectionDesktop-90": {
-      //   paddingLeft: "500px",
-      // },
       "& .MuiToolbar-gutters": {
         paddingLeft: "0.75rem",
         paddingRight: "0.75rem",
@@ -51,7 +45,7 @@ const StyledAppBar = (props) => {
       },
     },
     appBar: {
-      background: "#EFF0F6",
+      background: theme.palette.grey.inputBackground,
       paddingTop: "0.625rem",
       paddingBottom: "0.625rem",
       [theme.breakpoints.up("sm")]: {
@@ -81,7 +75,6 @@ const StyledAppBar = (props) => {
       },
       marginRight: theme.spacing(4),
       marginLeft: 0,
-      // width: "100%",
       [theme.breakpoints.up("sm")]: {
         marginLeft: theme.spacing(0),
         width: "auto",
@@ -91,7 +84,6 @@ const StyledAppBar = (props) => {
       },
     },
     searchIcon: {
-      // padding: theme.spacing(0, 2),
       fontSize: "1.563rem",
       height: "100%",
       position: "absolute",
@@ -101,7 +93,7 @@ const StyledAppBar = (props) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       zIndex: 1030,
     },
     inputRoot: {
@@ -113,19 +105,18 @@ const StyledAppBar = (props) => {
       paddingRight: `calc(1em + ${theme.spacing(2)}px)`,
       transition: theme.transitions.create("width"),
       width: "100%",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       borderRadius: "1rem",
-      backgroundColor: "#EFF0F6",
+      backgroundColor: theme.palette.grey.inputBackground,
       [theme.breakpoints.up("md")]: {
         width: "40ch",
       },
     },
     sectionDesktop: {
-      // position: "fixed",
       right: "28px",
       zIndex: 1030,
       display: "none",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       padding: 0,
       paddingBottom: 0,
       [theme.breakpoints.up("md")]: {
@@ -134,7 +125,7 @@ const StyledAppBar = (props) => {
     },
     sectionMobile: {
       display: "flex",
-      color: "#000",
+      color: theme.palette.secondary.contrastText,
       padding: 0,
       marginLeft: "10px",
       [theme.breakpoints.up("md")]: {
@@ -148,7 +139,7 @@ const StyledAppBar = (props) => {
       borderRadius: "1rem",
     },
     searchBackground: {
-      background: "#fff",
+      background: theme.palette.grey.background,
       lineHeight: "60px",
       paddingRight: "0.938rem",
       paddingLeft: "0.938rem",
@@ -287,7 +278,7 @@ const StyledAppBar = (props) => {
             >
               <MenuIcon
                 style={{
-                  color: "#000",
+                  color: theme.palette.secondary.contrastText,
                   marginTop: "1.563rem",
                   marginLeft: "0.625rem",
                 }}

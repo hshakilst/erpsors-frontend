@@ -16,27 +16,13 @@ const StyledDrawer = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       zIndex: 1030,
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.grey.background,
       "& .MuiList-padding": {
         paddingTop: 0,
         paddingBottom: "0px",
       },
-      // "& .MuiTypography-h6": {
-      //   fontSize: "2rem",
-      //   fontWeight: 800,
-      // },
-      // "& .MuiSvgIcon-fontSizeLarge": {
-      //   fontSize: "3rem",
-      //   color: "#14142B",
-      // },
-      // "& .MuiList-padding": {
-      //   paddingTop: 0,
-      // },
-      // "& .makeStyles-drawerPaper-33": {
-      //   background: "#EFF0F6",
-      // },
       "& .MuiDrawer-paper": {
-        backgroundColor: "#EFF0F6",
+        backgroundColor: theme.palette.grey.inputBackground,
         flexDirection: "none",
         zIndex: 1030,
       },
@@ -60,11 +46,12 @@ const StyledDrawer = (props) => {
   }));
 
   const { window } = props;
-  const classes = useStyles();
+
   const theme = useTheme();
+  const classes = useStyles();
 
   const drawer = (
-    <div style={{ backgroundColor: "#EFF0F6" }}>
+    <div style={{ backgroundColor: theme.palette.grey.inputBackground }}>
       <List>
         {[
           <Typography
@@ -74,7 +61,7 @@ const StyledDrawer = (props) => {
               fontSize: "2rem",
               fontWeight: "700",
               letterSpacing: "0.063rem",
-              color: "#14142B",
+              color: theme.palette.grey.title,
               paddingTop: "0.625rem",
               paddingBottom: "0.625rem",
             }}
@@ -87,7 +74,7 @@ const StyledDrawer = (props) => {
               {
                 <LocalMallOutlinedIcon
                   fontSize={"large"}
-                  style={{ fontSize: "3rem", color: "#14142B" }}
+                  style={{ fontSize: "3rem", color: theme.palette.grey.title }}
                 ></LocalMallOutlinedIcon>
               }
             </ListItemIcon>
@@ -101,7 +88,7 @@ const StyledDrawer = (props) => {
           marginTop: "0.75rem",
           paddingTop: "1.25rem",
           paddingBottom: "1.25rem",
-          background: "#fff",
+          background: theme.palette.grey.background,
           width: "93%",
           marginLeft: "0.813rem",
           borderRadius: "1rem",
@@ -112,7 +99,7 @@ const StyledDrawer = (props) => {
           <List
             style={{
               width: "100%",
-              background: "#EFF0F6",
+              background: theme.palette.grey.inputBackground,
               borderRadius: "1rem",
               paddingTop: "1rem",
               paddingBottom: "1rem",
@@ -127,7 +114,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -146,7 +133,7 @@ const StyledDrawer = (props) => {
           <List
             style={{
               width: "100%",
-              background: "#EFF0F6",
+              background: theme.palette.grey.inputBackground,
               borderRadius: "1rem",
               paddingTop: "1rem",
               paddingBottom: "1rem",
@@ -161,7 +148,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -181,7 +168,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -201,7 +188,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -221,7 +208,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -241,7 +228,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -261,7 +248,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -282,7 +269,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -302,7 +289,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -322,7 +309,7 @@ const StyledDrawer = (props) => {
                     <a>
                       <Typography
                         style={{
-                          color: "#14142B",
+                          color: theme.palette.grey.title,
                           fontSize: "1rem",
                           fontWeight: 400,
                           letterSpacing: "0.047rem",
@@ -341,7 +328,7 @@ const StyledDrawer = (props) => {
       </List>
       <List
         style={{
-          background: "#fff",
+          background: theme.palette.grey.background,
           width: "93%",
           marginLeft: "0.813rem",
           borderRadius: "1rem",
