@@ -3,12 +3,12 @@ import Image from "next/image";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useTheme } from "@material-ui/core/styles";
 
-const StyledAvatar = ({ image, text, style }) => {
+const StyledAvatar = ({ image, text, ...props }) => {
   const theme = useTheme();
   return (
     <Avatar
       alt={"avatar"}
-      style={{ borderWidth: 1, borderStyle: "solid", borderColor: theme.palette.grey.line }}
+      {...props}
     >
       {image ? (
         <Image src={image} layout="fill" />

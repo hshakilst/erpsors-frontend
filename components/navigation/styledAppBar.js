@@ -257,6 +257,11 @@ const StyledAppBar = (props) => {
           <StyledAvatar
             image={user.picture}
             text={user.name || user.nickname}
+            style={{
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: theme.palette.grey.line,
+            }}
           />
         </IconButton>
         <p>{user.name || user.nickname}</p>
@@ -357,6 +362,11 @@ const StyledAppBar = (props) => {
                 <StyledAvatar
                   image={user.picture}
                   text={user.name || user.nickname}
+                  style={{
+                    borderWidth: 1,
+                    borderStyle: "solid",
+                    borderColor: theme.palette.grey.line,
+                  }}
                 />
               </IconButton>
             </div>
