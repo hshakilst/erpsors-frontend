@@ -1,6 +1,6 @@
 const path = require("path");
-
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require("@sentry/nextjs");
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 const moduleExports = {
   // Your existing module.exports
@@ -14,6 +14,21 @@ const moduleExports = {
   images: {
     domains: ["lh3.googleusercontent.com", "s.gravatar.com"],
   },
+  configureWebpack: {
+    plugins: [
+      new SentryWebpackPlugin({
+        // sentry-cli configuration
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        release: process.env.VERCEL_GIT_COMMIT_SHA,
+
+        // webpack specific configuration
+        include: ".",
+        ignore: ["node_modules", "webpack.config.js"],
+      }),
+    ],
+  },
 };
 
 const SentryWebpackPluginOptions = {
@@ -24,7 +39,7 @@ const SentryWebpackPluginOptions = {
   //   urlPrefix, include, ignore
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
-  silent:true
+  silent: true,
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to

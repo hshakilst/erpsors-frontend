@@ -1,5 +1,10 @@
 import React from "react";
-import { makeStyles, createStyles, fade, useTheme } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  createStyles,
+  fade,
+  useTheme,
+} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -18,7 +23,6 @@ import StyledDropzoneDialog from "@/components/dropzone/StyledDropzoneDialog";
 import StyledDatePicker from "@/components/ui/styledDatePicker";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllSupplierCodes } from "@/adapters/suppliers";
-
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -139,16 +143,19 @@ const useStyles = makeStyles((theme) =>
 const StyledFormItems = (props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset, watch, setValue } = useForm();
+  const { register, handleSubmit, errors, control, reset, watch, setValue } =
+    useForm();
   const [rate, setRate] = React.useState("");
   let watchedQty = Number(watch("qty")) || 0;
   let watchedTotalAmount = Number(watch("totalAmount")) || 0;
 
-  React.useEffect(() => {setRate(
-    isNaN(watchedTotalAmount / watchedQty)
-      ? ""
-      : String(watchedTotalAmount / watchedQty)
-  );}, [watchedQty, watchedTotalAmount]);
+  React.useEffect(() => {
+    setRate(
+      isNaN(watchedTotalAmount / watchedQty)
+        ? ""
+        : String(watchedTotalAmount / watchedQty)
+    );
+  }, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
     let opnDate = data.opnDate;
@@ -164,8 +171,8 @@ const StyledFormItems = (props) => {
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
-    let warehouse = data.warehouse.code
-    let supplier = data.supplier.code
+    let warehouse = data.warehouse.code;
+    let supplier = data.supplier.code;
 
     try {
       const { error, data } = await useCreateItem({
@@ -183,23 +190,23 @@ const StyledFormItems = (props) => {
         image,
         notes,
         warehouse,
-        supplier
+        supplier,
       });
       if (!error)
         props.enqueueSnackbar(`Item ${code} added successfully.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(`Adding Item ${code} was unsuccessful. Reason: ${error.code}`, {
-          variant: "error",
-        });
+        props.enqueueSnackbar(
+          `Adding Item ${code} was unsuccessful. Reason: ${error.code}`,
+          {
+            variant: "error",
+          }
+        );
     } catch (error) {
-      props.enqueueSnackbar(
-        `Something went wrong.`,
-        {
-          variant: "error",
-        }
-      );
+      props.enqueueSnackbar(`Something went wrong.`, {
+        variant: "error",
+      });
     }
   };
 
@@ -310,6 +317,7 @@ const StyledFormItems = (props) => {
                       </MenuItem>
                       <MenuItem value="git">{"Goods In Transit"}</MenuItem>
                       <MenuItem value="mro">{"MRO Goods"}</MenuItem>
+                      <MenuItem value="fixed-asset">{"Fixed Assets"}</MenuItem>
                       <MenuItem value="consumable">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>

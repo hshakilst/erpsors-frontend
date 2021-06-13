@@ -1,57 +1,9 @@
-import { db } from "@/libs/fauna";
-import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-const createStoreRequisition = ({
-  code,
-  item,
-  reqQty,
-  warehouse,
-  notes,
-  reqDate,
-}) => {
-  return db.query(
-    q.Create(q.Collection("store_requisitions"), {
-      data: {
-        code: code ?? "",
-        item: item ?? "",
-        reqQty: reqQty ?? "",
-        reqDate: reqDate ?? "",
-        warehouse: warehouse ?? "",
-        notes: notes ?? "",
-      },
-    })
-  );
-};
-
-const getAllStoreRequisitions = () => {
-  return db.query(
-    q.Map(
-      q.Paginate(q.Match(q.Index("all_store_requisitions"))),
-      q.Lambda(
-        "storeReqRef",
-        q.Let(
-          {
-            storeReqDoc: q.Get(q.Var("storeReqRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("storeReqDoc")),
-            code: q.Select(["data", "code"], q.Var("storeReqDoc")),
-            item: q.Select(["data", "item"], q.Var("storeReqDoc")),
-            reqQty: q.Select(["data", "reqQty"], q.Var("storeReqDoc")),
-            reqDate: q.Select(["data", "reqDate"], q.Var("storeReqDoc")),
-            warehouse: q.Select(["data", "warehouse"], q.Var("storeReqDoc")),
-            notes: q.Select(["data", "notes"], q.Var("storeReqDoc")),
-          }
-        )
-      )
-    )
-  );
-};
-
-const getAllStoreRequisitionCodes = () => {
-  return db.query(q.Paginate(q.Match(q.Index("all_store_requisition_codes"))));
-};
+import {
+  createStoreRequisition,
+  getAllStoreRequisitions,
+  getAllStoreRequisitionCodes,
+} from "@/fauna/store-requisitions";
 
 const handler = withApiAuthRequired(async (req, res) => {
   try {

@@ -1,35 +1,9 @@
-import { db } from "@/libs/fauna";
-import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-const getStoreRequisitionById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("store_requisitions"), id)));
-};
-
-const deleteStoreRequisitionById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("store_requisitions"), id)));
-};
-
-const updateStoreRequisitionById = ({
-  id,
-  item,
-  reqQty,
-  warehouse,
-  notes,
-  reqDate,
-}) => {
-  return db.query(
-    q.Update(q.Ref(q.Collection("store_requisitions"), id), {
-      data: {
-        item,
-        reqQty,
-        warehouse,
-        notes,
-        reqDate,
-      },
-    })
-  );
-};
+import {
+  getStoreRequisitionById,
+  deleteStoreRequisitionById,
+  updateStoreRequisitionById,
+} from "@/fauna/store-requisitions";
 
 const handler = withApiAuthRequired(async (req, res) => {
   try {

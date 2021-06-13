@@ -1,47 +1,9 @@
-import { db } from "@/libs/fauna";
-import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-const getPurchaseOrderById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("purchase_orders"), id)));
-};
-
-const deletePurchaseOrdersById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("purchase_orders"), id)));
-};
-
-const updatePurchaseOrderById = ({
-  id,
-  reqCode,
-  item,
-  rate,
-  appQty,
-  supplier,
-  purMode,
-  creDays,
-  purBy,
-  notes,
-  totalAmount,
-  date,
-}) => {
-  return db.query(
-    q.Update(q.Ref(q.Collection("purchase_orders"), id), {
-      data: {
-        reqCode,
-        item,
-        rate,
-        appQty,
-        supplier,
-        purMode,
-        creDays,
-        purBy,
-        notes,
-        totalAmount,
-        date,
-      },
-    })
-  );
-};
+import {
+  getPurchaseOrderById,
+  deletePurchaseOrdersById,
+  updatePurchaseOrderById,
+} from "@/fauna/purchase-orders";
 
 const handler = withApiAuthRequired(async (req, res) => {
   try {

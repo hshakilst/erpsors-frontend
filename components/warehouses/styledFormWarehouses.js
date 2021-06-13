@@ -391,9 +391,8 @@ const StyledFormWarehouses = (props) => {
                         {"Finished Goods"}
                       </MenuItem>
                       <MenuItem value="git">{"Goods In Transit"}</MenuItem>
-                      <MenuItem value="mro">
-                        {"MRO Goods"}
-                      </MenuItem>
+                      <MenuItem value="mro">{"MRO Goods"}</MenuItem>
+                      <MenuItem value="fixed-asset">{"Fixed Assets"}</MenuItem>
                       <MenuItem value="consumable">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>

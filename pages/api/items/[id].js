@@ -1,53 +1,5 @@
-import { db } from "@/libs/fauna";
-import { query as q } from "faunadb";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-
-const getItemById = (id) => {
-  return db.query(q.Get(q.Ref(q.Collection("items"), id)));
-};
-
-const deleteItemById = (id) => {
-  return db.query(q.Delete(q.Ref(q.Collection("items"), id)));
-};
-
-const updateItemById = ({
-  id,
-  opnDate,
-  name,
-  type,
-  qty,
-  totalAmount,
-  valueRate,
-  unit,
-  status,
-  shelfLife,
-  group,
-  image,
-  notes,
-  warehouse,
-  supplier
-}) => {
-  return db.query(
-    q.Update(q.Ref(q.Collection("items"), id), {
-      data: {
-        opnDate,
-        name,
-        type,
-        qty,
-        totalAmount,
-        valueRate,
-        unit,
-        status,
-        shelfLife,
-        group,
-        image,
-        notes,
-        warehouse,
-        supplier
-      },
-    })
-  );
-};
+import { getItemById, deleteItemById, updateItemById } from "@/fauna/items";
 
 const handler = withApiAuthRequired(async (req, res) => {
   try {
@@ -71,7 +23,7 @@ const handler = withApiAuthRequired(async (req, res) => {
       image,
       notes,
       warehouse,
-      supplier
+      supplier,
     } = req.body;
 
     switch (method) {
@@ -95,7 +47,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           image,
           notes,
           warehouse,
-          supplier
+          supplier,
         });
         res.status(200).json({ error: false, data: resUpdate });
         break;
