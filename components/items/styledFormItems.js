@@ -515,11 +515,6 @@ const StyledFormItems = (props) => {
                         root: classes.selectRoot,
                       }}
                       name={"unit"}
-                      //FIXME:Add validation pattern
-                      // inputRef={register({
-                      //   required: true,
-                      // })}
-                      // error={errors.unit ? true : false}
                       control={control}
                       defaultValue={""}
                       required
@@ -537,6 +532,8 @@ const StyledFormItems = (props) => {
                       <MenuItem value="tin">{"Tins"}</MenuItem>
                       <MenuItem value="l">{"Litres"}</MenuItem>
                       <MenuItem value="pk">{"Packets"}</MenuItem>
+                      <MenuItem value="lb">{"Pounds"}</MenuItem>
+                      <MenuItem value="laci">{"Laci"}</MenuItem>
                       <MenuItem value="unit">{"Units"}</MenuItem>
                     </StyledSelectForm>
                   </div>

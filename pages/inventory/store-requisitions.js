@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import StyledFormStoreRequisitions from "@/components/store-requisitions/styledFormStoreRequisitions";
 import StyledInventoryHistory from "@/components/ui/styledInventoryHistory";
-import StyledTableCard from "@/components/ui/styledTableCard";
+import StyledTableCard from "@/components/shared/styledTableCard";
 import BaseLayout from "@/components/layouts/baseLayout";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 

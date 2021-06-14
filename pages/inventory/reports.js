@@ -1,9 +1,9 @@
 import React from "react";
-import { makeStyles, createStyles,useTheme } from "@material-ui/core/styles";
+import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import BaseLayout from "@/components/layouts/baseLayout";
-import StyledTableCard from "@/components/ui/styledTableCard";
+import StyledTableCard from "@/components/shared/styledTableCard";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import theme from "@/components/ui/theme";
 
