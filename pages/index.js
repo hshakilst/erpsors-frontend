@@ -52,11 +52,6 @@ const Index = (props) => {
                 label={"Sign In"}
                 onClick={() => router.push("/api/auth/login")}
               ></StyledButton>
-              <StyledButton
-                style={{ marginTop: 16 }}
-                label={"Error me"}
-                onClick={() => {throw new Error("Sentry")}}
-              ></StyledButton>
             </Paper>
           </Grid>
         </Grid>
