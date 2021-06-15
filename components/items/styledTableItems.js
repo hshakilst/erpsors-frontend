@@ -7,6 +7,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import theme from "@/components/ui/theme";
 import StyledFormDialog from "@/components/shared/styledFormDialog";
+import LogRocket from "logrocket";
 
 const StyledTableItems = (props) => {
   const [data, setData] = useState({});
@@ -159,7 +160,52 @@ const StyledTableItems = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={6}>
-            <IconButton onClick={() => useDeleteItemById(params.row.id)}>
+            <IconButton
+              onClick={() =>
+                Promise.resolve(useDeleteItemById(params.row.id)).then(
+                  ({ error, data }) => {
+                    if (!error) {
+                      props.enqueueSnackbar(`Item ${data.data.code} : Deletion successful.`, {
+                        variant: "success",
+                        autoHideDuration: 5000,
+                      });
+                    }
+                    else{
+                      props.enqueueSnackbar(
+                        `Item ${data.data.code} : Deletion failes.
+                        Reason: ${error.code}`,
+                        {
+                          variant: "error",
+                          autoHideDuration: 5000,
+                        }
+                      );
+
+                      LogRocket.captureException(data, {
+                        tags: { source: "FaunaDB Error" },
+                        extra: {
+                          component: "Item Table",
+                        },
+                      });
+                    }
+                  }
+                ).catch((error)=>{
+                   props.enqueueSnackbar(
+                     `Something went wrong.`,
+                     {
+                       variant: "error",
+                       autoHideDuration: 5000,
+                     }
+                   );
+
+                   LogRocket.captureException(error, {
+                     tags: { function: "useDeleteItemById" },
+                     extra: {
+                       component: "Item Table",
+                     },
+                   });
+                })
+              }
+            >
               <DeleteIcon style={{ color: theme.palette.grey.title }} />
             </IconButton>
           </Grid>

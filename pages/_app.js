@@ -10,6 +10,16 @@ import ProgressBar from "@badrap/bar-of-progress";
 import { UserProvider } from "@auth0/nextjs-auth0";
 import Header from "@/components/shared/header"
 import Footer from "@/components/shared/footer";
+import LogRocket from "logrocket";
+import setupLogRocketReact from "logrocket-react";
+
+// only initialize when in the browser
+if (typeof window !== "undefined") {
+  LogRocket.init("ogzvmk/erpsors-ho76o");
+  // plugins should also only be initialized when in the browser
+  setupLogRocketReact(LogRocket);
+}
+
 const progress = new ProgressBar({
   size: 3,
   color: theme.palette.primary.main,

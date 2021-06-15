@@ -3,9 +3,6 @@ import { useTheme } from "@material-ui/core/styles";
 
 const Index = (props) => {
   const theme = useTheme();
-  const { user, error, isLoading } = useUser();
-
-  console.log(user);
 
   return <h1>Inventory Index</h1>;
 };

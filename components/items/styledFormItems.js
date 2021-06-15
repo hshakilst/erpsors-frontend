@@ -23,6 +23,7 @@ import StyledDropzoneDialog from "@/components/dropzone/StyledDropzoneDialog";
 import StyledDatePicker from "@/components/ui/styledDatePicker";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllSupplierCodes } from "@/adapters/suppliers";
+import LogRocket from "logrocket";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -171,8 +172,8 @@ const StyledFormItems = (props) => {
     let group = data.group;
     let image = data.image;
     let notes = data.notes;
-    let warehouse = data.warehouse.code;
-    let supplier = data.supplier.code;
+    let warehouse = data.warehouse?.code;
+    let supplier = data.supplier?.code;
 
     try {
       const { error, data } = await useCreateItem({
@@ -193,19 +194,32 @@ const StyledFormItems = (props) => {
         supplier,
       });
       if (!error)
-        props.enqueueSnackbar(`Item ${code} added successfully.`, {
+        props.enqueueSnackbar(`Item ${code} : Insertion successful.`, {
           variant: "success",
+          autoHideDuration: 5000,
         });
-      else
-        props.enqueueSnackbar(
-          `Adding Item ${code} was unsuccessful. Reason: ${error.code}`,
-          {
-            variant: "error",
-          }
-        );
+      else {
+        props.enqueueSnackbar(`Item ${code} : Insertion failed.`, {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+        LogRocket.captureException(data, {
+          tags: { source: "FaunaDB Error" },
+          extra: {
+            component: "Item Form",
+          },
+        });
+      }
     } catch (error) {
       props.enqueueSnackbar(`Something went wrong.`, {
         variant: "error",
+        autoHideDuration: 5000,
+      });
+      LogRocket.captureException(error, {
+        tags: { function: "onSubmit" },
+        extra: {
+          component: "Item Form",
+        },
       });
     }
   };
@@ -519,22 +533,19 @@ const StyledFormItems = (props) => {
                       defaultValue={""}
                       required
                     >
-                      <MenuItem value="pr">{"Pairs"}</MenuItem>
-                      <MenuItem value="pc">{"Pieces"}</MenuItem>
-                      <MenuItem value="kg">{"KGs"}</MenuItem>
-                      <MenuItem value="m">{"Meters"}</MenuItem>
-                      <MenuItem value="cm">{"Centimeters"}</MenuItem>
-                      <MenuItem value="ft">{"Feet"}</MenuItem>
-                      <MenuItem value="in">{"Inches"}</MenuItem>
-                      <MenuItem value="g">{"Grams"}</MenuItem>
-                      <MenuItem value="rl">{"Reels"}</MenuItem>
-                      <MenuItem value="dz">{"Dozens"}</MenuItem>
-                      <MenuItem value="tin">{"Tins"}</MenuItem>
-                      <MenuItem value="l">{"Litres"}</MenuItem>
-                      <MenuItem value="pk">{"Packets"}</MenuItem>
-                      <MenuItem value="lb">{"Pounds"}</MenuItem>
-                      <MenuItem value="laci">{"Laci"}</MenuItem>
-                      <MenuItem value="unit">{"Units"}</MenuItem>
+                      <MenuItem value="pairs">{"Pairs"}</MenuItem>
+                      <MenuItem value="pieces">{"Pieces"}</MenuItem>
+                      <MenuItem value="kgs">{"KGs"}</MenuItem>
+                      <MenuItem value="grams">{"Grams"}</MenuItem>
+                      <MenuItem value="meters">{"Meters"}</MenuItem>
+                      <MenuItem value="centimeters">{"Centimeters"}</MenuItem>
+                      <MenuItem value="yards">{"Yards"}</MenuItem>
+                      <MenuItem value="feet">{"Feet"}</MenuItem>
+                      <MenuItem value="inches">{"Inches"}</MenuItem>
+                      <MenuItem value="litres">{"Litres"}</MenuItem>
+                      <MenuItem value="packets">{"Packets"}</MenuItem>
+                      <MenuItem value="pounds">{"Pounds"}</MenuItem>
+                      <MenuItem value="units">{"Units"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>

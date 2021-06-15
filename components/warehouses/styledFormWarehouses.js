@@ -179,7 +179,6 @@ const StyledFormWarehouses = (props) => {
         code,
         name,
         type,
-        // capacity,
         incharge,
         address,
         phone,

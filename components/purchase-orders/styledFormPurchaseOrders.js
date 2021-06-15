@@ -161,11 +161,11 @@ const StyledFormPurchaseOrders = (props) => {
   const onSubmit = async (data) => {
     console.log(data);
     let code = data.code;
-    let reqCode = data.reqCode.code;
-    let item = data.item.code;
+    let reqCode = data.reqCode?.code;
+    let item = data.item?.code;
     let rate = data.rate;
     let appQty = data.appQty;
-    let supplier = data.supplier.code;
+    let supplier = data.supplier?.code;
     let purMode = data.purMode;
     let creDays = data.creDays;
     let purBy = data.purBy;

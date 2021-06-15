@@ -19,7 +19,6 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import StyledAvatar from "@/components/ui/styledAvatar";
-import * as Sentry from "@sentry/nextjs";
 
 const StyledAppBar = (props) => {
   const theme = useTheme();
@@ -201,7 +200,6 @@ const StyledAppBar = (props) => {
       <MenuItem
         style={{ textAlign: "center" }}
         onClick={() => {
-          Sentry.configureScope((scope) => scope.setUser(null));
           router.push("/api/auth/logout");
           handleMenuClose();
         }}

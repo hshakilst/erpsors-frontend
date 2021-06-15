@@ -6,7 +6,7 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import { CircularProgress, Divider, Typography } from "@material-ui/core";
 import { withPageAuthRequired, useUser } from "@auth0/nextjs-auth0";
 import StyledAvatar from "@/components/ui/styledAvatar";
-import * as Sentry from "@sentry/nextjs";
+import LogRocket from "logrocket";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -50,7 +50,7 @@ const Dashboard = ({user}) => {
   const theme = useTheme();
   const classes = useStyles()
 
-  if(user) Sentry.setUser({ email: user.email, id: user.sub, username: user.nickname });
+  if(user) LogRocket.identify(user.email,user);
 
   return (
     <BaseLayout>
