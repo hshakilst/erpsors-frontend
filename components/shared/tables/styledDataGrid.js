@@ -128,7 +128,7 @@ export default function StyledDataGrid(props) {
           pagination
           autoHeight
           disableSelectionOnClick
-          {...props}
+          // {...props}
         />
       </div>
     </div>

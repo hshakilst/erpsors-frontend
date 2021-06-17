@@ -95,7 +95,7 @@ export const createItem = ({
 export const getAllItems = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_items"))),
+      q.Paginate(q.Match(q.Index("all_items")),{size: 10000}),
       q.Lambda(
         "itemRef",
         q.Let(
