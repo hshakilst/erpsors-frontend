@@ -9,9 +9,10 @@ import {
   GridToolbarDensitySelector,
 } from "@material-ui/data-grid";
 import { makeStyles, createStyles, useTheme } from "@material-ui/core/styles";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, ButtonBase } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import { RefreshOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -97,6 +98,7 @@ function CustomToolbar(props) {
               <GridToolbarColumnsButton />
               <GridToolbarFilterButton />
               <GridToolbarExport />
+              <Button startIcon={(<RefreshOutlined />)} onClick={()=>props.refresh()}>Refresh</Button>
             </div>
           </Paper>
         </Grid>
@@ -107,14 +109,14 @@ function CustomToolbar(props) {
 
 export default function StyledDataGrid(props) {
   const classes = useStyles();
-  const { error, data, loading, revalidate } = props.fetch();
+  const { error, data, loading, mutate } = props.fetch();
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
       <div className={classes.root} style={{ flexGrow: 1 }}>
         <DataGrid
           components={{
-            Toolbar: () => <CustomToolbar label={props.label} />,
+            Toolbar: () => <CustomToolbar refresh={mutate} label={props.label} />,
           }}
           rows={data ?? []}
           columns={props.columns}
@@ -126,6 +128,7 @@ export default function StyledDataGrid(props) {
           pagination
           autoHeight
           disableSelectionOnClick
+          {...props}
         />
       </div>
     </div>

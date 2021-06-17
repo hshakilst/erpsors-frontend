@@ -136,10 +136,11 @@ export const ReactExcel = (props) => {
         ))}
       </Box>
       {currentSheet && (
-        <TableContainer style={{ borderRadius: 4 }}>
+        <TableContainer style={{ borderRadius: 4, border:"2px solid", }}>
           <Table
             size="small"
             style={{
+              maxHeight:400,
               minWidth: 650,
               backgroundColor: theme.palette.grey.inputBackground,
               boxShadow: "none",
