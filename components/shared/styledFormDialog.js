@@ -6,6 +6,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import dynamic from "next/dynamic";
+
+const StyledFormItems = dynamic(
+  () => import("@/components/items/styledFormItems"),
+  { ssr: false, loading: () => <p>...</p> }
+);
 
 export default function StyledFormDialog({
   label,
@@ -44,7 +50,7 @@ export default function StyledFormDialog({
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Subscribe
+            Update
           </Button>
         </DialogActions>
       </Dialog>

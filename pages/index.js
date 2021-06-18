@@ -44,7 +44,7 @@ const Index = (props) => {
         <Grid container spacing={2} justify="center">
           <Grid className={classes.gridItem} item xs={6}>
             <Paper elevation={2} className={classes.paper}>
-              <Typography variant="h3">{"ERPSORS"}</Typography>
+              <Typography variant="h5" style={{fontWeight:600}}>{"ERPSORS"}</Typography>
               <Typography variant="h6">{"Landing Page"}</Typography>
               <Divider style={{ marginTop: 16 }} />
               <StyledButton
