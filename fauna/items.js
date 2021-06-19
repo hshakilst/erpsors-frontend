@@ -1,5 +1,6 @@
 import { db } from "@/fauna/index";
 import { query as q } from "faunadb";
+import { getSession } from "@auth0/nextjs-auth0";
 
 export const getItemById = (id) => {
   return db.query(q.Get(q.Ref(q.Collection("items"), id)));
@@ -95,7 +96,7 @@ export const createItem = ({
 export const getAllItems = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_items")),{size: 10000}),
+      q.Paginate(q.Match(q.Index("all_items")), { size: 10000 }),
       q.Lambda(
         "itemRef",
         q.Let(
@@ -127,5 +128,9 @@ export const getAllItems = () => {
 };
 
 export const getAllItemCodes = () => {
-  return db.query(q.Paginate(q.Match(q.Index("all_item_codes"))));
+  return db.query(
+    q.Paginate(q.Match(q.Index("all_item_codes")), {
+      size: 10000,
+    })
+  );
 };
