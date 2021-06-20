@@ -7,7 +7,15 @@ export const useGetAllSuppliers = () => {
     revalidateOnFocus: false,
   });
 
-  return { data, error, loading: !data && !error, ...rest };
+  return {
+    data: data?.map((row) => {
+      const id = row.ref["@ref"].id;
+      return { id, ...row.data };
+    }),
+    error,
+    loading: !data && !error,
+    ...rest,
+  };
 };
 
 export const useCreateSupplier = async (

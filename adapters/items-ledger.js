@@ -1,13 +1,24 @@
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/adapters";
 import axios from "axios";
+import { fromUnixTime, format } from "date-fns";
 
 export const useGetAllItemsLedger = () => {
   const { data, error, ...rest } = useSWR("/api/items-ledger", fetcher, {
     revalidateOnFocus: false,
   });
 
-  return { data, error, loading: !data && !error, ...rest };
+  return {
+    data: data?.map((row) => {
+      const id = row.ref["@ref"].id;
+      const date = format(fromUnixTime(Number(row.ts) / 1000000), "dd/MM/yy");
+      console.log(date);
+      return { id, date, ...row.data };
+    }),
+    error,
+    loading: !data && !error,
+    ...rest,
+  };
 };
 
 export const useGetItemLedgerById = (id) => {
@@ -21,21 +32,21 @@ export const useGetItemLedgerById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useCreateItemLedger = async (
-    {code, //store-receipts or store-issues codes
-    type, //store-receipts or store-issues
-    itemId,
-    itemCode,
-    itemName,
-    opnRate,
-    opnQty,
-    recRate,
-    recQty,
-    issRate,
-    issQty,
-    warehouseCode,
-    warehouseName,}
-) => {
+export const useCreateItemLedger = async ({
+  code, //store-receipts or store-issues codes
+  type, //store-receipts or store-issues
+  itemId,
+  itemCode,
+  itemName,
+  opnRate,
+  opnQty,
+  recRate,
+  recQty,
+  issRate,
+  issQty,
+  warehouseCode,
+  warehouseName,
+}) => {
   const res = await axios.post("/api/items-ledger", {
     code, //store-receipts or store-issues codes
     type, //store-receipts or store-issues

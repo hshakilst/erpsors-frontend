@@ -318,21 +318,21 @@ const StyledFormItems = (props) => {
                       required
                       error={errors.type ? true : false}
                     >
-                      <MenuItem value="raw-material">
+                      <MenuItem value="raw-materials">
                         {"Raw Materials"}
                       </MenuItem>
-                      <MenuItem value="chemical">{"Chemicals"}</MenuItem>
+                      <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
                       <MenuItem value="packing-material">
                         {"Packing Materials"}
                       </MenuItem>
                       <MenuItem value="wip">{"Work In Process"}</MenuItem>
-                      <MenuItem value="finished-good">
+                      <MenuItem value="finished-goods">
                         {"Finished Goods"}
                       </MenuItem>
                       <MenuItem value="git">{"Goods In Transit"}</MenuItem>
                       <MenuItem value="mro">{"MRO Goods"}</MenuItem>
-                      <MenuItem value="fixed-asset">{"Fixed Assets"}</MenuItem>
-                      <MenuItem value="consumable">{"Consumables"}</MenuItem>
+                      <MenuItem value="fixed-assets">{"Fixed Assets"}</MenuItem>
+                      <MenuItem value="consumables">{"Consumables"}</MenuItem>
                     </StyledSelectForm>
                   </div>
                 </Paper>

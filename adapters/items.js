@@ -3,9 +3,19 @@ import { fetcher } from "@/adapters";
 import axios from "axios";
 
 export const useGetAllItems = () => {
-  const { data, error, ...rest } = useSWR("/api/items", fetcher, {revalidateOnFocus:false,});
+  const { data, error, ...rest } = useSWR("/api/items", fetcher, {
+    revalidateOnFocus: false,
+  });
 
-  return { data, error, loading: !data && !error, ...rest };
+  return {
+    data: data?.map((row) => {
+      const id = row.ref["@ref"].id;
+      return { id, ...row.data };
+    }),
+    error,
+    loading: !data && !error,
+    ...rest,
+  };
 };
 
 export const useGetItemById = (id) => {
@@ -34,7 +44,7 @@ export const useCreateItem = async ({
   image,
   notes,
   warehouse,
-  supplier
+  supplier,
 }) => {
   const res = await axios.post("/api/items", {
     opnDate,
@@ -51,7 +61,7 @@ export const useCreateItem = async ({
     image,
     notes,
     warehouse,
-    supplier
+    supplier,
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };
@@ -78,7 +88,7 @@ export const useUpdateItemById = async ({
   image,
   notes,
   warehouse,
-  supplier
+  supplier,
 }) => {
   const res = await axios.patch(`/api/items/${id}`, {
     opnDate,
@@ -94,7 +104,7 @@ export const useUpdateItemById = async ({
     image,
     notes,
     warehouse,
-    supplier
+    supplier,
   });
   mutate("/api/items");
   return { error: res.data.error, data: res.data.data };

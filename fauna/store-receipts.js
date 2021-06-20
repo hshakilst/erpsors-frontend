@@ -67,28 +67,8 @@ export const createStoreReceipt = (
 export const getAllStoreReceipts = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_store_receipts"))),
-      q.Lambda(
-        "docRef",
-        q.Let(
-          {
-            doc: q.Get(q.Var("docRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("doc")),
-            code: q.Select(["data", "code"], q.Var("doc")),
-            poCode: q.Select(["data", "poCode"], q.Var("doc")),
-            item: q.Select(["data", "item"], q.Var("doc")),
-            opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
-            opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
-            valueRate: q.Select(["data", "valueRate"], q.Var("doc")),
-            recQty: q.Select(["data", "recQty"], q.Var("doc")),
-            warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
-            notes: q.Select(["data", "notes"], q.Var("doc")),
-            isPosted: q.Select(["data", "isPosted"], q.Var("doc")),
-          }
-        )
-      )
+      q.Paginate(q.Match(q.Index("all_store_receipts")), { size: 10000 }),
+      q.Lambda("docRef", q.Get(q.Var("docRef")))
     )
   );
 };

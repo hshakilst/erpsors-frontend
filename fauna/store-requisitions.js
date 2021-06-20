@@ -55,28 +55,14 @@ export const createStoreRequisition = ({
 export const getAllStoreRequisitions = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_store_requisitions"))),
-      q.Lambda(
-        "storeReqRef",
-        q.Let(
-          {
-            storeReqDoc: q.Get(q.Var("storeReqRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("storeReqDoc")),
-            code: q.Select(["data", "code"], q.Var("storeReqDoc")),
-            item: q.Select(["data", "item"], q.Var("storeReqDoc")),
-            reqQty: q.Select(["data", "reqQty"], q.Var("storeReqDoc")),
-            reqDate: q.Select(["data", "reqDate"], q.Var("storeReqDoc")),
-            warehouse: q.Select(["data", "warehouse"], q.Var("storeReqDoc")),
-            notes: q.Select(["data", "notes"], q.Var("storeReqDoc")),
-          }
-        )
-      )
+      q.Paginate(q.Match(q.Index("all_store_requisitions")), { size: 10000 }),
+      q.Lambda("docRef", q.Get(q.Var("docRef")))
     )
   );
 };
 
 export const getAllStoreRequisitionCodes = () => {
-  return db.query(q.Paginate(q.Match(q.Index("all_store_requisition_codes"))));
+  return db.query(
+    q.Paginate(q.Match(q.Index("all_store_requisition_codes")), { size: 10000 })
+  );
 };

@@ -97,32 +97,7 @@ export const getAllItems = () => {
   return db.query(
     q.Map(
       q.Paginate(q.Match(q.Index("all_items")), { size: 10000 }),
-      q.Lambda(
-        "itemRef",
-        q.Let(
-          {
-            itemDoc: q.Get(q.Var("itemRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("itemDoc")),
-            opnDate: q.Select(["data", "opnDate"], q.Var("itemDoc")),
-            code: q.Select(["data", "code"], q.Var("itemDoc")),
-            name: q.Select(["data", "name"], q.Var("itemDoc")),
-            type: q.Select(["data", "type"], q.Var("itemDoc")),
-            qty: q.Select(["data", "qty"], q.Var("itemDoc")),
-            totalAmount: q.Select(["data", "totalAmount"], q.Var("itemDoc")),
-            valueRate: q.Select(["data", "valueRate"], q.Var("itemDoc")),
-            unit: q.Select(["data", "unit"], q.Var("itemDoc")),
-            status: q.Select(["data", "status"], q.Var("itemDoc")),
-            shelfLife: q.Select(["data", "shelfLife"], q.Var("itemDoc")),
-            group: q.Select(["data", "group"], q.Var("itemDoc")),
-            image: q.Select(["data", "image"], q.Var("itemDoc")),
-            notes: q.Select(["data", "notes"], q.Var("itemDoc")),
-            warehouse: q.Select(["data", "warehouse"], q.Var("itemDoc")),
-            supplier: q.Select(["data", "supplier"], q.Var("itemDoc")),
-          }
-        )
-      )
+      q.Lambda("docRef", q.Get(q.Var("docRef")))
     )
   );
 };
