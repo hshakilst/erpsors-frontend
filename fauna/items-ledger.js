@@ -83,11 +83,6 @@ export const createItemsLedger = (
   );
 };
 
-q.Map(
-  q.Paginate(q.Match(q.Index("all_items_ledger")), { size: 10000 }),
-  q.Lambda("docRef", q.Get(q.Var("docRef")))
-);
-
 export const getAllItemsLedger = () => {
   return db.query(
     q.Map(

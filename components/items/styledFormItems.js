@@ -146,17 +146,17 @@ const StyledFormItems = (props) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, control, reset, watch, setValue } =
     useForm();
-  const [rate, setRate] = React.useState("");
+  const [amount, setAmount] = React.useState("");
   let watchedQty = Number(watch("qty")) || 0;
-  let watchedTotalAmount = Number(watch("totalAmount")) || 0;
+  let watchedValueRate = Number(watch("valueRate")) || 0;
 
   React.useEffect(() => {
-    setRate(
-      isNaN(watchedTotalAmount / watchedQty)
+    setAmount(
+      isNaN(watchedValueRate * watchedQty)
         ? ""
-        : String(watchedTotalAmount / watchedQty)
+        : String(watchedValueRate * watchedQty)
     );
-  }, [watchedQty, watchedTotalAmount]);
+  }, [watchedQty, watchedValueRate]);
 
   const onSubmit = async (data) => {
     let opnDate = data.opnDate;
@@ -460,14 +460,15 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Total Amount"}
+                      label={"Rate"}
                       size={"small"}
-                      name={"totalAmount"}
+                      name={"valueRate"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.totalAmount ? true : false}
+                      required
+                      error={errors.valueRate ? true : false}
                     />
                   </div>
                 </Paper>
@@ -493,18 +494,18 @@ const StyledFormItems = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      value={rate}
+                      value={amount}
                       onChange={(event) => {
-                        setRate(event.target.value);
+                        setAmount(event.target.value);
                       }}
-                      label={"Rate of Value"}
+                      label={"Total Amount"}
                       size={"small"}
-                      name={"valueRate"}
+                      name={"totalAmount"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.valueRate ? true : false}
+                      error={errors.totalAmount ? true : false}
                       required
                     />
                   </div>

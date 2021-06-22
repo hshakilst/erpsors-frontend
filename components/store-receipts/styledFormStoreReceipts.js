@@ -79,6 +79,10 @@ const useStyles = makeStyles((theme) =>
         marginLeft: theme.spacing(3),
         width: "auto",
       },
+      [theme.breakpoints.up("xs")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+      },
     },
     searchIcon: {
       padding: theme.spacing(0, 2),
@@ -92,20 +96,65 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.grey.title,
     },
     inputRoot: {
-      fontSize: "1rem",
-      fontWeight: 400,
-      color: theme.palette.grey.title,
-      letterSpacing: "0.047rem",
       lineHeight: 0,
-      paddingLeft: "1.25rem",
+      // paddingLeft: "1.25rem",
       "& .MuiInputLabel-animated": {
-        fontSize: "1rem",
+        fontSize: ".975rem",
         fontWeight: 400,
         color: theme.palette.grey.title,
-        letterSpacing: "0.047rem",
         lineHeight: 0,
         paddingLeft: "1.25rem",
         paddingTop: "0.5rem",
+      },
+      "& .MuiInputBase-input": {
+        fontSize: ".975rem",
+        fontWeight: 400,
+        color: theme.palette.grey.title,
+        letterSpacing: "0.047rem",
+        paddingTop: "0.4rem",
+        paddingLeft: "1.25rem",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100%",
+      },
+      [theme.breakpoints.up("xs")]: {
+        width: "100%",
+      },
+    },
+    selectRoot: {
+      paddingLeft: "1.25rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
+    selectRootContainer: {
+      paddingLeft: "1.25rem",
+      paddingTop: ".55rem",
+      // [theme.breakpoints.up("md")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: "100%",
+      // },
+      // [theme.breakpoints.up("xs")]: {
+      //   width: "100%",
+      // },
+    },
+    add: {
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
       },
     },
   })
@@ -201,7 +250,10 @@ const StyledFormStoreReceipts = (props) => {
               style={{ color: theme.palette.grey.title, fontSize: "1.125rem" }}
             ></AddOutlinedIcon>
           </div>
-          <div style={{ textAlign: "right", float: "left" }}>
+          <div
+            className={classes.add}
+            style={{ textAlign: "right", float: "left" }}
+          >
             <Link
               component="button"
               variant="body2"

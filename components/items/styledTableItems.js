@@ -152,8 +152,8 @@ const StyledTableItems = (props) => {
           <Grid item xs={6}>
             <IconButton
               onClick={() => {
-                // setData(params.row);
-                // setOpen(true);
+                setData(params.row);
+                setOpen(true);
               }}
             >
               <EditIcon style={{ color: theme.palette.grey.title }} />
@@ -162,15 +162,17 @@ const StyledTableItems = (props) => {
           <Grid item xs={6}>
             <IconButton
               onClick={() =>
-                Promise.resolve(useDeleteItemById(params.row.id)).then(
-                  ({ error, data }) => {
+                Promise.resolve(useDeleteItemById(params.row.id))
+                  .then(({ error, data }) => {
                     if (!error) {
-                      props.enqueueSnackbar(`Item ${data.data.code} : Deletion successful.`, {
-                        variant: "success",
-                        autoHideDuration: 5000,
-                      });
-                    }
-                    else{
+                      props.enqueueSnackbar(
+                        `Item ${data.data.code} : Deletion successful.`,
+                        {
+                          variant: "success",
+                          autoHideDuration: 5000,
+                        }
+                      );
+                    } else {
                       props.enqueueSnackbar(
                         `Item ${data.data.code} : Deletion failes.
                         Reason: ${error.code}`,
@@ -187,23 +189,20 @@ const StyledTableItems = (props) => {
                         },
                       });
                     }
-                  }
-                ).catch((error)=>{
-                   props.enqueueSnackbar(
-                     `Something went wrong.`,
-                     {
-                       variant: "error",
-                       autoHideDuration: 5000,
-                     }
-                   );
+                  })
+                  .catch((error) => {
+                    props.enqueueSnackbar(`Something went wrong.`, {
+                      variant: "error",
+                      autoHideDuration: 5000,
+                    });
 
-                   LogRocket.captureException(error, {
-                     tags: { function: "useDeleteItemById" },
-                     extra: {
-                       component: "Item Table",
-                     },
-                   });
-                })
+                    LogRocket.captureException(error, {
+                      tags: { function: "useDeleteItemById" },
+                      extra: {
+                        component: "Item Table",
+                      },
+                    });
+                  })
               }
             >
               <DeleteIcon style={{ color: theme.palette.grey.title }} />
