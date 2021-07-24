@@ -70,32 +70,14 @@ export const createStoreIssue = (
 export const getAllStoreIssues = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_store_issues"))),
-      q.Lambda(
-        "docRef",
-        q.Let(
-          {
-            doc: q.Get(q.Var("docRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("doc")),
-            code: q.Select(["data", "code"], q.Var("doc")),
-            reqCode: q.Select(["data", "reqCode"], q.Var("doc")),
-            item: q.Select(["data", "item"], q.Var("doc")),
-            opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
-            opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
-            issRate: q.Select(["data", "issRate"], q.Var("doc")),
-            issQty: q.Select(["data", "issQty"], q.Var("doc")),
-            warehouse: q.Select(["data", "warehouse"], q.Var("doc")),
-            notes: q.Select(["data", "notes"], q.Var("doc")),
-            isPosted: q.Select(["data", "isPosted"], q.Var("doc")),
-          }
-        )
-      )
+      q.Paginate(q.Match(q.Index("all_store_issues")), { size: 10000 }),
+      q.Lambda("docRef", q.Get(q.Var("docRef")))
     )
   );
 };
 
 export const getAllStoreIssueCodes = () => {
-  return db.query(q.Paginate(q.Match(q.Index("all_store_issue_codes"))));
+  return db.query(
+    q.Paginate(q.Match(q.Index("all_store_issue_codes")), { size: 10000 })
+  );
 };

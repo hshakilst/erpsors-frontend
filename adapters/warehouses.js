@@ -7,7 +7,15 @@ export const useGetAllWarehouses = () => {
     revalidateOnFocus: false,
   });
 
-  return { data, error, loading: !data && !error, ...rest };
+  return {
+    data: data?.map((row) => {
+      const id = row.ref["@ref"].id;
+      return { id, ...row.data };
+    }),
+    error,
+    loading: !data && !error,
+    ...rest,
+  };
 };
 
 export const useCreateWarehouses = async (
@@ -36,18 +44,6 @@ export const useCreateWarehouses = async (
   });
   mutate("/api/warehouses");
   return { error: res.data.error, data: res.data.data };
-};
-
-export const useGetAllWarehouseCodes = () => {
-  const { data, error, ...rest } = useSWR(
-    "/api/warehouses?filter=codes",
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-
-  return { data, error, loading: !data && !error, ...rest };
 };
 
 export const useDeleteWarehouseById = async (id) => {
@@ -92,4 +88,16 @@ export const useUpdateWarehouseById = async (
   });
   mutate("/api/warehouses");
   return { error: res.data.error, data: res.data.data };
+};
+
+export const useGetAllWarehouseCodes = () => {
+  const { data, error, ...rest } = useSWR(
+    "/api/warehouses?filter=codes",
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  return { data, error, loading: !data && !error, ...rest };
 };

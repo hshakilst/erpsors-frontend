@@ -9,12 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import dynamic from "next/dynamic";
 import Box from "@material-ui/core/Box";
 import { useTheme, makeStyles, createStyles } from "@material-ui/core/styles";
-import StyledButton from "@/components/ui/styledButton";
-
-const StyledTableItems = dynamic(
-  () => import("@/components/update-forms/items"),
-  { ssr: false, loading: () => <p>...</p> }
-);
+import StyledTableItems from "@/components/update-forms/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -35,22 +30,15 @@ export default function StyledFormDialog({
 }) {
   const classes = useStyles();
   const theme = useTheme();
-  // const [open, setOpen] = React.useState(show);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <Dialog
+      fullWidth
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       className={classes.root}
+      {...props}
     >
       <DialogTitle
         id="form-dialog-title"
@@ -79,49 +67,11 @@ export default function StyledFormDialog({
           {`Update ${label}`}
         </Typography>
       </DialogContentText>
-      <DialogContent style={{ marginTop: -8 }}>
+      <DialogContent style={{ marginTop: -8, marginBottom: "1rem" }}>
         <Box>
-          <StyledTableItems />
+          <StyledTableItems data={data} handleClose={handleClose} />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <div
-          style={{
-            float: "right",
-            marginTop: 8,
-            marginBottom: 4,
-            marginRight: "1.75rem",
-          }}
-        >
-          <div style={{ float: "left" }}>
-            <StyledButton
-              label={"Add"}
-              style={{
-                background: "none",
-                padding: "0.25rem 1.5rem",
-                color: theme.palette.primary.main,
-                border: "0.125rem solid #5F2EEA",
-                boxShadow: "none",
-                marginRight: "0.625rem",
-              }}
-              type="submit"
-            ></StyledButton>
-          </div>
-          <div style={{ float: "left" }}>
-            <StyledButton
-              label={"Clear"}
-              style={{
-                background: "none",
-                padding: "0.25rem 1.5rem",
-                color: theme.palette.primary.main,
-                border: "0.125rem solid #D6D8E7",
-                boxShadow: "none",
-              }}
-              onClick={() => reset()}
-            />
-          </div>
-        </div>
-      </DialogActions>
     </Dialog>
   );
 }

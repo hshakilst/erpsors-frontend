@@ -86,35 +86,8 @@ export const createItemsLedger = (
 export const getAllItemsLedger = () => {
   return db.query(
     q.Map(
-      q.Paginate(q.Match(q.Index("all_items_ledger"))),
-      q.Lambda(
-        "docRef",
-        q.Let(
-          {
-            doc: q.Get(q.Var("docRef")),
-          },
-          {
-            id: q.Select(["ref", "id"], q.Var("doc")),
-            date: q.ToString(
-              q.ToDate(q.Epoch(q.Select(["ts"], q.Var("doc")), "microseconds"))
-            ),
-            code: q.Select(["data", "code"], q.Var("doc")),
-            type: q.Select(["data", "type"], q.Var("doc")),
-            itemCode: q.Select(["data", "itemCode"], q.Var("doc")),
-            itemName: q.Select(["data", "itemName"], q.Var("doc")),
-            opnRate: q.Select(["data", "opnRate"], q.Var("doc")),
-            opnQty: q.Select(["data", "opnQty"], q.Var("doc")),
-            recRate: q.Select(["data", "recRate"], q.Var("doc")),
-            recQty: q.Select(["data", "recQty"], q.Var("doc")),
-            issRate: q.Select(["data", "issRate"], q.Var("doc")),
-            issQty: q.Select(["data", "issQty"], q.Var("doc")),
-            cloRate: q.Select(["data", "cloRate"], q.Var("doc")),
-            cloQty: q.Select(["data", "cloQty"], q.Var("doc")),
-            warehouseCode: q.Select(["data", "warehouseCode"], q.Var("doc")),
-            warehouseName: q.Select(["data", "warehouseName"], q.Var("doc")),
-          }
-        )
-      )
+      q.Paginate(q.Match(q.Index("all_items_ledger")), { size: 10000 }),
+      q.Lambda("docRef", q.Get(q.Var("docRef")))
     )
   );
 };

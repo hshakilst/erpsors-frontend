@@ -7,7 +7,15 @@ export const useGetAllStoreReceipts = () => {
     revalidateOnFocus: false,
   });
 
-  return { data, error, loading: !data && !error, ...rest };
+  return {
+    data: data?.map((row) => {
+      const id = row.ref["@ref"].id;
+      return { id, ...row.data };
+    }),
+    error,
+    loading: !data && !error,
+    ...rest,
+  };
 };
 
 export const useCreateStoreReceipt = async (
@@ -28,7 +36,7 @@ export const useCreateStoreReceipt = async (
     recQty,
     warehouse,
     notes,
-    isPosted
+    isPosted,
   });
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };
@@ -63,16 +71,16 @@ export const useGetStoreReceiptById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdateStoreReceiptById = async (
-  {id,
+export const useUpdateStoreReceiptById = async ({
+  id,
   poCode,
   item,
   valueRate,
   recQty,
   warehouse,
   notes,
-  isPosted}
-) => {
+  isPosted,
+}) => {
   const res = await axios.patch(`/api/store-receipts/${id}`, {
     poCode,
     item,
@@ -80,7 +88,7 @@ export const useUpdateStoreReceiptById = async (
     recQty,
     warehouse,
     notes,
-    isPosted
+    isPosted,
   });
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };

@@ -13,6 +13,7 @@ import {
   Fade,
   Hidden,
   Typography,
+  Divider,
 } from "@material-ui/core";
 import {
   ReactExcel,
@@ -21,6 +22,7 @@ import {
 } from "@/components/excel-utils/excelRenderer";
 import ItemsSchema from "@/validators/items";
 import { useTheme } from "@material-ui/core/styles";
+import { useCreateItem } from "@/adapters/items";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -43,7 +45,8 @@ export default function StyledDropzoneDialog(props) {
   const [currentSheet, setCurrentSheet] = useState({});
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [objects, setObjects] = React.useState();
+  const [errors, setErrors] = React.useState([]);
+  const [progress, setProgress] = React.useState(0);
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,28 +69,27 @@ export default function StyledDropzoneDialog(props) {
 
   const save = async () => {
     setLoading(true);
-    const objects = await Promise.resolve().then(() =>
-      generateObjects(currentSheet)
-    );
-    //save array of objects to backend
-    objects.map((object) => {
-      ItemsSchema.validate(object, {
-        abortEarly: true,
-        strict: true,
-        stripUnknown: true,
-      })
-        .then((object) => {
-          object.isValidated = true;
+    await Promise.resolve(generateObjects(currentSheet)).then((objects) => {
+      objects.map((object) => {
+        ItemsSchema.validate(object, {
+          abortEarly: true,
+          strict: true,
+          stripUnknown: true,
         })
-        .catch((error) => {
-          if (error.name === "ValidationError") {
-            object.isValidated = false;
-          } else {
-            console.log(error);
-          }
-        });
+          .then(async (object) => {
+            await Promise.resolve(useCreateItem(object)).then(({ error }) => {
+              if (!error) setProgress((prevState) => prevState + 1);
+            });
+          })
+          .catch((error) => {
+            if (error.name === "ValidationError") {
+              setErrors((prevState) => [...prevState, object]);
+            } else {
+              console.log(error);
+            }
+          });
+      });
     });
-    console.log(objects);
   };
 
   return (
@@ -104,36 +106,47 @@ export default function StyledDropzoneDialog(props) {
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Upload a File</DialogTitle>
         <DialogContent>
-          {/* {!loading ? (
-            <> */}
-          <Box textAlign={"center"} hidden={loading}>
-            <input
-              type="file"
-              accept=".xlsx, .csv"
-              onChange={handleUpload}
-              style={{
-                border: "2px dashed #4E4B66",
-                padding: 20,
-                width: "80%",
-              }}
-            />
-            <ReactExcel
-              initialData={initialData}
-              onSheetUpdate={(currentSheet) => setCurrentSheet(currentSheet)}
-              activeSheetClassName="active-sheet"
-              reactExcelClassName="react-excel"
-            />
-          </Box>
-          {/* </>
-          ) : ( */}
-          <Fade in={loading}>
-            <Box>
-              <LinearProgress variant="determinate" value={100} />
-              <Typography style={{ marginTop: 4 }}>{"100/100"}</Typography>
-            </Box>
-          </Fade>
-
-          {/* )} */}
+          {!loading ? (
+            <>
+              <Box textAlign={"center"} hidden={loading}>
+                <input
+                  type="file"
+                  accept=".xlsx, .csv"
+                  onChange={handleUpload}
+                  style={{
+                    border: "2px dashed #4E4B66",
+                    padding: 20,
+                    width: "80%",
+                  }}
+                />
+                <ReactExcel
+                  initialData={initialData}
+                  onSheetUpdate={(currentSheet) =>
+                    setCurrentSheet(currentSheet)
+                  }
+                  activeSheetClassName="active-sheet"
+                  reactExcelClassName="react-excel"
+                />
+              </Box>
+            </>
+          ) : (
+            <Fade in={loading}>
+              <Box>
+                <LinearProgress variant="determinate" value={100} />
+                <Typography style={{ marginTop: 4 }}>{progress}</Typography>
+                <Divider />
+                {errors.length > 0 ? (
+                  errors?.map((error, idx) => (
+                    <Typography
+                      key={idx}
+                    >{`Error Uploading Item ${error.code}`}</Typography>
+                  ))
+                ) : (
+                  <Typography>{"Upload Successful!"}</Typography>
+                )}
+              </Box>
+            </Fade>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

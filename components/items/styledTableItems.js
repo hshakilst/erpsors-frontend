@@ -225,6 +225,12 @@ const StyledTableItems = (props) => {
         label={"Items"}
         columns={columns}
         fetch={useGetAllItems}
+        sortModel={[
+          {
+            field: "code",
+            sort: "asc",
+          },
+        ]}
       />
     </>
   );
