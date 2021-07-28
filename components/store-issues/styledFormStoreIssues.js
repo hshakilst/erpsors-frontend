@@ -21,6 +21,8 @@ import { useCreateStoreIssue } from "@/adapters/store-issues";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
 import { useGetAllItemCodes, useGetItemById } from "@/adapters/items";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
+import LogRocket from "logrocket";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -168,53 +170,71 @@ const StyledFormStoreIssues = (props) => {
   let { data: itemData } = useGetItemById(watchItem?.id);
 
   const onSubmit = async (data) => {
+    let date = data.date;
     let code = data.code;
     let reqCode = data.reqCode;
-    let item = data.item;
-    let valueRate = data.valueRate;
+    let item = data.item?.code;
+    let issRate = data.issRate;
     let issQty = data.issQty;
-    let warehouse = data.warehouse;
+    let warehouse = data.warehouse?.code;
     let notes = data.notes;
-    let isPosted = data.isPosted;
+    let isPosted = false;
 
     try {
-      const { error, data } = await useCreateStoreIssue(
+      const { error, data } = await useCreateStoreIssue({
+        date,
         code,
         reqCode,
         item,
-        valueRate,
+        issRate,
         issQty,
         warehouse,
         notes,
-        isPosted
-      );
+        isPosted,
+      });
       if (!error)
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+        props.enqueueSnackbar(`Issue ${code} : Insertion successful.`, {
           variant: "success",
+          autoHideDuration: 5000,
         });
-      else
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+      else {
+        props.enqueueSnackbar(`Issue ${code} : Insertion failed.`, {
           variant: "error",
+          autoHideDuration: 5000,
         });
+        LogRocket.captureException(data, {
+          tags: { source: "FaunaDB Error" },
+          extra: {
+            component: "Store Issue Form",
+          },
+        });
+      }
     } catch (error) {
       props.enqueueSnackbar(
-        //FIXME: Change below code before deploying to production
-        `${JSON.stringify(error)}`,
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
         {
           variant: "error",
+          autoHideDuration: 5000,
         }
       );
+      LogRocket.captureException(error, {
+        tags: { function: "onSubmit" },
+        extra: {
+          component: "Store Issue Form",
+        },
+      });
     }
   };
 
   const onError = (errors) => {
     if (errors) {
-      props.enqueueSnackbar("Errors", {
+      props.enqueueSnackbar("Please check your inputs.", {
         variant: "error",
         autoHideDuration: 10000,
       });
     }
   };
+
   return (
     <Card className={classes.root}>
       <Box>
@@ -279,6 +299,33 @@ const StyledFormStoreIssues = (props) => {
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
               <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"Date"}
+                      name="date"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      required
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.date ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
                 className={classes.gridItem}
                 item
                 lg={6}
@@ -325,7 +372,7 @@ const StyledFormStoreIssues = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    {/* //TODO:After Impleminting floor requisitions implement StyledAutoComplete */}
+                    {/* //TODO:After Implementing floor requisitions implement StyledAutoComplete */}
                     {/* <StyledAutoCompleteForm
                       label={"Floor Req. Code"}
                       name="reqCode"
@@ -402,15 +449,15 @@ const StyledFormStoreIssues = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Rate of Value"}
+                      label={"Issue Rate"}
                       size={"small"}
-                      name={"valueRate"}
+                      name={"issRate"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
                       value={itemData ? itemData.valueRate : ""}
-                      error={errors.valueRate ? true : false}
+                      error={errors.issRate ? true : false}
                       readOnly
                       required
                     />
@@ -480,7 +527,7 @@ const StyledFormStoreIssues = (props) => {
               <Grid
                 className={classes.gridItem}
                 item
-                lg={12}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}

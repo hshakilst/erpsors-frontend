@@ -49,8 +49,8 @@ export const updateItemById = ({
   );
 };
 
-export const getOpeningItemRateQtyById = (id) => {
-  return db.query(q.Paginate(q.Match(q.Index("item_rate_qty_by_id"), id)));
+export const getOpeningItemRateQtyByCode = (code) => {
+  return db.query(q.Paginate(q.Match(q.Index("item_rate_qty_by_code"), code)));
 };
 
 export const createItem = ({

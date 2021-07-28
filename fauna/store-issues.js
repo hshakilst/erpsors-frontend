@@ -9,19 +9,21 @@ export const deleteStoreIssuesById = (id) => {
   return db.query(q.Delete(q.Ref(q.Collection("store_issues"), id)));
 };
 
-export const updateStoreIssuesById = (
+export const updateStoreIssuesById = ({
   id,
+  date,
   reqCode,
   item,
   issRate,
   issQty,
   warehouse,
   notes,
-  isPosted
-) => {
+  isPosted,
+}) => {
   return db.query(
     q.Update(q.Ref(q.Collection("store_issues"), id), {
       data: {
+        date,
         reqCode,
         item,
         issRate,
@@ -34,7 +36,8 @@ export const updateStoreIssuesById = (
   );
 };
 
-export const createStoreIssue = (
+export const createStoreIssue = ({
+  date,
   code,
   reqCode,
   item,
@@ -44,12 +47,12 @@ export const createStoreIssue = (
   issQty,
   warehouse,
   notes,
-  isPosted
-) => {
+  isPosted,
+}) => {
   return db.query(
-    // q.Do(
     q.Create(q.Collection("store_issues"), {
       data: {
+        date: date ?? "",
         code: code ?? "",
         reqCode: reqCode ?? "",
         item: item ?? "",
@@ -62,8 +65,6 @@ export const createStoreIssue = (
         isPosted: isPosted ?? false,
       },
     })
-    // q.Call("OnIssueUpdateItem", item.id, issQty)
-    //)
   );
 };
 

@@ -211,10 +211,13 @@ const StyledFormItems = (props) => {
         });
       }
     } catch (error) {
-      props.enqueueSnackbar(`Something went wrong.`, {
-        variant: "error",
-        autoHideDuration: 5000,
-      });
+      props.enqueueSnackbar(
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
       LogRocket.captureException(error, {
         tags: { function: "onSubmit" },
         extra: {

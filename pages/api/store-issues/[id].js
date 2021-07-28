@@ -12,7 +12,7 @@ const handler = withApiAuthRequired(async (req, res) => {
       method,
     } = req;
 
-    const { reqCode, item, issRate, issQty, warehouse, notes, isPosted } =
+    const { date, reqCode, item, issRate, issQty, warehouse, notes, isPosted } =
       req.body;
 
     switch (method) {
@@ -21,16 +21,17 @@ const handler = withApiAuthRequired(async (req, res) => {
         res.status(200).json(query.data);
         break;
       case "PATCH":
-        const resUpdate = await updateStoreIssuesById(
+        const resUpdate = await updateStoreIssuesById({
           id,
+          date,
           reqCode,
           item,
           issRate,
           issQty,
           warehouse,
           notes,
-          isPosted
-        );
+          isPosted,
+        });
         res.status(200).json({ error: false, data: resUpdate });
         break;
       case "DELETE":

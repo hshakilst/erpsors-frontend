@@ -35,9 +35,7 @@ export const useGetItemLedgerById = (id) => {
 export const useCreateItemLedger = async ({
   code, //store-receipts or store-issues codes
   type, //store-receipts or store-issues
-  itemId,
   itemCode,
-  itemName,
   opnRate,
   opnQty,
   recRate,
@@ -45,14 +43,12 @@ export const useCreateItemLedger = async ({
   issRate,
   issQty,
   warehouseCode,
-  warehouseName,
+  notes,
 }) => {
   const res = await axios.post("/api/items-ledger", {
     code, //store-receipts or store-issues codes
     type, //store-receipts or store-issues
-    itemId,
     itemCode,
-    itemName,
     opnRate,
     opnQty,
     recRate,
@@ -60,7 +56,7 @@ export const useCreateItemLedger = async ({
     issRate,
     issQty,
     warehouseCode,
-    warehouseName,
+    notes,
   });
   mutate("/api/items-ledger");
   return { error: res.data.error, data: res.data.data };

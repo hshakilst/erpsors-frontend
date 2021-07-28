@@ -18,7 +18,8 @@ export const useGetAllStoreIssues = () => {
   };
 };
 
-export const useCreateStoreIssue = async (
+export const useCreateStoreIssue = async ({
+  date,
   code,
   reqCode,
   item,
@@ -26,9 +27,10 @@ export const useCreateStoreIssue = async (
   issQty,
   warehouse,
   notes,
-  isPosted
-) => {
+  isPosted,
+}) => {
   const res = await axios.post("/api/store-issues", {
+    date,
     code,
     reqCode,
     item,
@@ -73,6 +75,7 @@ export const useGetStoreIssuesById = (id) => {
 
 export const useUpdateStoreIssueById = async ({
   id,
+  date,
   reqCode,
   item,
   issRate,
@@ -82,6 +85,7 @@ export const useUpdateStoreIssueById = async ({
   isPosted,
 }) => {
   const res = await axios.patch(`/api/store-issues/${id}`, {
+    date,
     reqCode,
     item,
     issRate,
