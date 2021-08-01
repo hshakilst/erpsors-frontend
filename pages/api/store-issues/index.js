@@ -35,17 +35,8 @@ const handler = withApiAuthRequired(async (req, res) => {
         }
         break;
       case "POST":
-        const {
-          date,
-          code,
-          reqCode,
-          item,
-          issRate,
-          issQty,
-          warehouse,
-          notes,
-          isPosted,
-        } = req.body;
+        const { date, code, reqCode, item, issRate, issQty, warehouse, notes } =
+          req.body;
 
         const query = await getOpeningItemRateQtyByCode(item);
         const opnRate = query.data[0][0];
@@ -64,7 +55,6 @@ const handler = withApiAuthRequired(async (req, res) => {
           issQty,
           warehouse,
           notes,
-          isPosted,
         });
         res.status(200).json({ error: false, data: result });
         break;
@@ -73,7 +63,6 @@ const handler = withApiAuthRequired(async (req, res) => {
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
-    throw error;
     res.status(500).json({ error: true, data: error });
   }
 });

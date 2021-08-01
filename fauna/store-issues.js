@@ -47,7 +47,6 @@ export const createStoreIssue = ({
   issQty,
   warehouse,
   notes,
-  isPosted,
 }) => {
   return db.query(
     q.Create(q.Collection("store_issues"), {
@@ -62,7 +61,7 @@ export const createStoreIssue = ({
         issQty: issQty ?? "",
         warehouse: warehouse ?? "",
         notes: notes ?? "",
-        isPosted: isPosted ?? false,
+        isPosted: false,
       },
     })
   );

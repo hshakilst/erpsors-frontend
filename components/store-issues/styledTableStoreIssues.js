@@ -27,125 +27,6 @@ const StyledTableStoreIssues = (props) => {
   const UpdateFormItems = withStyledUpdateForm(StoreIssues);
 
   const columns = [
-    { headerName: "ID", field: "id", hide: true },
-    {
-      headerName: "Date",
-      headerAlign: "center",
-      field: "date",
-      type: "date",
-      width: 115,
-      align: "center",
-    },
-    {
-      headerName: "Issue Code",
-      headerAlign: "center",
-      field: "code",
-      width: 180,
-      align: "center",
-    },
-    {
-      headerName: "Requisition Code",
-      headerAlign: "center",
-      field: "reqCode",
-      width: 180,
-      align: "center",
-    },
-    {
-      headerName: "Item Code",
-      headerAlign: "center",
-      field: "item",
-      width: 180,
-      align: "center",
-    },
-    // {
-    //   headerName: "Item Type",
-    //   headerAlign: "center",
-    //   field: "type",
-    //   width: 180,
-    //   align: "center",
-    // },
-    // {
-    //   headerName: "Item Name",
-    //   headerAlign: "center",
-    //   field: "name",
-    //   width: 230,
-    //   align: "center",
-    // },
-    {
-      headerName: "Opening Qty.",
-      headerAlign: "right",
-      field: "opnQty",
-      type: "number",
-      width: 160,
-      align: "right",
-    },
-    {
-      headerName: "Issued Qty.",
-      headerAlign: "right",
-      field: "issQty",
-      type: "number",
-      width: 160,
-      align: "right",
-    },
-    {
-      headerName: "Closing Qty.",
-      headerAlign: "right",
-      field: "cloQty",
-      type: "number",
-      width: 160,
-      align: "right",
-      valueGetter: (params) =>
-        Number(params.row.opnQty) - Number(params.row.issQty),
-    },
-    // {
-    //   headerName: "Unit",
-    //   headerAlign: "center",
-    //   field: "unit",
-    //   width: 120,
-    //   align: "center",
-    // },
-    // {
-    //   headerName: "Supplier Code",
-    //   headerAlign: "center",
-    //   field: "supplier",
-    //   width: 200,
-    //   align: "center",
-    //   valueFormatter: (params) =>
-    //     params.value === "" ? `(empty)` : params.value,
-    // },-*
-    {
-      headerName: "Warehouse Code",
-      headerAlign: "center",
-      field: "warehouse",
-      width: 200,
-      align: "center",
-    },
-    {
-      headerName: "Posted",
-      headerAlign: "center",
-      field: "isPosted",
-      type: "boolean",
-      width: 145,
-      align: "center",
-    },
-    // {
-    //   headerName: "Group",
-    //   headerAlign: "center",
-    //   field: "group",
-    //   width: 120,
-    //   align: "center",
-    //   valueFormatter: (params) =>
-    //     params.value === "" ? `(empty)` : params.value,
-    // },
-    {
-      headerName: "Notes",
-      headerAlign: "center",
-      field: "notes",
-      width: 180,
-      align: "center",
-      valueFormatter: (params) =>
-        params.value === "" ? `(empty)` : params.value,
-    },
     {
       headerName: "Actions",
       headerAlign: "center",
@@ -160,20 +41,22 @@ const StyledTableStoreIssues = (props) => {
               onClick={() => {
                 try {
                   Promise.resolve(
-                    useCreateItemLedger({
-                      date: params.row.date,
-                      code: params.row.code,
-                      type: "store-issues",
-                      itemCode: params.row.item,
-                      opnRate: params.row.opnRate,
-                      opnQty: params.row.opnQty,
-                      recRate: 0,
-                      recQty: 0,
-                      issRate: params.row.issRate,
-                      issQty: params.row.issQty,
-                      warehouseCode: params.row.warehouse,
-                      notes: params.row.notes,
-                    })
+                    useCreateItemLedger(
+                      new ItemsLedger({
+                        date: params.row.date,
+                        code: params.row.code,
+                        type: "store-issues",
+                        itemCode: params.row.item,
+                        opnRate: params.row.opnRate,
+                        opnQty: params.row.opnQty,
+                        recRate: 0,
+                        recQty: 0,
+                        issRate: params.row.issRate,
+                        issQty: params.row.issQty,
+                        warehouseCode: params.row.warehouse,
+                        notes: params.row.notes,
+                      })
+                    )
                   )
                     .then(({ error, data }) => {
                       if (!error && data)
@@ -228,22 +111,30 @@ const StyledTableStoreIssues = (props) => {
           </Grid>
           <Grid item xs={4}>
             <IconButton
+              disabled={params.row.isPosted}
               onClick={() => {
                 setData(params.row);
                 setOpen(true);
               }}
             >
-              <EditIcon style={{ color: theme.palette.grey.title }} />
+              <EditIcon
+                style={{
+                  color: params.row.isPosted
+                    ? theme.palette.grey.label
+                    : theme.palette.grey.title,
+                }}
+              />
             </IconButton>
           </Grid>
           <Grid item xs={4}>
             <IconButton
+              disabled={params.row.isPosted}
               onClick={() =>
                 Promise.resolve(useDeleteStoreIssueById(params.row.id))
                   .then(({ error, data }) => {
                     if (!error) {
                       props.enqueueSnackbar(
-                        `Item ${data.data.code} : Deletion successful.`,
+                        `Issue ${data.data.code} : Deletion successful.`,
                         {
                           variant: "success",
                           autoHideDuration: 5000,
@@ -251,7 +142,7 @@ const StyledTableStoreIssues = (props) => {
                       );
                     } else {
                       props.enqueueSnackbar(
-                        `Item ${data.data.code} : Deletion failed.
+                        `Issue ${data.data.code} : Deletion failed.
                         Reason: ${error.code}`,
                         {
                           variant: "error",
@@ -268,25 +159,115 @@ const StyledTableStoreIssues = (props) => {
                     }
                   })
                   .catch((error) => {
-                    props.enqueueSnackbar(`Something went wrong.`, {
-                      variant: "error",
-                      autoHideDuration: 5000,
-                    });
+                    props.enqueueSnackbar(
+                      `Something went wrong.
+                  \nReason: ${JSON.stringify(error)}`,
+                      {
+                        variant: "error",
+                        autoHideDuration: 5000,
+                      }
+                    );
 
                     LogRocket.captureException(error, {
                       tags: { function: "useDeleteItemById" },
                       extra: {
-                        component: "Item Table",
+                        component: "Store Issue Table",
                       },
                     });
                   })
               }
             >
-              <DeleteIcon style={{ color: theme.palette.grey.title }} />
+              <DeleteIcon
+                style={{
+                  color: params.row.isPosted
+                    ? theme.palette.grey.label
+                    : theme.palette.grey.title,
+                }}
+              />
             </IconButton>
           </Grid>
         </Grid>
       ),
+    },
+    {
+      headerName: "Posted",
+      headerAlign: "center",
+      field: "isPosted",
+      type: "boolean",
+      width: 145,
+      align: "center",
+    },
+    { headerName: "ID", field: "id", hide: true },
+    {
+      headerName: "Date",
+      headerAlign: "center",
+      field: "date",
+      type: "date",
+      width: 115,
+      align: "center",
+    },
+    {
+      headerName: "Issue Code",
+      headerAlign: "center",
+      field: "code",
+      width: 180,
+      align: "center",
+    },
+    {
+      headerName: "Requisition Code",
+      headerAlign: "center",
+      field: "reqCode",
+      width: 200,
+      align: "center",
+    },
+    {
+      headerName: "Item Code",
+      headerAlign: "center",
+      field: "item",
+      width: 180,
+      align: "center",
+    },
+    {
+      headerName: "Opening Qty.",
+      headerAlign: "right",
+      field: "opnQty",
+      type: "number",
+      width: 180,
+      align: "right",
+    },
+    {
+      headerName: "Issued Qty.",
+      headerAlign: "right",
+      field: "issQty",
+      type: "number",
+      width: 160,
+      align: "right",
+    },
+    {
+      headerName: "Closing Qty.",
+      headerAlign: "right",
+      field: "cloQty",
+      type: "number",
+      width: 180,
+      align: "right",
+      valueGetter: (params) =>
+        Number(params.row.opnQty) - Number(params.row.issQty),
+    },
+    {
+      headerName: "Warehouse Code",
+      headerAlign: "center",
+      field: "warehouse",
+      width: 200,
+      align: "center",
+    },
+    {
+      headerName: "Notes",
+      headerAlign: "center",
+      field: "notes",
+      width: 300,
+      align: "center",
+      valueFormatter: (params) =>
+        params.value === "" ? `(empty)` : params.value,
     },
   ];
 

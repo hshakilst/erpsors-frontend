@@ -2,7 +2,7 @@ import React from "react";
 import {
   makeStyles,
   createStyles,
-  fade,
+  alpha,
   useTheme,
 } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) =>
       height: "3.5rem",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -138,18 +138,21 @@ const useStyles = makeStyles((theme) =>
 const StyledFormStoreRequisitions = (props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset, setValue } = useForm();
+  const { register, handleSubmit, errors, control, reset, setValue } =
+    useForm();
 
   const onSubmit = async (data) => {
+    let date = data.date;
     let code = data.code;
-    let item = data.item;
+    let item = data.item?.code;
     let reqQty = data.reqQty;
-    let warehouse = data.warehouse;
+    let warehouse = data.warehouse?.code;
     let reqDate = data.reqDate;
     let notes = data.notes;
 
     try {
       const { error, data } = await useCreateStoreRequisition({
+        date,
         code,
         item,
         reqQty,
@@ -256,9 +259,36 @@ const StyledFormStoreRequisitions = (props) => {
           <div className={classes.rootGrid}>
             <Grid container spacing={2}>
               <Grid
+                item
+                className={classes.gridItem}
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
+                <Paper className={classes.paper}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <TocOutlinedIcon fontSize="large" />
+                    </div>
+                    <StyledDatePicker
+                      label={"Date"}
+                      name="date"
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      required
+                      inputRef={register({
+                        required: true,
+                      })}
+                      error={errors.date ? true : false}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              <Grid
                 className={classes.gridItem}
                 item
-                lg={12}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
@@ -463,7 +493,7 @@ const StyledFormStoreRequisitions = (props) => {
                 border: "0.125rem solid #D6D8E7",
                 boxShadow: "none",
               }}
-              onClick={() =>reset()}
+              onClick={() => reset()}
             ></StyledButton>
           </div>
         </div>

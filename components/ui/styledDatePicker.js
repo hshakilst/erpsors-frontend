@@ -4,7 +4,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   makeStyles,
   createStyles,
-  fade,
+  alpha,
   useTheme,
 } from "@material-ui/core/styles";
 
@@ -53,7 +53,7 @@ export default function StyledDatePicker(props) {
         autoOk
         clearable
         label={props.label}
-        format="dd/MM/yyyy"
+        format="yyyy-MM-dd"
         InputProps={{
           disableUnderline: true,
         }}

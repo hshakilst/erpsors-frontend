@@ -27,7 +27,6 @@ export const useCreateStoreIssue = async ({
   issQty,
   warehouse,
   notes,
-  isPosted,
 }) => {
   const res = await axios.post("/api/store-issues", {
     date,
@@ -38,7 +37,6 @@ export const useCreateStoreIssue = async ({
     issQty,
     warehouse,
     notes,
-    isPosted,
   });
   mutate("/api/store-issues");
   return { error: res.data.error, data: res.data.data };

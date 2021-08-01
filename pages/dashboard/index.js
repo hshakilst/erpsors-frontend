@@ -46,16 +46,16 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Dashboard = ({user}) => {
+const Dashboard = ({ user }) => {
   const theme = useTheme();
-  const classes = useStyles()
+  const classes = useStyles();
 
-  if(user) LogRocket.identify(user.email,user);
+  if (user) LogRocket.identify(user.email, user);
 
   return (
     <BaseLayout>
       <div className={classes.root}>
-        <Grid container spacing={2} justify="center">
+        <Grid container spacing={2} justifyContent="center">
           <Grid className={classes.gridItem} item xs={6}>
             <Paper elevation={2} className={classes.paper}>
               <Typography variant="h5">{"Profile"}</Typography>

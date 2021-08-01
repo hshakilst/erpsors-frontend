@@ -7,9 +7,7 @@ module.exports = {
     config.resolve.alias["@"] = path.resolve(__dirname);
     return config;
   },
-  future: {
-    webpack5: true,
-  },
+  webpack5: true,
   images: {
     domains: ["lh3.googleusercontent.com", "s.gravatar.com"],
   },

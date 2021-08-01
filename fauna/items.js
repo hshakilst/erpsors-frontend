@@ -1,6 +1,5 @@
 import { db } from "@/fauna/index";
 import { query as q } from "faunadb";
-import { getSession } from "@auth0/nextjs-auth0";
 
 export const getItemById = (id) => {
   return db.query(q.Get(q.Ref(q.Collection("items"), id)));

@@ -1,4 +1,5 @@
 class ItemsLedger {
+  _id;
   _date;
   _code;
   _type;
@@ -39,6 +40,14 @@ class ItemsLedger {
     this._warehouseCode = warehouseCode;
     this._notes = notes;
   }
+
+  get id() {
+    return this._id;
+  }
+  set id(value) {
+    this._id = value;
+  }
+
   get date() {
     return this._date;
   }
@@ -123,5 +132,4 @@ class ItemsLedger {
     this._notes = value;
   }
 }
-
 export default ItemsLedger;
