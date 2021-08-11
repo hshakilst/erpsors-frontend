@@ -76,6 +76,7 @@ export const useUpdateStoreRequisitionById = async ({
   reqQty,
   warehouse,
   notes,
+  reqDate,
   isApproved,
 }) => {
   const res = await axios.patch(`/api/store-requisitions/${id}`, {
@@ -84,6 +85,7 @@ export const useUpdateStoreRequisitionById = async ({
     reqQty,
     warehouse,
     notes,
+    reqDate,
     isApproved,
   });
   mutate("/api/store-requisitions");

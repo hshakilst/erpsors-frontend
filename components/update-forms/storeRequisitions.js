@@ -12,7 +12,7 @@ import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useUpdateStoreIssueById } from "@/adapters/store-issues";
+import { useUpdateStoreRequisitionById } from "@/adapters/store-requisitions";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
 import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
 import { useGetAllItemCodes } from "@/adapters/items";
@@ -149,42 +149,42 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const StoreIssues = ({ data, handleClose, ...props }) => {
+const StoreRequisitions = ({ data, handleClose, ...props }) => {
   const theme = useTheme();
   const classes = useStyles();
   const { register, handleSubmit, errors, control, reset, setValue } =
     useForm();
 
   React.useEffect(() => {
-    setValue("date", data.date);
-    setValue("reqCode", data.reqCode);
+    setValue("date,", data.date);
+    setValue("code", data.code);
     setValue("item", { code: data.item });
-    setValue("issRate", data.issRate);
-    setValue("issQty", data.issQty);
+    setValue("reqQty", data.reqQty);
     setValue("warehouse", { code: data.warehouse });
     setValue("notes", data.notes);
+    setValue("reqDate", data.reqDate);
 
     return () => {
       reset();
       setValue("date", null);
+      setValue("reqDate", null);
     };
   }, [data]);
 
   const onSubmit = (form) => {
     let updateData = {};
     updateData.date = form.date;
-    updateData.reqCode = form.reqCode;
     updateData.item = form.item?.code;
-    updateData.issRate = form.issRate;
-    updateData.issQty = form.issQty;
+    updateData.reqQty = form.reqQty;
     updateData.warehouse = form.warehouse?.code;
     updateData.notes = form.notes;
+    updateData.reqDate = form.reqDate;
     updateData.id = data.id;
 
     for (const property in updateData) {
       if (!updateData[property]) delete updateData[property];
     }
-    Promise.resolve(useUpdateStoreIssueById(updateData))
+    Promise.resolve(useUpdateStoreRequisitionById(updateData))
       .then(({ error, data }) => {
         if (!error)
           props.enqueueSnackbar(`Update successful.`, {
@@ -199,7 +199,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
           LogRocket.captureException(data, {
             tags: { source: "FaunaDB Error" },
             extra: {
-              component: "Issues Update Form",
+              component: "Requisition Update Form",
             },
           });
         }
@@ -212,7 +212,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
         LogRocket.captureException(error, {
           tags: { function: "onSubmit" },
           extra: {
-            component: "Issues Update Form",
+            component: "Requisition Update Form",
           },
         });
       });
@@ -229,8 +229,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
 
   return (
     <form component="form" onSubmit={handleSubmit(onSubmit, onError)}>
-      <Bx>
-        o
+      <Box>
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
             <Grid
@@ -248,7 +247,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledDatePicker
                     label={"Date"}
-                    name="date"
+                    name={"date"}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                     inputRef={register({
@@ -260,50 +259,8 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
               </Paper>
             </Grid>
             <Grid
-              className={classes.gridItem}
               item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  {/* //TODO:After Implementing floor requisitions implement StyledAutoComplete */}
-                  {/* <StyledAutoCompleteForm
-                      label={"Floor Req. Code"}
-                      name="reqCode"
-                      defaultValue={null}
-                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
-                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
-                      control={control}
-                    /> */}
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Floor Req. Code"}
-                    size={"small"}
-                    name={"reqCode"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.reqCode ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
               className={classes.gridItem}
-              item
               lg={6}
               md={12}
               sm={12}
@@ -316,7 +273,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledAutoCompleteForm
                     label={"Item"}
-                    name="item"
+                    name={"item"}
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -327,8 +284,8 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
               </Paper>
             </Grid>
             <Grid
-              className={classes.gridItem}
               item
+              className={classes.gridItem}
               lg={6}
               md={12}
               sm={12}
@@ -347,47 +304,14 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
                     classes={{
                       root: classes.inputRoot,
                     }}
-                    label={"Issue Rate"}
+                    label={"Required Qty."}
                     size={"small"}
-                    name={"issRate"}
+                    name={"reqQty"}
                     //FIXME:Add validation pattern
                     inputRef={register({
                       required: false,
                     })}
-                    error={errors.issRate ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              className={classes.gridItem}
-              item
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Issued Qty."}
-                    size={"small"}
-                    name={"issQty"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.issQty ? true : false}
+                    error={errors.reqQty ? true : false}
                   />
                 </div>
               </Paper>
@@ -407,7 +331,7 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledAutoCompleteForm
                     label={"Warehouse"}
-                    name="warehouse"
+                    name={"warehouse"}
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -418,9 +342,35 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
               </Paper>
             </Grid>
             <Grid
-              className={classes.gridItem}
               item
+              className={classes.gridItem}
               lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <StyledDatePicker
+                    label={"Required By"}
+                    name={"reqDate"}
+                    //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                    //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                    inputRef={register({
+                      required: false,
+                    })}
+                    error={errors.reqDate ? true : false}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              className={classes.gridItem}
+              lg={12}
               md={12}
               sm={12}
               xs={12}
@@ -452,33 +402,28 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
             </Grid>
           </Grid>
         </div>
-      </Bx>
-      <div
-        style={{
-          float: "right",
-          marginTop: 14,
-        }}
-      >
+      </Box>
+      <div style={{ float: "right", marginTop: "1rem" }}>
         <div style={{ float: "left" }}>
           <StyledButton
-            label={"Update"}
+            label={"Add"}
             style={{
               background: "none",
-              padding: "0.25rem 1rem",
+              padding: "0.25rem 1.5rem",
               color: theme.palette.primary.main,
               border: "0.125rem solid #5F2EEA",
               boxShadow: "none",
               marginRight: "0.625rem",
             }}
             type="submit"
-          ></StyledButton>
+          />
         </div>
         <div style={{ float: "left" }}>
           <StyledButton
             label={"Cancel"}
             style={{
               background: "none",
-              padding: "0.25rem 1rem",
+              padding: "0.25rem 1.5rem",
               color: theme.palette.primary.main,
               border: "0.125rem solid #D6D8E7",
               boxShadow: "none",
@@ -491,4 +436,4 @@ const StoreIssues = ({ data, handleClose, ...props }) => {
   );
 };
 
-export default withSnackbar(StoreIssues);
+export default withSnackbar(StoreRequisitions);

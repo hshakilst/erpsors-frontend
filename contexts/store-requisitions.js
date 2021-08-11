@@ -9,16 +9,7 @@ export default class StoreRequisitions {
   _reqDate;
   _isApproved;
 
-  constructor({
-    date,
-    code,
-    item,
-    reqQty,
-    warehouse,
-    notes,
-    reqDate,
-    isApproved,
-  }) {
+  constructor({ date, code, item, reqQty, warehouse, notes, reqDate }) {
     this._date = date;
     this._code = code;
     this._item = item;
@@ -26,7 +17,6 @@ export default class StoreRequisitions {
     this._warehouse = warehouse;
     this._notes = notes;
     this._reqDate = reqDate;
-    this._isApproved = isApproved;
   }
 
   get id() {

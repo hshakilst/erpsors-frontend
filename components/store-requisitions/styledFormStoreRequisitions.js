@@ -161,21 +161,36 @@ const StyledFormStoreRequisitions = (props) => {
         reqDate,
       });
       if (!error)
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+        props.enqueueSnackbar(`Requisition ${code} : Insertion successful.`, {
           variant: "success",
+          autoHideDuration: 5000,
         });
-      else
-        props.enqueueSnackbar(`${JSON.stringify(data)}`, {
+      else {
+        props.enqueueSnackbar(`Requisition ${code} : Insertion failed.`, {
           variant: "error",
+          autoHideDuration: 5000,
         });
+        LogRocket.captureException(data, {
+          tags: { source: "FaunaDB Error" },
+          extra: {
+            component: "Store Requisition Form",
+          },
+        });
+      }
     } catch (error) {
       props.enqueueSnackbar(
-        //FIXME: Change below code before deploying to production
-        `${JSON.stringify(error)}`,
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
         {
           variant: "error",
+          autoHideDuration: 5000,
         }
       );
+      LogRocket.captureException(error, {
+        tags: { function: "onSubmit" },
+        extra: {
+          component: "Store Requisition Form",
+        },
+      });
     }
   };
 

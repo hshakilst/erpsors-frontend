@@ -204,7 +204,7 @@ const Items = ({ data, handleClose, ...props }) => {
     for (const property in updateData) {
       if (!updateData[property]) delete updateData[property];
     }
-    useUpdateItemById(updateData)
+    Promise.resolve(useUpdateItemById(updateData))
       .then(({ error, data }) => {
         if (!error)
           props.enqueueSnackbar(`Update successful.`, {
@@ -267,7 +267,7 @@ const Items = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledDatePicker
                     label={"Opening Date"}
-                    name="opnDate"
+                    name={"opnDate"}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                     inputRef={register({
@@ -505,7 +505,7 @@ const Items = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledAutoCompleteForm
                     label={"Supplier"}
-                    name="supplier"
+                    name={"supplier"}
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -530,7 +530,7 @@ const Items = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledAutoCompleteForm
                     label={"Warehouse"}
-                    name="warehouse"
+                    name={"warehouse"}
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -674,7 +674,7 @@ const Items = ({ data, handleClose, ...props }) => {
             <Grid
               item
               className={classes.gridItem}
-              lg={12}
+              lg={6}
               md={12}
               sm={12}
               xs={12}

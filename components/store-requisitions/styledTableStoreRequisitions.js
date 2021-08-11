@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import theme from "@/components/ui/theme";
 import withStyledUpdateForm from "@/components/shared/withStyledUpdateForm";
-import StoreIssues from "@/components/update-forms/storeIssues";
+import StoreRequisitions from "@/components/update-forms/storeRequisitions";
 import LogRocket from "logrocket";
 import { useCreateItemLedger } from "@/adapters/items-ledger";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
@@ -24,9 +24,10 @@ const StyledTableStoreIssues = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const UpdateFormItems = withStyledUpdateForm(StoreIssues);
+  const UpdateFormItems = withStyledUpdateForm(StoreRequisitions);
 
   const columns = [
+    { headerName: "ID", field: "id", hide: true },
     {
       headerName: "Actions",
       headerAlign: "center",
@@ -171,7 +172,6 @@ const StyledTableStoreIssues = (props) => {
       width: 160,
       align: "center",
     },
-    { headerName: "ID", field: "id", hide: true },
     {
       headerName: "Date",
       headerAlign: "center",

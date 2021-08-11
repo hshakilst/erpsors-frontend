@@ -144,8 +144,7 @@ const useStyles = makeStyles((theme) =>
 const StyledFormItems = (props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset, watch, setValue } =
-    useForm();
+  const { register, handleSubmit, errors, control, reset, watch } = useForm();
   const [amount, setAmount] = React.useState("");
   let watchedQty = Number(watch("qty")) || 0;
   let watchedValueRate = Number(watch("valueRate")) || 0;
@@ -256,7 +255,7 @@ const StyledFormItems = (props) => {
               color: theme.palette.grey.body,
             }}
           >
-            Create an item
+            {"Create an Item"}
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
@@ -284,7 +283,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledDatePicker
                       label={"Opening Date"}
-                      name="opnDate"
+                      name={"opnDate"}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       required
@@ -569,7 +568,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledAutoCompleteForm
                       label={"Supplier"}
-                      name="supplier"
+                      name={"supplier"}
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -594,7 +593,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledAutoCompleteForm
                       label={"Warehouse"}
-                      name="warehouse"
+                      name={"warehouse"}
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -691,11 +690,6 @@ const StyledFormItems = (props) => {
                         root: classes.selectRoot,
                       }}
                       name={"group"}
-                      //FIXME:Add validation pattern
-                      // inputRef={register({
-                      //   required: true,
-                      // })}
-                      // error={errors.group ? true : false}
                       control={control}
                       defaultValue={""}
                     >

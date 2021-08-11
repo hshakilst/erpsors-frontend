@@ -159,7 +159,6 @@ const StyledFormPurchaseOrders = (props) => {
   }, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let reqCode = data.reqCode?.code;
     let item = data.item?.code;
@@ -187,22 +186,22 @@ const StyledFormPurchaseOrders = (props) => {
         notes,
         totalAmount,
         date,
-      });
+      }).then(() => {});
       if (!error)
-        props.enqueueSnackbar(`PO ${code} added successfully.`, {
+        props.enqueueSnackbar(`PO ${code} : Insertion successful.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(
-          `Adding PO ${code} was unsuccessful. Reason: ${error.code}`,
-          {
-            variant: "error",
-          }
-        );
+        props.enqueueSnackbar(`PO ${code} : Insertion failed.`, {
+          variant: "error",
+        });
     } catch (error) {
-      props.enqueueSnackbar(`Something went wrong.`, {
-        variant: "error",
-      });
+      props.enqueueSnackbar(
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        {
+          variant: "error",
+        }
+      );
     }
   };
 
@@ -307,7 +306,7 @@ const StyledFormPurchaseOrders = (props) => {
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnDate ? true : false}
+                      error={errors.date ? true : false}
                     />
                   </div>
                 </Paper>
@@ -418,7 +417,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      required={true}
+                      // required={true}
                       fetchOptions={useGetAllSupplierCodes}
                     />
                   </div>

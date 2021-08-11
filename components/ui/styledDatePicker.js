@@ -49,7 +49,6 @@ export default function StyledDatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <DatePicker
-        {...props}
         autoOk
         clearable
         label={props.label}
@@ -62,6 +61,7 @@ export default function StyledDatePicker(props) {
         }}
         value={selectedDate}
         onChange={handleDateChange}
+        {...props}
       />
     </MuiPickersUtilsProvider>
   );

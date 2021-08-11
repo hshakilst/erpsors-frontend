@@ -1,14 +1,10 @@
-import { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import { Box } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import dynamic from "next/dynamic";
-import Box from "@material-ui/core/Box";
 import { useTheme, makeStyles, createStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -24,16 +20,11 @@ export default function withStyledUpdateForm(WrappedComponent) {
   return ({ data, label, open, handleClose, ...props }) => {
     const classes = useStyles();
     const theme = useTheme();
-    // const [data, setData] = useState({});
-    // const [open, setOpen] = useState(false);
-
-    // const handleClose = () => {
-    //   setOpen(false);
-    // };
+    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
       <Dialog
-        fullWidth
+        fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
