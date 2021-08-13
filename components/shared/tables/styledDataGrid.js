@@ -203,6 +203,9 @@ export default function StyledDataGrid(props) {
   const classes = useStyles();
   const { error, data, loading, mutate } = props.fetch();
   const [pageSize, setPageSize] = React.useState(5);
+  // const [rows, setRows] = React.useState(data);
+
+  // React.useEffect(()=>{},[data]);
 
   const handlePageSizeChange = (params) => {
     setPageSize(params.pageSize);
@@ -222,7 +225,7 @@ export default function StyledDataGrid(props) {
           rows={data ?? []}
           columns={props.columns}
           loading={loading}
-          error={error && "Error fetching data."}
+          error={error && true}
           checkboxSelection
           pageSize={pageSize}
           onPageSizeChange={handlePageSizeChange}
