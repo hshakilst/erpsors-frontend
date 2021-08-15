@@ -186,7 +186,7 @@ const StyledFormPurchaseOrders = (props) => {
         notes,
         totalAmount,
         date,
-      }).then(() => {});
+      });
       if (!error)
         props.enqueueSnackbar(`PO ${code} : Insertion successful.`, {
           variant: "success",

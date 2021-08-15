@@ -15,16 +15,58 @@ import StoreRequisitions from "@/components/update-forms/storeRequisitions";
 import LogRocket from "logrocket";
 import { useCreateItemLedger } from "@/adapters/items-ledger";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import ItemsLedger from "@/contexts/items-ledger";
+import { format } from "date-fns";
 
-const StyledTableStoreIssues = (props) => {
-  const [data, setData] = useState({});
-  const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const UpdateFormItems = withStyledUpdateForm(StoreRequisitions);
+const StyledTableStoreRequisitions = (props) => {
+  const [editable, setEditable] = React.useState(false);
+
+  const toggleEdit = () => setEditable((isEditable) => !isEditable);
+
+  const handleCellEditCommit = React.useCallback(
+    ({ id, field, value, ...params }, event) => {
+      if (field === "date" || field === "reqDate")
+        value = format(new Date(value), "yyyy-MM-dd");
+
+      let data = {};
+      data.id = id;
+      data[field] = value;
+
+      try {
+        if (value !== params.row[field])
+          Promise.resolve(useUpdateStoreRequisitionById(data)).then(
+            ({ error, data }) => {
+              if (!error)
+                props.enqueueSnackbar(
+                  `Requisition ${data.data.code} : Update Successful.`,
+                  {
+                    variant: "success",
+                    autoHideDuration: 5000,
+                  }
+                );
+              else throw error;
+            }
+          );
+      } catch (error) {
+        props.enqueueSnackbar(
+          `Something went wrong.
+        \nReason: ${JSON.stringify(error)}`,
+          {
+            variant: "error",
+            autoHideDuration: 5000,
+          }
+        );
+
+        LogRocket.captureException(error, {
+          tags: { function: "onUpdateStoreRequisition" },
+          extra: {
+            component: "Store Requisition Table",
+          },
+        });
+      }
+    },
+    []
+  );
 
   const columns = [
     { headerName: "ID", field: "id", hide: true },
@@ -49,7 +91,7 @@ const StyledTableStoreIssues = (props) => {
                   ).then(({ error, data }) => {
                     if (!error)
                       props.enqueueSnackbar(
-                        `Issue ${data.data.code} : Posted Successful.`,
+                        `Requisition ${data.data.code} : Posted Successful.`,
                         {
                           variant: "success",
                           autoHideDuration: 5000,
@@ -86,16 +128,13 @@ const StyledTableStoreIssues = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={4}>
-            <IconButton
-              onClick={() => {
-                setData(params.row);
-                setOpen(true);
-              }}
-            >
+          <IconButton disabled={params.row.isApproved} onClick={toggleEdit}>
               <EditIcon
                 style={{
                   color: params.row.isApproved
                     ? theme.palette.grey.label
+                    : editable
+                    ? theme.palette.primary.main
                     : theme.palette.grey.title,
                 }}
               />
@@ -144,7 +183,7 @@ const StyledTableStoreIssues = (props) => {
                     );
 
                     LogRocket.captureException(error, {
-                      tags: { function: "useDeleteStoreIssueById" },
+                      tags: { function: "useDeleteStoreRequisitionById" },
                       extra: {
                         component: "Store Requisition Table",
                       },
@@ -171,6 +210,7 @@ const StyledTableStoreIssues = (props) => {
       type: "boolean",
       width: 160,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Date",
@@ -179,6 +219,8 @@ const StyledTableStoreIssues = (props) => {
       type: "date",
       width: 160,
       align: "center",
+      editable: editable,
+      valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
       headerName: "Requisition Code",
@@ -186,6 +228,7 @@ const StyledTableStoreIssues = (props) => {
       field: "code",
       width: 200,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Item Code",
@@ -193,6 +236,7 @@ const StyledTableStoreIssues = (props) => {
       field: "item",
       width: 160,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Required Qty.",
@@ -201,21 +245,8 @@ const StyledTableStoreIssues = (props) => {
       type: "number",
       width: 180,
       align: "right",
+      editable: editable,
     },
-    // {
-    //   headerName: "Item Type",
-    //   headerAlign: "center",
-    //   field: "type",
-    //   width: 180,
-    //   align: "center",
-    // },
-    // {
-    //   headerName: "Item Name",
-    //   headerAlign: "center",
-    //   field: "name",
-    //   width: 230,
-    //   align: "center",
-    // },
     {
       headerName: "Required By",
       headerAlign: "center",
@@ -223,29 +254,16 @@ const StyledTableStoreIssues = (props) => {
       type: "date",
       width: 180,
       align: "center",
+      editable: editable,
+      valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
-    // {
-    //   headerName: "Unit",
-    //   headerAlign: "center",
-    //   field: "unit",
-    //   width: 120,
-    //   align: "center",
-    // },
-    // {
-    //   headerName: "Supplier Code",
-    //   headerAlign: "center",
-    //   field: "supplier",
-    //   width: 200,
-    //   align: "center",
-    //   valueFormatter: (params) =>
-    //     params.value === "" ? `(empty)` : params.value,
-    // },-*
     {
       headerName: "Warehouse Code",
       headerAlign: "center",
       field: "warehouse",
       width: 200,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Notes",
@@ -255,17 +273,11 @@ const StyledTableStoreIssues = (props) => {
       align: "center",
       valueFormatter: (params) =>
         params.value === "" ? `(empty)` : params.value,
+      editable: editable,
     },
   ];
 
   return (
-    <>
-      <UpdateFormItems
-        label={"Store Requisitions"}
-        data={data}
-        open={open}
-        handleClose={handleClose}
-      />
       <StyledDataGrid
         label={"Store Requisitions"}
         columns={columns}
@@ -276,9 +288,9 @@ const StyledTableStoreIssues = (props) => {
             sort: "asc",
           },
         ]}
+        onCellEditCommit={handleCellEditCommit}
       />
-    </>
   );
 };
 
-export default withSnackbar(StyledTableStoreIssues);
+export default withSnackbar(StyledTableStoreRequisitions);

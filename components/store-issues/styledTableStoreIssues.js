@@ -10,23 +10,64 @@ import StyledDataGrid from "@/components/shared/tables/styledDataGrid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import theme from "@/components/ui/theme";
-import withStyledUpdateForm from "@/components/shared/withStyledUpdateForm";
-import StoreIssues from "@/components/update-forms/storeIssues";
 import LogRocket from "logrocket";
 import { useCreateItemLedger } from "@/adapters/items-ledger";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import ItemsLedger from "@/contexts/items-ledger";
+import { format } from "date-fns";
 
 const StyledTableStoreIssues = (props) => {
-  const [data, setData] = useState({});
-  const [open, setOpen] = useState(false);
+  const [editable, setEditable] = React.useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const UpdateFormItems = withStyledUpdateForm(StoreIssues);
+  const toggleEdit = () => setEditable((isEditable) => !isEditable);
+
+  const handleCellEditCommit = React.useCallback(
+    ({ id, field, value, ...params }) => {
+      if (field === "date")
+        value = format(new Date(value), "yyyy-MM-dd");
+
+      let data = {};
+      data.id = id;
+      data[field] = value;
+
+      try {
+        if (value !== params.row[field])
+          Promise.resolve(useUpdateStoreIssueById(data)).then(
+            ({ error, data }) => {
+              if (!error)
+                props.enqueueSnackbar(
+                  `Issue ${data.data.code} : Update Successful.`,
+                  {
+                    variant: "success",
+                    autoHideDuration: 5000,
+                  }
+                );
+              else throw error;
+            }
+          );
+      } catch (error) {
+        props.enqueueSnackbar(
+          `Something went wrong.
+        \nReason: ${JSON.stringify(error)}`,
+          {
+            variant: "error",
+            autoHideDuration: 5000,
+          }
+        );
+
+        LogRocket.captureException(error, {
+          tags: { function: "onUpdateStoreIssue" },
+          extra: {
+            component: "Store Issue Table",
+          },
+        });
+      }
+    },
+    []
+  );
 
   const columns = [
+    { headerName: "ID", field: "id", hide: true },
     {
       headerName: "Actions",
       headerAlign: "center",
@@ -110,17 +151,13 @@ const StyledTableStoreIssues = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={4}>
-            <IconButton
-              disabled={params.row.isPosted}
-              onClick={() => {
-                setData(params.row);
-                setOpen(true);
-              }}
-            >
+            <IconButton disabled={params.row.isPosted} onClick={toggleEdit}>
               <EditIcon
                 style={{
                   color: params.row.isPosted
                     ? theme.palette.grey.label
+                    : editable
+                    ? theme.palette.primary.main
                     : theme.palette.grey.title,
                 }}
               />
@@ -196,8 +233,8 @@ const StyledTableStoreIssues = (props) => {
       type: "boolean",
       width: 145,
       align: "center",
+      editable: editable,
     },
-    { headerName: "ID", field: "id", hide: true },
     {
       headerName: "Date",
       headerAlign: "center",
@@ -205,6 +242,8 @@ const StyledTableStoreIssues = (props) => {
       type: "date",
       width: 115,
       align: "center",
+      editable: editable,
+      valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
       headerName: "Issue Code",
@@ -212,6 +251,7 @@ const StyledTableStoreIssues = (props) => {
       field: "code",
       width: 180,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Requisition Code",
@@ -219,6 +259,7 @@ const StyledTableStoreIssues = (props) => {
       field: "reqCode",
       width: 200,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Item Code",
@@ -226,6 +267,7 @@ const StyledTableStoreIssues = (props) => {
       field: "item",
       width: 180,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Opening Qty.",
@@ -234,6 +276,7 @@ const StyledTableStoreIssues = (props) => {
       type: "number",
       width: 180,
       align: "right",
+      editable: editable,
     },
     {
       headerName: "Issued Qty.",
@@ -242,6 +285,7 @@ const StyledTableStoreIssues = (props) => {
       type: "number",
       width: 160,
       align: "right",
+      editable: editable,
     },
     {
       headerName: "Closing Qty.",
@@ -252,6 +296,7 @@ const StyledTableStoreIssues = (props) => {
       align: "right",
       valueGetter: (params) =>
         Number(params.row.opnQty) - Number(params.row.issQty),
+      editable: editable,
     },
     {
       headerName: "Warehouse Code",
@@ -259,6 +304,7 @@ const StyledTableStoreIssues = (props) => {
       field: "warehouse",
       width: 200,
       align: "center",
+      editable: editable,
     },
     {
       headerName: "Notes",
@@ -268,29 +314,23 @@ const StyledTableStoreIssues = (props) => {
       align: "center",
       valueFormatter: (params) =>
         params.value === "" ? `(empty)` : params.value,
+      editable: editable,
     },
   ];
 
   return (
-    <>
-      <UpdateFormItems
-        label={"Store Issues"}
-        data={data}
-        open={open}
-        handleClose={handleClose}
-      />
-      <StyledDataGrid
-        label={"Store Issues"}
-        columns={columns}
-        fetch={useGetAllStoreIssues}
-        sortModel={[
-          {
-            field: "code",
-            sort: "asc",
-          },
-        ]}
-      />
-    </>
+    <StyledDataGrid
+      label={"Store Issues"}
+      columns={columns}
+      fetch={useGetAllStoreIssues}
+      sortModel={[
+        {
+          field: "code",
+          sort: "asc",
+        },
+      ]}
+      onCellEditCommit={handleCellEditCommit}
+    />
   );
 };
 

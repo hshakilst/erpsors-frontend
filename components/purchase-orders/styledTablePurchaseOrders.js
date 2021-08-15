@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   useGetAllPurchaseOrders,
   useDeletePurchaseOrderById,
@@ -10,49 +10,58 @@ import StyledDataGrid from "@/components/shared/tables/styledDataGrid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import theme from "@/components/ui/theme";
-import withStyledUpdateForm from "@/components/shared/withStyledUpdateForm";
-import PurchaseOrders from "@/components/update-forms/purchaseOrders";
 import LogRocket from "logrocket";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import { format } from "date-fns";
 
 const StyledTablePurchaseOrders = (props) => {
   const [editable, setEditable] = React.useState(false);
 
   const toggleEdit = () => setEditable((isEditable) => !isEditable);
 
-  const handleCellEditCommit = React.useCallback(({ id, field, value }) => {
-    let data = {};
-    data.id = id;
-    data[field] = value;
-    try {
-      Promise.resolve(
-        useUpdatePurchaseOrderById(data)
-      ).then(({ error, data }) => {
-        if (!error)
-          props.enqueueSnackbar(`PO ${data.data.code} : Update Successful.`, {
-            variant: "success",
-            autoHideDuration: 5000,
-          });
-        else throw error;
-      });
-    } catch (error) {
-      props.enqueueSnackbar(
-        `Something went wrong.
-        \nReason: ${JSON.stringify(error)}`,
-        {
-          variant: "error",
-          autoHideDuration: 5000,
-        }
-      );
+  const handleCellEditCommit = React.useCallback(
+    ({ id, field, value, ...params }) => {
+      if (field === "date")
+        console.log(format(new Date(value), "yyyy-MM-dd")) ;
 
-      LogRocket.captureException(error, {
-        tags: { function: "onUpdatePurchaseOrder" },
-        extra: {
-          component: "Purchase Orders Table",
-        },
-      });
-    }
-  }, []);
+      let data = {};
+      data.id = id;
+      data[field] = value;
+      try {
+        if (value !== params.row[field])
+          Promise.resolve(useUpdatePurchaseOrderById(data)).then(
+            ({ error, data }) => {
+              if (!error)
+                props.enqueueSnackbar(
+                  `PO ${data.data.code} : Update Successful.`,
+                  {
+                    variant: "success",
+                    autoHideDuration: 5000,
+                  }
+                );
+              else throw error;
+            }
+          );
+      } catch (error) {
+        props.enqueueSnackbar(
+          `Something went wrong.
+        \nReason: ${JSON.stringify(error)}`,
+          {
+            variant: "error",
+            autoHideDuration: 5000,
+          }
+        );
+
+        LogRocket.captureException(error, {
+          tags: { function: "onUpdatePurchaseOrder" },
+          extra: {
+            component: "Purchase Orders Table",
+          },
+        });
+      }
+    },
+    []
+  );
 
   const columns = [
     { headerName: "ID", headerAlign: "center", field: "id", hide: true },
@@ -114,7 +123,7 @@ const StyledTablePurchaseOrders = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={4}>
-            <IconButton onClick={toggleEdit}>
+            <IconButton disabled={params.row.isReceived} onClick={toggleEdit}>
               <EditIcon
                 style={{
                   color: params.row.isReceived
@@ -206,8 +215,7 @@ const StyledTablePurchaseOrders = (props) => {
       width: 115,
       align: "center",
       editable: editable,
-      valueFormatter: (params) =>
-        new Date(params.value).toISOString().split("T")[0],
+      valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
       headerName: "PO Code",
@@ -307,12 +315,6 @@ const StyledTablePurchaseOrders = (props) => {
 
   return (
     <>
-      {/* <UpdateFormItems
-        label={"Purchase Orders"}
-        data={data}
-        open={open}
-        handleClose={handleClose}
-      /> */}
       <StyledDataGrid
         label={"Purchase Orders"}
         columns={columns}
