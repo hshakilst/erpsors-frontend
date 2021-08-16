@@ -47,7 +47,7 @@ const StyledTableStoreReceipts = (props) => {
     } catch (error) {
       props.enqueueSnackbar(
         `Something went wrong.
-        \nReason: ${JSON.stringify(error).replace("\\\\", " ").trim()}`,
+        \nReason: ${JSON.stringify(error).replace(`\\`, " ").trim()}`,
         {
           variant: "error",
           autoHideDuration: 5000,
@@ -118,7 +118,7 @@ const StyledTableStoreReceipts = (props) => {
                 } catch (error) {
                   props.enqueueSnackbar(
                     `Something went wrong.
-                  \nReason: ${JSON.stringify(error).replace("\\", " ").trim()}`,
+                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
                     {
                       variant: "error",
                       autoHideDuration: 5000,
@@ -174,18 +174,11 @@ const StyledTableStoreReceipts = (props) => {
                         }
                       );
                     else throw data;
-
-                    LogRocket.captureException(data, {
-                      tags: { source: "FaunaDB Error" },
-                      extra: {
-                        component: "Store Receipt Table",
-                      },
-                    });
                   })
                   .catch((error) => {
                     props.enqueueSnackbar(
                       `Something went wrong.
-                  \nReason: ${JSON.stringify(error).replace("\\", " ").trim()}`,
+                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
                       {
                         variant: "error",
                         autoHideDuration: 5000,

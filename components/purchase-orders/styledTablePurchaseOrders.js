@@ -23,54 +23,39 @@ const StyledTablePurchaseOrders = (props) => {
       return id;
     });
 
-  const handleCellEditCommit = React.useCallback(
-    ({id, field, value}) => {
-      let data = {};
-      data.id = id;
-      data[field] = value;
-        try {
-          Promise.resolve(useUpdatePurchaseOrderById(data)).then(
-            ({ error, data }) => {
-              if (!error)
-                props.enqueueSnackbar(
-                  `PO ${data.data.code} : Update Successful.`,
-                  {
-                    variant: "success",
-                    autoHideDuration: 5000,
-                  }
-                );
-              else
-                props.enqueueSnackbar(
-                  `PO ${
-                    data.data.code
-                  } : Update Failed.\nReason: ${JSON.stringify(error)}`,
-                  {
-                    variant: "error",
-                    autoHideDuration: 5000,
-                  }
-                );
-            }
-          );
-        } catch (error) {
-          props.enqueueSnackbar(
-            `Something went wrong.
-        \nReason: ${JSON.stringify(error)}`,
-            {
-              variant: "error",
+  const handleCellEditCommit = React.useCallback(({ id, field, value }) => {
+    let data = {};
+    data.id = id;
+    data[field] = value;
+    try {
+      Promise.resolve(useUpdatePurchaseOrderById(data)).then(
+        ({ error, data }) => {
+          if (!error)
+            props.enqueueSnackbar(`PO ${data.data.code} : Update Successful.`, {
+              variant: "success",
               autoHideDuration: 5000,
-            }
-          );
-
-          LogRocket.captureException(error, {
-            tags: { function: "onUpdatePurchaseOrder" },
-            extra: {
-              component: "Purchase Orders Table",
-            },
-          });
+            });
+          else throw data;
         }
-    },
-    []
-  );
+      );
+    } catch (error) {
+      props.enqueueSnackbar(
+        `Something went wrong.
+       \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
+
+      LogRocket.captureException(error, {
+        tags: { function: "onUpdatePurchaseOrder" },
+        extra: {
+          component: "Purchase Orders Table",
+        },
+      });
+    }
+  }, []);
 
   const columns = [
     { headerName: "ID", headerAlign: "center", field: "id", hide: true },
@@ -101,12 +86,12 @@ const StyledTablePurchaseOrders = (props) => {
                           autoHideDuration: 5000,
                         }
                       );
-                    else throw error;
+                    else throw data;
                   });
                 } catch (error) {
                   props.enqueueSnackbar(
                     `Something went wrong.
-                  \nReason: ${JSON.stringify(error)}`,
+                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
                     {
                       variant: "error",
                       autoHideDuration: 5000,
@@ -161,28 +146,14 @@ const StyledTablePurchaseOrders = (props) => {
                           autoHideDuration: 5000,
                         }
                       );
-                    } else {
-                      props.enqueueSnackbar(
-                        `PO ${data.data.code} : Deletion failed.
-                        Reason: ${error.code}`,
-                        {
-                          variant: "error",
-                          autoHideDuration: 5000,
-                        }
-                      );
-
-                      LogRocket.captureException(data, {
-                        tags: { source: "FaunaDB Error" },
-                        extra: {
-                          component: "Purchase Order Table",
-                        },
-                      });
-                    }
+                    } else throw data;
                   })
                   .catch((error) => {
                     props.enqueueSnackbar(
                       `Something went wrong.
-                  \nReason: ${JSON.stringify(error)}`,
+                  \nReason: ${JSON.stringify(error)
+                    .replaceAll(`//`, ` `)
+                    .trim()}`,
                       {
                         variant: "error",
                         autoHideDuration: 5000,

@@ -40,13 +40,13 @@ const StyledTableStoreRequisitions = (props) => {
                   autoHideDuration: 5000,
                 }
               );
-            else throw error;
+            else throw data;
           }
         );
       } catch (error) {
         props.enqueueSnackbar(
           `Something went wrong.
-        \nReason: ${JSON.stringify(error)}`,
+        \nReason: ${JSON.stringify(error).replaceAll(`//`, ` `).trim()}`,
           {
             variant: "error",
             autoHideDuration: 5000,
@@ -93,12 +93,12 @@ const StyledTableStoreRequisitions = (props) => {
                           autoHideDuration: 5000,
                         }
                       );
-                    else throw error;
+                    else throw data;
                   });
                 } catch (error) {
                   props.enqueueSnackbar(
                     `Something went wrong.
-                  \nReason: ${JSON.stringify(error)}`,
+                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
                     {
                       variant: "error",
                       autoHideDuration: 5000,
@@ -153,28 +153,12 @@ const StyledTableStoreRequisitions = (props) => {
                           autoHideDuration: 5000,
                         }
                       );
-                    } else {
-                      props.enqueueSnackbar(
-                        `Requisition ${data.data.code} : Deletion failed.
-                        Reason: ${error.code}`,
-                        {
-                          variant: "error",
-                          autoHideDuration: 5000,
-                        }
-                      );
-
-                      LogRocket.captureException(data, {
-                        tags: { source: "FaunaDB Error" },
-                        extra: {
-                          component: "Store Requisition Table",
-                        },
-                      });
-                    }
+                    } else throw data;
                   })
                   .catch((error) => {
                     props.enqueueSnackbar(
                       `Something went wrong.
-                  \nReason: ${JSON.stringify(error)}`,
+                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
                       {
                         variant: "error",
                         autoHideDuration: 5000,
