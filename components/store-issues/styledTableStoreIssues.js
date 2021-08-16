@@ -17,54 +17,49 @@ import ItemsLedger from "@/contexts/items-ledger";
 import { format } from "date-fns";
 
 const StyledTableStoreIssues = (props) => {
-  const [editable, setEditable] = React.useState(false);
+  const [editable, setEditable] = React.useState();
 
-  const toggleEdit = () => setEditable((isEditable) => !isEditable);
+  const toggleEdit = (id) =>
+    setEditable((prevState) => {
+      if (prevState) return undefined;
+      return id;
+    });
 
-  const handleCellEditCommit = React.useCallback(
-    ({ id, field, value, ...params }) => {
-      if (field === "date")
-        value = format(new Date(value), "yyyy-MM-dd");
+  const handleCellEditCommit = React.useCallback(({ id, field, value }) => {
+    let data = {};
+    data.id = id;
+    data[field] = value;
 
-      let data = {};
-      data.id = id;
-      data[field] = value;
-
-      try {
-        if (value !== params.row[field])
-          Promise.resolve(useUpdateStoreIssueById(data)).then(
-            ({ error, data }) => {
-              if (!error)
-                props.enqueueSnackbar(
-                  `Issue ${data.data.code} : Update Successful.`,
-                  {
-                    variant: "success",
-                    autoHideDuration: 5000,
-                  }
-                );
-              else throw error;
+    try {
+      Promise.resolve(useUpdateStoreIssueById(data)).then(({ error, data }) => {
+        if (!error)
+          props.enqueueSnackbar(
+            `Issue ${data.data.code} : Update Successful.`,
+            {
+              variant: "success",
+              autoHideDuration: 5000,
             }
           );
-      } catch (error) {
-        props.enqueueSnackbar(
-          `Something went wrong.
+        else throw error;
+      });
+    } catch (error) {
+      props.enqueueSnackbar(
+        `Something went wrong.
         \nReason: ${JSON.stringify(error)}`,
-          {
-            variant: "error",
-            autoHideDuration: 5000,
-          }
-        );
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
 
-        LogRocket.captureException(error, {
-          tags: { function: "onUpdateStoreIssue" },
-          extra: {
-            component: "Store Issue Table",
-          },
-        });
-      }
-    },
-    []
-  );
+      LogRocket.captureException(error, {
+        tags: { function: "onUpdateStoreIssue" },
+        extra: {
+          component: "Store Issue Table",
+        },
+      });
+    }
+  }, []);
 
   const columns = [
     { headerName: "ID", field: "id", hide: true },
@@ -85,7 +80,7 @@ const StyledTableStoreIssues = (props) => {
                     useCreateItemLedger(
                       new ItemsLedger({
                         date: params.row.date,
-                        code: params.row.code,
+                        code: `SI-${params.row.code}`,
                         type: "store-issues",
                         itemCode: params.row.item,
                         opnRate: params.row.opnRate,
@@ -151,12 +146,15 @@ const StyledTableStoreIssues = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={4}>
-            <IconButton disabled={params.row.isPosted} onClick={toggleEdit}>
+            <IconButton
+              disabled={params.row.isPosted}
+              onClick={() => toggleEdit(params.row.id)}
+            >
               <EditIcon
                 style={{
                   color: params.row.isPosted
                     ? theme.palette.grey.label
-                    : editable
+                    : params.row.id === editable
                     ? theme.palette.primary.main
                     : theme.palette.grey.title,
                 }}
@@ -233,7 +231,7 @@ const StyledTableStoreIssues = (props) => {
       type: "boolean",
       width: 145,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Date",
@@ -242,7 +240,7 @@ const StyledTableStoreIssues = (props) => {
       type: "date",
       width: 115,
       align: "center",
-      editable: editable,
+      editable: true,
       valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
@@ -251,15 +249,15 @@ const StyledTableStoreIssues = (props) => {
       field: "code",
       width: 180,
       align: "center",
-      editable: editable,
+      editable: false,
     },
     {
       headerName: "Requisition Code",
       headerAlign: "center",
-      field: "reqCode",
+      field: "reqCode", //floor requisition code
       width: 200,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Item Code",
@@ -267,7 +265,7 @@ const StyledTableStoreIssues = (props) => {
       field: "item",
       width: 180,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Opening Qty.",
@@ -276,7 +274,7 @@ const StyledTableStoreIssues = (props) => {
       type: "number",
       width: 180,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Issued Qty.",
@@ -285,7 +283,7 @@ const StyledTableStoreIssues = (props) => {
       type: "number",
       width: 160,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Closing Qty.",
@@ -296,7 +294,7 @@ const StyledTableStoreIssues = (props) => {
       align: "right",
       valueGetter: (params) =>
         Number(params.row.opnQty) - Number(params.row.issQty),
-      editable: editable,
+      editable: false,
     },
     {
       headerName: "Warehouse Code",
@@ -304,7 +302,7 @@ const StyledTableStoreIssues = (props) => {
       field: "warehouse",
       width: 200,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Notes",
@@ -314,7 +312,7 @@ const StyledTableStoreIssues = (props) => {
       align: "center",
       valueFormatter: (params) =>
         params.value === "" ? `(empty)` : params.value,
-      editable: editable,
+      editable: true,
     },
   ];
 
@@ -329,6 +327,7 @@ const StyledTableStoreIssues = (props) => {
           sort: "asc",
         },
       ]}
+      isCellEditable={(params) => params.row.id === editable}
       onCellEditCommit={handleCellEditCommit}
     />
   );

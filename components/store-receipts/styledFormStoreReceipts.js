@@ -170,59 +170,56 @@ const StyledFormStoreReceipts = (props) => {
   const onSubmit = async (data) => {
     let date = data.date;
     let code = data.code;
-    let poCode = data.poCode;
-    let item = data.item;
-    let valueRate = data.valueRate;
+    let poCode = data.poCode?.code;
+    let item = data.item?.code;
+    let recRate = data.recRate;
     let recQty = data.recQty;
-    let warehouse = data.warehouse;
+    let warehouse = data.warehouse?.code;
     let notes = data.notes;
-    let isPosted = false;
-    console.log(data);
 
-    // try {
-    //   const { error, data } = await useCreateStoreReceipt({
-    //     date,
-    //     code,
-    //     poCode,
-    //     item,
-    //     valueRate,
-    //     recQty,
-    //     warehouse,
-    //     notes,
-    //     isPosted,
-    //   });
-    //   if (!error)
-    //     props.enqueueSnackbar(`Receipt ${code} : Insertion successful.`, {
-    //       variant: "success",
-    //       autoHideDuration: 5000,
-    //     });
-    //   else {
-    //     props.enqueueSnackbar(`Receipt ${code} : Insertion failed.`, {
-    //       variant: "error",
-    //       autoHideDuration: 5000,
-    //     });
-    //     LogRocket.captureException(data, {
-    //       tags: { source: "FaunaDB Error" },
-    //       extra: {
-    //         component: "Store Receipt Form",
-    //       },
-    //     });
-    //   }
-    // } catch (error) {
-    //   props.enqueueSnackbar(
-    //     `Something went wrong.\nError:${JSON.stringify(error)}`,
-    //     {
-    //       variant: "error",
-    //       autoHideDuration: 5000,
-    //     }
-    //   );
-    //   LogRocket.captureException(error, {
-    //     tags: { function: "onSubmit" },
-    //     extra: {
-    //       component: "Store Receipt Form",
-    //     },
-    //   });
-    // }
+    try {
+      const { error, data } = await useCreateStoreReceipt({
+        date,
+        code,
+        poCode,
+        item,
+        recRate,
+        recQty,
+        warehouse,
+        notes,
+      });
+      if (!error)
+        props.enqueueSnackbar(`Receipt ${code} : Insertion successful.`, {
+          variant: "success",
+          autoHideDuration: 5000,
+        });
+      else {
+        props.enqueueSnackbar(`Receipt ${code} : Insertion failed.`, {
+          variant: "error",
+          autoHideDuration: 5000,
+        });
+        LogRocket.captureException(data, {
+          tags: { source: "FaunaDB Error" },
+          extra: {
+            component: "Store Receipt Form",
+          },
+        });
+      }
+    } catch (error) {
+      props.enqueueSnackbar(
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
+      LogRocket.captureException(error, {
+        tags: { function: "onSubmit" },
+        extra: {
+          component: "Store Receipt Form",
+        },
+      });
+    }
   };
 
   const onError = (errors) => {
@@ -427,14 +424,14 @@ const StyledFormStoreReceipts = (props) => {
                       classes={{
                         root: classes.inputRoot,
                       }}
-                      label={"Rate of Value"}
+                      label={"Rate"}
                       size={"small"}
-                      name={"valueRate"}
+                      name={"recRate"}
                       //FIXME:Add validation pattern
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.valueRate ? true : false}
+                      error={errors.recRate ? true : false}
                     />
                   </div>
                 </Paper>

@@ -64,13 +64,13 @@ export const useGetAllPurchaseOrderCodes = () => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useDeletePurchaseOrdersById = async (id) => {
+export const useDeletePurchaseOrderById = async (id) => {
   const res = await axios.delete(`/api/purchase-orders/${id}`);
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetPurchaseOrdersById = (id) => {
+export const useGetPurchaseOrderById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/purchase-orders/${id}` : null,
     fetcher,

@@ -15,20 +15,20 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import { format } from "date-fns";
 
 const StyledTablePurchaseOrders = (props) => {
-  const [editable, setEditable] = React.useState(false);
+  const [editable, setEditable] = React.useState();
 
-  const toggleEdit = () => setEditable((isEditable) => !isEditable);
+  const toggleEdit = (id) =>
+    setEditable((prevState) => {
+      if (prevState) return undefined;
+      return id;
+    });
 
   const handleCellEditCommit = React.useCallback(
-    ({ id, field, value, ...params }) => {
-      if (field === "date")
-        console.log(format(new Date(value), "yyyy-MM-dd")) ;
-
+    ({id, field, value}) => {
       let data = {};
       data.id = id;
       data[field] = value;
-      try {
-        if (value !== params.row[field])
+        try {
           Promise.resolve(useUpdatePurchaseOrderById(data)).then(
             ({ error, data }) => {
               if (!error)
@@ -39,26 +39,35 @@ const StyledTablePurchaseOrders = (props) => {
                     autoHideDuration: 5000,
                   }
                 );
-              else throw error;
+              else
+                props.enqueueSnackbar(
+                  `PO ${
+                    data.data.code
+                  } : Update Failed.\nReason: ${JSON.stringify(error)}`,
+                  {
+                    variant: "error",
+                    autoHideDuration: 5000,
+                  }
+                );
             }
           );
-      } catch (error) {
-        props.enqueueSnackbar(
-          `Something went wrong.
+        } catch (error) {
+          props.enqueueSnackbar(
+            `Something went wrong.
         \nReason: ${JSON.stringify(error)}`,
-          {
-            variant: "error",
-            autoHideDuration: 5000,
-          }
-        );
+            {
+              variant: "error",
+              autoHideDuration: 5000,
+            }
+          );
 
-        LogRocket.captureException(error, {
-          tags: { function: "onUpdatePurchaseOrder" },
-          extra: {
-            component: "Purchase Orders Table",
-          },
-        });
-      }
+          LogRocket.captureException(error, {
+            tags: { function: "onUpdatePurchaseOrder" },
+            extra: {
+              component: "Purchase Orders Table",
+            },
+          });
+        }
     },
     []
   );
@@ -123,12 +132,15 @@ const StyledTablePurchaseOrders = (props) => {
             </IconButton>
           </Grid>
           <Grid item xs={4}>
-            <IconButton disabled={params.row.isReceived} onClick={toggleEdit}>
+            <IconButton
+              disabled={params.row.isReceived}
+              onClick={() => toggleEdit(params.row.id)}
+            >
               <EditIcon
                 style={{
                   color: params.row.isReceived
                     ? theme.palette.grey.label
-                    : editable
+                    : params.row.id === editable
                     ? theme.palette.primary.main
                     : theme.palette.grey.title,
                 }}
@@ -205,7 +217,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "boolean",
       width: 160,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Date",
@@ -214,7 +226,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "date",
       width: 115,
       align: "center",
-      editable: editable,
+      editable: true,
       valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
@@ -223,7 +235,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "code",
       width: 140,
       align: "center",
-      editable: editable,
+      editable: false,
     },
     {
       headerName: "Requisition Code",
@@ -231,7 +243,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "reqCode",
       width: 200,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Item Code",
@@ -239,7 +251,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "item",
       width: 150,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Approved Qty.",
@@ -248,7 +260,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "number",
       width: 180,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Amount",
@@ -257,7 +269,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "number",
       width: 160,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Rate",
@@ -266,7 +278,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "number",
       width: 140,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Supplier Code",
@@ -274,7 +286,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "supplier",
       width: 180,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Purchase Mode",
@@ -282,7 +294,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "purMode",
       width: 200,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Credit Days",
@@ -291,7 +303,7 @@ const StyledTablePurchaseOrders = (props) => {
       type: "number",
       width: 160,
       align: "right",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Purchased By",
@@ -299,7 +311,7 @@ const StyledTablePurchaseOrders = (props) => {
       field: "purBy",
       width: 200,
       align: "center",
-      editable: editable,
+      editable: true,
     },
     {
       headerName: "Notes",
@@ -309,7 +321,7 @@ const StyledTablePurchaseOrders = (props) => {
       align: "center",
       valueFormatter: (params) =>
         params.value === "" ? `(empty)` : params.value,
-      editable: editable,
+      editable: true,
     },
   ];
 
@@ -325,6 +337,7 @@ const StyledTablePurchaseOrders = (props) => {
             sort: "asc",
           },
         ]}
+        isCellEditable={(params) => params.row.id === editable}
         onCellEditCommit={handleCellEditCommit}
       />
     </>
