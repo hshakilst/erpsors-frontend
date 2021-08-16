@@ -2,7 +2,7 @@ import React from "react";
 import {
   makeStyles,
   createStyles,
-  fade,
+  alpha,
   useTheme,
 } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -62,9 +62,9 @@ const useStyles = makeStyles((theme) =>
       height: "3.5rem",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -375,7 +375,10 @@ export default function StyledBillOfMaterials() {
               }}
             >
               <AddOutlinedIcon
-                style={{ color: theme.palette.grey.title, fontSize: "1.125rem" }}
+                style={{
+                  color: theme.palette.grey.title,
+                  fontSize: "1.125rem",
+                }}
               ></AddOutlinedIcon>
             </div>
             <div style={{ textAlign: "right", float: "left" }}>

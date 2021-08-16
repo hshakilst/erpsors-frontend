@@ -1,4 +1,5 @@
 //TODO:
+#Re structure reports data and table and change store received accordingly
+#Change Store Receipts Table to DataGrid and add date to Forms
 #Change all tables to Data Grid
 #Add editing option to tables.
-#Seperate FQL from api and structure them

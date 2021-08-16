@@ -11,8 +11,7 @@ export const useGetAllItemsLedger = () => {
   return {
     data: data?.map((row) => {
       const id = row.ref["@ref"].id;
-      const date = format(fromUnixTime(Number(row.ts) / 1000000), "dd/MM/yy");
-      console.log(date);
+      const date = format(fromUnixTime(Number(row.ts) / 1000000), "yyyy-MM-dd");
       return { id, date, ...row.data };
     }),
     error,
@@ -35,9 +34,7 @@ export const useGetItemLedgerById = (id) => {
 export const useCreateItemLedger = async ({
   code, //store-receipts or store-issues codes
   type, //store-receipts or store-issues
-  itemId,
   itemCode,
-  itemName,
   opnRate,
   opnQty,
   recRate,
@@ -45,14 +42,12 @@ export const useCreateItemLedger = async ({
   issRate,
   issQty,
   warehouseCode,
-  warehouseName,
+  notes,
 }) => {
   const res = await axios.post("/api/items-ledger", {
     code, //store-receipts or store-issues codes
     type, //store-receipts or store-issues
-    itemId,
     itemCode,
-    itemName,
     opnRate,
     opnQty,
     recRate,
@@ -60,7 +55,7 @@ export const useCreateItemLedger = async ({
     issRate,
     issQty,
     warehouseCode,
-    warehouseName,
+    notes,
   });
   mutate("/api/items-ledger");
   return { error: res.data.error, data: res.data.data };
@@ -68,7 +63,7 @@ export const useCreateItemLedger = async ({
 
 export const useDeleteItemLedgerById = async (id) => {
   const res = await axios.delete(`/api/items-ledger/${id}`);
-  mutate("/api/items");
+  mutate("/api/items-ledger");
   return { error: res.data.error, data: res.data.data };
 };
 

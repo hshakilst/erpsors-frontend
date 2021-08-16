@@ -64,13 +64,13 @@ export const useGetAllPurchaseOrderCodes = () => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useDeletePurchaseOrdersById = async (id) => {
+export const useDeletePurchaseOrderById = async (id) => {
   const res = await axios.delete(`/api/purchase-orders/${id}`);
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };
 };
 
-export const useGetPurchaseOrdersById = (id) => {
+export const useGetPurchaseOrderById = (id) => {
   const { data, error, ...rest } = useSWR(
     id ? `/api/purchase-orders/${id}` : null,
     fetcher,
@@ -81,7 +81,7 @@ export const useGetPurchaseOrdersById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdatePurchaseOrdersById = async ({
+export const useUpdatePurchaseOrderById = async ({
   id,
   reqCode,
   item,
@@ -94,6 +94,7 @@ export const useUpdatePurchaseOrdersById = async ({
   notes,
   totalAmount,
   date,
+  isReceived,
 }) => {
   const res = await axios.patch(`/api/purchase-orders/${id}`, {
     reqCode,
@@ -107,6 +108,7 @@ export const useUpdatePurchaseOrdersById = async ({
     notes,
     totalAmount,
     date,
+    isReceived,
   });
   mutate("/api/purchase-orders");
   return { error: res.data.error, data: res.data.data };

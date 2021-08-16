@@ -24,6 +24,7 @@ const handler = withApiAuthRequired(async (req, res) => {
       notes,
       totalAmount,
       date,
+      isReceived,
     } = req.body;
 
     switch (method) {
@@ -45,6 +46,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           notes,
           totalAmount,
           date,
+          isReceived,
         });
         res.status(200).json({ error: false, data: resUpdate });
         break;

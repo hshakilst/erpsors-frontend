@@ -2,7 +2,7 @@ import React from "react";
 import {
   makeStyles,
   createStyles,
-  fade,
+  alpha,
   useTheme,
 } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) =>
       height: "3.5rem",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -144,8 +144,7 @@ const useStyles = makeStyles((theme) =>
 const StyledFormItems = (props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, reset, watch, setValue } =
-    useForm();
+  const { register, handleSubmit, errors, control, reset, watch } = useForm();
   const [amount, setAmount] = React.useState("");
   let watchedQty = Number(watch("qty")) || 0;
   let watchedValueRate = Number(watch("valueRate")) || 0;
@@ -211,10 +210,13 @@ const StyledFormItems = (props) => {
         });
       }
     } catch (error) {
-      props.enqueueSnackbar(`Something went wrong.`, {
-        variant: "error",
-        autoHideDuration: 5000,
-      });
+      props.enqueueSnackbar(
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+        }
+      );
       LogRocket.captureException(error, {
         tags: { function: "onSubmit" },
         extra: {
@@ -253,7 +255,7 @@ const StyledFormItems = (props) => {
               color: theme.palette.grey.body,
             }}
           >
-            Create an item
+            {"Create an Item"}
           </Typography>
         </div>
         <div style={{ float: "right", marginTop: ".5rem" }}>
@@ -281,7 +283,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledDatePicker
                       label={"Opening Date"}
-                      name="opnDate"
+                      name={"opnDate"}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       required
@@ -566,7 +568,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledAutoCompleteForm
                       label={"Supplier"}
-                      name="supplier"
+                      name={"supplier"}
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -591,7 +593,7 @@ const StyledFormItems = (props) => {
                     </div>
                     <StyledAutoCompleteForm
                       label={"Warehouse"}
-                      name="warehouse"
+                      name={"warehouse"}
                       defaultValue={null}
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -688,11 +690,6 @@ const StyledFormItems = (props) => {
                         root: classes.selectRoot,
                       }}
                       name={"group"}
-                      //FIXME:Add validation pattern
-                      // inputRef={register({
-                      //   required: true,
-                      // })}
-                      // error={errors.group ? true : false}
                       control={control}
                       defaultValue={""}
                     >

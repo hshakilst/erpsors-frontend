@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) =>
       position: "relative",
       "& .MuiPaper-root": {
         backgroundColor: theme.palette.grey.inputBackground,
+        float: "right",
       },
       "& .MuiGrid-spacing-xs-2 > .MuiGrid-item": {
         paddingTop: ".01rem",
@@ -71,7 +72,7 @@ function CustomToolbar(props) {
   const theme = useTheme();
   const classes = useStyles();
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer style={{ minHeight: 52 }}>
       <Grid container spacing={2}>
         <Grid className={classes.gridItem} item xs={12}>
           <Paper className={classes.paper}>
@@ -95,7 +96,7 @@ function CustomToolbar(props) {
         <Grid item className={classes.gridItem} xs={12}>
           <Paper className={classes.paper}>
             <div>
-              <GridToolbarDensitySelector />
+              {/* <GridToolbarDensitySelector /> */}
               <GridToolbarColumnsButton />
               <GridToolbarFilterButton />
               <GridToolbarExport />
@@ -124,34 +125,32 @@ function CustomLoadingOverlay() {
 }
 
 function CustomNoRowsOverlay() {
-  const useStyles = makeStyles(
-    (theme) => ({
-      root: {
-        marginTop:4,
-        marginBottom:4,
-        flexDirection: "column",
-        "& .ant-empty-img-1": {
-          fill: theme.palette.type === "light" ? "#aeb8c2" : "#262626",
-        },
-        "& .ant-empty-img-2": {
-          fill: theme.palette.type === "light" ? "#f5f5f7" : "#595959",
-        },
-        "& .ant-empty-img-3": {
-          fill: theme.palette.type === "light" ? "#dce0e6" : "#434343",
-        },
-        "& .ant-empty-img-4": {
-          fill: theme.palette.type === "light" ? "#fff" : "#1c1c1c",
-        },
-        "& .ant-empty-img-5": {
-          fillOpacity: theme.palette.type === "light" ? "0.8" : "0.08",
-          fill: theme.palette.type === "light" ? "#f5f5f5" : "#fff",
-        },
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      marginTop: 4,
+      marginBottom: 4,
+      flexDirection: "column",
+      "& .ant-empty-img-1": {
+        fill: theme.palette.type === "light" ? "#aeb8c2" : "#262626",
       },
-      label: {
-        marginTop: theme.spacing(1),
+      "& .ant-empty-img-2": {
+        fill: theme.palette.type === "light" ? "#f5f5f7" : "#595959",
       },
-    })
-  );
+      "& .ant-empty-img-3": {
+        fill: theme.palette.type === "light" ? "#dce0e6" : "#434343",
+      },
+      "& .ant-empty-img-4": {
+        fill: theme.palette.type === "light" ? "#fff" : "#1c1c1c",
+      },
+      "& .ant-empty-img-5": {
+        fillOpacity: theme.palette.type === "light" ? "0.8" : "0.08",
+        fill: theme.palette.type === "light" ? "#f5f5f5" : "#fff",
+      },
+    },
+    label: {
+      marginTop: theme.spacing(1),
+    },
+  }));
   const classes = useStyles();
 
   return (
@@ -204,6 +203,9 @@ export default function StyledDataGrid(props) {
   const classes = useStyles();
   const { error, data, loading, mutate } = props.fetch();
   const [pageSize, setPageSize] = React.useState(5);
+  // const [rows, setRows] = React.useState(data);
+
+  // React.useEffect(()=>{},[data]);
 
   const handlePageSizeChange = (params) => {
     setPageSize(params.pageSize);
@@ -223,7 +225,7 @@ export default function StyledDataGrid(props) {
           rows={data ?? []}
           columns={props.columns}
           loading={loading}
-          error={error && "Error fetching data."}
+          error={error && true}
           checkboxSelection
           pageSize={pageSize}
           onPageSizeChange={handlePageSizeChange}

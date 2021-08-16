@@ -35,9 +35,11 @@ const handler = withApiAuthRequired(async (req, res) => {
         break;
 
       case "POST":
-        const { code, item, reqQty, warehouse, notes, reqDate } = req.body;
+        const { date, code, item, reqQty, warehouse, notes, reqDate } =
+          req.body;
 
         const result = await createStoreRequisition({
+          date,
           code,
           item,
           reqQty,

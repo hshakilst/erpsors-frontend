@@ -1,5 +1,5 @@
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { getOpeningItemRateQtyById } from "@/fauna/items";
+import { getOpeningItemRateQtyByCode } from "@/fauna/items";
 import {
   createStoreIssue,
   getAllStoreIssues,
@@ -35,24 +35,17 @@ const handler = withApiAuthRequired(async (req, res) => {
         }
         break;
       case "POST":
-        const {
-          code,
-          reqCode,
-          item,
-          issRate,
-          issQty,
-          warehouse,
-          notes,
-          isPosted,
-        } = req.body;
+        const { date, code, reqCode, item, issRate, issQty, warehouse, notes } =
+          req.body;
 
-        const query = await getOpeningItemRateQtyById(item.id);
+        const query = await getOpeningItemRateQtyByCode(item);
         const opnRate = query.data[0][0];
         const opnQty = query.data[0][1];
         if (Number(opnQty) < Number(issQty)) {
           res.status(403).json({ error: false, data: "Insufficient quantity" });
         }
-        const result = await createStoreIssue(
+        const result = await createStoreIssue({
+          date,
           code,
           reqCode,
           item,
@@ -62,8 +55,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           issQty,
           warehouse,
           notes,
-          isPosted
-        );
+        });
         res.status(200).json({ error: false, data: result });
         break;
       default:

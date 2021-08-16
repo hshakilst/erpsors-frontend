@@ -22,6 +22,7 @@ export const updatePurchaseOrderById = ({
   notes,
   totalAmount,
   date,
+  isReceived,
 }) => {
   return db.query(
     q.Update(q.Ref(q.Collection("purchase_orders"), id), {
@@ -37,6 +38,7 @@ export const updatePurchaseOrderById = ({
         notes,
         totalAmount,
         date,
+        isReceived,
       },
     })
   );
@@ -73,6 +75,7 @@ export const createPurchaseOrder = ({
         notes: notes ?? "",
         totalAmount: totalAmount ?? "",
         date: date ?? "",
+        isReceived: false,
       },
     })
   );

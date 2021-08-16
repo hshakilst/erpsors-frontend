@@ -6,7 +6,8 @@ import StyledDataGrid from "@/components/shared/tables/styledDataGrid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import theme from "@/components/ui/theme";
-import StyledFormDialog from "@/components/shared/styledFormDialog";
+import withStyledUpdateForm from "@/components/shared/withStyledUpdateForm";
+import Items from "@/components/update-forms/items";
 import LogRocket from "logrocket";
 
 const StyledTableItems = (props) => {
@@ -16,6 +17,7 @@ const StyledTableItems = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const UpdateFormItems = withStyledUpdateForm(Items);
 
   const columns = [
     { headerName: "ID", field: "id", hide: true },
@@ -215,7 +217,7 @@ const StyledTableItems = (props) => {
 
   return (
     <>
-      <StyledFormDialog
+      <UpdateFormItems
         label={"Items"}
         data={data}
         open={open}

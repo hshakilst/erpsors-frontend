@@ -11,26 +11,31 @@ export const deleteStoreRequisitionById = (id) => {
 
 export const updateStoreRequisitionById = ({
   id,
+  date,
   item,
   reqQty,
   warehouse,
   notes,
   reqDate,
+  isApproved,
 }) => {
   return db.query(
     q.Update(q.Ref(q.Collection("store_requisitions"), id), {
       data: {
+        date,
         item,
         reqQty,
         warehouse,
         notes,
         reqDate,
+        isApproved,
       },
     })
   );
 };
 
 export const createStoreRequisition = ({
+  date,
   code,
   item,
   reqQty,
@@ -41,12 +46,14 @@ export const createStoreRequisition = ({
   return db.query(
     q.Create(q.Collection("store_requisitions"), {
       data: {
+        date: date ?? "",
         code: code ?? "",
         item: item ?? "",
         reqQty: reqQty ?? "",
         reqDate: reqDate ?? "",
         warehouse: warehouse ?? "",
         notes: notes ?? "",
+        isApproved: false,
       },
     })
   );

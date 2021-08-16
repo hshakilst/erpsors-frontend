@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
+import { alpha, makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -68,9 +68,9 @@ const StyledAppBar = (props) => {
       position: "relative",
       paddingTop: "0.25rem",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       marginRight: theme.spacing(4),
       marginLeft: 0,
@@ -158,7 +158,7 @@ const StyledAppBar = (props) => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const router = useRouter();
-  const { user} = useUser();
+  const { user } = useUser();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);

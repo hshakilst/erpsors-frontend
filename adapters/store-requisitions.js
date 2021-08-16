@@ -19,6 +19,7 @@ export const useGetAllStoreRequisitions = () => {
 };
 
 export const useCreateStoreRequisition = async ({
+  date,
   code,
   item,
   reqQty,
@@ -27,6 +28,7 @@ export const useCreateStoreRequisition = async ({
   reqDate,
 }) => {
   const res = await axios.post("/api/store-requisitions", {
+    date,
     code,
     item,
     reqQty,
@@ -67,18 +69,24 @@ export const useGetStoreRequisitionById = (id) => {
   return { data, error, loading: !data && !error, ...rest };
 };
 
-export const useUpdateStoreRequisitionById = async (
+export const useUpdateStoreRequisitionById = async ({
   id,
+  date,
   item,
   reqQty,
   warehouse,
-  notes
-) => {
+  notes,
+  reqDate,
+  isApproved,
+}) => {
   const res = await axios.patch(`/api/store-requisitions/${id}`, {
+    date,
     item,
     reqQty,
     warehouse,
     notes,
+    reqDate,
+    isApproved,
   });
   mutate("/api/store-requisitions");
   return { error: res.data.error, data: res.data.data };

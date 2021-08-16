@@ -18,25 +18,25 @@ export const useGetAllStoreReceipts = () => {
   };
 };
 
-export const useCreateStoreReceipt = async (
+export const useCreateStoreReceipt = async ({
+  date,
   code,
   poCode,
   item,
-  valueRate,
+  recRate,
   recQty,
   warehouse,
   notes,
-  isPosted
-) => {
+}) => {
   const res = await axios.post("/api/store-receipts", {
+    date,
     code,
     poCode,
     item,
-    valueRate,
+    recRate,
     recQty,
     warehouse,
     notes,
-    isPosted,
   });
   mutate("/api/store-receipts");
   return { error: res.data.error, data: res.data.data };
@@ -73,18 +73,20 @@ export const useGetStoreReceiptById = (id) => {
 
 export const useUpdateStoreReceiptById = async ({
   id,
+  date,
   poCode,
   item,
-  valueRate,
+  recRate,
   recQty,
   warehouse,
   notes,
   isPosted,
 }) => {
   const res = await axios.patch(`/api/store-receipts/${id}`, {
+    date,
     poCode,
     item,
-    valueRate,
+    recRate,
     recQty,
     warehouse,
     notes,

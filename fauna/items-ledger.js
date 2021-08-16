@@ -9,42 +9,40 @@ export const deleteItemLedgerById = (id) => {
   return db.query(q.Delete(q.Ref(q.Collection("items_ledger"), id)));
 };
 
-export const updateItemLedgerById = (
-  id,
-  code, //store-receipt or store-issues codes
-  type, //store-receipt or store-issues
-  itemCode,
-  itemName,
-  opnRate,
-  opnQty,
-  recRate,
-  recQty,
-  issRate,
-  issQty,
-  warehouseCode,
-  warehouseName
-) => {
-  return db.query(
-    q.Update(q.Ref(q.Collection("store_issues"), id), {
-      data: {
-        reqCode,
-        item,
-        valueRate,
-        issQty,
-        warehouse,
-        notes,
-        isPosted,
-      },
-    })
-  );
-};
+// export const updateItemLedgerById = (
+//   id,
+//   code, //store-receipt or store-issues codes
+//   type, //store-receipt or store-issues
+//   itemCode,
+//   itemName,
+//   opnRate,
+//   opnQty,
+//   recRate,
+//   recQty,
+//   issRate,
+//   issQty,
+//   warehouseCode,
+//   warehouseName
+// ) => {
+//   return db.query(
+//     q.Update(q.Ref(q.Collection("store_issues"), id), {
+//       data: {
+//         reqCode,
+//         item,
+//         valueRate,
+//         issQty,
+//         warehouse,
+//         notes,
+//         isPosted,
+//       },
+//     })
+//   );
+// };
 
-export const createItemsLedger = (
+export const createItemsLedger = ({
   code,
   type,
-  itemId,
   itemCode,
-  itemName,
   opnRate,
   opnQty,
   recRate,
@@ -54,12 +52,12 @@ export const createItemsLedger = (
   cloRate,
   cloQty,
   warehouseCode,
-  warehouseName
-) => {
+  notes,
+}) => {
   if (type === "store-issues")
-    db.query(q.Call("OnIssueUpdateItem", itemId, issQty));
+    db.query(q.Call("OnIssueUpdateItem", itemCode, issQty));
   else if (type === "store-receipts")
-    db.query(q.Call("OnReceiveUpdateItem", itemId, recQty, recRate));
+    db.query(q.Call("OnReceiveUpdateItem", itemCode, recQty, recRate));
 
   return db.query(
     q.Create(q.Collection("items_ledger"), {
@@ -67,7 +65,6 @@ export const createItemsLedger = (
         code: code ?? "",
         type: type ?? "",
         itemCode: itemCode ?? "",
-        itemName: itemName ?? "",
         opnRate: opnRate ?? "",
         opnQty: opnQty ?? "",
         recRate: recRate ?? "",
@@ -77,7 +74,7 @@ export const createItemsLedger = (
         cloRate: cloRate ?? "",
         cloQty: cloQty ?? "",
         warehouseCode: warehouseCode ?? "",
-        warehouseName: warehouseName ?? "",
+        notes: notes ?? "",
       },
     })
   );

@@ -1,6 +1,5 @@
 import { db } from "@/fauna/index";
 import { query as q } from "faunadb";
-import { getSession } from "@auth0/nextjs-auth0";
 
 export const getItemById = (id) => {
   return db.query(q.Get(q.Ref(q.Collection("items"), id)));
@@ -49,8 +48,8 @@ export const updateItemById = ({
   );
 };
 
-export const getOpeningItemRateQtyById = (id) => {
-  return db.query(q.Paginate(q.Match(q.Index("item_rate_qty_by_id"), id)));
+export const getOpeningItemRateQtyByCode = (code) => {
+  return db.query(q.Paginate(q.Match(q.Index("item_rate_qty_by_code"), code)));
 };
 
 export const createItem = ({

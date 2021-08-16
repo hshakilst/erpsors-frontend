@@ -15,9 +15,7 @@ const handler = withApiAuthRequired(async (req, res) => {
         const {
           code, //store-receipts or store-issues codes
           type, //store-receipts or store-issues
-          itemId,
           itemCode,
-          itemName,
           opnRate,
           opnQty,
           recRate,
@@ -25,7 +23,7 @@ const handler = withApiAuthRequired(async (req, res) => {
           issRate,
           issQty,
           warehouseCode,
-          warehouseName,
+          notes,
         } = req.body;
 
         const cloQty = Number(opnQty) + Number(recQty) - Number(issQty);
@@ -35,12 +33,10 @@ const handler = withApiAuthRequired(async (req, res) => {
           Number(issQty) * Number(issRate);
         const cloRate = cloValue / cloQty;
 
-        const result = await createItemsLedger(
+        const result = await createItemsLedger({
           code,
           type,
-          itemId,
           itemCode,
-          itemName,
           opnRate,
           opnQty,
           recRate,
@@ -50,8 +46,8 @@ const handler = withApiAuthRequired(async (req, res) => {
           cloRate,
           cloQty,
           warehouseCode,
-          warehouseName
-        );
+          notes,
+        });
         res.status(200).json({ error: false, data: result });
         break;
       default:

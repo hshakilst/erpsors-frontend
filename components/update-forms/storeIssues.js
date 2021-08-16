@@ -12,16 +12,13 @@ import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { withSnackbar } from "notistack";
-import { useUpdateItemById } from "@/adapters/items";
-import StyledSelectForm from "@/components/ui/styledSelectForm";
-import MenuItem from "@material-ui/core/MenuItem";
-import StyledDatePicker from "@/components/ui/styledDatePicker";
+import { useUpdateStoreIssueById } from "@/adapters/store-issues";
 import StyledAutoCompleteForm from "@/components/ui/styledAutoCompleteForm";
-import { useGetAllSupplierCodes } from "@/adapters/suppliers";
+import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
+import { useGetAllItemCodes } from "@/adapters/items";
 import LogRocket from "logrocket";
 import StyledButton from "@/components/ui/styledButton";
-import { useGetAllWarehouseCodes } from "@/adapters/warehouses";
-import { format, parse } from "date-fns";
+import StyledDatePicker from "@/components/ui/styledDatePicker";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -152,59 +149,42 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const Items = ({ data, handleClose, ...props }) => {
+const StoreIssues = ({ data, handleClose, ...props }) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { register, handleSubmit, errors, control, setValue, reset } =
+  const { register, handleSubmit, errors, control, reset, setValue } =
     useForm();
 
   React.useEffect(() => {
-    setValue(
-      "opnDate",
-      format(parse(data.opnDate, "dd/MM/yyyy", new Date()), "dd/MM/yyyy")
-    );
-    setValue("name", data.name);
-    setValue("type", data.type);
-    setValue("qty", data.qty);
-    setValue("totalAmount", data.totalAmount);
-    setValue("valueRate", data.valueRate);
-    setValue("unit", data.unit);
-    setValue("status", data.status);
-    setValue("shelfLife", data.shelfLife);
-    setValue("group", data.group);
-    setValue("image", data.image);
-    setValue("notes", data.notes);
+    setValue("date", data.date);
+    setValue("reqCode", data.reqCode);
+    setValue("item", { code: data.item });
+    setValue("issRate", data.issRate);
+    setValue("issQty", data.issQty);
     setValue("warehouse", { code: data.warehouse });
-    setValue("supplier", { code: data.supplier });
+    setValue("notes", data.notes);
 
     return () => {
       reset();
-      setValue("opnDate", null);
+      setValue("date", null);
     };
   }, [data]);
 
   const onSubmit = (form) => {
     let updateData = {};
-    updateData.opnDate = form.opnDate;
-    updateData.name = form.name;
-    updateData.type = form.type;
-    updateData.qty = form.qty;
-    updateData.totalAmount = form.totalAmount;
-    updateData.valueRate = form.valueRate;
-    updateData.unit = form.unit;
-    updateData.status = form.status;
-    updateData.shelfLife = form.shelfLife;
-    updateData.group = form.group;
-    updateData.image = form.image;
-    updateData.notes = form.notes;
+    updateData.date = form.date;
+    updateData.reqCode = form.reqCode;
+    updateData.item = form.item?.code;
+    updateData.issRate = form.issRate;
+    updateData.issQty = form.issQty;
     updateData.warehouse = form.warehouse?.code;
-    updateData.supplier = form.supplier?.code;
+    updateData.notes = form.notes;
     updateData.id = data.id;
 
     for (const property in updateData) {
       if (!updateData[property]) delete updateData[property];
     }
-    Promise.resolve(useUpdateItemById(updateData))
+    Promise.resolve(useUpdateStoreIssueById(updateData))
       .then(({ error, data }) => {
         if (!error)
           props.enqueueSnackbar(`Update successful.`, {
@@ -219,7 +199,7 @@ const Items = ({ data, handleClose, ...props }) => {
           LogRocket.captureException(data, {
             tags: { source: "FaunaDB Error" },
             extra: {
-              component: "Item Update Form",
+              component: "Issues Update Form",
             },
           });
         }
@@ -232,7 +212,7 @@ const Items = ({ data, handleClose, ...props }) => {
         LogRocket.captureException(error, {
           tags: { function: "onSubmit" },
           extra: {
-            component: "Item Update Form",
+            component: "Issues Update Form",
           },
         });
       });
@@ -249,7 +229,8 @@ const Items = ({ data, handleClose, ...props }) => {
 
   return (
     <form component="form" onSubmit={handleSubmit(onSubmit, onError)}>
-      <Box>
+      <Bx>
+        o
         <div className={classes.rootGrid}>
           <Grid container spacing={2}>
             <Grid
@@ -266,21 +247,21 @@ const Items = ({ data, handleClose, ...props }) => {
                     <TocOutlinedIcon fontSize="large" />
                   </div>
                   <StyledDatePicker
-                    label={"Opening Date"}
-                    name={"opnDate"}
+                    label={"Date"}
+                    name="date"
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                     inputRef={register({
                       required: false,
                     })}
-                    error={errors.opnDate ? true : false}
+                    error={errors.date ? true : false}
                   />
                 </div>
               </Paper>
             </Grid>
             <Grid
-              item
               className={classes.gridItem}
+              item
               lg={6}
               md={12}
               sm={12}
@@ -291,47 +272,15 @@ const Items = ({ data, handleClose, ...props }) => {
                   <div className={classes.searchIcon}>
                     <TocOutlinedIcon fontSize="large" />
                   </div>
-                  <StyledSelectForm
-                    label={"Type"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                    name={"type"}
-                    //FIXME:Add validation pattern
-                    control={control}
-                    defaultValue={""}
-                    error={errors.type ? true : false}
-                  >
-                    <MenuItem value="raw-materials">{"Raw Materials"}</MenuItem>
-                    <MenuItem value="chemicals">{"Chemicals"}</MenuItem>
-                    <MenuItem value="packing-material">
-                      {"Packing Materials"}
-                    </MenuItem>
-                    <MenuItem value="wip">{"Work In Process"}</MenuItem>
-                    <MenuItem value="finished-goods">
-                      {"Finished Goods"}
-                    </MenuItem>
-                    <MenuItem value="git">{"Goods In Transit"}</MenuItem>
-                    <MenuItem value="mro">{"MRO Goods"}</MenuItem>
-                    <MenuItem value="fixed-assets">{"Fixed Assets"}</MenuItem>
-                    <MenuItem value="consumables">{"Consumables"}</MenuItem>
-                  </StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
+                  {/* //TODO:After Implementing floor requisitions implement StyledAutoComplete */}
+                  {/* <StyledAutoCompleteForm
+                      label={"Floor Req. Code"}
+                      name="reqCode"
+                      defaultValue={null}
+                      //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
+                      //TODO:"Render input field implement Chips of warehouse(Code + Name)"
+                      control={control}
+                    /> */}
                   <TextField
                     fullWidth
                     InputProps={{
@@ -340,153 +289,15 @@ const Items = ({ data, handleClose, ...props }) => {
                     classes={{
                       root: classes.inputRoot,
                     }}
-                    label={"Name"}
+                    label={"Floor Req. Code"}
                     size={"small"}
-                    name={"name"}
+                    name={"reqCode"}
                     //FIXME:Add validation pattern
                     inputRef={register({
                       required: false,
                     })}
-                    error={errors.name ? true : false}
+                    error={errors.reqCode ? true : false}
                   />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Opening Qty."}
-                    size={"small"}
-                    name={"qty"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.qty ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Rate"}
-                    size={"small"}
-                    name={"valueRate"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.valueRate ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Total Amount"}
-                    size={"small"}
-                    name={"totalAmount"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.totalAmount ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Unit"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                    name={"unit"}
-                    control={control}
-                    defaultValue={""}
-                  >
-                    <MenuItem value="pairs">{"Pairs"}</MenuItem>
-                    <MenuItem value="pieces">{"Pieces"}</MenuItem>
-                    <MenuItem value="kgs">{"KGs"}</MenuItem>
-                    <MenuItem value="grams">{"Grams"}</MenuItem>
-                    <MenuItem value="meters">{"Meters"}</MenuItem>
-                    <MenuItem value="centimeters">{"Centimeters"}</MenuItem>
-                    <MenuItem value="yards">{"Yards"}</MenuItem>
-                    <MenuItem value="feet">{"Feet"}</MenuItem>
-                    <MenuItem value="inches">{"Inches"}</MenuItem>
-                    <MenuItem value="litres">{"Litres"}</MenuItem>
-                    <MenuItem value="packets">{"Packets"}</MenuItem>
-                    <MenuItem value="pounds">{"Pounds"}</MenuItem>
-                    <MenuItem value="units">{"Units"}</MenuItem>
-                  </StyledSelectForm>
                 </div>
               </Paper>
             </Grid>
@@ -504,20 +315,86 @@ const Items = ({ data, handleClose, ...props }) => {
                     <TocOutlinedIcon fontSize="large" />
                   </div>
                   <StyledAutoCompleteForm
-                    label={"Supplier"}
-                    name={"supplier"}
+                    label={"Item"}
+                    name="item"
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                     control={control}
-                    fetchOptions={useGetAllSupplierCodes}
+                    fetchOptions={useGetAllItemCodes}
                   />
                 </div>
               </Paper>
             </Grid>
             <Grid
-              item
               className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                    }}
+                    label={"Issue Rate"}
+                    size={"small"}
+                    name={"issRate"}
+                    //FIXME:Add validation pattern
+                    inputRef={register({
+                      required: false,
+                    })}
+                    error={errors.issRate ? true : false}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid
+              className={classes.gridItem}
+              item
+              lg={6}
+              md={12}
+              sm={12}
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <TocOutlinedIcon fontSize="large" />
+                  </div>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                    }}
+                    label={"Issued Qty."}
+                    size={"small"}
+                    name={"issQty"}
+                    //FIXME:Add validation pattern
+                    inputRef={register({
+                      required: false,
+                    })}
+                    error={errors.issQty ? true : false}
+                  />
+                </div>
+              </Paper>
+            </Grid>
+            <Grid
+              className={classes.gridItem}
+              item
               lg={6}
               md={12}
               sm={12}
@@ -530,7 +407,7 @@ const Items = ({ data, handleClose, ...props }) => {
                   </div>
                   <StyledAutoCompleteForm
                     label={"Warehouse"}
-                    name={"warehouse"}
+                    name="warehouse"
                     defaultValue={null}
                     //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                     //TODO:"Render input field implement Chips of warehouse(Code + Name)"
@@ -541,139 +418,8 @@ const Items = ({ data, handleClose, ...props }) => {
               </Paper>
             </Grid>
             <Grid
-              item
               className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Status"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                    name={"status"}
-                    //FIXME:Add validation pattern
-                    // inputRef={register({
-                    //   required: true,
-                    // })}
-                    // error={errors.status ? true : false}
-                    control={control}
-                    defaultValue={""}
-                  >
-                    <MenuItem value="active">{"Active"}</MenuItem>
-                    <MenuItem value="inactive">{"Inactive"}</MenuItem>
-                  </StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
               item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Shelf Life Days"}
-                    size={"small"}
-                    name={"shelfLife"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.shelfLife ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <StyledSelectForm
-                    label={"Group"}
-                    classes={{
-                      root: classes.selectRoot,
-                    }}
-                    name={"group"}
-                    //FIXME:Add validation pattern
-                    // inputRef={register({
-                    //   required: true,
-                    // })}
-                    // error={errors.group ? true : false}
-                    control={control}
-                    defaultValue={""}
-                  >
-                    <MenuItem value="none">{"(None)"}</MenuItem>
-                  </StyledSelectForm>
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
-              lg={6}
-              md={12}
-              sm={12}
-              xs={12}
-            >
-              <Paper className={classes.paper}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <TocOutlinedIcon fontSize="large" />
-                  </div>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                    }}
-                    label={"Image"}
-                    size={"small"}
-                    name={"image"}
-                    //FIXME:Add validation pattern
-                    inputRef={register({
-                      required: false,
-                    })}
-                    error={errors.image ? true : false}
-                  />
-                </div>
-              </Paper>
-            </Grid>
-            <Grid
-              item
-              className={classes.gridItem}
               lg={6}
               md={12}
               sm={12}
@@ -706,7 +452,7 @@ const Items = ({ data, handleClose, ...props }) => {
             </Grid>
           </Grid>
         </div>
-      </Box>
+      </Bx>
       <div
         style={{
           float: "right",
@@ -745,4 +491,4 @@ const Items = ({ data, handleClose, ...props }) => {
   );
 };
 
-export default withSnackbar(Items);
+export default withSnackbar(StoreIssues);

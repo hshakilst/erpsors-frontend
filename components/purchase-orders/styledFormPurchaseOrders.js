@@ -2,7 +2,7 @@ import React from "react";
 import {
   makeStyles,
   createStyles,
-  fade,
+  alpha,
   useTheme,
 } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -71,9 +71,9 @@ const useStyles = makeStyles((theme) =>
       height: "3.5rem",
       position: "relative",
       borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
@@ -159,7 +159,6 @@ const StyledFormPurchaseOrders = (props) => {
   }, [watchedQty, watchedTotalAmount]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     let code = data.code;
     let reqCode = data.reqCode?.code;
     let item = data.item?.code;
@@ -189,20 +188,20 @@ const StyledFormPurchaseOrders = (props) => {
         date,
       });
       if (!error)
-        props.enqueueSnackbar(`PO ${code} added successfully.`, {
+        props.enqueueSnackbar(`PO ${code} : Insertion successful.`, {
           variant: "success",
         });
       else
-        props.enqueueSnackbar(
-          `Adding PO ${code} was unsuccessful. Reason: ${error.code}`,
-          {
-            variant: "error",
-          }
-        );
+        props.enqueueSnackbar(`PO ${code} : Insertion failed.`, {
+          variant: "error",
+        });
     } catch (error) {
-      props.enqueueSnackbar(`Something went wrong.`, {
-        variant: "error",
-      });
+      props.enqueueSnackbar(
+        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        {
+          variant: "error",
+        }
+      );
     }
   };
 
@@ -307,7 +306,7 @@ const StyledFormPurchaseOrders = (props) => {
                       inputRef={register({
                         required: true,
                       })}
-                      error={errors.opnDate ? true : false}
+                      error={errors.date ? true : false}
                     />
                   </div>
                 </Paper>
@@ -418,7 +417,7 @@ const StyledFormPurchaseOrders = (props) => {
                       //TODO:"Render option menu implement list of warehouse(Code(Secondary Text), Name(PrimaryText))"
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
-                      required={true}
+                      // required={true}
                       fetchOptions={useGetAllSupplierCodes}
                     />
                   </div>
