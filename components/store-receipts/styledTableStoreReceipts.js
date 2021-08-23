@@ -30,37 +30,35 @@ const StyledTableStoreReceipts = (props) => {
     data.id = id;
     data[field] = value;
 
-    try {
-      Promise.resolve(useUpdateStoreReceiptById(data)).then(
-        ({ error, data }) => {
-          if (!error)
-            props.enqueueSnackbar(
-              `Receipt ${data.data.code} : Update Successful.`,
-              {
-                variant: "success",
-                autoHideDuration: 5000,
-              }
-            );
-          else throw data;
-        }
-      );
-    } catch (error) {
-      props.enqueueSnackbar(
-        `Something went wrong.
+    Promise.resolve(useUpdateStoreReceiptById(data))
+      .then(({ error, data }) => {
+        if (!error)
+          props.enqueueSnackbar(
+            `Receipt ${data.data.code} : Update Successful.`,
+            {
+              variant: "success",
+              autoHideDuration: 5000,
+            }
+          );
+        else throw data;
+      })
+      .catch((error) => {
+        props.enqueueSnackbar(
+          `Something went wrong.
         \nReason: ${JSON.stringify(error).replace(`\\`, " ").trim()}`,
-        {
-          variant: "error",
-          autoHideDuration: 5000,
-        }
-      );
+          {
+            variant: "error",
+            autoHideDuration: 5000,
+          }
+        );
 
-      LogRocket.captureException(error, {
-        tags: { function: "onUpdateStoreReceipt" },
-        extra: {
-          component: "Store Receipts Table",
-        },
+        LogRocket.captureException(error, {
+          tags: { function: "onUpdateStoreReceipt" },
+          extra: {
+            component: "Store Receipts Table",
+          },
+        });
       });
-    }
   }, []);
 
   const columns = [
@@ -76,49 +74,40 @@ const StyledTableStoreReceipts = (props) => {
           <Grid item xs={4}>
             <IconButton
               disabled={params.row.isPosted}
-              onClick={() => {
+              onClick={async () => {
                 try {
-                  Promise.resolve(
-                    useCreateItemLedger(
-                      new ItemsLedger({
-                        date: params.row.date,
-                        code: `SR-${params.row.code}`,
-                        type: "store-receipts",
-                        itemCode: params.row.item,
-                        opnRate: params.row.opnRate,
-                        opnQty: params.row.opnQty,
-                        recRate: params.row.recRate,
-                        recQty: params.row.recQty,
-                        issRate: 0,
-                        issQty: 0,
-                        warehouseCode: params.row.warehouse,
-                        notes: params.row.notes,
-                      })
-                    )
-                  ).then(({ error, data }) => {
-                    if (!error)
-                      Promise.resolve(
-                        useUpdateStoreReceiptById({
-                          id: params.row.id,
-                          isPosted: true,
-                        })
-                      ).then(({ error, data }) => {
-                        if (!error)
-                          props.enqueueSnackbar(
-                            `Receipt ${data.data.code} : Posted Successful.`,
-                            {
-                              variant: "success",
-                              autoHideDuration: 5000,
-                            }
-                          );
-                        else throw data;
-                      });
-                    else throw data;
+                  const { error: errorLedger, data: dataLedger } =
+                    await useCreateItemLedger({
+                      date: params.row.date,
+                      code: `SR-${params.row.code}`,
+                      type: "store-receipts",
+                      itemCode: params.row.item,
+                      opnRate: params.row.opnRate,
+                      opnQty: params.row.opnQty,
+                      recRate: params.row.recRate,
+                      recQty: params.row.recQty,
+                      issRate: 0,
+                      issQty: 0,
+                      warehouseCode: params.row.warehouse,
+                      notes: params.row.notes,
+                    });
+                  console.log(params.row.cloQty);
+                  const { error, data } = await useUpdateStoreReceiptById({
+                    id: params.row.id,
+                    isPosted: true,
                   });
+                  if (!error && !errorLedger)
+                    props.enqueueSnackbar(
+                      `Receipt ${params.row.code} : Posting Successful.`,
+                      {
+                        variant: "success",
+                        autoHideDuration: 5000,
+                      }
+                    );
+                  else throw { dataLedger, data };
                 } catch (error) {
                   props.enqueueSnackbar(
-                    `Something went wrong.
-                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
+                    `Receipt ${params.row.code} : Posting Failed.`,
                     {
                       variant: "error",
                       autoHideDuration: 5000,
@@ -126,12 +115,88 @@ const StyledTableStoreReceipts = (props) => {
                   );
 
                   LogRocket.captureException(error, {
-                    tags: { function: "onPostToItemsLedger" },
+                    tags: { function: "onPostStoreReceipt" },
                     extra: {
                       component: "Store Receipt Table",
                     },
                   });
                 }
+
+                // Promise.resolve(
+                // useCreateItemLedger({
+                //   date: params.row.date,
+                //   code: `SR-${params.row.code}`,
+                //   type: "store-receipts",
+                //   itemCode: params.row.item,
+                //   opnRate: params.row.opnRate,
+                //   opnQty: params.row.opnQty,
+                //   recRate: params.row.recRate,
+                //   recQty: params.row.recQty,
+                //   issRate: 0,
+                //   issQty: 0,
+                //   warehouseCode: params.row.warehouse,
+                //   notes: params.row.notes,
+                // })
+                // )
+                //   .then(({ error, data }) => {
+                //     if (!error)
+                //       Promise.resolve(
+                // useUpdateStoreReceiptById({
+                //   id: params.row.id,
+                //   isPosted: true,
+                // })
+                //       )
+                //         .then(({ error, data }) => {
+                //           if (!error)
+                // props.enqueueSnackbar(
+                //   `Receipt ${data.data.code} : Posted Successful.`,
+                //   {
+                //     variant: "success",
+                //     autoHideDuration: 5000,
+                //   }
+                // );
+                //           else throw data;
+                //         })
+                //         .catch((error) => {
+                // props.enqueueSnackbar(
+                //   `Something went wrong.
+                //   \nReason: ${JSON.stringify(error)
+                //     .replace(`\\`, ` `)
+                //     .trim()}`,
+                //   {
+                //     variant: "error",
+                //     autoHideDuration: 5000,
+                //   }
+                // );
+
+                // LogRocket.captureException(error, {
+                //   tags: { function: "useUpdateStoreReceiptById" },
+                //   extra: {
+                //     component: "Store Receipt Table",
+                //   },
+                // });
+                //         });
+                //     else throw data;
+                //   })
+                //   .catch((error) => {
+                //     props.enqueueSnackbar(
+                //       `Something went wrong.
+                //        \nReason: ${JSON.stringify(error)
+                //          .replace(`\\`, ` `)
+                //          .trim()}`,
+                //       {
+                //         variant: "error",
+                //         autoHideDuration: 5000,
+                //       }
+                //     );
+
+                //     LogRocket.captureException(error, {
+                //       tags: { function: "useCreateItemLedger" },
+                //       extra: {
+                //         component: "Store Receipt Table",
+                //       },
+                //     });
+                //   });
               }}
             >
               <PostAddIcon

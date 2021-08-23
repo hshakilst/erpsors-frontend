@@ -209,7 +209,7 @@ const StyledFormStoreIssues = (props) => {
       }
     } catch (error) {
       props.enqueueSnackbar(
-        `Something went wrong.\nError:${JSON.stringify(error)}`,
+        `Something went wrong.\n${error?.name}:${error?.description}`,
         {
           variant: "error",
           autoHideDuration: 5000,

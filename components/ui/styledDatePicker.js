@@ -59,6 +59,7 @@ export default function StyledDatePicker(props) {
         classes={{
           root: classes.inputRoot,
         }}
+        disableToolbar
         value={selectedDate}
         onChange={handleDateChange}
         {...props}

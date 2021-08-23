@@ -45,7 +45,7 @@ const StyledTableStoreIssues = (props) => {
     } catch (error) {
       props.enqueueSnackbar(
         `Something went wrong.
-        \nReason: ${JSON.stringify(error).replaceAll(`//`, ` `).trim()}`,
+        \nReason: ${JSON.stringify(error).replaceAll(`/`, ``).trim()}`,
         {
           variant: "error",
           autoHideDuration: 5000,

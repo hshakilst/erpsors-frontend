@@ -44,19 +44,23 @@ export const useCreateItemLedger = async ({
   warehouseCode,
   notes,
 }) => {
-  const res = await axios.post("/api/items-ledger", {
-    code, //store-receipts or store-issues codes
-    type, //store-receipts or store-issues
-    itemCode,
-    opnRate,
-    opnQty,
-    recRate,
-    recQty,
-    issRate,
-    issQty,
-    warehouseCode,
-    notes,
-  });
+  const res = await axios
+    .post("/api/items-ledger", {
+      code, //store-receipts or store-issues codes
+      type, //store-receipts or store-issues
+      itemCode,
+      opnRate,
+      opnQty,
+      recRate,
+      recQty,
+      issRate,
+      issQty,
+      warehouseCode,
+      notes,
+    })
+    .catch((error) => {
+      return { error: true, data: error };
+    });
   mutate("/api/items-ledger");
   return { error: res.data.error, data: res.data.data };
 };

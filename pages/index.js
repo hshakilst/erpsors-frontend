@@ -6,6 +6,7 @@ import BaseLayout from "@/components/layouts/baseLayout";
 import StyledButton from "@/components/ui/styledButton";
 import { Divider, Typography } from "@material-ui/core";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,26 +39,7 @@ const Index = (props) => {
   const classes = useStyles();
   const router = useRouter();
 
-  return (
-    <BaseLayout>
-      <div className={classes.root}>
-        <Grid container spacing={2} justify="center">
-          <Grid className={classes.gridItem} item xs={6}>
-            <Paper elevation={2} className={classes.paper}>
-              <Typography variant="h5" style={{fontWeight:600}}>{"ERPSORS"}</Typography>
-              <Typography variant="h6">{"Landing Page"}</Typography>
-              <Divider style={{ marginTop: 16 }} />
-              <StyledButton
-                style={{ marginTop: 16 }}
-                label={"Sign In"}
-                onClick={() => router.push("/api/auth/login")}
-              ></StyledButton>
-            </Paper>
-          </Grid>
-        </Grid>
-      </div>
-    </BaseLayout>
-  );
+  return null;
 };
 
 export const getServerSideProps = ({ req, res }) => {
@@ -71,6 +53,11 @@ export const getServerSideProps = ({ req, res }) => {
       },
     };
   }
-  return { props: {} };
+  return {
+    redirect: {
+      destination: "/api/auth/login",
+      permanent: true,
+    },
+  };
 };
 export default Index;
