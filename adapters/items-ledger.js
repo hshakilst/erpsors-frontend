@@ -62,6 +62,7 @@ export const useCreateItemLedger = async ({
       return { error: true, data: error };
     });
   mutate("/api/items-ledger");
+  mutate("/api/items")
   return { error: res.data.error, data: res.data.data };
 };
 
