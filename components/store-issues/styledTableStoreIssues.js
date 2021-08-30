@@ -305,12 +305,12 @@ const StyledTableStoreIssues = (props) => {
       label={"Store Issues"}
       columns={columns}
       fetch={useGetAllStoreIssues}
-      sortModel={[
-        {
-          field: "code",
-          sort: "asc",
-        },
-      ]}
+      // sortModel={[
+      //   {
+      //     field: "date",
+      //     sort: "asc",
+      //   },
+      // ]}
       isCellEditable={(params) => params.row.id === editable}
       onCellEditCommit={handleCellEditCommit}
     />

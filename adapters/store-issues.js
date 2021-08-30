@@ -8,10 +8,12 @@ export const useGetAllStoreIssues = () => {
   });
 
   return {
-    data: data?.map((row) => {
-      const id = row.ref["@ref"].id;
-      return { id, ...row.data };
-    }),
+    data: data
+      ?.map((row) => {
+        const id = row.ref["@ref"].id;
+        return { id, ...row.data };
+      })
+      ?.reverse(),
     error,
     loading: !data && !error,
     ...rest,

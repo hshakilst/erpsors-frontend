@@ -368,12 +368,12 @@ const StyledTableStoreReceipts = (props) => {
       label={"Store Receipts"}
       columns={columns}
       fetch={useGetAllStoreReceipts}
-      sortModel={[
-        {
-          field: "code",
-          sort: "asc",
-        },
-      ]}
+      // sortModel={[
+      //   {
+      //     field: "code",
+      //     sort: "asc",
+      //   },
+      // ]}
       isCellEditable={(params) => params.row.id === editable}
       onCellEditCommit={handleCellEditCommit}
     />
