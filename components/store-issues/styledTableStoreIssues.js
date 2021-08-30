@@ -15,6 +15,7 @@ import { useCreateItemLedger } from "@/adapters/items-ledger";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import ItemsLedger from "@/contexts/items-ledger";
 import { format } from "date-fns";
+import { number } from "prop-types";
 
 const StyledTableStoreIssues = (props) => {
   const [editable, setEditable] = React.useState();
@@ -74,61 +75,51 @@ const StyledTableStoreIssues = (props) => {
           <Grid item xs={4}>
             <IconButton
               disabled={params.row.isPosted}
-              onClick={() => {
+              onClick={async () => {
                 try {
-                  Promise.resolve(
-                    useCreateItemLedger(
-                      new ItemsLedger({
-                        date: params.row.date,
-                        code: `SI-${params.row.code}`,
-                        type: "store-issues",
-                        itemCode: params.row.item,
-                        opnRate: params.row.opnRate,
-                        opnQty: params.row.opnQty,
-                        recRate: 0,
-                        recQty: 0,
-                        issRate: params.row.issRate,
-                        issQty: params.row.issQty,
-                        warehouseCode: params.row.warehouse,
-                        notes: params.row.notes,
-                      })
-                    )
-                  )
-                    .then(({ error, data }) => {
-                      if (!error && data)
-                        Promise.resolve(
-                          useUpdateStoreIssueById({
-                            id: params.row.id,
-                            isPosted: true,
-                          })
-                        ).then(({ error, data }) => {
-                          if (!error)
-                            props.enqueueSnackbar(
-                              `Issue ${data.data.code} : Posted Successful.`,
-                              {
-                                variant: "success",
-                                autoHideDuration: 5000,
-                              }
-                            );
-                          else throw data;
-                        });
-                      else throw data;
-                    })
-                    .catch((error) => {
-                      throw error;
+                  const { error: errorLedger, data: dataLedger } =
+                    await useCreateItemLedger({
+                      date: params.row.date,
+                      code: `SI-${params.row.code}`,
+                      type: "store-issues",
+                      itemCode: params.row.item,
+                      opnRate: params.row.opnRate,
+                      opnQty: params.row.opnQty,
+                      recRate: 0,
+                      recQty: 0,
+                      issRate: params.row.issRate,
+                      issQty: params.row.issQty,
+                      warehouseCode: params.row.warehouse,
+                      notes: params.row.notes,
                     });
+                  const { error, data } = await useUpdateStoreIssueById({
+                    id: params.row.id,
+                    isPosted: true,
+                  });
+                  if (!error && !errorLedger)
+                    props.enqueueSnackbar(
+                      `Issue ${params.row.code} : Posting Successful.`,
+                      {
+                        variant: "success",
+                        autoHideDuration: 5000,
+                      }
+                    );
+                  else
+                    props.enqueueSnackbar(
+                      `Issue ${params.row.code} : Posting Failed.`,
+                      {
+                        variant: "success",
+                        autoHideDuration: 5000,
+                      }
+                    );
                 } catch (error) {
-                  props.enqueueSnackbar(
-                    `Something went wrong.
-                  \nReason: ${JSON.stringify(error).replace(`\\`, ` `).trim()}`,
-                    {
-                      variant: "error",
-                      autoHideDuration: 5000,
-                    }
-                  );
+                  props.enqueueSnackbar(`Something went wrong.`, {
+                    variant: "error",
+                    autoHideDuration: 5000,
+                  });
 
                   LogRocket.captureException(error, {
-                    tags: { function: "onPostToItemsLedger" },
+                    tags: { function: "onPostStoreIssue" },
                     extra: {
                       component: "Store Issue Table",
                     },
@@ -231,6 +222,7 @@ const StyledTableStoreIssues = (props) => {
       headerName: "Issue Code",
       headerAlign: "center",
       field: "code",
+      type: "number",
       width: 180,
       align: "center",
       editable: false,
@@ -305,12 +297,6 @@ const StyledTableStoreIssues = (props) => {
       label={"Store Issues"}
       columns={columns}
       fetch={useGetAllStoreIssues}
-      // sortModel={[
-      //   {
-      //     field: "date",
-      //     sort: "asc",
-      //   },
-      // ]}
       isCellEditable={(params) => params.row.id === editable}
       onCellEditCommit={handleCellEditCommit}
     />

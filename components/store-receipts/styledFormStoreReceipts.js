@@ -348,6 +348,7 @@ const StyledFormStoreReceipts = (props) => {
                       inputRef={register({
                         required: true,
                       })}
+                      required
                       error={errors.code ? true : false}
                     />
                   </div>
@@ -366,7 +367,7 @@ const StyledFormStoreReceipts = (props) => {
                     <div className={classes.searchIcon}>
                       <TocOutlinedIcon fontSize="large" />
                     </div>
-                    <StyledAutoCompleteForm
+                    {/* <StyledAutoCompleteForm
                       label={"P.O. Code"}
                       name="poCode"
                       defaultValue={null}
@@ -374,6 +375,23 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllPurchaseOrderCodes}
+                    /> */}
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      classes={{
+                        root: classes.inputRoot,
+                      }}
+                      label={"P.O. Code"}
+                      size={"small"}
+                      name={"poCode"}
+                      //FIXME:Add validation pattern
+                      inputRef={register({
+                        required: false,
+                      })}
+                      error={errors.recRate ? true : false}
                     />
                   </div>
                 </Paper>
@@ -399,6 +417,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllItemCodes}
+                      required
                     />
                   </div>
                 </Paper>
@@ -432,6 +451,7 @@ const StyledFormStoreReceipts = (props) => {
                         required: true,
                       })}
                       error={errors.recRate ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -465,6 +485,7 @@ const StyledFormStoreReceipts = (props) => {
                         required: true,
                       })}
                       error={errors.recQty ? true : false}
+                      required
                     />
                   </div>
                 </Paper>
@@ -490,6 +511,7 @@ const StyledFormStoreReceipts = (props) => {
                       //TODO:"Render input field implement Chips of warehouse(Code + Name)"
                       control={control}
                       fetchOptions={useGetAllWarehouseCodes}
+                      required
                     />
                   </div>
                 </Paper>
